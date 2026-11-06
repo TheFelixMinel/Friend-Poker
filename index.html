@@ -32,8 +32,9 @@
   color-scheme: dark;
 }
 [hidden]{display:none!important}
-html,body{height:100%;overflow:hidden}
+html,body{height:100%;overflow:hidden;overflow:clip}
 body{position:fixed;inset:0}
+#bg,#stage{contain:layout}
 body{margin:0;background:var(--floor);color:var(--ui);font-family:var(--body);overflow:hidden;
   -webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
 #bg{position:fixed;inset:0;
@@ -279,8 +280,8 @@ table.led td:first-child,table.led th:first-child{text-align:left}
 #tutBubble .tbBtns{display:flex;justify-content:flex-end;margin-top:8px}
 #tutBubble .tbBtns .btn{height:38px;font-size:15px;padding:0 16px}
 #tutBubble .tbX{position:absolute;right:6px;top:6px;width:26px;height:26px;border-radius:50%;border:none;background:#0000;color:#8a7a52;font-size:14px;cursor:pointer}
-#tutRing{position:absolute;width:74px;height:74px;margin:-37px 0 0 -37px;border-radius:50%;border:3px solid #ffe08a;box-shadow:0 0 0 4px #ffe08a44,0 0 24px #ffe08a;pointer-events:none;animation:ringP 1.3s ease-in-out infinite;z-index:19}
-@keyframes ringP{0%,100%{transform:scale(.9);opacity:1}50%{transform:scale(1.12);opacity:.6}}
+#tutRing{position:absolute;box-sizing:border-box;border:3px solid #ffd45c;box-shadow:0 0 0 3px #ffd45c40,0 0 18px #ffd45c,inset 0 0 12px #ffd45c66;pointer-events:none;animation:ringP 1.3s ease-in-out infinite;z-index:19;transition:left .2s,top .2s,width .2s,height .2s}
+@keyframes ringP{0%,100%{opacity:1;box-shadow:0 0 0 3px #ffd45c40,0 0 18px #ffd45c,inset 0 0 12px #ffd45c66}50%{opacity:.7;box-shadow:0 0 0 8px #ffd45c00,0 0 30px #ffd45c,inset 0 0 6px #ffd45c44}}
 .modes .btn{height:48px}
 .lessons{display:flex;flex-direction:column;gap:8px}
 .lesson{display:flex;gap:12px;align-items:center;text-align:left;background:#ffffff08;border:1px solid #ffffff1a;border-radius:10px;padding:10px 12px;color:#e8e4da;cursor:pointer;font:inherit}
@@ -2343,7 +2344,7 @@ async function takeSeat(i) { cmd('sit', { seat: i }); }
 
 /* ===================== bots, solo mode, coach, tutorial ===================== */
 let solo = false, tut = null, coachOn = store.get('coach', true);
-const BOT_NAMES = ['Аркадий', 'Вера', 'Гоша', 'Лена', 'Марат', 'Соня', 'Тимур', 'Зоя', 'Федя', 'Нина', 'Остап', 'Майя'];
+const BOT_NAMES = ['Джек', 'Эмили', 'Майк', 'Оливия', 'Тони', 'София', 'Райан', 'Грейс', 'Фрэнк', 'Миа', 'Лео', 'Хлоя'];
 const LEVELS = { easy: 'Новичок', mid: 'Любитель', pro: 'Акула' };
 const isBot = u => !!(S && S.bots && S.bots[u]);
 const C = s => '♠♥♦♣'.indexOf(s.slice(-1)) * 13 + '23456789TJQKA'.indexOf(s.slice(0, -1).replace('10', 'T'));
@@ -2442,9 +2443,9 @@ function openSoloSetup() {
       <h3>Уровень</h3><div class="chipsel">${[['easy', 'Новичок'], ['mid', 'Любитель'], ['pro', 'Акула'], ['mix', 'Вперемешку']].map(([k, t]) => `<button class="${st.lv === k ? 'on' : ''}" data-l="${k}">${t}</button>`).join('')}</div>
       <p class="fine">${{ easy: 'Новичок часто уравнивает и ошибается — хорошо для первых игр.', mid: 'Любитель играет по силе руки.', pro: 'Акула считает шансы и банк, иногда блефует.', mix: 'За столом будут боты разного уровня.' }[st.lv]}</p>
       <h3>Ставки</h3>
-      <div class="fields"><label for="fSb">Малый блайнд<input id="fSb" type="number" inputmode="numeric" value="10"></label>
-      <label for="fBb">Большой блайнд<input id="fBb" type="number" inputmode="numeric" value="20"></label>
-      <label for="fBuy">Бай-ин<input id="fBuy" type="number" inputmode="numeric" value="2000"></label></div>
+      <div class="fields"><label for="fSb">Малый блайнд<input id="fSb" type="number" inputmode="numeric" value="250"></label>
+      <label for="fBb">Большой блайнд<input id="fBb" type="number" inputmode="numeric" value="500"></label>
+      <label for="fBuy">Бай-ин<input id="fBuy" type="number" inputmode="numeric" value="15000"></label></div>
       <label class="tgl"><input type="checkbox" id="fCoach" ${coachOn ? 'checked' : ''}> Тренер подсказывает на моём ходу</label>
       <div class="row2" style="margin-top:12px"><button class="btn gold" id="soloGo">За стол</button><button class="btn dark" id="soloBack">Назад</button></div>`;
     $('#menuPanel').querySelectorAll('[data-n]').forEach(b => b.onclick = () => { st.n = +b.dataset.n; draw(); });
@@ -2579,29 +2580,37 @@ function openCombos(asLesson) {
 }
 
 /* ---- tutorial engine: scripted hands on a solo table ---- */
-function tutWait(pred) { const g = tut && tut.gen; return new Promise(res => { const f = () => { if (!tut || tut.gen !== g) return res(false); if (pred()) return res(true); setTimeout(f, 150); }; f(); }); }
+function tutWait(pred) { const g = tut && tut.gen; return new Promise((res, rej) => { const f = () => { if (!tut || tut.gen !== g) return rej(new Error('lesson-ended')); if (pred()) return res(true); setTimeout(f, 150); }; f(); }); }
 const calm = () => !animating && !queue.length;
 const myTurnNow = () => calm() && S && S.hand.turn === mySeat() && disp && disp.turn === mySeat();
-function anchorXY(a) {
-  const me = mySeat();
-  if (!a) return null;
-  if (a === 'cards') return slot(me).cards;
-  if (a === 'board') return [CX, BOARD_Y];
-  if (a === 'pot') return POT;
-  if (a === 'eq') return [slot(me).plate[0], slot(me).plate[1] + 14];
-  if (a === 'dealer') return S && S.hand.dealer >= 0 ? slot(S.hand.dealer).btn : null;
-  if (a.startsWith('seat:')) return slot(+a.slice(5)).plate;
-  if (a.startsWith('#')) { const el = $(a); if (!el) return null; const sr = stage.getBoundingClientRect(), r = el.getBoundingClientRect(), k = sr.width / W; return [(r.left + r.width / 2 - sr.left) / k, (r.top + r.height / 2 - sr.top) / k]; }
+function stageRect(el) { const sr = stage.getBoundingClientRect(), r = el.getBoundingClientRect(), k = sr.width / W; return { x: (r.left - sr.left) / k, y: (r.top - sr.top) / k, w: r.width / k, h: r.height / k }; }
+function anchorRect(a) {
+  const me = mySeat(); if (!a || !S) return null;
+  const R0 = (cx, cy, w, h) => ({ x: cx - w / 2, y: cy - h / 2, w, h });
+  if (a === 'cards') { const c = slot(me).cards; return R0(c[0], c[1], 140, 100); }
+  if (a === 'board') { const n = Math.max(3, disp.board.length); return { x: BOARD_X(0) - 31, y: BOARD_Y - 43, w: (n - 1) * 62 + 62, h: 86 }; }
+  if (a === 'board:last') { const k = Math.max(0, disp.board.length - 1); return R0(BOARD_X(k), BOARD_Y, 62, 86); }
+  if (a === 'board:flop') return { x: BOARD_X(0) - 31, y: BOARD_Y - 43, w: 186, h: 86 };
+  if (a === 'pot') { const el = $('#pot'); return el && !el.hidden ? stageRect(el) : R0(POT[0], POT[1], 120, 50); }
+  if (a === 'eq') { const p = slot(me).plate; return R0(p[0], p[1] + 18, 196, 24); }
+  if (a === 'dealer') { if (S.hand.dealer < 0) return null; const b = slot(S.hand.dealer).btn; return R0(b[0], b[1], 36, 36); }
+  if (a.startsWith('seat:')) { const el = $('#plate' + a.slice(5)); return el ? stageRect(el) : null; }
+  if (a.startsWith('#')) { const el = $(a); return el && el.offsetParent !== null ? stageRect(el) : null; }
   return null;
 }
+function anchorXY(a) { const r = anchorRect(a); return r ? [r.x + r.w / 2, r.y + r.h / 2] : null; }
 function bubble(text, anchor, withNext, nextLabel = 'Дальше') {
-  return new Promise(res => {
+  if (!tut) return Promise.reject(new Error('lesson-ended'));
+  const g = tut.gen;
+  return new Promise((res, rej) => {
     let b = $('#tutBubble'); if (!b) { b = document.createElement('div'); b.id = 'tutBubble'; L.hud.appendChild(b); }
     let ring = $('#tutRing'); if (!ring) { ring = document.createElement('div'); ring.id = 'tutRing'; L.hud.appendChild(ring); }
     b.innerHTML = `<div class="tbTop">${esc(tut.title)} · ${tut.step}</div><div class="tbText">${text}</div>${withNext ? `<div class="tbBtns"><button class="btn gold" id="tbNext">${nextLabel}</button></div>` : ''}<button class="tbX" id="tbExit" aria-label="Выйти из урока">✕</button>`;
     const place2 = () => {
-      const p = anchorXY(anchor);
-      ring.hidden = !p; if (p) { ring.style.left = p[0] + 'px'; ring.style.top = p[1] + 'px'; }
+      if (!tut || tut.gen !== g || !b.isConnected) return;
+      const rc = anchorRect(anchor), p = rc ? [rc.x + rc.w / 2, rc.y + rc.h / 2] : null;
+      ring.hidden = !rc;
+      if (rc) { const pad = 6; Object.assign(ring.style, { left: (rc.x - pad) + 'px', top: (rc.y - pad) + 'px', width: (rc.w + pad * 2) + 'px', height: (rc.h + pad * 2) + 'px', borderRadius: Math.min(18, (rc.h + pad * 2) / 2) + 'px' }); }
       const bw = 330; let x, y, below = false;
       if (!p) { x = CX - bw / 2; y = 150; }
       else if (p[0] > 820) { x = Math.max(10, Math.min(p[0] - bw - 70, 834 - bw)); y = Math.min(500 - 10 - b.offsetHeight, Math.max(60, p[1] - b.offsetHeight / 2)); }
@@ -2610,18 +2619,21 @@ function bubble(text, anchor, withNext, nextLabel = 'Дальше') {
     };
     place2(); requestAnimationFrame(place2); setTimeout(place2, 400);
     tut.reposition = place2;
+    clearInterval(tut.follow); tut.follow = setInterval(place2, 300);   // follow targets that move or re-render
+    tut.reject = rej;
     $('#tbExit').onclick = () => endLesson(false);
     if (withNext) $('#tbNext').onclick = () => res(true); else res(true);
   });
 }
-function clearBubble() { const b = $('#tutBubble'), r = $('#tutRing'); if (b) b.remove(); if (r) r.remove(); }
+function clearBubble() { const b = $('#tutBubble'), r = $('#tutRing'); if (b) b.remove(); if (r) r.remove(); if (tut) clearInterval(tut.follow); }
 async function expectAct(allow, text, anchor) {
   await tutWait(myTurnNow);
-  if (!tut) return;
+  if (!tut) throw new Error('lesson-ended');
   tut.allow = allow; renderHud();
-  await bubble(text, anchor || '#controls', false);
-  await new Promise(res => { tut.actResolve = res; });
-  tut.allow = null; clearBubble();
+  const btn = { call: '#bCall', check: '#bCall', fold: '#bFold', q1: '#bQ1', q3: '#bQ3', allin: '#bQA', raise: '#bRaise' }[allow[0]];
+  await bubble(text, anchor && anchor !== '#controls' && !anchor.startsWith('#b') ? anchor : btn, false);
+  await new Promise((res, rej) => { tut.actResolve = res; tut.reject = rej; });
+  if (tut) tut.allow = null; clearBubble();
 }
 function scriptFor(spec) {
   return (s, seat) => {
@@ -2653,10 +2665,12 @@ async function startLesson(k) {
   const gen = Date.now();
   tut = { gen, k, title: 'Урок ' + (k + 1) + ' · ' + L0.title, step: '', allow: null, hold: false };
   Engine.setTurnMs(10 * 60 * 1000);
-  startSolo({ sb: 10, bb: 20, buyIn: 2000 }, ['easy', 'easy', 'easy'], { noAuto: true });
+  startSolo({ sb: 250, bb: 500, buyIn: 15000 }, ['easy', 'easy', 'easy'], { noAuto: true });
   $('#lobby').hidden = true; $('#menu').hidden = true;
   await sleep(500);
-  try { await LESSON_FLOW[L0.id](); if (tut && tut.gen === gen) await finishLesson(L0.id, k); } catch (e) { console.warn(e); }
+  try { await LESSON_FLOW[L0.id](); if (tut && tut.gen === gen) await finishLesson(L0.id, k); } catch (e) { if (!/lesson-ended/.test(e && e.message)) console.warn(e); if (!tut || tut.gen !== gen) clearStaleBubble(); }
+}
+function clearStaleBubble() { if (!tut) { const b = $('#tutBubble'), r = $('#tutRing'); if (b) b.remove(); if (r) r.remove(); }
 }
 async function finishLesson(id, k) {
   markDone(id);
@@ -2665,11 +2679,12 @@ async function finishLesson(id, k) {
   await bubble(`<b>Урок пройден!</b> ${next ? 'Дальше — «' + next.title + '».' : 'Ты прошёл всё обучение. Теперь сыграй с ботами-новичками с включённым тренером — он подскажет, если засомневаешься.'}`, null, true, next ? 'Следующий урок' : 'Играть с ботами');
   const gen = tut && tut.gen; endLesson(true);
   if (next) startLesson(k + 1);
-  else { coachOn = true; store.set('coach', true); startSolo({ sb: 10, bb: 20, buyIn: 2000 }, ['easy', 'easy', 'mid']); }
+  else { coachOn = true; store.set('coach', true); startSolo({ sb: 250, bb: 500, buyIn: 15000 }, ['easy', 'easy', 'mid']); }
 }
 function endLesson(silent) {
   if (!tut) return;
-  tut = null; clearBubble(); Engine.setTurnMs(15000);
+  const t0 = tut; clearInterval(t0.follow); clearBubble(); tut = null; Engine.setTurnMs(15000);
+  if (t0.reject) setTimeout(() => t0.reject(new Error('lesson-ended')), 0);
   if (!silent) { solo = false; goHome(); }
 }
 
@@ -2678,7 +2693,7 @@ const LESSON_FLOW = {
   async flow() {
     tut.step = 'знакомство';
     await bubble('Это стол на 6 мест. <b>Цель покера — выиграть фишки соперников</b>: собрать лучшую комбинацию из 5 карт или заставить всех сбросить карты.', null, true);
-    await bubble('Это соперники-боты. У каждого есть <b>стек</b> — фишки перед ним. Сейчас у всех по 2 000.', 'seat:3', true);
+    await bubble('Это соперники-боты. У каждого есть <b>стек</b> — фишки перед ним. Сейчас у всех по 15 000.', 'seat:3', true);
     await bubble('Внизу — ты. В покере играют на фишки: здесь они ничего не стоят, просто очки.', 'seat:0', true);
     await dealHand(HAND({ dealer: 2, hole: { 0: [C('A♠'), C('K♠')], 2: [C('Q♣'), C('J♣')], 3: [C('8♦'), C('6♦')], 5: [C('5♠'), C('4♥')] }, board: ['K♦', '7♣', '2♥', '9♠', 'A♦'].map(C) }));
     tut.step = 'блайнды';
@@ -2687,17 +2702,18 @@ const LESSON_FLOW = {
     tut.step = 'префлоп';
     await bubble('Тебе раздали <b>2 закрытые карты</b> — их видишь только ты. Туз и король одной масти — очень сильное начало.', 'cards', true);
     await bubble('Под стеком — подсказка: какая у тебя сейчас комбинация и <b>шанс выиграть</b> в процентах.', 'eq', true);
-    await expectAct(['call'], 'Сейчас <b>префлоп</b> — первый круг ставок, до общих карт. Ходят по очереди по часовой стрелке. Чтобы остаться в игре, нужно уравнять большой блайнд. Нажми <b>«Колл 20»</b>.');
+    await expectAct(['call'], 'Сейчас <b>префлоп</b> — первый круг ставок, до общих карт. Ходят по очереди по часовой стрелке. Чтобы остаться в игре, нужно уравнять большой блайнд. Нажми <b>«Колл 500»</b>.');
     tut.step = 'флоп';
     await waitBoard(3);
     await bubble('<b>Флоп</b> — дилер открыл 3 общие карты. Ими пользуются все игроки. У тебя пара королей: король на руке + король на столе.', 'board', true);
     await expectAct(['check'], 'Начался второй круг ставок. Если до тебя никто не ставил, можно <b>«Чек»</b> — пропустить ход без ставки. Нажми «Чек».');
     tut.step = 'тёрн';
     await waitBoard(4);
-    await expectAct(['check'], '<b>Тёрн</b> — четвёртая общая карта и третий круг ставок. Снова <b>«Чек»</b>.', 'board');
+    await bubble('<b>Тёрн</b> — четвёртая общая карта. Начинается третий круг ставок.', 'board:last', true);
+    await expectAct(['check'], 'Снова <b>«Чек»</b>.');
     tut.step = 'ривер';
     await waitBoard(5);
-    await bubble('<b>Ривер</b> — пятая, последняя карта. Пришёл туз: у тебя теперь <b>две пары</b>, тузы и короли!', 'board', true);
+    await bubble('<b>Ривер</b> — пятая, последняя карта. Пришёл туз: у тебя теперь <b>две пары</b>, тузы и короли!', 'board:last', true);
     await expectAct(['check'], 'Последний круг ставок. Нажми <b>«Чек»</b>, и игроки откроют карты.');
     tut.step = 'вскрытие';
     await waitShow();
@@ -2706,19 +2722,19 @@ const LESSON_FLOW = {
   async acts() {
     tut.step = 'фолд';
     await bubble('За свой ход ты выбираешь одно из действий: <b>Фолд</b> — сбросить карты, <b>Чек</b> — пропустить, <b>Колл</b> — уравнять, <b>Рейз</b> — повысить ставку.', null, true);
-    await dealHand(HAND({ dealer: 3, hole: { 0: [C('7♣'), C('2♦')], 2: [C('A♦'), C('K♦')] }, script: { 'preflop:2': 'raise:60', 'preflop:3': 'fold', 'preflop:5': 'fold' } }));
-    await bubble('У тебя 7 и 2 разных мастей — <b>худшая стартовая рука</b> в холдеме. Ты на большом блайнде: твои 20 уже в банке.', 'cards', true);
+    await dealHand(HAND({ dealer: 3, hole: { 0: [C('7♣'), C('2♦')], 2: [C('A♦'), C('K♦')] }, script: { 'preflop:2': 'raise:1500', 'preflop:3': 'fold', 'preflop:5': 'fold' } }));
+    await bubble('У тебя 7 и 2 разных мастей — <b>худшая стартовая рука</b> в холдеме. Ты на большом блайнде: твои 500 уже в банке.', 'cards', true);
     await tutWait(myTurnNow);
-    await expectAct(['fold'], 'Бот слева от тебя повысил ставку до 60. Со слабой рукой против повышения правильно <b>сбросить</b> — потеряешь только блайнд. Нажми <b>«Фолд»</b>.');
+    await expectAct(['fold'], 'Бот слева от тебя повысил ставку до 1 500. Со слабой рукой против повышения правильно <b>сбросить</b> — потеряешь только блайнд. Нажми <b>«Фолд»</b>.');
     await tutWait(() => calm() && S.hand.phase === 'showdown');
     await bubble('Фолд — это нормально. Хорошие игроки сбрасывают большинство рук и вступают в игру только с хорошими картами.', null, true);
     tut.step = 'рейз';
     await dealHand(HAND({ dealer: 2, hole: { 0: [C('A♥'), C('A♣')], 5: [C('Q♥'), C('Q♠')] }, board: ['A♦', '8♠', '3♣', '2♦', 'K♣'].map(C), script: { 'preflop:2': 'fold', 'preflop:3': 'fold', 'preflop:5': 'call' } }));
     await bubble('А теперь <b>пара тузов</b> — лучшая стартовая рука. С сильной рукой нужно <b>повышать</b>: так в банке будет больше фишек, а слабые руки сбросят.', 'cards', true);
-    await expectAct(['q3'], 'Нажми <b>«3 ББ»</b> — это рейз до трёх больших блайндов (60). Сумма написана прямо на кнопке.', '#bQ3');
+    await expectAct(['q3'], 'Нажми <b>«3 ББ»</b> — это рейз до трёх больших блайндов (1 500). Сумма написана прямо на кнопке.', '#bQ3');
     tut.step = 'ставка';
     await waitBoard(3);
-    await bubble('На флопе пришёл туз — у тебя <b>сет</b>, три туза. Соперник сделал чек.', 'board', true);
+    await bubble('На флопе пришёл туз — у тебя <b>сет</b>, три туза. Соперник сделал чек.', 'board:flop', true);
     await expectAct(['q3'], 'Когда до тебя не ставили, повышение называется <b>бет</b> (ставка). Поставь <b>«3 ББ»</b>, чтобы соперник с более слабой рукой доплатил.', '#bQ3');
     tut.step = 'пред-ходы';
     await waitBoard(4);
@@ -2731,8 +2747,8 @@ const LESSON_FLOW = {
   },
   async allin() {
     tut.step = 'олл-ин';
-    await dealHand(HAND({ dealer: 3, stacks: { 3: 300 }, hole: { 0: [C('Q♠'), C('Q♣')], 2: [C('J♠'), C('J♦')], 3: [C('A♣'), C('K♣')], 5: [C('9♦'), C('4♣')] }, board: ['Q♦', '7♠', '2♣', '9♥', '5♦'].map(C), script: { 'preflop:2': ['call', 'call'], 'preflop:3': 'allin', 'preflop:5': 'fold', 'flop:2': 'raise:200' } }));
-    await bubble('Посмотри на бота справа сверху: у него всего 300 фишек — короткий стек.', 'seat:3', true);
+    await dealHand(HAND({ dealer: 3, stacks: { 3: 7500 }, hole: { 0: [C('Q♠'), C('Q♣')], 2: [C('J♠'), C('J♦')], 3: [C('A♣'), C('K♣')], 5: [C('9♦'), C('4♣')] }, board: ['Q♦', '7♠', '2♣', '9♥', '5♦'].map(C), script: { 'preflop:2': ['call', 'call'], 'preflop:3': 'allin', 'preflop:5': 'fold', 'flop:2': 'raise:5000' } }));
+    await bubble('Посмотри на бота справа сверху: у него всего 7 500 фишек — короткий стек.', 'seat:3', true);
     await tutWait(myTurnNow);
     await bubble('Он пошёл <b>олл-ин</b> — поставил все фишки. Больше он ставить не может, но остаётся в раздаче до вскрытия.', 'seat:3', true);
     await bubble('Твой шанс выиграть — под стеком. С парой дам он высокий. Справа — сколько нужно доплатить.', 'eq', true);
@@ -2742,8 +2758,8 @@ const LESSON_FLOW = {
     await bubble('Пришла дама — у тебя <b>сет</b>! Игрок в олл-ине может выиграть только то, что сам смог уравнять: это <b>основной банк</b>.', 'pot', true);
     await expectAct(['check'], 'Нажми <b>«Чек»</b> и посмотри, что сделает третий игрок.');
     await tutWait(myTurnNow);
-    await bubble('Он поставил 200. Эти фишки идут в <b>сайд-пот</b> (побочный банк). Его разыгрывают только те, у кого остались фишки, — ты и он.', 'seat:2', true);
-    await bubble('<b>Шансы банка:</b> раздели доплату на банк после неё. Доплатить 200 в банк ~1 300 — нужно выигрывать хотя бы в ~15% случаев. Твой шанс гораздо больше — колл выгоден.', 'eq', true);
+    await bubble('Он поставил 5 000. Эти фишки идут в <b>сайд-пот</b> (побочный банк). Его разыгрывают только те, у кого остались фишки, — ты и он.', 'seat:2', true);
+    await bubble('<b>Шансы банка:</b> раздели доплату на банк после неё. Доплатить 5 000 в банк ~32 750 — нужно выигрывать хотя бы в ~15% случаев. Твой шанс гораздо больше — колл выгоден.', 'eq', true);
     await expectAct(['call'], 'Нажми <b>«Колл»</b>.');
     await waitBoard(4); await expectAct(['check'], 'Тёрн. <b>«Чек»</b>.');
     await waitBoard(5); await expectAct(['check'], 'Ривер. <b>«Чек»</b>.');
@@ -2801,9 +2817,9 @@ function showLobby(kind, msg, keepButtons) {
       <div class="row2 modes"><button class="btn gold" id="bSolo">Игра с ботами</button><button class="btn ${tutDone().length ? '' : 'pulse'}" id="bTut">Обучение${tutDone().length ? ' · ' + tutDone().length + '/5' : ''}</button></div>
       ${tutDone().length ? '' : '<p class="fine" style="margin:6px 0 0">Впервые играешь в покер? Начни с обучения — 5 коротких уроков.</p>'}
       <h3>Стол с друзьями</h3>
-      <div class="fields"><label for="fSb">Малый блайнд<input id="fSb" type="number" inputmode="numeric" min="1" value="10"></label>
-      <label for="fBb">Большой блайнд<input id="fBb" type="number" inputmode="numeric" min="2" value="20"></label>
-      <label for="fBuy">Бай-ин<input id="fBuy" type="number" inputmode="numeric" min="10" value="2000"></label></div>
+      <div class="fields"><label for="fSb">Малый блайнд<input id="fSb" type="number" inputmode="numeric" min="1" value="250"></label>
+      <label for="fBb">Большой блайнд<input id="fBb" type="number" inputmode="numeric" min="2" value="500"></label>
+      <label for="fBuy">Бай-ин<input id="fBuy" type="number" inputmode="numeric" min="10" value="15000"></label></div>
       <div class="row2"><button class="btn gold" id="bCreate">Создать стол</button>${hc && hs ? `<button class="btn dark" id="bResume">Вернуться к столу ${esc(hc)}</button>` : ''}</div>
       <div class="row2" style="margin-top:8px">${installBtnHtml()}</div>
       <h3>Есть код от друга?</h3>
@@ -2818,9 +2834,9 @@ function showLobby(kind, msg, keepButtons) {
 }
 const _showLobby = showLobby;
 showLobby = function (...a) { _showLobby(...a); wireInstall($('#lobbyPanel')); };
-function goHome() { clientGen++; try { if (hostConn) hostConn.close(); } catch (e) { } hostRelays.forEach(c => { try { c.end(true); } catch (e) { } }); hostRelays = []; try { if (peer) peer.destroy(); } catch (e) { } peer = null; hostConn = null; preferRelay = false; linkKind = ''; isHost = false; solo = false; if (tut) { tut = null; clearBubble(); Engine.setTurnMs(15000); } S = null; history.replaceState(null, '', location.pathname); boot(true); }
+function goHome() { clientGen++; try { if (hostConn) hostConn.close(); } catch (e) { } hostRelays.forEach(c => { try { c.end(true); } catch (e) { } }); hostRelays = []; try { if (peer) peer.destroy(); } catch (e) { } peer = null; hostConn = null; preferRelay = false; linkKind = ''; isHost = false; solo = false; if (tut) endLesson(true); S = null; history.replaceState(null, '', location.pathname); boot(true); }
 function readCfg() {
-  const sb = Math.max(1, Math.round(+$('#fSb').value || 10)), bb = Math.max(sb, Math.round(+$('#fBb').value || sb * 2)), buyIn = Math.max(bb * 10, Math.round(+$('#fBuy').value || bb * 100));
+  const sb = Math.max(1, Math.round(+$('#fSb').value || 250)), bb = Math.max(sb, Math.round(+$('#fBb').value || sb * 2)), buyIn = Math.max(bb * 10, Math.round(+$('#fBuy').value || bb * 100));
   return { sb, bb, buyIn };
 }
 function openInvite() {
