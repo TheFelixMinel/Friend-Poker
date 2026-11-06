@@ -261,6 +261,10 @@ table.led td:first-child,table.led th:first-child{text-align:left}
 @keyframes comboIn{from{opacity:0;transform:translate(-50%,8px)}to{opacity:1;transform:translate(-50%,0)}}
 .card.dim{filter:brightness(.45) saturate(.8)}
 
+.hintBar{position:fixed;left:50%;top:max(10px,env(safe-area-inset-top,0px));transform:translateX(-50%);z-index:60;max-width:min(92vw,560px);display:flex;gap:10px;align-items:center;background:#1d211ef5;border:1px solid #e3c27a88;color:#eee;border-radius:10px;padding:9px 10px 9px 14px;font:500 14px/1.35 var(--body);box-shadow:0 8px 24px #000a}
+.hintBar b{color:var(--gold)}
+.hintBar button{flex:none;width:30px;height:30px;border-radius:50%;border:1px solid #ffffff33;background:none;color:#ccc;font-size:14px;cursor:pointer}
+
 </style>
 </head>
 <body>
@@ -2221,6 +2225,32 @@ function onFullBtn() {
 function syncFullBtn() { const b = $('#bFull'); if (b) b.hidden = standalone(); }
 document.addEventListener('fullscreenchange', syncFullBtn);
 
+/* any tap goes fullscreen (browsers only allow it from a user gesture) */
+let fsHintShown = false;
+function autoFull() {
+  if (standalone() || document.fullscreenElement || document.webkitFullscreenElement) return;
+  if (isIOS || !canFull()) { iosHint(); return; }
+  goFull();
+  setTimeout(() => { if (!document.fullscreenElement && !document.webkitFullscreenElement && !standalone()) browserHint(); }, 700);
+}
+['pointerup', 'click'].forEach(ev => document.addEventListener(ev, autoFull, { passive: true }));
+function showHintBar(html, key) {
+  if (fsHintShown) return; fsHintShown = true;
+  try { if (sessionStorage.getItem('poker.hint.' + key)) return; sessionStorage.setItem('poker.hint.' + key, '1'); } catch (e) { }
+  const bar = document.createElement('div'); bar.className = 'hintBar'; bar.innerHTML = `<span>${html}</span><button aria-label="Закрыть">✕</button>`;
+  bar.querySelector('button').onclick = () => bar.remove();
+  document.body.appendChild(bar); setTimeout(() => bar.remove(), 12000);
+}
+function browserHint() { showHintBar('Браузер не дал развернуть игру. Если ссылка открыта в Telegram, нажмите <b>⋮ → «Открыть в браузере»</b>.', 'br'); }
+function iosHint() { showHintBar('На весь экран: <b>Поделиться → «На экран „Домой“»</b>, затем запускайте игру с иконки.', 'ios'); }
+
+/* one-tap install on Android/Chrome: the icon always opens fullscreen */
+let installEvt = null;
+window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); installEvt = e; document.querySelectorAll('.installBtn').forEach(b => b.hidden = false); });
+window.addEventListener('appinstalled', () => { installEvt = null; document.querySelectorAll('.installBtn').forEach(b => b.hidden = true); toast('Игра установлена — откройте её с иконки «Покер»'); });
+function installBtnHtml() { return `<button class="btn installBtn" ${installEvt && !standalone() ? '' : 'hidden'}>Установить игру на экран</button>`; }
+function wireInstall(root = document) { root.querySelectorAll('.installBtn').forEach(b => b.onclick = async () => { if (!installEvt) return; installEvt.prompt(); try { await installEvt.userChoice; } catch (e) { } installEvt = null; document.querySelectorAll('.installBtn').forEach(x => x.hidden = true); }); }
+
 /* keep the host screen awake */
 let wakeLock = null;
 async function keepAwake() {
@@ -2252,7 +2282,7 @@ function showLobby(kind, msg, keepButtons) {
     pnl.innerHTML = `<h2>Стол ${esc(msg)}</h2><p>Вас пригласили сыграть в холдем. Регистрация не нужна.</p>
       <div class="fields one">${nameField()}</div>
       <p class="fine" style="margin:-6px 0 8px"><a href="#" id="bLook">Настроить свои руки</a></p>
-      <div class="row2"><button class="btn gold" id="bJoin">За стол</button></div>
+      <div class="row2"><button class="btn gold" id="bJoin">За стол</button>${installBtnHtml()}</div>
       <p class="fine"><a href="#" id="bOther">Создать свой стол</a></p>`;
     $('#bLook').onclick = e => { e.preventDefault(); const n = ($('#fName').value || '').trim(); if (n) store.set('name', n); openLook(false, () => showLobby('join', msg)); };
     $('#bJoin').onclick = () => { if (readName()) { goFull(); startClient(msg); } };
@@ -2268,6 +2298,7 @@ function showLobby(kind, msg, keepButtons) {
       <label for="fBb">Большой блайнд<input id="fBb" type="number" inputmode="numeric" min="2" value="20"></label>
       <label for="fBuy">Бай-ин<input id="fBuy" type="number" inputmode="numeric" min="10" value="2000"></label></div>
       <div class="row2"><button class="btn gold" id="bCreate">Создать стол</button>${hc && hs ? `<button class="btn dark" id="bResume">Вернуться к столу ${esc(hc)}</button>` : ''}</div>
+      <div class="row2" style="margin-top:8px">${installBtnHtml()}</div>
       <h3>Есть код от друга?</h3>
       <div class="row2"><input id="fCode" class="codeIn" maxlength="5" autocapitalize="characters" autocomplete="off" placeholder="КОД" value="${esc(lc)}" aria-label="Код стола"><button class="btn" id="bJoinCode">Подключиться</button></div>`;
     $('#bLook').onclick = e => { e.preventDefault(); const n = ($('#fName').value || '').trim(); if (n) store.set('name', n); ['fSb', 'fBb', 'fBuy'].forEach(k => store.set('cfg_' + k, $('#' + k).value)); openLook(false, () => showLobby('home')); };
@@ -2276,6 +2307,8 @@ function showLobby(kind, msg, keepButtons) {
     $('#bJoinCode').onclick = () => { const code = ($('#fCode').value || '').trim().toUpperCase(); if (!/^[A-Z0-9]{5}$/.test(code)) { toast('Код — 5 символов'); return; } if (readName()) { goFull(); startClient(code); } };
   }
 }
+const _showLobby = showLobby;
+showLobby = function (...a) { _showLobby(...a); wireInstall($('#lobbyPanel')); };
 function goHome() { clientGen++; try { if (hostConn) hostConn.close(); } catch (e) { } hostRelays.forEach(c => { try { c.end(true); } catch (e) { } }); hostRelays = []; try { if (peer) peer.destroy(); } catch (e) { } peer = null; hostConn = null; preferRelay = false; linkKind = ''; isHost = false; S = null; history.replaceState(null, '', location.pathname); boot(true); }
 function readCfg() {
   const sb = Math.max(1, Math.round(+$('#fSb').value || 10)), bb = Math.max(sb, Math.round(+$('#fBb').value || sb * 2)), buyIn = Math.max(bb * 10, Math.round(+$('#fBuy').value || bb * 100));
@@ -2348,6 +2381,7 @@ function openMenu() {
   }).join('');
   const live = ['preflop', 'flop', 'turn', 'river'].includes(S.hand.phase);
   $('#menuPanel').innerHTML = `<h2>Стол ${esc(tableCode)}</h2>
+    ${installEvt && !standalone() ? `<div class="row2" style="margin-bottom:8px">${installBtnHtml()}</div>` : ''}
     <div class="row2"><button class="btn gold" id="mInvite">Пригласить друзей</button><button class="btn" id="mBar">Бар</button><button class="btn" id="mLook">Мои руки</button></div>
     ${p ? `<div class="row2" style="margin-top:8px"><button class="btn" id="mRebuy" ${p.inHand && !p.folded && live ? 'disabled' : ''}>Докупить ${fmt(S.cfg.buyIn)}</button>
       <button class="btn dark" id="mAway">${p.sitOut ? 'Вернуться' : 'Отойти'}</button>
@@ -2363,7 +2397,7 @@ function openMenu() {
     <div class="row2" style="margin-top:12px"><button class="btn dark" id="mClose">Закрыть меню</button></div>`;
   const close = () => ov.hidden = true;
   $('#mClose').onclick = close;
-  $('#mInvite').onclick = openInvite;
+  $('#mInvite').onclick = openInvite; wireInstall($('#menuPanel'));
   $('#mBar').onclick = openBar;
   $('#mLook').onclick = () => openLook(true);
   if (p) {
