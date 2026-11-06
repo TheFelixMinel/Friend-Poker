@@ -153,9 +153,10 @@ body{margin:0;background:var(--floor);color:var(--ui);font-family:var(--body);ov
 .ibtn:focus-visible,.btn:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 #title{font-family:var(--display);font-style:italic;font-weight:700;font-size:22px;color:var(--gold);letter-spacing:.01em;text-shadow:0 2px 6px #000}
 
-#controls{position:absolute;left:846px;top:376px;width:266px;display:grid;grid-template-columns:1fr 1fr;gap:6px}
-#controls.turnMode{top:352px;grid-template-columns:repeat(6,1fr)}
-#controls.turnMode .h2{grid-column:span 3;height:46px}
+#controls{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+#controls.turnMode{grid-template-columns:repeat(6,1fr)}
+#controls.turnMode .h2{grid-column:span 3;height:52px}
+#controls.turnMode .h3{grid-column:span 3;height:46px}
 #controls.turnMode .h6{grid-column:span 6;height:38px;font-size:15px}
 #controls.turnMode .q{grid-column:span 2;height:44px;flex-direction:column;gap:0;font-size:15px;line-height:1.05;padding:0 2px}
 #controls.turnMode .q small{font-size:12px;opacity:.85}
@@ -172,7 +173,7 @@ body{margin:0;background:var(--floor);color:var(--ui);font-family:var(--body);ov
 .pre.on .rd{background:radial-gradient(circle,#e3c27a 0 38%,#0d0f0d 42%);box-shadow:inset 0 0 0 2px #e3c27a}
 .pre.on{background:#2f2a1c;border-color:#e3c27a99;color:#f2e3b4}
 .wide{grid-column:span 2}
-#raisePanel{position:absolute;left:846px;top:236px;width:266px;background:#0b0d0bee;border:1px solid #ffffff22;border-radius:10px;padding:10px;box-sizing:border-box;display:flex;flex-direction:column;gap:8px;font-family:var(--hud)}
+#raisePanel{background:#0b0d0bee;border:1px solid #ffffff22;border-radius:10px;padding:10px;box-sizing:border-box;display:flex;flex-direction:column;gap:8px;font-family:var(--hud)}
 #raisePanel .q{display:grid;grid-template-columns:repeat(4,1fr);gap:5px}
 #raisePanel .q button{height:32px;border-radius:6px;border:1px solid #ffffff2a;background:#252a26;color:#eee;font:600 14px var(--hud);cursor:pointer}
 #raisePanel .amt{display:flex;justify-content:space-between;align-items:baseline;font-size:15px;color:#cfcac0}
@@ -269,7 +270,7 @@ table.led td:first-child,table.led th:first-child{text-align:left}
 .hintBar button{flex:none;width:30px;height:30px;border-radius:50%;border:1px solid #ffffff33;background:none;color:#ccc;font-size:14px;cursor:pointer}
 
 .botTag{font-size:12px;margin-right:3px}
-#coach{position:absolute;left:846px;top:262px;width:266px;box-sizing:border-box;background:#0b0d0bf0;border:1px solid #e3c27a66;border-radius:10px;padding:8px 10px;font:500 13px/1.35 var(--body);color:#e8e4da;box-shadow:0 6px 16px #0008}
+#coach{box-sizing:border-box;background:#0b0d0bf0;border:1px solid #e3c27a66;border-radius:10px;padding:8px 10px;font:500 13px/1.35 var(--body);color:#e8e4da;box-shadow:0 6px 16px #0008}
 #coach b{color:var(--gold)}
 #coach .ct{display:block;font:700 11px var(--hud);letter-spacing:.1em;text-transform:uppercase;color:#a9a497;margin-bottom:2px}
 .btn.pulse{animation:pulse 1.2s ease-in-out infinite}
@@ -315,11 +316,35 @@ table.led td:first-child,table.led th:first-child{text-align:left}
 .sw{flex-wrap:wrap}
 .lookOpts{max-height:360px;overflow:auto;padding-right:4px}
 
+#tableWrap{position:absolute;left:0;top:0;width:1120px;height:500px;transform-origin:0 0;transform:translate(-14px,50px) scale(.8)}
+#sidePanel{position:absolute;left:854px;top:56px;width:260px;bottom:8px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-end;gap:8px;padding:8px;border-radius:12px;background:linear-gradient(#0d100ee6,#090b0af2);border:1px solid #ffffff14;box-shadow:inset 0 1px 0 #ffffff0d,0 8px 24px #0008}
+#sidePanel .waitNote{font-size:15px;padding:12px 10px}
+#sidePanel .btn{min-width:0}
+#raisePanel{width:auto}
+#log{top:372px;height:120px;width:192px}
+/* pre-actions look like the turn buttons, plus a radio dot */
+.btn.pre{text-transform:uppercase;font-size:18px;letter-spacing:.03em;justify-content:center;gap:8px;padding:0 6px;border:2px solid #0000;overflow:hidden}
+.btn.pre:not(.dark){background:var(--ui);color:var(--ui-ink);box-shadow:0 3px 0 #a9a497,0 6px 12px #0008}
+.btn.pre.dark{background:#2b302c;color:#eee;box-shadow:0 3px 0 #111,0 6px 12px #0008}
+.btn.pre.h3{font-size:15px}
+.btn.pre small{font-size:15px}
+.btn.pre .rd{width:16px;height:16px;border-radius:50%;flex:none;background:#0000;box-shadow:inset 0 0 0 2px currentColor;opacity:.55}
+.btn.pre.on{border-color:var(--gold);box-shadow:0 0 0 2px #e3c27a55,0 0 16px #e3c27a88,0 3px 0 #8d6d2c}
+.btn.pre.on .rd{opacity:1;background:radial-gradient(circle,var(--gold) 0 45%,#0000 50%);box-shadow:inset 0 0 0 2px var(--gold)}
+
+#sidePanel .btn{font-size:16px;letter-spacing:.02em}
+#sidePanel .btn small{font-size:14px}
+#sidePanel .btn.pre{font-size:15px;gap:6px;padding:0 4px}
+#sidePanel .btn.pre.h3{font-size:13.5px;letter-spacing:0}
+#sidePanel .btn.pre .rd{width:13px;height:13px}
+#controls.turnMode .q{font-size:14px}
+
 </style>
 </head>
 <body>
 <div id="bg"></div>
 <div id="stage">
+ <div id="tableWrap">
   <div id="rail">
     <div id="felt">
       <div class="line2"></div>
@@ -395,6 +420,8 @@ table.led td:first-child,table.led th:first-child{text-align:left}
   </svg>
 
   <div class="layer" id="seatLayer"></div>
+  <div class="layer" id="txtLayer"></div>
+ </div>
 
   <div class="layer" id="hud">
     <div class="hudTop" style="left:10px"><span id="title">Покер</span><span class="pill" id="tableInfo">Холдем</span></div>
@@ -405,6 +432,7 @@ table.led td:first-child,table.led th:first-child{text-align:left}
       <button class="ibtn" id="bSound" aria-label="Звук" aria-pressed="true">🔊</button>
       <button class="ibtn" id="bMenu" aria-label="Меню стола">☰</button></div>
 
+    <div id="sidePanel">
     <div id="raisePanel" hidden>
       <div class="amt"><span>Ставка до</span><b id="raiseAmt">0</b></div>
       <input id="raiseRange" type="range" aria-label="Размер ставки">
@@ -413,6 +441,7 @@ table.led td:first-child,table.led th:first-child{text-align:left}
     </div>
     <div id="coach" hidden></div>
     <div id="controls"></div>
+    </div>
 
     <div id="log">
       <div class="hd" id="logHd"><span>Ход игры</span><b id="logArrow">↓</b></div>
@@ -431,6 +460,7 @@ const Engine = (() => {
 /* ===== Poker engine: pure functions over a plain JSON table state ===== */
 const SEATS = 6;
 let TURN_MS = 15000;
+const ANIM_ALLOW = 3000;   // time for every phone to finish the animations before the 15 s clock
 function setTurnMs(ms) { TURN_MS = ms; }
 function turnMs() { return TURN_MS; }
 const RANKS = '23456789TJQKA';
@@ -663,7 +693,7 @@ function post(s, i, amt, kind) {
   p.last = kind === 'sb' ? 'МБ' : 'ББ';
   pushEv(s, { t: 'bet', seat: i, amt: a, to: p.bet, kind, allIn: p.allIn });
 }
-function setTurn(s, i, now) { s.hand.turn = i; s.hand.deadline = i >= 0 ? now + TURN_MS : 0; if (i >= 0) pushEv(s, { t: 'turn', seat: i }); }
+function setTurn(s, i, now) { s.hand.turn = i; s.hand.deadline = i >= 0 ? now + TURN_MS + ANIM_ALLOW : 0; if (i >= 0) pushEv(s, { t: 'turn', seat: i }); }
 function notFolded(s) { return s.seats.map((p, i) => inHand(p) ? i : -1).filter(i => i >= 0); }
 function roundDone(s) {
   const h = s.hand;
@@ -879,7 +909,7 @@ const DENOMS = [
 let uid = null;
 let S = null;              // latest authoritative table state
 let disp = null;           // what is currently drawn
-let lastSeq = 0, queue = [], animating = false;
+let lastSeq = 0, seenSeq = 0, queue = [], animating = false, calmAt = 0;
 let names = {}, online = new Set(), busy = false;
 let preAct = null, preCallAmt = 0, raiseOpen = false, raiseTo = 0;
 let eqCache = { key: '', val: null, name: '' };
@@ -888,7 +918,9 @@ let demo = true;
 let logOpen = true;
 
 const stage = $('#stage');
-const L = { felt: $('#feltItems'), fx: $('#fxLayer'), seats: $('#seatLayer'), hud: $('#hud') };
+const L = { felt: $('#feltItems'), fx: $('#fxLayer'), seats: $('#seatLayer'), hud: $('#hud'), txt: $('#txtLayer') };
+const TK = .8, TOX = -14, TOY = 50;          // table area is scaled into the left part of the stage
+const toStage = (x, y) => [TOX + x * TK, TOY + y * TK];
 
 /* ---------------- scaling ---------------- */
 let force = false;
@@ -1025,10 +1057,13 @@ function drawArms() {
   }
 }
 const ease = { io: t => t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2, out: t => 1 - Math.pow(1 - t, 3), back: t => { const c1 = 1.5, c3 = c1 + 1; return 1 + c3 * Math.pow(t - 1, 3) + c1 * Math.pow(t - 1, 2); } };
+const ANIM_K = 1.33;
 function tween(dur, fn, e = ease.io) {
+  dur *= ANIM_K;
+  if (document.hidden) { fn(e(1)); return Promise.resolve(); }
   return new Promise(res => {
     const t0 = performance.now();
-    const step = now => { const t = Math.min(1, (now - t0) / dur); if (fn(e(t)) === false) { res(); return; } if (t < 1) requestAnimationFrame(step); else res(); };
+    const step = now => { if (document.hidden) { fn(e(1)); res(); return; } const t = Math.min(1, (now - t0) / dur); if (fn(e(t)) === false) { res(); return; } if (t < 1) requestAnimationFrame(step); else res(); };
     requestAnimationFrame(step);
   });
 }
@@ -1674,7 +1709,7 @@ function tick() {
   requestAnimationFrame(tick);
   if (!disp || disp.turn < 0 || !disp.deadline) return;
   const pl = $('#plate' + disp.turn); if (!pl) return;
-  const left = Math.max(0, disp.deadline - Date.now());
+  const left = Math.min(Engine.turnMs(), Math.max(0, disp.deadline - Date.now()));
   const p = Math.min(1, left / Engine.turnMs());
   const ring = pl.querySelector('.ring'); if (ring) { ring.style.setProperty('--p', p.toFixed(3)); ring.style.setProperty('--rc', p > .33 ? '#e3c27a' : '#e0414f'); }
   const t = $('#tm' + disp.turn); if (t) t.textContent = tut ? '' : (left / 1000).toFixed(1);
@@ -1743,10 +1778,10 @@ function renderHud() {
   if (live && p.inHand && !p.folded && !p.allIn && ['preflop', 'flop', 'turn', 'river'].includes(h.phase)) {
     const toCall = Math.max(0, h.curBet - p.bet);
     if (preAct === 'call' && preCallAmt !== toCall) preAct = null;
-    const opts = toCall > 0
-      ? [['call', `Колл ${fmt(Math.min(toCall, p.stack))}`], ['callany', 'Колл любую'], ['fold', 'Фолд'], ['checkfold', 'Чек / Фолд']]
-      : [['checkfold', 'Чек / Фолд'], ['callany', 'Колл любую'], ['check', 'Чек'], ['fold', 'Фолд']];
-    c.innerHTML = opts.map(([k, t]) => `<button class="btn pre ${preAct === k ? 'on' : ''}" data-k="${k}"><span class="rd"></span>${t}</button>`).join('');
+    // same grid, size and places as the turn buttons: row 1 = Fold | Check/Call, row 2 = Check-Fold | Call any
+    const opts = [['fold', 'Фолд', 'dark h2'], toCall > 0 ? ['call', `Колл <small>${fmt(Math.min(toCall, p.stack))}</small>`, 'h2'] : ['check', 'Чек', 'h2'], ['checkfold', 'Чек / Фолд', 'dark h3'], ['callany', 'Колл любую', 'h3']];
+    c.classList.add('turnMode');
+    c.innerHTML = opts.map(([k, t, cls]) => `<button class="btn pre ${cls} ${preAct === k ? 'on' : ''}" data-k="${k}"><span class="rd"></span><span>${t}</span></button>`).join('');
     c.querySelectorAll('.pre').forEach(b => b.onclick = () => { const k = b.dataset.k; preAct = preAct === k ? null : k; preCallAmt = toCall; renderHud(); });
     return;
   }
@@ -1802,12 +1837,12 @@ async function playQueue() {
   try {
     while (queue.length) {
       const e = queue.shift();
-      if (document.hidden || queue.length > 30) { lastSeq = e.s; continue; }
+      if (document.hidden || queue.length > 30) { lastSeq = e.s; if (!queue.length || document.hidden) { queue.forEach(q => lastSeq = q.s); queue = []; } continue; }
       try { await animate(e); } catch (err) { console.warn(err); }
       lastSeq = e.s;
     }
   } finally {
-    animating = false;
+    animating = false; calmAt = Date.now();
     if (S) { disp = fromState(S); render(); renderLog(); }
     L.fx.innerHTML = '';
     restHands(300);
@@ -1952,6 +1987,7 @@ async function animate(e) {
       break;
     }
     case 'board': {
+      await sleep(e.runout ? 600 : 1000);
       const start = d.board.length;
       await moveHand('R', DECK[0] - 6, DECK[1] + 4, 220);
       if (e.cards.length === 3) {
@@ -2013,7 +2049,7 @@ async function animate(e) {
             restPH(seat, 'B', 300);
           } else await moveSprite(w, sl.bet, sl.stack, 380, ease.back);
           p.stack += amt;
-          const tx = document.createElement('div'); tx.className = 'winTxt'; tx.textContent = '+' + fmt(amt); place(tx, sl.plate[0], sl.plate[1] - 46); L.hud.appendChild(tx); setTimeout(() => tx.remove(), 2500);
+          const tx = document.createElement('div'); tx.className = 'winTxt'; tx.textContent = '+' + fmt(amt); place(tx, sl.plate[0], sl.plate[1] - 46); L.txt.appendChild(tx); setTimeout(() => tx.remove(), 2500);
           w.remove(); render();
         }
       }
@@ -2032,7 +2068,7 @@ async function animate(e) {
         if (g) g.animate([{ transform: 'translateY(-26px) scale(.3)', opacity: 0 }, { transform: 'translateY(3px) scale(1.1)', opacity: 1 }, { transform: 'none' }], { duration: 480, easing: 'cubic-bezier(.3,1.4,.5,1)' });
         noise(.05, 6000, 8, .3); await sleep(e.all ? 120 : 0);
       }
-      if (e.all) { const tx = document.createElement('div'); tx.className = 'winTxt'; tx.textContent = '🥂 ' + nameOf(p ? p.uid : '') + ' угощает'; place(tx, CX, 300); L.hud.appendChild(tx); setTimeout(() => tx.remove(), 2500); }
+      if (e.all) { const tx = document.createElement('div'); tx.className = 'winTxt'; tx.textContent = '🥂 ' + nameOf(p ? p.uid : '') + ' угощает'; place(tx, CX, 300); L.txt.appendChild(tx); setTimeout(() => tx.remove(), 2500); }
       await sleep(420);
       break;
     }
@@ -2105,11 +2141,14 @@ function applyState(s) {
   S = s;
   if (s.names) names = Object.assign({}, s.names);
   online = new Set(s.online || []);
-  if (reset) { lastSeq = s.seq; queue = []; disp = fromState(s); render(); renderLog(); closeLobby(); return; }
-  const newEv = s.ev.filter(e => e.s > lastSeq);
-  const gap = s.ev.length && s.ev[0].s > lastSeq + 1;
-  if (gap || seatChanged) { lastSeq = s.seq; queue = []; disp = fromState(s); render(); renderLog(); return; }
-  queue.push(...newEv.filter(e => !queue.some(q => q.s === e.s)));
+  if (reset) { lastSeq = seenSeq = s.seq; queue = []; disp = fromState(s); render(); renderLog(); closeLobby(); return; }
+  const from = Math.max(lastSeq, seenSeq);
+  const newEv = s.ev.filter(e => e.s > from);
+  const gap = s.ev.length && s.ev[0].s > from + 1;
+  if (gap || seatChanged) { lastSeq = seenSeq = s.seq; queue = []; disp = fromState(s); render(); renderLog(); return; }
+  // every event is queued exactly once, even while an earlier one is still animating
+  queue.push(...newEv);
+  if (newEv.length) seenSeq = newEv[newEv.length - 1].s;
   if (!animating && queue.length) playQueue();
   else if (!queue.length && !animating) { disp = fromState(s); render(); }
   renderLog();
@@ -2160,6 +2199,7 @@ function cmd(name, data = {}) {
 function hostMutate(fn) { if (!isHost || !S) return; const s = clone(S); const err = fn(s); if (typeof err === 'string') { if (err !== 'skip') toast(err); return; } hostCommit(s); }
 
 /* host loop: timers and next hand */
+let breakFor = -1, breakMs = 6000;
 setInterval(() => {
   if (!isHost || !S) return;
   const now = Date.now(), h = S.hand;
@@ -2167,7 +2207,11 @@ setInterval(() => {
   if (tut) return;
   if (live && h.turn >= 0 && h.deadline && now > h.deadline + 400) { hostMutate(s => Engine.timeout(s, Date.now())); return; }
   if (!live) {
-    if (h.nextAt && now > h.nextAt && (!animating || now > h.nextAt + 6000)) { hostMutate(s => Engine.startHand(s, Date.now())); return; }
+    if (h.nextAt && now > h.nextAt) {
+      if (breakFor !== h.no) { breakFor = h.no; breakMs = 5000 + Math.random() * 2000; }
+      const ready = h.phase !== 'showdown' || (!animating && !queue.length && now - calmAt >= breakMs) || now > h.nextAt + 20000;
+      if (ready) { hostMutate(s => Engine.startHand(s, Date.now())); return; }
+    }
     if (!h.nextAt && S.seats.filter(p => p && !p.sitOut && !p.leaving && p.stack > 0).length >= 2) hostMutate(s => { s.hand.nextAt = Date.now() + 1500; return null; });
   }
 }, 300);
@@ -2495,9 +2539,9 @@ function addBot(s, seat, level) {
 
 /* ---- bot brain ---- */
 const BOTP = {
-  easy: { noise: .2, call: .5, raise: 2.0, bluff: .03, shove: .03, think: [700, 1800] },
-  mid: { noise: .08, call: .95, raise: 1.6, bluff: .06, shove: .1, think: [1000, 2500] },
-  pro: { noise: .03, call: 1.05, raise: 1.4, bluff: .13, shove: .16, think: [1200, 3000] },
+  easy: { noise: .2, call: .5, raise: 2.0, bluff: .03, shove: .03, think: [2000, 4000] },
+  mid: { noise: .08, call: .95, raise: 1.6, bluff: .06, shove: .1, think: [2500, 5000] },
+  pro: { noise: .03, call: 1.05, raise: 1.4, bluff: .13, shove: .16, think: [3000, 6000] },
 };
 function botDecide(s, seat) {
   const p = s.seats[seat]; const lv = (s.bots[p.uid] || {}).level || 'mid'; const P = BOTP[lv];
@@ -2535,7 +2579,7 @@ setInterval(() => {
     const p = S.seats[h.turn];
     if (p && S.bots[p.uid]) {
       const key = h.no + ':' + h.turn + ':' + h.phase + ':' + h.curBet;
-      if (botKey !== key) { botKey = key; const th = (BOTP[S.bots[p.uid].level] || BOTP.mid).think; botAt = now + (tut ? 1100 : th[0] + Math.random() * (th[1] - th[0])); return; }
+      if (botKey !== key) { botKey = key; const th = (BOTP[S.bots[p.uid].level] || BOTP.mid).think; botAt = now + (tut ? 1400 : th[0] + Math.random() * (th[1] - th[0]) + (Math.random() < .12 ? 2500 : 0)); return; }
       if (now < botAt || (animating && now < botAt + 5000) || (tut && tut.hold)) return;
       botKey = key + ':done';
       const d = tut && tut.botAct ? tut.botAct(S, h.turn) : botDecide(S, h.turn);
@@ -2719,11 +2763,12 @@ const myTurnNow = () => calm() && S && S.hand.turn === mySeat() && disp && disp.
 function stageRect(el) { const sr = stage.getBoundingClientRect(), r = el.getBoundingClientRect(), k = sr.width / W; return { x: (r.left - sr.left) / k, y: (r.top - sr.top) / k, w: r.width / k, h: r.height / k }; }
 function anchorRect(a) {
   const me = mySeat(); if (!a || !S) return null;
-  const R0 = (cx, cy, w, h) => ({ x: cx - w / 2, y: cy - h / 2, w, h });
+  const R0 = (cx, cy, w, h) => { const [x, y] = toStage(cx - w / 2, cy - h / 2); return { x, y, w: w * TK, h: h * TK }; };
+  const RT = r => { const [x, y] = toStage(r.x, r.y); return { x, y, w: r.w * TK, h: r.h * TK }; };
   if (a === 'cards') { const c = slot(me).cards; return R0(c[0], c[1], 140, 100); }
-  if (a === 'board') { const n = Math.max(3, disp.board.length); return { x: BOARD_X(0) - 31, y: BOARD_Y - 43, w: (n - 1) * 62 + 62, h: 86 }; }
+  if (a === 'board') { const n = Math.max(3, disp.board.length); return RT({ x: BOARD_X(0) - 31, y: BOARD_Y - 43, w: (n - 1) * 62 + 62, h: 86 }); }
   if (a === 'board:last') { const k = Math.max(0, disp.board.length - 1); return R0(BOARD_X(k), BOARD_Y, 62, 86); }
-  if (a === 'board:flop') return { x: BOARD_X(0) - 31, y: BOARD_Y - 43, w: 186, h: 86 };
+  if (a === 'board:flop') return RT({ x: BOARD_X(0) - 31, y: BOARD_Y - 43, w: 186, h: 86 });
   if (a === 'pot') { const el = $('#pot'); return el && !el.hidden ? stageRect(el) : R0(POT[0], POT[1], 120, 50); }
   if (a === 'eq') { const p = slot(me).plate; return R0(p[0], p[1] + 18, 196, 24); }
   if (a === 'dealer') { if (S.hand.dealer < 0) return null; const b = slot(S.hand.dealer).btn; return R0(b[0], b[1], 36, 36); }
@@ -2745,9 +2790,9 @@ function bubble(text, anchor, withNext, nextLabel = 'Дальше') {
       ring.hidden = !rc;
       if (rc) { const pad = 6; Object.assign(ring.style, { left: (rc.x - pad) + 'px', top: (rc.y - pad) + 'px', width: (rc.w + pad * 2) + 'px', height: (rc.h + pad * 2) + 'px', borderRadius: Math.min(18, (rc.h + pad * 2) / 2) + 'px' }); }
       const bw = 330; let x, y, below = false;
-      if (!p) { x = CX - bw / 2; y = 150; }
-      else if (p[0] > 820) { x = Math.max(10, Math.min(p[0] - bw - 70, 834 - bw)); y = Math.min(500 - 10 - b.offsetHeight, Math.max(60, p[1] - b.offsetHeight / 2)); }
-      else { x = Math.min(W - bw - 10, Math.max(10, p[0] - bw / 2)); below = p[1] < 240; y = below ? p[1] + 48 : Math.max(56, p[1] - 48 - b.offsetHeight); }
+      if (!p) { x = toStage(CX, 0)[0] - bw / 2; y = 150; }
+      else if (p[0] > 860) { x = Math.max(10, Math.min(p[0] - bw - 40, 860 - bw)); y = Math.min(500 - 10 - b.offsetHeight, Math.max(60, p[1] - b.offsetHeight / 2)); }
+      else { x = Math.min(860 - bw, Math.max(10, p[0] - bw / 2)); below = p[1] < 240; y = below ? p[1] + 48 : Math.max(56, p[1] - 48 - b.offsetHeight); }
       b.style.left = x + 'px'; b.style.top = y + 'px';
     };
     place2(); requestAnimationFrame(place2); setTimeout(place2, 400);
