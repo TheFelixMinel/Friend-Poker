@@ -32,7 +32,8 @@
   color-scheme: dark;
 }
 [hidden]{display:none!important}
-html,body{height:100%}
+html,body{height:100%;overflow:hidden}
+body{position:fixed;inset:0}
 body{margin:0;background:var(--floor);color:var(--ui);font-family:var(--body);overflow:hidden;
   -webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
 #bg{position:fixed;inset:0;
@@ -165,9 +166,10 @@ body{margin:0;background:var(--floor);color:var(--ui);font-family:var(--body);ov
 .btn[disabled]{opacity:.45;pointer-events:none}
 .btn small{font-size:15px;font-weight:600;font-variant-numeric:tabular-nums}
 .pre{text-transform:none;justify-content:flex-start;font-size:15px;height:46px;letter-spacing:.01em;gap:6px;padding:0 8px;min-width:0;overflow:hidden}
-.pre .rd{width:18px;height:18px;border-radius:50%;background:#d9d5ca;box-shadow:inset 0 1px 2px #0005;flex:none}
-.pre.on .rd{background:radial-gradient(circle,#1a1d1a 0 35%,#d9d5ca 40%)}
-.pre.on{background:#fff6dc}
+.pre{background:#232825;color:#e8e4da;box-shadow:0 3px 0 #0f120f,0 6px 12px #0008;border:1px solid #ffffff14}
+.pre .rd{width:18px;height:18px;border-radius:50%;background:#0d0f0d;box-shadow:inset 0 0 0 2px #5d625e;flex:none}
+.pre.on .rd{background:radial-gradient(circle,#e3c27a 0 38%,#0d0f0d 42%);box-shadow:inset 0 0 0 2px #e3c27a}
+.pre.on{background:#2f2a1c;border-color:#e3c27a99;color:#f2e3b4}
 .wide{grid-column:span 2}
 #raisePanel{position:absolute;left:846px;top:236px;width:266px;background:#0b0d0bee;border:1px solid #ffffff22;border-radius:10px;padding:10px;box-sizing:border-box;display:flex;flex-direction:column;gap:8px;font-family:var(--hud)}
 #raisePanel .q{display:grid;grid-template-columns:repeat(4,1fr);gap:5px}
@@ -265,6 +267,48 @@ table.led td:first-child,table.led th:first-child{text-align:left}
 .hintBar b{color:var(--gold)}
 .hintBar button{flex:none;width:30px;height:30px;border-radius:50%;border:1px solid #ffffff33;background:none;color:#ccc;font-size:14px;cursor:pointer}
 
+.botTag{font-size:12px;margin-right:3px}
+#coach{position:absolute;left:846px;top:262px;width:266px;box-sizing:border-box;background:#0b0d0bf0;border:1px solid #e3c27a66;border-radius:10px;padding:8px 10px;font:500 13px/1.35 var(--body);color:#e8e4da;box-shadow:0 6px 16px #0008}
+#coach b{color:var(--gold)}
+#coach .ct{display:block;font:700 11px var(--hud);letter-spacing:.1em;text-transform:uppercase;color:#a9a497;margin-bottom:2px}
+.btn.pulse{animation:pulse 1.2s ease-in-out infinite}
+@keyframes pulse{0%,100%{box-shadow:0 3px 0 #8d6d2c,0 0 0 0 #e3c27a99}50%{box-shadow:0 3px 0 #8d6d2c,0 0 0 9px #e3c27a00}}
+#tutBubble{position:absolute;width:330px;box-sizing:border-box;background:linear-gradient(#fbf7ec,#efe7d2);color:#1f1a10;border-radius:12px;padding:12px 14px 12px;box-shadow:0 12px 34px #000b, 0 0 0 2px #e3c27a;font:500 14.5px/1.42 var(--body);z-index:20;transition:left .25s, top .25s}
+#tutBubble b{color:#8a1f1f}
+#tutBubble .tbTop{font:700 11px var(--hud);letter-spacing:.1em;text-transform:uppercase;color:#8a7a52;margin:0 26px 4px 0}
+#tutBubble .tbBtns{display:flex;justify-content:flex-end;margin-top:8px}
+#tutBubble .tbBtns .btn{height:38px;font-size:15px;padding:0 16px}
+#tutBubble .tbX{position:absolute;right:6px;top:6px;width:26px;height:26px;border-radius:50%;border:none;background:#0000;color:#8a7a52;font-size:14px;cursor:pointer}
+#tutRing{position:absolute;width:74px;height:74px;margin:-37px 0 0 -37px;border-radius:50%;border:3px solid #ffe08a;box-shadow:0 0 0 4px #ffe08a44,0 0 24px #ffe08a;pointer-events:none;animation:ringP 1.3s ease-in-out infinite;z-index:19}
+@keyframes ringP{0%,100%{transform:scale(.9);opacity:1}50%{transform:scale(1.12);opacity:.6}}
+.modes .btn{height:48px}
+.lessons{display:flex;flex-direction:column;gap:8px}
+.lesson{display:flex;gap:12px;align-items:center;text-align:left;background:#ffffff08;border:1px solid #ffffff1a;border-radius:10px;padding:10px 12px;color:#e8e4da;cursor:pointer;font:inherit}
+.lesson:hover,.lesson:focus-visible{border-color:#e3c27a88;outline:none}
+.lesson .ln{flex:none;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:#2b302c;font:700 15px var(--hud);color:var(--gold)}
+.lesson.done .ln{background:var(--gold);color:#241a05}
+.lesson .lt{display:flex;flex-direction:column;gap:2px;min-width:0}
+.lesson .lt b{font:600 16px var(--hud)}
+.lesson .lt small{font-size:12.5px;color:#a9a497}
+.tgl{display:flex;gap:8px;align-items:center;font:500 14px var(--body);color:#ddd;margin-top:4px}
+.tgl input{width:18px;height:18px;accent-color:#e3c27a}
+.ctable{display:grid;grid-template-columns:1fr 1fr;gap:8px 14px}
+.crowWrap{display:flex;flex-direction:column;gap:4px}
+.cname{font:700 13px var(--hud);letter-spacing:.05em;text-transform:uppercase;color:#fff;display:flex;gap:6px;align-items:center}
+.cname span{background:#d0111f;border-radius:3px;padding:1px 5px;font-size:11px}
+.crow{display:flex;gap:3px}
+.cslot{position:relative;width:38px;height:54px;flex:none}
+.cslot.sm .card{position:absolute;left:0;top:0}
+.cslot:not(.sm){width:56px;height:80px}
+.cslot .card{position:absolute;left:0;top:0}
+.bigRow{margin:8px 0 10px}
+.bigRow .crow{gap:6px;justify-content:center}
+.lessonTop{font:700 11px var(--hud);letter-spacing:.1em;text-transform:uppercase;color:#a9a497;margin-bottom:2px}
+.quiz{display:flex;gap:10px;flex-wrap:wrap}
+.qopt{flex:1;min-width:180px;display:flex;flex-direction:column;align-items:center;gap:6px;background:#ffffff08;border:1px solid #ffffff22;border-radius:10px;padding:10px;color:#eee;cursor:pointer;font:600 16px var(--hud)}
+.qopt.right{border-color:#5fc27a;background:#1f3a26}
+.qopt.wrong{opacity:.55}
+
 </style>
 </head>
 <body>
@@ -361,6 +405,7 @@ table.led td:first-child,table.led th:first-child{text-align:left}
       <div class="q"><button id="q1">½ банка</button><button id="q2">¾</button><button id="q3">Банк</button><button id="q4">Олл-ин</button></div>
       <button id="raiseClose" style="background:none;border:none;color:#aaa;font:600 13px var(--hud);cursor:pointer">Отменить</button>
     </div>
+    <div id="coach" hidden></div>
     <div id="controls"></div>
 
     <div id="log">
@@ -379,7 +424,9 @@ table.led td:first-child,table.led th:first-child{text-align:left}
 const Engine = (() => {
 /* ===== Poker engine: pure functions over a plain JSON table state ===== */
 const SEATS = 6;
-const TURN_MS = 15000;
+let TURN_MS = 15000;
+function setTurnMs(ms) { TURN_MS = ms; }
+function turnMs() { return TURN_MS; }
 const RANKS = '23456789TJQKA';
 const SUITS = '♠♥♦♣';
 
@@ -544,6 +591,18 @@ function setLook(s, uid, look) {
   const ok = v => typeof v === 'number' && v >= 0 && v < 8 ? Math.floor(v) : 0;
   s.looks[uid] = { skin: ok(look && look.skin), sleeve: ok(look && look.sleeve), acc: ok(look && look.acc) };
   return null;
+}
+/* tutorial: replace dealt cards with a scripted hand */
+function rig(s, spec) {
+  const h = s.hand;
+  const fixed = []; Object.values(spec.hole || {}).forEach(a => fixed.push(...a)); (spec.board || []).forEach(c => fixed.push(c));
+  const used = new Set(fixed);
+  const rest = []; for (let c = 0; c < 52; c++) if (!used.has(c)) rest.push(c);
+  for (let i = rest.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [rest[i], rest[j]] = [rest[j], rest[i]]; }
+  for (let i = 0; i < SEATS; i++) { const p = s.seats[i]; if (!p || !p.inHand) continue; const cs = (spec.hole && spec.hole[i]) || [rest.pop(), rest.pop()]; p.c = obf(cs, h.salt + i + 17); }
+  const b = spec.board || [rest.pop(), rest.pop(), rest.pop(), rest.pop(), rest.pop()];
+  const order = [rest.pop(), b[0], b[1], b[2], rest.pop(), b[3], rest.pop(), b[4]];
+  h.deck = obf(rest.concat(order.reverse()), h.salt + 5);
 }
 function setCfg(s, cfg) { s.cfg = { sb: cfg.sb, bb: cfg.bb, buyIn: cfg.buyIn }; return null; }
 function maybeSchedule(s, now) {
@@ -774,7 +833,7 @@ function timeout(s, now) {
   return null;
 }
 
-const API = { TURN_MS, bestFive, DRINKS, drinkPrice, drink, setLook, newTable, sit, leave, rebuy, setCfg, setSitOut, startHand, act, timeout, legal, evalHand, handName, equity, holeCards, board, totalPot, deobf, obf, HAND_NAMES, handCategory, cardStr, seatOf };
+const API = { TURN_MS, setTurnMs, turnMs, rig, bestFive, DRINKS, drinkPrice, drink, setLook, newTable, sit, leave, rebuy, setCfg, setSitOut, startHand, act, timeout, legal, evalHand, handName, equity, holeCards, board, totalPot, deobf, obf, HAND_NAMES, handCategory, cardStr, seatOf };
 
 if (typeof module !== 'undefined') module.exports = API;
 return API;
@@ -1394,9 +1453,10 @@ function render() {
   for (let i = 0; i < 6; i++) {
     const sl = slot(i), p = d.seats[i];
     if (!p) {
-      const e = document.createElement('div'); e.className = 'empty' + (me < 0 && !demo && uid ? ' can' : '');
-      e.textContent = me < 0 && !demo && uid ? 'Сесть сюда' : 'Свободно';
-      if (me < 0 && !demo && uid) { e.tabIndex = 0; e.setAttribute('role', 'button'); e.onclick = () => takeSeat(i); e.onkeydown = ev => { if (ev.key === 'Enter') takeSeat(i); }; }
+      const canSit = me < 0 && !demo && uid, canBot = !canSit && isHost && !demo && !tut;
+      const e = document.createElement('div'); e.className = 'empty' + (canSit || canBot ? ' can' : '');
+      e.textContent = canSit ? 'Сесть сюда' : canBot ? '+ Посадить бота' : 'Свободно';
+      if (canSit || canBot) { const go = () => canSit ? takeSeat(i) : openBotAdd(i); e.tabIndex = 0; e.setAttribute('role', 'button'); e.onclick = go; e.onkeydown = ev => { if (ev.key === 'Enter') go(); }; }
       place(e, ...sl.plate); L.seats.appendChild(e); continue;
     }
     const isMe = p.uid === uid;
@@ -1431,13 +1491,15 @@ function render() {
     let act = p.last;
     if (p.sitOut && !p.inHand) act = 'Отошёл';
     const actCls = act === 'Фолд' ? ' fold' : act === 'Олл-ин' ? ' allin' : '';
-    const online1 = online.has(p.uid) || isMe;
+    const bot = isBot(p.uid);
+    const online1 = online.has(p.uid) || isMe || bot;
     pl.innerHTML = `<div class="av"><div class="ring"></div><span>${esc(initials(p.uid))}</span>${d.turn === i ? '<div class="t" id="tm' + i + '"></div>' : ''}</div>
-      <div class="info"><div class="nm">${esc(nameOf(p.uid))}${online1 || demo ? '' : ' <span class="dbg">· офлайн</span>'}</div><div class="st"><span class="coin"></span>${fmt(p.stack)}</div>
+      <div class="info"><div class="nm">${bot ? '<span class="botTag">🤖</span>' : ''}${esc(nameOf(p.uid))}${online1 || demo ? '' : ' <span class="dbg">· офлайн</span>'}</div><div class="st"><span class="coin"></span>${fmt(p.stack)}</div>
       ${isMe && p.cards ? `<div class="hn" id="eqName"></div>` : ''}</div>
       ${act ? `<div class="act${actCls}">${esc(act)}</div>` : ''}
       ${isMe && p.cards ? '<div class="eq"><i id="eqBar"></i></div>' : ''}`;
     place(pl, ...sl.plate); L.seats.appendChild(pl);
+    if (bot && isHost && !tut && !demo) { pl.style.cursor = 'pointer'; pl.onclick = () => openBotMenu(i); }
   }
   // drinks on the table
   if (S && S.drinks) for (let i = 0; i < 6; i++) {
@@ -1465,7 +1527,7 @@ function renderEquity() {
   const opp = disp.seats.filter((p, j) => p && j !== i && p.inHand && !p.folded).length;
   const key = hole.join(',') + '|' + bd.join(',') + '|' + opp;
   const nm = bd.length >= 3 ? Engine.handName([...hole, ...bd]) : (hole[0] % 13 === hole[1] % 13 ? 'Пара' : 'Старшая карта');
-  const paint = () => { const n = $('#eqName'), b = $('#eqBar'); if (n) n.innerHTML = `${esc(nm)} <b>${eqCache.val == null ? '…' : Math.round(eqCache.val * 100) + '%'}</b>`; if (b && eqCache.val != null) b.style.width = Math.round(eqCache.val * 100) + '%'; };
+  const paint = () => { const n = $('#eqName'), b = $('#eqBar'); if (n) n.innerHTML = `${esc(nm)} <b>${eqCache.val == null ? '…' : Math.round(eqCache.val * 100) + '%'}</b>`; if (b && eqCache.val != null) b.style.width = Math.round(eqCache.val * 100) + '%'; paintCoach(); };
   if (eqCache.key !== key) {
     eqCache = { key, val: null };
     setTimeout(() => { if (eqCache.key !== key) return; const v = Engine.equity(hole, bd, Math.max(1, opp), 1400); if (eqCache.key === key) { eqCache.val = v; paint(); } }, 30);
@@ -1479,9 +1541,9 @@ function tick() {
   if (!disp || disp.turn < 0 || !disp.deadline) return;
   const pl = $('#plate' + disp.turn); if (!pl) return;
   const left = Math.max(0, disp.deadline - Date.now());
-  const p = left / Engine.TURN_MS;
+  const p = Math.min(1, left / Engine.turnMs());
   const ring = pl.querySelector('.ring'); if (ring) { ring.style.setProperty('--p', p.toFixed(3)); ring.style.setProperty('--rc', p > .33 ? '#e3c27a' : '#e0414f'); }
-  const t = $('#tm' + disp.turn); if (t) t.textContent = (left / 1000).toFixed(1);
+  const t = $('#tm' + disp.turn); if (t) t.textContent = tut ? '' : (left / 1000).toFixed(1);
 }
 requestAnimationFrame(tick);
 
@@ -1491,8 +1553,10 @@ function renderHud() {
   const st = S;
   $('#tableInfo').innerHTML = st ? `Холдем · блайнды <b>${fmt(st.cfg.sb)}/${fmt(st.cfg.bb)}</b> · бай-ин <b>${fmt(st.cfg.buyIn)}</b>` : 'Холдем · демо-стол';
   $('#onlineInfo').textContent = st ? `стол ${tableCode} · онлайн ${Math.max(1, online.size)}${isHost ? '' : linkKind === 'relay' ? ' · через сервер' : linkKind === 'p2p' ? ' · напрямую' : ''}` : '';
-  $('#onlineInfo').hidden = !st;
-  const c = $('#controls'); c.innerHTML = ''; c.classList.remove('turnMode'); $('#raisePanel').hidden = true;
+  $('#onlineInfo').hidden = !st || solo;
+  $('#bInvite').hidden = solo || demo;
+  if (st && solo) $('#tableInfo').innerHTML = (tut ? '<b>Обучение</b>' : '<b>Игра с ботами</b>') + ` · блайнды <b>${fmt(st.cfg.sb)}/${fmt(st.cfg.bb)}</b>`;
+  const c = $('#controls'); c.innerHTML = ''; c.classList.remove('turnMode'); $('#raisePanel').hidden = true; if ($('#coach')) $('#coach').hidden = true;
   if (!st || demo) return;
   const i = mySeat();
   if (i < 0) { c.innerHTML = `<div class="waitNote">Выберите свободное место за столом</div>`; return; }
@@ -1529,8 +1593,19 @@ function renderHud() {
       doAct(raiseTo >= lg.maxTo ? 'allin' : 'raise', raiseTo);
     };
     if (raiseOpen) showRaise(lg);
+    // tutorial: only the taught action is available
+    if (tut && tut.allow) {
+      const ids = { call: '#bCall', check: '#bCall', fold: '#bFold', q1: '#bQ1', q3: '#bQ3', allin: '#bQA', raise: '#bRaise' };
+      const ok = new Set(tut.allow.map(a => ids[a]));
+      c.querySelectorAll('button').forEach(b => { if (ok.has('#' + b.id)) b.classList.add('pulse'); else b.disabled = true; });
+      $('#raisePanel').hidden = true;
+    }
+    // coach bubble
+    const co = $('#coach');
+    if (co) { co.hidden = !(coachOn && !tut && !raiseOpen && (solo || S.bots)); if (!co.hidden) paintCoach(); }
     return;
   }
+  if (tut) { c.innerHTML = live ? `<div class="waitNote">Ход соперника…</div>` : ''; return; }
   if (live && p.inHand && !p.folded && !p.allIn && ['preflop', 'flop', 'turn', 'river'].includes(h.phase)) {
     const toCall = Math.max(0, h.curBet - p.bet);
     if (preAct === 'call' && preCallAmt !== toCall) preAct = null;
@@ -1561,7 +1636,7 @@ function setRaise(v, lg, fromRange) {
   $('#raiseAmt').textContent = fmt(raiseTo); if (!fromRange) $('#raiseRange').value = raiseTo;
   const b = $('#bRaise'); if (b) b.innerHTML = (raiseTo >= lg.maxTo ? 'Олл-ин' : (lg.curBet === 0 ? 'Бет' : 'Рейз') + ` до <small>${fmt(raiseTo)}</small>`);
 }
-function doAct(a, amt) { raiseOpen = false; preAct = null; cmd('act', { a, amt: amt || 0 }); }
+function doAct(a, amt) { raiseOpen = false; preAct = null; cmd('act', { a, amt: amt || 0 }); if (tut && tut.actResolve) { const r = tut.actResolve; tut.actResolve = null; setTimeout(r, 60); } }
 function runPreAct() {
   if (!S || animating) return;
   const i = mySeat(); if (i < 0) return;
@@ -1812,7 +1887,7 @@ async function animate(e) {
       await sleep(400);
       break;
     }
-    case 'turn': { d.turn = e.seat; d.deadline = S.hand.turn === e.seat ? S.hand.deadline : Date.now() + Engine.TURN_MS; render(); break; }
+    case 'turn': { d.turn = e.seat; d.deadline = S.hand.turn === e.seat ? S.hand.deadline : Date.now() + Engine.turnMs(); render(); break; }
     case 'drink': {
       const p = d.seats[e.seat]; if (p) p.stack = Math.max(0, p.stack - e.price);
       render();
@@ -1915,6 +1990,7 @@ function viewFor(pid) {
   return v;
 }
 function broadcast() {
+  if (solo) { S.online = [uid]; online = new Set([uid]); return; }
   S.online = [uid, ...[...conns.keys()].filter(k => conns.get(k).open)];
   online = new Set(S.online);
   store.set('hostState', S);
@@ -1954,6 +2030,7 @@ setInterval(() => {
   if (!isHost || !S) return;
   const now = Date.now(), h = S.hand;
   const live = ['preflop', 'flop', 'turn', 'river'].includes(h.phase);
+  if (tut) return;
   if (live && h.turn >= 0 && h.deadline && now > h.deadline + 400) { hostMutate(s => Engine.timeout(s, Date.now())); return; }
   if (!live) {
     if (h.nextAt && now > h.nextAt && (!animating || now > h.nextAt + 6000)) { hostMutate(s => Engine.startHand(s, Date.now())); return; }
@@ -2264,6 +2341,434 @@ function startClientReconnect() { if (peer && !peer.destroyed) { try { if (peer.
 
 async function takeSeat(i) { cmd('sit', { seat: i }); }
 
+/* ===================== bots, solo mode, coach, tutorial ===================== */
+let solo = false, tut = null, coachOn = store.get('coach', true);
+const BOT_NAMES = ['Аркадий', 'Вера', 'Гоша', 'Лена', 'Марат', 'Соня', 'Тимур', 'Зоя', 'Федя', 'Нина', 'Остап', 'Майя'];
+const LEVELS = { easy: 'Новичок', mid: 'Любитель', pro: 'Акула' };
+const isBot = u => !!(S && S.bots && S.bots[u]);
+const C = s => '♠♥♦♣'.indexOf(s.slice(-1)) * 13 + '23456789TJQKA'.indexOf(s.slice(0, -1).replace('10', 'T'));
+
+function addBot(s, seat, level) {
+  s.bots = s.bots || {}; s.names = s.names || {};
+  const id = 'bot_' + Math.random().toString(36).slice(2, 9);
+  const taken = new Set(Object.values(s.names));
+  const free = BOT_NAMES.filter(n => !taken.has(n));
+  s.names[id] = free.length ? free[Math.floor(Math.random() * free.length)] : 'Бот ' + (Object.keys(s.bots).length + 1);
+  s.bots[id] = { level: LEVELS[level] ? level : 'mid' };
+  Engine.setLook(s, id, { skin: Math.floor(Math.random() * 5), sleeve: Math.floor(Math.random() * 5), acc: Math.floor(Math.random() * 4) });
+  return Engine.sit(s, id, seat, Date.now());
+}
+
+/* ---- bot brain ---- */
+const BOTP = {
+  easy: { noise: .2, call: .5, raise: 2.0, bluff: .03, shove: .03, think: [700, 1800] },
+  mid: { noise: .08, call: .95, raise: 1.6, bluff: .06, shove: .1, think: [1000, 2500] },
+  pro: { noise: .03, call: 1.05, raise: 1.4, bluff: .13, shove: .16, think: [1200, 3000] },
+};
+function botDecide(s, seat) {
+  const p = s.seats[seat]; const lv = (s.bots[p.uid] || {}).level || 'mid'; const P = BOTP[lv];
+  const L = Engine.legal(s, seat); if (!L) return { a: 'fold' };
+  const hole = Engine.holeCards(s, seat), board = Engine.board(s);
+  const opp = Math.max(1, s.seats.filter((q, j) => j !== seat && q && q.inHand && !q.folded).length);
+  const eq = Math.min(1, Math.max(0, Engine.equity(hole, board, opp, 320) + (Math.random() * 2 - 1) * P.noise));
+  const rel = eq * (opp + 1);                       // 1.0 = average share of the pot
+  const bb = s.cfg.bb, pot = L.pot, toCall = L.toCall;
+  const odds = toCall / (pot + toCall || 1);
+  const pre = board.length === 0;
+  const raiseTo = () => {
+    let to = pre ? (L.curBet <= bb ? bb * (2.5 + Math.random()) : L.curBet * (2.2 + Math.random() * .8)) : L.curBet + (pot + toCall) * (.45 + Math.random() * .55);
+    to = Math.round(to / (bb / 2)) * (bb / 2);
+    return Math.max(L.minTo, Math.min(L.maxTo, to));
+  };
+  if (L.canRaise && rel > P.raise + .6 && Math.random() < P.shove) return { a: 'allin' };
+  if (L.canRaise && rel > P.raise && Math.random() < (lv === 'easy' ? .5 : .8)) { const to = raiseTo(); return to >= L.maxTo ? { a: 'allin' } : { a: 'raise', amt: to }; }
+  if (toCall === 0) {
+    if (L.canRaise && Math.random() < P.bluff * (opp === 1 ? 2 : 1)) { const to = raiseTo(); return { a: 'raise', amt: to }; }
+    return { a: 'check' };
+  }
+  if (eq >= odds * P.call || (lv === 'easy' && toCall <= bb * 2 && Math.random() < .6)) return { a: 'call' };
+  if (lv === 'pro' && L.canRaise && opp === 1 && Math.random() < P.bluff * .5) return { a: 'raise', amt: raiseTo() };
+  return { a: 'fold' };
+}
+
+/* ---- host-side bot driver ---- */
+let botKey = '', botAt = 0;
+setInterval(() => {
+  if (!isHost || !S || !S.bots) return;
+  const h = S.hand, now = Date.now();
+  const live = ['preflop', 'flop', 'turn', 'river'].includes(h.phase);
+  if (live && h.turn >= 0) {
+    const p = S.seats[h.turn];
+    if (p && S.bots[p.uid]) {
+      const key = h.no + ':' + h.turn + ':' + h.phase + ':' + h.curBet;
+      if (botKey !== key) { botKey = key; const th = (BOTP[S.bots[p.uid].level] || BOTP.mid).think; botAt = now + (tut ? 1100 : th[0] + Math.random() * (th[1] - th[0])); return; }
+      if (now < botAt || (animating && now < botAt + 5000) || (tut && tut.hold)) return;
+      botKey = key + ':done';
+      const d = tut && tut.botAct ? tut.botAct(S, h.turn) : botDecide(S, h.turn);
+      const err = runCommand(p.uid, 'act', d);
+      if (err) runCommand(p.uid, 'act', { a: Engine.legal(S, h.turn) && Engine.legal(S, h.turn).canCheck ? 'check' : 'fold' });
+    }
+  } else if (!tut && !animating) {
+    // busted bots buy back in; bots sometimes order a drink between hands
+    const bust = S.seats.find(p => p && S.bots[p.uid] && p.stack === 0);
+    if (bust) { runCommand(bust.uid, 'rebuy', {}); return; }
+    if (h.nextAt && Math.random() < .004) {
+      const b = S.seats.find(p => p && S.bots[p.uid] && !(S.drinks || {})[p.uid] && p.stack > S.cfg.bb * 10);
+      if (b) runCommand(b.uid, 'drink', { id: Math.random() < .5 ? 'beer' : 'whisky', all: false });
+    }
+  }
+}, 250);
+
+/* ---- solo table (no network) ---- */
+function startSolo(cfg, levels, opts = {}) {
+  try { if (peer) peer.destroy(); } catch (e) { } peer = null; hostConn = null;
+  isHost = true; solo = true; tableCode = '';
+  const s = Engine.newTable(uid, cfg, Date.now()); s.created = Date.now(); s.v = 1;
+  s.names = { [uid]: store.get('name', '') || 'Вы' }; Engine.setLook(s, uid, myLook()); s.bots = {};
+  Engine.sit(s, uid, 0, Date.now());
+  const order = [2, 3, 5, 1, 4];
+  levels.forEach((lv, k) => addBot(s, order[k], lv));
+  if (opts.stacks) Object.entries(opts.stacks).forEach(([i, v]) => { if (s.seats[i]) s.seats[i].stack = v; });
+  if (opts.noAuto) s.hand.nextAt = 0;
+  S = null; applyState(s);
+  history.replaceState(null, '', location.pathname);
+}
+function openSoloSetup() {
+  const ov = $('#menu'); ov.hidden = false;
+  const st = { n: store.get('soloN', 3), lv: store.get('soloLv', 'easy') };
+  const draw = () => {
+    $('#menuPanel').innerHTML = `<h2>Игра с ботами</h2><p>Без интернета и без друзей. Боты думают сами и ходят как живые игроки.</p>
+      <h3>Сколько ботов</h3><div class="chipsel">${[1, 2, 3, 4, 5].map(n => `<button class="${st.n === n ? 'on' : ''}" data-n="${n}">${n}</button>`).join('')}</div>
+      <h3>Уровень</h3><div class="chipsel">${[['easy', 'Новичок'], ['mid', 'Любитель'], ['pro', 'Акула'], ['mix', 'Вперемешку']].map(([k, t]) => `<button class="${st.lv === k ? 'on' : ''}" data-l="${k}">${t}</button>`).join('')}</div>
+      <p class="fine">${{ easy: 'Новичок часто уравнивает и ошибается — хорошо для первых игр.', mid: 'Любитель играет по силе руки.', pro: 'Акула считает шансы и банк, иногда блефует.', mix: 'За столом будут боты разного уровня.' }[st.lv]}</p>
+      <h3>Ставки</h3>
+      <div class="fields"><label for="fSb">Малый блайнд<input id="fSb" type="number" inputmode="numeric" value="10"></label>
+      <label for="fBb">Большой блайнд<input id="fBb" type="number" inputmode="numeric" value="20"></label>
+      <label for="fBuy">Бай-ин<input id="fBuy" type="number" inputmode="numeric" value="2000"></label></div>
+      <label class="tgl"><input type="checkbox" id="fCoach" ${coachOn ? 'checked' : ''}> Тренер подсказывает на моём ходу</label>
+      <div class="row2" style="margin-top:12px"><button class="btn gold" id="soloGo">За стол</button><button class="btn dark" id="soloBack">Назад</button></div>`;
+    $('#menuPanel').querySelectorAll('[data-n]').forEach(b => b.onclick = () => { st.n = +b.dataset.n; draw(); });
+    $('#menuPanel').querySelectorAll('[data-l]').forEach(b => b.onclick = () => { st.lv = b.dataset.l; draw(); });
+    $('#soloBack').onclick = () => { ov.hidden = true; };
+    $('#soloGo').onclick = () => {
+      const cfg = readCfg(); coachOn = $('#fCoach').checked; store.set('coach', coachOn); store.set('soloN', st.n); store.set('soloLv', st.lv);
+      const lv = Array.from({ length: st.n }, (_, k) => st.lv === 'mix' ? ['easy', 'mid', 'pro'][k % 3] : st.lv);
+      ov.hidden = true; goFull(); startSolo(cfg, lv);
+    };
+  };
+  draw();
+}
+/* host adds/removes bots at a table with friends */
+function openBotAdd(seat) {
+  const ov = $('#menu'); ov.hidden = false;
+  $('#menuPanel').innerHTML = `<h2>Посадить бота</h2><p>Бот займёт место ${seat + 1} и будет играть с телефона хоста.</p>
+    <div class="row2">${Object.entries(LEVELS).map(([k, t]) => `<button class="btn ${k === 'mid' ? 'gold' : ''}" data-l="${k}">${t}</button>`).join('')}</div>
+    <div class="row2" style="margin-top:10px"><button class="btn dark" id="baClose">Отмена</button></div>`;
+  $('#baClose').onclick = () => ov.hidden = true;
+  $('#menuPanel').querySelectorAll('[data-l]').forEach(b => b.onclick = () => { ov.hidden = true; hostMutate(s => s.seats[seat] ? 'Место уже занято' : addBot(s, seat, b.dataset.l)); });
+}
+function openBotMenu(seat) {
+  const p = S.seats[seat]; if (!p) return;
+  const ov = $('#menu'); ov.hidden = false;
+  $('#menuPanel').innerHTML = `<h2>${esc(nameOf(p.uid))} 🤖</h2><p>Бот, уровень «${LEVELS[(S.bots[p.uid] || {}).level] || 'Любитель'}».</p>
+    <div class="row2"><button class="btn red" id="bkKick">Убрать бота</button><button class="btn dark" id="bkClose">Закрыть</button></div>`;
+  $('#bkClose').onclick = () => ov.hidden = true;
+  $('#bkKick').onclick = () => { ov.hidden = true; hostMutate(s => Engine.leave(s, p.uid, Date.now())); };
+}
+
+/* ---- coach ---- */
+function coachTip() {
+  const i = mySeat(); const L = S && Engine.legal(S, i); if (!L) return '';
+  if (eqCache.val == null) return 'Считаю шансы…';
+  const eq = eqCache.val, pct = Math.round(eq * 100);
+  const opp = Math.max(1, disp.seats.filter((p, j) => p && j !== i && p.inHand && !p.folded).length);
+  const rel = eq * (opp + 1);
+  const toCall = L.toCall, odds = toCall / (L.pot + toCall || 1), need = Math.round(odds * 100);
+  if (rel >= 1.7 && L.canRaise) return `<b>Сильная рука</b> — шанс ~${pct}% против ${opp}. Повышай: «3 ББ» или ставка около 2/3 банка, чтобы соперники платили.`;
+  if (toCall === 0) return rel >= 1.15 ? `<b>Выше среднего</b> (~${pct}%). Можно поставить около половины банка или чекнуть.` : `<b>Слабо</b> (~${pct}%). Чек — посмотришь следующую карту бесплатно.`;
+  if (eq >= odds + .04) return `<b>Колл выгоден</b>: доплатить ${fmt(toCall)}, нужно хотя бы ${need}% шансов, у тебя ~${pct}%.`;
+  return `<b>Лучше фолд</b>: чтобы уравнять ${fmt(toCall)}, нужно ${need}% шансов, а у тебя ~${pct}%.`;
+}
+function paintCoach() { const el = $('#coach'); if (el) el.innerHTML = '<span class="ct">Тренер</span>' + coachTip(); }
+
+/* =============== tutorial =============== */
+const LESSONS = [
+  { id: 'flow', title: 'Как идёт раздача', sub: 'Блайнды, свои карты, флоп, тёрн, ривер, вскрытие' },
+  { id: 'acts', title: 'Чек, колл, рейз, фолд', sub: 'Что значит каждое действие и когда его выбирать' },
+  { id: 'combos', title: 'Комбинации', sub: 'Все 10 рук от старшей карты до роял-флеша + проверка' },
+  { id: 'allin', title: 'Банк, олл-ин и шансы', sub: 'Олл-ин, сайд-пот и как понять, стоит ли уравнивать' },
+  { id: 'bluff', title: 'Позиция и блеф', sub: 'Как выиграть банк без лучшей карты' },
+];
+const tutDone = () => store.get('tutDone', []);
+function markDone(id) { const d = new Set(tutDone()); d.add(id); store.set('tutDone', [...d]); }
+function openLessons() {
+  const ov = $('#menu'); ov.hidden = false;
+  const done = new Set(tutDone());
+  $('#menuPanel').innerHTML = `<h2>Обучение</h2><p>Пять коротких уроков на настоящем столе. Каждый — пара минут. После них ты будешь знать всё, чтобы сесть играть.</p>
+    <div class="lessons">${LESSONS.map((l, k) => `<button class="lesson ${done.has(l.id) ? 'done' : ''}" data-k="${k}"><span class="ln">${done.has(l.id) ? '✓' : k + 1}</span><span class="lt"><b>${l.title}</b><small>${l.sub}</small></span></button>`).join('')}</div>
+    <div class="row2" style="margin-top:12px"><button class="btn" id="lsCombos">Таблица комбинаций</button><button class="btn dark" id="lsClose">Закрыть</button></div>`;
+  $('#lsClose').onclick = () => ov.hidden = true;
+  $('#lsCombos').onclick = () => openCombos(false);
+  $('#menuPanel').querySelectorAll('[data-k]').forEach(b => b.onclick = () => { ov.hidden = true; startLesson(+b.dataset.k); });
+}
+
+/* combos reference / lesson */
+const COMBOS = [
+  ['Старшая карта', ['A♠', 'J♥', '10♠', '6♠', '5♦'], [0], 'Ничего не собралось — сравнивают самую старшую карту. Туз старше короля, король старше дамы и так далее.'],
+  ['Пара', ['Q♦', 'Q♣', 'J♦', '8♣', '2♥'], [0, 1], 'Две карты одного ранга. Пара дам сильнее пары валетов.'],
+  ['Две пары', ['K♠', 'K♥', '7♦', '7♠', '3♥'], [0, 1, 2, 3], 'Две разные пары. Сначала сравнивают старшую пару.'],
+  ['Сет (тройка)', ['3♠', '3♥', '3♦', '8♣', 'A♠'], [0, 1, 2], 'Три карты одного ранга.'],
+  ['Стрит', ['A♠', '2♦', '3♣', '4♥', '5♠'], [0, 1, 2, 3, 4], 'Пять карт подряд, масти любые. Туз бывает и младшей картой (A-2-3-4-5), и старшей (10-J-Q-K-A).'],
+  ['Флеш', ['2♦', '7♦', '9♦', 'J♦', 'K♦'], [0, 1, 2, 3, 4], 'Пять карт одной масти, не обязательно подряд.'],
+  ['Фулл-хаус', ['3♥', '3♠', '3♦', '2♦', '2♣'], [0, 1, 2, 3, 4], 'Тройка и пара вместе.'],
+  ['Каре', ['4♠', '4♥', '4♣', '4♦', 'J♦'], [0, 1, 2, 3], 'Четыре карты одного ранга.'],
+  ['Стрит-флеш', ['5♣', '6♣', '7♣', '8♣', '9♣'], [0, 1, 2, 3, 4], 'Пять карт подряд одной масти.'],
+  ['Роял-флеш', ['10♠', 'J♠', 'Q♠', 'K♠', 'A♠'], [0, 1, 2, 3, 4], 'Стрит-флеш от десятки до туза. Самая сильная рука в покере.'],
+];
+function comboCards(cards, lit, size = 'sm') {
+  return `<div class="crow">${cards.map((c, k) => `<div class="cslot ${size}">${cardEl(C(c), size).outerHTML.replace('class="card', `class="card ${lit.includes(k) ? 'win' : 'dim'}`)}</div>`).join('')}</div>`;
+}
+function openCombos(asLesson) {
+  const ov = $('#menu'); ov.hidden = false;
+  if (!asLesson) {
+    $('#menuPanel').innerHTML = `<h2>Комбинации</h2><p>Снизу вверх — от слабой к сильной. Рука всегда из 5 лучших карт: 2 своих + 5 общих в любом сочетании.</p>
+      <div class="ctable">${COMBOS.map((c, k) => `<div class="crowWrap"><div class="cname"><span>${k + 1}</span>${c[0]}</div>${comboCards(c[1], c[2])}</div>`).join('')}</div>
+      <div class="row2" style="margin-top:12px"><button class="btn dark" id="cbClose">Закрыть</button></div>`;
+    $('#cbClose').onclick = () => ov.hidden = true;
+    return;
+  }
+  let k = 0;
+  const QUIZ = [
+    { q: 'Что сильнее?', a: [['Флеш', ['2♥', '6♥', '9♥', 'J♥', 'K♥']], ['Стрит', ['8♠', '9♦', '10♣', 'J♥', 'Q♠']]], ok: 0, why: 'Флеш сильнее стрита.' },
+    { q: 'Что сильнее?', a: [['Две пары', ['A♠', 'A♦', 'K♣', 'K♥', '2♠']], ['Сет', ['5♠', '5♦', '5♣', '9♥', '2♦']]], ok: 1, why: 'Даже маленький сет бьёт любые две пары.' },
+    { q: 'У обоих пара тузов. Кто выиграл?', a: [['Кикер король', ['A♠', 'A♦', 'K♣', '7♥', '3♠']], ['Кикер девятка', ['A♣', 'A♥', '9♣', '7♦', '3♦']]], ok: 0, why: 'При равной комбинации решает старшая карта вне её — кикер.' },
+    { q: 'У тебя 9♥ 9♣, на столе 9♠ K♦ K♣ 4♥ 2♠. Что у тебя?', a: [['Сет', null], ['Фулл-хаус', null]], ok: 1, why: 'Три девятки + пара королей со стола = фулл-хаус.' },
+    { q: 'На столе A♠ K♠ Q♠ J♠ 10♠. У тебя 2♥ 3♦. Что у тебя?', a: [['Старшая карта', null], ['Роял-флеш', null]], ok: 1, why: 'Можно играть всеми пятью общими картами: у всех за столом роял-флеш, банк делится.' },
+  ];
+  let score = 0, qi = -1;
+  const draw = () => {
+    if (qi < 0) {
+      const c = COMBOS[k];
+      $('#menuPanel').innerHTML = `<div class="lessonTop">Урок 3 · Комбинации · ${k + 1} из 10</div><h2>${c[0]}</h2>
+        <div class="bigRow">${comboCards(c[1], c[2], '')}</div><p>${c[3]}</p>
+        ${k > 0 ? `<p class="fine">Сильнее, чем «${COMBOS[k - 1][0]}»${k > 1 ? ' и всё, что ниже' : ''}.</p>` : '<p class="fine">Самая слабая рука.</p>'}
+        <div class="row2"><button class="btn dark" id="cbPrev" ${k === 0 ? 'disabled' : ''}>Назад</button><button class="btn gold" id="cbNext">${k < 9 ? 'Дальше' : 'Проверить себя'}</button></div>`;
+      $('#cbPrev').onclick = () => { k--; draw(); };
+      $('#cbNext').onclick = () => { if (k < 9) k++; else qi = 0; draw(); };
+      return;
+    }
+    if (qi >= QUIZ.length) {
+      markDone('combos');
+      $('#menuPanel').innerHTML = `<div class="lessonTop">Урок 3 · Проверка</div><h2>${score} из ${QUIZ.length}</h2><p>${score >= 4 ? 'Отлично, комбинации ты знаешь.' : 'Неплохо! Таблица комбинаций всегда есть в меню ☰ — подглядывай, пока не запомнишь.'}</p>
+        <div class="row2"><button class="btn gold" id="cbNextL">Следующий урок</button><button class="btn dark" id="cbList">К урокам</button></div>`;
+      $('#cbNextL').onclick = () => { ov.hidden = true; startLesson(3); };
+      $('#cbList').onclick = openLessons;
+      return;
+    }
+    const Q = QUIZ[qi];
+    $('#menuPanel').innerHTML = `<div class="lessonTop">Урок 3 · Проверка ${qi + 1} из ${QUIZ.length}</div><h2>${Q.q}</h2>
+      <div class="quiz">${Q.a.map(([t, cs], j) => `<button class="qopt" data-j="${j}">${cs ? comboCards(cs, [0, 1, 2, 3, 4]) : ''}<b>${t}</b></button>`).join('')}</div><p id="qWhy" class="fine"></p>`;
+    $('#menuPanel').querySelectorAll('.qopt').forEach(b => b.onclick = () => {
+      const j = +b.dataset.j; const ok = j === Q.ok; if (ok) score++;
+      $('#menuPanel').querySelectorAll('.qopt').forEach((x, jj) => { x.disabled = true; x.classList.add(jj === Q.ok ? 'right' : 'wrong'); });
+      $('#qWhy').innerHTML = (ok ? '✓ Верно. ' : '✗ Не совсем. ') + Q.why;
+      setTimeout(() => { qi++; draw(); }, 1700);
+    });
+  };
+  draw();
+}
+
+/* ---- tutorial engine: scripted hands on a solo table ---- */
+function tutWait(pred) { const g = tut && tut.gen; return new Promise(res => { const f = () => { if (!tut || tut.gen !== g) return res(false); if (pred()) return res(true); setTimeout(f, 150); }; f(); }); }
+const calm = () => !animating && !queue.length;
+const myTurnNow = () => calm() && S && S.hand.turn === mySeat() && disp && disp.turn === mySeat();
+function anchorXY(a) {
+  const me = mySeat();
+  if (!a) return null;
+  if (a === 'cards') return slot(me).cards;
+  if (a === 'board') return [CX, BOARD_Y];
+  if (a === 'pot') return POT;
+  if (a === 'eq') return [slot(me).plate[0], slot(me).plate[1] + 14];
+  if (a === 'dealer') return S && S.hand.dealer >= 0 ? slot(S.hand.dealer).btn : null;
+  if (a.startsWith('seat:')) return slot(+a.slice(5)).plate;
+  if (a.startsWith('#')) { const el = $(a); if (!el) return null; const sr = stage.getBoundingClientRect(), r = el.getBoundingClientRect(), k = sr.width / W; return [(r.left + r.width / 2 - sr.left) / k, (r.top + r.height / 2 - sr.top) / k]; }
+  return null;
+}
+function bubble(text, anchor, withNext, nextLabel = 'Дальше') {
+  return new Promise(res => {
+    let b = $('#tutBubble'); if (!b) { b = document.createElement('div'); b.id = 'tutBubble'; L.hud.appendChild(b); }
+    let ring = $('#tutRing'); if (!ring) { ring = document.createElement('div'); ring.id = 'tutRing'; L.hud.appendChild(ring); }
+    b.innerHTML = `<div class="tbTop">${esc(tut.title)} · ${tut.step}</div><div class="tbText">${text}</div>${withNext ? `<div class="tbBtns"><button class="btn gold" id="tbNext">${nextLabel}</button></div>` : ''}<button class="tbX" id="tbExit" aria-label="Выйти из урока">✕</button>`;
+    const place2 = () => {
+      const p = anchorXY(anchor);
+      ring.hidden = !p; if (p) { ring.style.left = p[0] + 'px'; ring.style.top = p[1] + 'px'; }
+      const bw = 330; let x, y, below = false;
+      if (!p) { x = CX - bw / 2; y = 150; }
+      else if (p[0] > 820) { x = Math.max(10, Math.min(p[0] - bw - 70, 834 - bw)); y = Math.min(500 - 10 - b.offsetHeight, Math.max(60, p[1] - b.offsetHeight / 2)); }
+      else { x = Math.min(W - bw - 10, Math.max(10, p[0] - bw / 2)); below = p[1] < 240; y = below ? p[1] + 48 : Math.max(56, p[1] - 48 - b.offsetHeight); }
+      b.style.left = x + 'px'; b.style.top = y + 'px';
+    };
+    place2(); requestAnimationFrame(place2); setTimeout(place2, 400);
+    tut.reposition = place2;
+    $('#tbExit').onclick = () => endLesson(false);
+    if (withNext) $('#tbNext').onclick = () => res(true); else res(true);
+  });
+}
+function clearBubble() { const b = $('#tutBubble'), r = $('#tutRing'); if (b) b.remove(); if (r) r.remove(); }
+async function expectAct(allow, text, anchor) {
+  await tutWait(myTurnNow);
+  if (!tut) return;
+  tut.allow = allow; renderHud();
+  await bubble(text, anchor || '#controls', false);
+  await new Promise(res => { tut.actResolve = res; });
+  tut.allow = null; clearBubble();
+}
+function scriptFor(spec) {
+  return (s, seat) => {
+    const ph = s.hand.phase, L = Engine.legal(s, seat);
+    const key = ph + ':' + seat; const plan = (spec.script || {})[key];
+    let a = Array.isArray(plan) ? plan.shift() : plan;
+    if (!a) a = L && L.canCheck ? 'check' : 'call';
+    const [act, amt] = a.split(':');
+    return { a: act, amt: +amt || 0 };
+  };
+}
+async function dealHand(spec) {
+  tut.botAct = scriptFor(spec);
+  hostMutate(s => {
+    s.seats.forEach((p, i) => { if (p && spec.stacks && spec.stacks[i] != null) p.stack = spec.stacks[i]; else if (p && p.stack < s.cfg.bb * 20) p.stack = s.cfg.buyIn; });
+    s.hand.dealer = (spec.dealer + 5) % 6; s.hand.nextAt = 0;
+    const err = Engine.startHand(s, Date.now()); if (err) return err;
+    Engine.rig(s, { hole: spec.hole, board: spec.board });
+    return null;
+  });
+  await tutWait(() => calm() && S.hand.phase === 'preflop');
+}
+const waitBoard = n => tutWait(() => calm() && disp.board.length >= n && (S.hand.turn === mySeat() || S.hand.phase === 'showdown'));
+const waitShow = () => tutWait(() => calm() && S.hand.phase === 'showdown' && disp.phase === 'showdown');
+
+async function startLesson(k) {
+  const L0 = LESSONS[k];
+  if (L0.id === 'combos') { tut = null; openCombos(true); return; }
+  const gen = Date.now();
+  tut = { gen, k, title: 'Урок ' + (k + 1) + ' · ' + L0.title, step: '', allow: null, hold: false };
+  Engine.setTurnMs(10 * 60 * 1000);
+  startSolo({ sb: 10, bb: 20, buyIn: 2000 }, ['easy', 'easy', 'easy'], { noAuto: true });
+  $('#lobby').hidden = true; $('#menu').hidden = true;
+  await sleep(500);
+  try { await LESSON_FLOW[L0.id](); if (tut && tut.gen === gen) await finishLesson(L0.id, k); } catch (e) { console.warn(e); }
+}
+async function finishLesson(id, k) {
+  markDone(id);
+  tut.step = 'готово';
+  const next = LESSONS[k + 1];
+  await bubble(`<b>Урок пройден!</b> ${next ? 'Дальше — «' + next.title + '».' : 'Ты прошёл всё обучение. Теперь сыграй с ботами-новичками с включённым тренером — он подскажет, если засомневаешься.'}`, null, true, next ? 'Следующий урок' : 'Играть с ботами');
+  const gen = tut && tut.gen; endLesson(true);
+  if (next) startLesson(k + 1);
+  else { coachOn = true; store.set('coach', true); startSolo({ sb: 10, bb: 20, buyIn: 2000 }, ['easy', 'easy', 'mid']); }
+}
+function endLesson(silent) {
+  if (!tut) return;
+  tut = null; clearBubble(); Engine.setTurnMs(15000);
+  if (!silent) { solo = false; goHome(); }
+}
+
+const HAND = (o) => Object.assign({ hole: {}, board: [] }, o);
+const LESSON_FLOW = {
+  async flow() {
+    tut.step = 'знакомство';
+    await bubble('Это стол на 6 мест. <b>Цель покера — выиграть фишки соперников</b>: собрать лучшую комбинацию из 5 карт или заставить всех сбросить карты.', null, true);
+    await bubble('Это соперники-боты. У каждого есть <b>стек</b> — фишки перед ним. Сейчас у всех по 2 000.', 'seat:3', true);
+    await bubble('Внизу — ты. В покере играют на фишки: здесь они ничего не стоят, просто очки.', 'seat:0', true);
+    await dealHand(HAND({ dealer: 2, hole: { 0: [C('A♠'), C('K♠')], 2: [C('Q♣'), C('J♣')], 3: [C('8♦'), C('6♦')], 5: [C('5♠'), C('4♥')] }, board: ['K♦', '7♣', '2♥', '9♠', 'A♦'].map(C) }));
+    tut.step = 'блайнды';
+    await bubble('Кнопка <b>D</b> — дилер этой раздачи. Каждую раздачу она сдвигается на одно место по часовой стрелке.', 'dealer', true);
+    await bubble('Двое слева от дилера ставят обязательные ставки — <b>блайнды</b>: малый (МБ) и большой (ББ). Так в банке всегда есть за что бороться.', 'seat:5', true);
+    tut.step = 'префлоп';
+    await bubble('Тебе раздали <b>2 закрытые карты</b> — их видишь только ты. Туз и король одной масти — очень сильное начало.', 'cards', true);
+    await bubble('Под стеком — подсказка: какая у тебя сейчас комбинация и <b>шанс выиграть</b> в процентах.', 'eq', true);
+    await expectAct(['call'], 'Сейчас <b>префлоп</b> — первый круг ставок, до общих карт. Ходят по очереди по часовой стрелке. Чтобы остаться в игре, нужно уравнять большой блайнд. Нажми <b>«Колл 20»</b>.');
+    tut.step = 'флоп';
+    await waitBoard(3);
+    await bubble('<b>Флоп</b> — дилер открыл 3 общие карты. Ими пользуются все игроки. У тебя пара королей: король на руке + король на столе.', 'board', true);
+    await expectAct(['check'], 'Начался второй круг ставок. Если до тебя никто не ставил, можно <b>«Чек»</b> — пропустить ход без ставки. Нажми «Чек».');
+    tut.step = 'тёрн';
+    await waitBoard(4);
+    await expectAct(['check'], '<b>Тёрн</b> — четвёртая общая карта и третий круг ставок. Снова <b>«Чек»</b>.', 'board');
+    tut.step = 'ривер';
+    await waitBoard(5);
+    await bubble('<b>Ривер</b> — пятая, последняя карта. Пришёл туз: у тебя теперь <b>две пары</b>, тузы и короли!', 'board', true);
+    await expectAct(['check'], 'Последний круг ставок. Нажми <b>«Чек»</b>, и игроки откроют карты.');
+    tut.step = 'вскрытие';
+    await waitShow();
+    await bubble('<b>Вскрытие.</b> Каждый собирает лучшую руку из 5 карт: любые из своих 2 и 5 общих. Подсвечены карты победителя. Банк твой!', 'board', true);
+  },
+  async acts() {
+    tut.step = 'фолд';
+    await bubble('За свой ход ты выбираешь одно из действий: <b>Фолд</b> — сбросить карты, <b>Чек</b> — пропустить, <b>Колл</b> — уравнять, <b>Рейз</b> — повысить ставку.', null, true);
+    await dealHand(HAND({ dealer: 3, hole: { 0: [C('7♣'), C('2♦')], 2: [C('A♦'), C('K♦')] }, script: { 'preflop:2': 'raise:60', 'preflop:3': 'fold', 'preflop:5': 'fold' } }));
+    await bubble('У тебя 7 и 2 разных мастей — <b>худшая стартовая рука</b> в холдеме. Ты на большом блайнде: твои 20 уже в банке.', 'cards', true);
+    await tutWait(myTurnNow);
+    await expectAct(['fold'], 'Бот слева от тебя повысил ставку до 60. Со слабой рукой против повышения правильно <b>сбросить</b> — потеряешь только блайнд. Нажми <b>«Фолд»</b>.');
+    await tutWait(() => calm() && S.hand.phase === 'showdown');
+    await bubble('Фолд — это нормально. Хорошие игроки сбрасывают большинство рук и вступают в игру только с хорошими картами.', null, true);
+    tut.step = 'рейз';
+    await dealHand(HAND({ dealer: 2, hole: { 0: [C('A♥'), C('A♣')], 5: [C('Q♥'), C('Q♠')] }, board: ['A♦', '8♠', '3♣', '2♦', 'K♣'].map(C), script: { 'preflop:2': 'fold', 'preflop:3': 'fold', 'preflop:5': 'call' } }));
+    await bubble('А теперь <b>пара тузов</b> — лучшая стартовая рука. С сильной рукой нужно <b>повышать</b>: так в банке будет больше фишек, а слабые руки сбросят.', 'cards', true);
+    await expectAct(['q3'], 'Нажми <b>«3 ББ»</b> — это рейз до трёх больших блайндов (60). Сумма написана прямо на кнопке.', '#bQ3');
+    tut.step = 'ставка';
+    await waitBoard(3);
+    await bubble('На флопе пришёл туз — у тебя <b>сет</b>, три туза. Соперник сделал чек.', 'board', true);
+    await expectAct(['q3'], 'Когда до тебя не ставили, повышение называется <b>бет</b> (ставка). Поставь <b>«3 ББ»</b>, чтобы соперник с более слабой рукой доплатил.', '#bQ3');
+    tut.step = 'пред-ходы';
+    await waitBoard(4);
+    await bubble('Пока ходят другие, внизу видны <b>пред-ходы</b>: можно заранее выбрать «Чек / Фолд» или «Колл любую», и игра сходит за тебя, когда очередь дойдёт.', null, true);
+    await expectAct(['check'], 'Иногда сильную руку разыгрывают тихо, чтобы не спугнуть соперника. Нажми <b>«Чек»</b>.');
+    await waitBoard(5);
+    await expectAct(['check'], 'Ривер. Снова <b>«Чек»</b> — посмотрим карты.');
+    await waitShow();
+    await bubble('Сет тузов побил пару дам. <b>Главное правило:</b> с сильной рукой — повышай, со слабой — не бойся сбросить.', 'board', true);
+  },
+  async allin() {
+    tut.step = 'олл-ин';
+    await dealHand(HAND({ dealer: 3, stacks: { 3: 300 }, hole: { 0: [C('Q♠'), C('Q♣')], 2: [C('J♠'), C('J♦')], 3: [C('A♣'), C('K♣')], 5: [C('9♦'), C('4♣')] }, board: ['Q♦', '7♠', '2♣', '9♥', '5♦'].map(C), script: { 'preflop:2': ['call', 'call'], 'preflop:3': 'allin', 'preflop:5': 'fold', 'flop:2': 'raise:200' } }));
+    await bubble('Посмотри на бота справа сверху: у него всего 300 фишек — короткий стек.', 'seat:3', true);
+    await tutWait(myTurnNow);
+    await bubble('Он пошёл <b>олл-ин</b> — поставил все фишки. Больше он ставить не может, но остаётся в раздаче до вскрытия.', 'seat:3', true);
+    await bubble('Твой шанс выиграть — под стеком. С парой дам он высокий. Справа — сколько нужно доплатить.', 'eq', true);
+    await expectAct(['call'], 'Пара дам — сильная рука. Нажми <b>«Колл»</b>, чтобы уравнять олл-ин.');
+    tut.step = 'сайд-пот';
+    await waitBoard(3);
+    await bubble('Пришла дама — у тебя <b>сет</b>! Игрок в олл-ине может выиграть только то, что сам смог уравнять: это <b>основной банк</b>.', 'pot', true);
+    await expectAct(['check'], 'Нажми <b>«Чек»</b> и посмотри, что сделает третий игрок.');
+    await tutWait(myTurnNow);
+    await bubble('Он поставил 200. Эти фишки идут в <b>сайд-пот</b> (побочный банк). Его разыгрывают только те, у кого остались фишки, — ты и он.', 'seat:2', true);
+    await bubble('<b>Шансы банка:</b> раздели доплату на банк после неё. Доплатить 200 в банк ~1 300 — нужно выигрывать хотя бы в ~15% случаев. Твой шанс гораздо больше — колл выгоден.', 'eq', true);
+    await expectAct(['call'], 'Нажми <b>«Колл»</b>.');
+    await waitBoard(4); await expectAct(['check'], 'Тёрн. <b>«Чек»</b>.');
+    await waitBoard(5); await expectAct(['check'], 'Ривер. <b>«Чек»</b>.');
+    await waitShow();
+    await bubble('Твой сет забрал и основной банк, и сайд-пот. Если бы лучшая рука была у игрока в олл-ине, он забрал бы только основной банк, а сайд-пот ушёл бы следующему.', 'board', true);
+  },
+  async bluff() {
+    tut.step = 'позиция';
+    await dealHand(HAND({ dealer: 0, hole: { 0: [C('6♣'), C('5♣')], 2: [C('J♦'), C('3♥')], 3: [C('8♣'), C('4♠')], 5: [C('10♦'), C('2♣')] }, board: ['K♠', '9♦', '2♥', '7♥', 'Q♠'].map(C), script: { 'preflop:5': 'fold', 'river:2': ['check', 'fold'], 'river:3': ['check', 'fold'] } }));
+    await bubble('Ты на кнопке <b>D</b>. После флопа дилер ходит <b>последним</b> — видит, что сделали все. Это называется <b>позиция</b>, и это большое преимущество.', 'dealer', true);
+    await expectAct(['call'], 'Рука средняя, зато позиция хорошая. Нажми <b>«Колл»</b>, чтобы дёшево посмотреть флоп.');
+    await waitBoard(3);
+    await bubble('Флоп тебе не помог. Но смотри: оба соперника <b>чекнули</b> — значит, у них, скорее всего, тоже ничего сильного.', 'board', true);
+    await expectAct(['check'], 'Пока <b>«Чек»</b>.');
+    await waitBoard(4); await expectAct(['check'], 'Тёрн. Снова все чекают. <b>«Чек»</b>.');
+    tut.step = 'блеф';
+    await waitBoard(5);
+    await bubble('Ривер. У тебя только шестёрка старшая — на вскрытии ты проиграешь. Но соперники всю раздачу показывали слабость.', 'cards', true);
+    await expectAct(['q3'], '<b>Блеф</b> — ставка со слабой рукой, чтобы соперники поверили в сильную и сбросили. Поставь <b>«3 ББ»</b>.', '#bQ3');
+    await tutWait(() => calm() && S.hand.phase === 'showdown');
+    await bubble('Оба сбросили — банк твой без вскрытия! Блефуй <b>редко</b> и когда соперники слабы: если блефовать всегда, тебя быстро раскусят.', 'pot', true);
+    await bubble('<b>Шпаргалка:</b> играй мало рук, но активно. Сильная рука — повышай. Слабая против ставки — фолд. Считай шансы банка. Позиция — твой друг.', null, true);
+  },
+};
+
 /* ---------------- overlays ---------------- */
 function toast(t) { const el = $('#toast'); el.textContent = t; el.style.opacity = 1; clearTimeout(toast.h); toast.h = setTimeout(() => el.style.opacity = 0, 2400); }
 function closeLobby() { $('#lobby').hidden = true; demo = false; render(); }
@@ -2293,7 +2798,9 @@ function showLobby(kind, msg, keepButtons) {
     pnl.innerHTML = `<h2>Покерный стол</h2><p>Техасский холдем без лимита до 6 игроков. Ваш телефон станет столом, друзья подключатся по ссылке — без регистрации.</p>
       <div class="fields one">${nameField()}</div>
       <p class="fine" style="margin:-6px 0 6px"><a href="#" id="bLook">Настроить свои руки</a></p>
-      <h3>Новый стол</h3>
+      <div class="row2 modes"><button class="btn gold" id="bSolo">Игра с ботами</button><button class="btn ${tutDone().length ? '' : 'pulse'}" id="bTut">Обучение${tutDone().length ? ' · ' + tutDone().length + '/5' : ''}</button></div>
+      ${tutDone().length ? '' : '<p class="fine" style="margin:6px 0 0">Впервые играешь в покер? Начни с обучения — 5 коротких уроков.</p>'}
+      <h3>Стол с друзьями</h3>
       <div class="fields"><label for="fSb">Малый блайнд<input id="fSb" type="number" inputmode="numeric" min="1" value="10"></label>
       <label for="fBb">Большой блайнд<input id="fBb" type="number" inputmode="numeric" min="2" value="20"></label>
       <label for="fBuy">Бай-ин<input id="fBuy" type="number" inputmode="numeric" min="10" value="2000"></label></div>
@@ -2302,6 +2809,8 @@ function showLobby(kind, msg, keepButtons) {
       <h3>Есть код от друга?</h3>
       <div class="row2"><input id="fCode" class="codeIn" maxlength="5" autocapitalize="characters" autocomplete="off" placeholder="КОД" value="${esc(lc)}" aria-label="Код стола"><button class="btn" id="bJoinCode">Подключиться</button></div>`;
     $('#bLook').onclick = e => { e.preventDefault(); const n = ($('#fName').value || '').trim(); if (n) store.set('name', n); ['fSb', 'fBb', 'fBuy'].forEach(k => store.set('cfg_' + k, $('#' + k).value)); openLook(false, () => showLobby('home')); };
+    $('#bSolo').onclick = () => { const n = ($('#fName').value || '').trim(); if (n) store.set('name', n); openSoloSetup(); };
+    $('#bTut').onclick = () => { const n = ($('#fName').value || '').trim(); if (n) store.set('name', n); openLessons(); };
     $('#bCreate').onclick = () => { if (!readName()) return; const cfg = readCfg(); const code = newCode(); const s = Engine.newTable(uid, cfg, Date.now()); s.created = Date.now(); s.v = 1; s.names = { [uid]: store.get('name') }; Engine.setLook(s, uid, myLook()); s.code = code; goFull(); startHost(code, s); };
     if (hc && hs) $('#bResume').onclick = () => { if (!readName()) return; hs.names = hs.names || {}; hs.names[uid] = store.get('name'); Engine.setLook(hs, uid, myLook()); goFull(); startHost(hc, hs); };
     $('#bJoinCode').onclick = () => { const code = ($('#fCode').value || '').trim().toUpperCase(); if (!/^[A-Z0-9]{5}$/.test(code)) { toast('Код — 5 символов'); return; } if (readName()) { goFull(); startClient(code); } };
@@ -2309,7 +2818,7 @@ function showLobby(kind, msg, keepButtons) {
 }
 const _showLobby = showLobby;
 showLobby = function (...a) { _showLobby(...a); wireInstall($('#lobbyPanel')); };
-function goHome() { clientGen++; try { if (hostConn) hostConn.close(); } catch (e) { } hostRelays.forEach(c => { try { c.end(true); } catch (e) { } }); hostRelays = []; try { if (peer) peer.destroy(); } catch (e) { } peer = null; hostConn = null; preferRelay = false; linkKind = ''; isHost = false; S = null; history.replaceState(null, '', location.pathname); boot(true); }
+function goHome() { clientGen++; try { if (hostConn) hostConn.close(); } catch (e) { } hostRelays.forEach(c => { try { c.end(true); } catch (e) { } }); hostRelays = []; try { if (peer) peer.destroy(); } catch (e) { } peer = null; hostConn = null; preferRelay = false; linkKind = ''; isHost = false; solo = false; if (tut) { tut = null; clearBubble(); Engine.setTurnMs(15000); } S = null; history.replaceState(null, '', location.pathname); boot(true); }
 function readCfg() {
   const sb = Math.max(1, Math.round(+$('#fSb').value || 10)), bb = Math.max(sb, Math.round(+$('#fBb').value || sb * 2)), buyIn = Math.max(bb * 10, Math.round(+$('#fBuy').value || bb * 100));
   return { sb, bb, buyIn };
@@ -2377,12 +2886,13 @@ function openMenu() {
     const seat = S.seats.find(q => q && q.uid === u);
     const stack = seat ? seat.stack + (seat.contrib || 0) : 0;
     const net = l.out + stack - l.in;
-    return `<tr><td>${esc(nameOf(u))}${seat ? '' : ' <span style="color:#888">· ушёл</span>'}</td><td>${fmt(l.in)}</td><td>${fmt(l.out)}</td><td>${fmt(l.bar || 0)}</td><td>${seat ? fmt(stack) : '—'}</td><td class="${net > 0 ? 'pos' : net < 0 ? 'neg' : ''}">${net > 0 ? '+' : ''}${fmt(net)}</td></tr>`;
+    return `<tr><td>${isBot(u) ? '🤖 ' : ''}${esc(nameOf(u))}${seat ? '' : ' <span style="color:#888">· ушёл</span>'}</td><td>${fmt(l.in)}</td><td>${fmt(l.out)}</td><td>${fmt(l.bar || 0)}</td><td>${seat ? fmt(stack) : '—'}</td><td class="${net > 0 ? 'pos' : net < 0 ? 'neg' : ''}">${net > 0 ? '+' : ''}${fmt(net)}</td></tr>`;
   }).join('');
   const live = ['preflop', 'flop', 'turn', 'river'].includes(S.hand.phase);
   $('#menuPanel').innerHTML = `<h2>Стол ${esc(tableCode)}</h2>
     ${installEvt && !standalone() ? `<div class="row2" style="margin-bottom:8px">${installBtnHtml()}</div>` : ''}
-    <div class="row2"><button class="btn gold" id="mInvite">Пригласить друзей</button><button class="btn" id="mBar">Бар</button><button class="btn" id="mLook">Мои руки</button></div>
+    <div class="row2">${solo ? '' : '<button class="btn gold" id="mInvite">Пригласить друзей</button>'}<button class="btn" id="mBar">Бар</button><button class="btn" id="mLook">Мои руки</button></div>
+    <div class="row2" style="margin-top:8px"><button class="btn" id="mCombos">Комбинации</button><button class="btn" id="mLessons">Обучение</button><button class="btn ${coachOn ? 'gold' : 'dark'}" id="mCoach">Тренер: ${coachOn ? 'вкл' : 'выкл'}</button></div>
     ${p ? `<div class="row2" style="margin-top:8px"><button class="btn" id="mRebuy" ${p.inHand && !p.folded && live ? 'disabled' : ''}>Докупить ${fmt(S.cfg.buyIn)}</button>
       <button class="btn dark" id="mAway">${p.sitOut ? 'Вернуться' : 'Отойти'}</button>
       <button class="btn red" id="mLeave">Встать</button></div>` : '<p style="margin-top:10px">Вы наблюдаете. Нажмите на свободное место, чтобы сесть.</p>'}
@@ -2393,11 +2903,15 @@ function openMenu() {
     <label for="fBb">Большой блайнд<input id="fBb" type="number" inputmode="numeric" value="${S.cfg.bb}"></label>
     <label for="fBuy">Бай-ин<input id="fBuy" type="number" inputmode="numeric" value="${S.cfg.buyIn}"></label></div>
     <p>Новые блайнды начнут действовать со следующей раздачи.</p>
-    <div class="row2"><button class="btn gold" id="mSave">Сохранить</button><button class="btn dark" id="mReset">Закрыть стол</button></div>` : `<div class="row2" style="margin-top:12px"><button class="btn dark" id="mExit">Выйти из игры</button></div>`}
+    <div class="row2"><button class="btn gold" id="mSave">Сохранить</button>${solo ? '<button class="btn dark" id="mExitSolo">Выйти из игры</button>' : '<button class="btn dark" id="mReset">Закрыть стол</button>'}</div>` : `<div class="row2" style="margin-top:12px"><button class="btn dark" id="mExit">Выйти из игры</button></div>`}
     <div class="row2" style="margin-top:12px"><button class="btn dark" id="mClose">Закрыть меню</button></div>`;
   const close = () => ov.hidden = true;
   $('#mClose').onclick = close;
-  $('#mInvite').onclick = openInvite; wireInstall($('#menuPanel'));
+  if ($('#mInvite')) $('#mInvite').onclick = openInvite; wireInstall($('#menuPanel'));
+  $('#mCombos').onclick = () => openCombos(false);
+  $('#mLessons').onclick = () => { if (tut) endLesson(true); openLessons(); };
+  $('#mCoach').onclick = () => { coachOn = !coachOn; store.set('coach', coachOn); close(); renderHud(); toast(coachOn ? 'Тренер включён' : 'Тренер выключен'); };
+  if ($('#mExitSolo')) $('#mExitSolo').onclick = () => { close(); goHome(); };
   $('#mBar').onclick = openBar;
   $('#mLook').onclick = () => openLook(true);
   if (p) {
@@ -2407,7 +2921,7 @@ function openMenu() {
   }
   if (host) {
     $('#mSave').onclick = () => { const c = readCfg(); close(); hostMutate(s => { Engine.setCfg(s, c); return null; }); toast('Настройки сохранены'); };
-    $('#mReset').onclick = () => {
+    if ($('#mReset')) $('#mReset').onclick = () => {
       const b = $('#mReset');
       if (b.dataset.sure) { close(); store.set('hostCode', ''); store.set('hostState', null); goHome(); } else { b.dataset.sure = 1; b.textContent = 'Точно? Нажмите ещё раз'; b.classList.add('red'); }
     };
