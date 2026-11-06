@@ -310,6 +310,11 @@ table.led td:first-child,table.led th:first-child{text-align:left}
 .qopt.right{border-color:#5fc27a;background:#1f3a26}
 .qopt.wrong{opacity:.55}
 
+.lookOpts h3 small{font:500 11px var(--body);letter-spacing:0;text-transform:none;color:#7d786e;margin-left:6px}
+.swc.none{background-image:repeating-linear-gradient(45deg,#0000 0 4px,#0002 4px 5px)!important}
+.sw{flex-wrap:wrap}
+.lookOpts{max-height:360px;overflow:auto;padding-right:4px}
+
 </style>
 </head>
 <body>
@@ -589,8 +594,11 @@ function drink(s, uid, id, all, now) {
 }
 function setLook(s, uid, look) {
   s.looks = s.looks || {};
-  const ok = v => typeof v === 'number' && v >= 0 && v < 8 ? Math.floor(v) : 0;
-  s.looks[uid] = { skin: ok(look && look.skin), sleeve: ok(look && look.sleeve), acc: ok(look && look.acc) };
+  const n = (v, max) => typeof v === 'number' && v >= 0 && v < max ? Math.floor(v) : 0;
+  const str = v => typeof v === 'string' && /^[a-z0-9]{1,16}$/.test(v) ? v : '';
+  const L = look || {};
+  s.looks[uid] = { g: L.g === 'f' ? 'f' : 'm', skin: n(L.skin, 5), sl: str(L.sl), col: n(L.col, 12), tat: n(L.tat, 8), nail: n(L.nail, 12),
+    acc: Array.isArray(L.acc) ? L.acc.map(str).filter(Boolean).slice(0, 4) : [] };
   return null;
 }
 /* tutorial: replace dealt cards with a scripted hand */
@@ -1042,15 +1050,6 @@ setInterval(() => {
 function restHands(dur = 380) { return Promise.all([moveHand('L', ...REST.L, dur), moveHand('R', ...REST.R, dur)]); }
 drawArms();
 /* ===================== player hands, chip tricks, bar art ===================== */
-const SKINS = [['#f3d2b6', '#d9ad8b'], ['#e8b48c', '#c98e63'], ['#c98b5e', '#a66b40'], ['#93603d', '#6e4427'], ['#5e3b25', '#422814']];
-const SLEEVES = [
-  { name: 'Пиджак', c: '#1d2433', cuff: '#f4f2ec' },
-  { name: 'Рубашка', c: '#9cc3e6', cuff: null },
-  { name: 'Худи', c: '#6d7178', cuff: '#5a5e65', rib: true },
-  { name: 'Свитер', c: '#7a2232', cuff: null, knit: true },
-  { name: 'Тату', c: null, cuff: null, tattoo: true },
-];
-const ACCS = ['Ничего', 'Часы', 'Перстень', 'Браслеты'];
 const DRINK_ART = {
   beer: { glass: 'mug', liquid: '#e2a42b', bottle: '#5a3410', label: '#e9d9b0', shape: 'beer' },
   vodka: { glass: 'shot', liquid: '#eef4f7', bottle: '#dfe9ee', label: '#1f4c7a', shape: 'tall' },
@@ -1060,11 +1059,116 @@ const DRINK_ART = {
   champagne: { glass: 'flute', liquid: '#f2dd8a', bottle: '#14301f', label: '#e7c87a', shape: 'champ' },
 };
 
+/* ===================== wardrobe: gender, sleeves, colours, nails, accessories ===================== */
+const SKINS = [['#f3d2b6', '#d9ad8b'], ['#e8b48c', '#c98e63'], ['#c98b5e', '#a66b40'], ['#93603d', '#6e4427'], ['#5e3b25', '#422814']];
+const NAILS = [['Без лака', null], ['Нюд', '#e3b3a0'], ['Красный', '#c4122a'], ['Бордо', '#6b0f22'], ['Чёрный', '#141414'], ['Розовый', '#f08bb5'], ['Золото', '#d9b25a']];
+const TATTOOS = ['Орнамент', 'Розы', 'Карты', 'Надписи'];
+// kind: how the sleeve is drawn. colors: choices for that garment.
+const WARDROBE = {
+  m: [
+    { id: 'jacket', name: 'Пиджак', kind: 'tailored', cuff: '#f4f2ec', colors: ['#1d2433', '#2b2b2e', '#3c4a3a', '#5a4632', '#7a1f2b', '#2f4f7a', '#8a8f96'] },
+    { id: 'tux', name: 'Смокинг', kind: 'tux', cuff: '#f4f2ec', colors: ['#121214', '#1b1f3a', '#3a0f1a', '#f2efe6'] },
+    { id: 'shirt', name: 'Рубашка с запонками', kind: 'shirt', links: true, colors: ['#f4f2ec', '#9cc3e6', '#e9c9d3', '#2b2b2e', '#c9d8b5'] },
+    { id: 'plaid', name: 'Рубашка в клетку', kind: 'plaid', colors: ['#a3242e', '#24496b', '#2f5b37', '#6b5a2a', '#3b3b3b'] },
+    { id: 'hoodie', name: 'Худи', kind: 'hoodie', colors: ['#6d7178', '#1f1f22', '#2f4f7a', '#7a2232', '#4b5d3a', '#d8d3c6'] },
+    { id: 'leather', name: 'Кожаная куртка', kind: 'leather', colors: ['#1b1b1d', '#4a2e1c', '#3a1a1a'] },
+    { id: 'knit', name: 'Свитер', kind: 'knit', colors: ['#7a2232', '#e8e0cf', '#2b3a55', '#4b5d3a', '#5a4632', '#6d7178'] },
+    { id: 'track', name: 'Олимпийка', kind: 'track', colors: ['#1f3f8a', '#b3122a', '#1f1f22', '#2f6b3a'] },
+    { id: 'tattoo', name: 'Тату-рукав', kind: 'tattoo', colors: [] },
+  ],
+  f: [
+    { id: 'bare', name: 'Платье, открытые руки', kind: 'bare', colors: [] },
+    { id: 'satin', name: 'Атласная блузка', kind: 'satin', colors: ['#e9d9c4', '#b3122a', '#1f1f22', '#2f4f7a', '#d98aa6', '#3c5a46', '#c9a34a'] },
+    { id: 'silk', name: 'Шёлковая рубашка', kind: 'shirt', colors: ['#f4f2ec', '#e9c9d3', '#c9d8e8', '#1f1f22', '#b89ad4'] },
+    { id: 'cardigan', name: 'Кардиган', kind: 'knit', colors: ['#e8e0cf', '#d98aa6', '#7a2232', '#6d7178', '#4b5d3a', '#2b3a55'] },
+    { id: 'blazer', name: 'Пиджак oversize', kind: 'tailored', cuff: null, colors: ['#e8e0cf', '#1f1f22', '#b3122a', '#3c4a3a', '#d98aa6', '#5a4632'] },
+    { id: 'turtle', name: 'Водолазка', kind: 'turtle', colors: ['#1f1f22', '#e8e0cf', '#7a2232', '#6d7178', '#2b3a55'] },
+    { id: 'leather', name: 'Кожаная куртка', kind: 'leather', colors: ['#1b1b1d', '#4a2e1c', '#7a1f2b'] },
+    { id: 'hoodie', name: 'Худи', kind: 'hoodie', colors: ['#d8d3c6', '#f0b7c9', '#6d7178', '#1f1f22', '#b89ad4'] },
+    { id: 'tattoo', name: 'Тату-рукав', kind: 'tattoo', colors: [] },
+  ],
+};
+const ACCESSORIES = {
+  m: [
+    { id: 'wgold', name: 'Часы золотые', slot: 'wristL' }, { id: 'wsteel', name: 'Часы стальные', slot: 'wristL' }, { id: 'wsmart', name: 'Смарт-часы', slot: 'wristL' },
+    { id: 'signet', name: 'Печатка', slot: 'pinky' }, { id: 'wedding', name: 'Обручальное', slot: 'ring' },
+    { id: 'leatherb', name: 'Кожаный браслет', slot: 'wristR' }, { id: 'chain', name: 'Цепочка', slot: 'wristR' }, { id: 'beads', name: 'Бусины', slot: 'wristR2' },
+  ],
+  f: [
+    { id: 'wlady', name: 'Часики', slot: 'wristL' }, { id: 'thinring', name: 'Тонкое кольцо', slot: 'index' }, { id: 'stone', name: 'Кольцо с камнем', slot: 'middle' },
+    { id: 'stack', name: 'Несколько колец', slot: 'stack' }, { id: 'wedding', name: 'Обручальное', slot: 'ring' },
+    { id: 'thinb', name: 'Тонкий браслет', slot: 'wristR' }, { id: 'bangles', name: 'Бэнглы', slot: 'wristR' }, { id: 'charm', name: 'С подвесками', slot: 'wristR2' },
+  ],
+};
+const M_NAMES = ['Джек', 'Майк', 'Тони', 'Райан', 'Фрэнк', 'Лео', 'Итан', 'Ноа', 'Логан', 'Дэниел', 'Люк', 'Генри'];
+const F_NAMES = ['Эмили', 'Оливия', 'София', 'Грейс', 'Миа', 'Хлоя', 'Эмма', 'Ава', 'Лили', 'Зои', 'Руби', 'Элла'];
+
+/* normalise any stored look (including old {skin,sleeve,acc}) to the new shape */
+const OLD_SLEEVE = ['jacket', 'shirt', 'hoodie', 'knit', 'tattoo'];
+const OLD_ACC = [[], ['wgold'], ['signet'], ['leatherb', 'chain']];
+function normLook(l) {
+  l = l || {};
+  const g = l.g === 'f' ? 'f' : 'm';
+  const list = WARDROBE[g];
+  let sl = typeof l.sl === 'string' ? l.sl : (typeof l.sleeve === 'number' ? OLD_SLEEVE[l.sleeve] : null);
+  if (!list.some(w => w.id === sl)) sl = list[0].id;
+  const w = list.find(x => x.id === sl);
+  const col = Math.max(0, Math.min((w.colors.length || 1) - 1, l.col | 0));
+  const tat = Math.max(0, Math.min(TATTOOS.length - 1, l.tat | 0));
+  const nail = g === 'f' ? Math.max(0, Math.min(NAILS.length - 1, l.nail | 0)) : 0;
+  let acc = Array.isArray(l.acc) ? l.acc : (typeof l.acc === 'number' ? OLD_ACC[l.acc] || [] : []);
+  const ok = new Set(ACCESSORIES[g].map(a => a.id));
+  acc = [...new Set(acc.filter(a => ok.has(a)))].slice(0, 4);
+  return { g, skin: Math.max(0, Math.min(4, l.skin | 0)), sl, col, tat, nail, acc };
+}
+function randomLook(g) {
+  g = g || (Math.random() < .5 ? 'm' : 'f');
+  const list = WARDROBE[g]; const w = list[Math.floor(Math.random() * list.length)];
+  const pool = ACCESSORIES[g].slice().sort(() => Math.random() - .5);
+  const acc = []; const used = new Set();
+  for (const a of pool) { if (acc.length >= (Math.random() < .5 ? 1 : 2)) break; if (used.has(a.slot)) continue; used.add(a.slot); acc.push(a.id); }
+  return normLook({ g, skin: Math.floor(Math.random() * 5), sl: w.id, col: Math.floor(Math.random() * Math.max(1, w.colors.length)), tat: Math.floor(Math.random() * 4), nail: g === 'f' ? Math.floor(Math.random() * NAILS.length) : 0, acc });
+}
 function lookOf(u) {
   const l = (S && S.looks && S.looks[u]) || null;
-  if (l) return l;
+  if (l) return normLook(l);
   let h = 0; for (const ch of String(u)) h = (h * 31 + ch.charCodeAt(0)) >>> 0;
-  return { skin: h % 5, sleeve: (h >> 3) % 5, acc: (h >> 6) % 4 };
+  return normLook({ g: h % 2 ? 'f' : 'm', skin: h % 5, sl: WARDROBE[h % 2 ? 'f' : 'm'][(h >> 3) % 9].id, col: (h >> 6) % 4 });
+}
+const garment = l => WARDROBE[l.g].find(w => w.id === l.sl) || WARDROBE[l.g][0];
+const garmentColor = l => { const w = garment(l); return w.colors.length ? w.colors[l.col] || w.colors[0] : SKINS[l.skin][0]; };
+
+/* ---- sleeve drawing (along a straight segment from elbow to wrist) ---- */
+function sleeveMarkup(l, w) {
+  const G = garment(l), c = garmentColor(l), mix = ensureHandDefs.mix, dark = mix(c, .35, '#000000'), light = mix(c, .3, '#ffffff');
+  const sk = SKINS[l.skin][0];
+  const base = `<path class="slv" fill="none" stroke="${c}" stroke-width="${w}" stroke-linecap="round"/>`;
+  const hi = `<path class="slv2 hi" fill="none" stroke="#fff" stroke-opacity=".1" stroke-width="${w * .32}" stroke-linecap="round"/>`;
+  const folds = `<path class="slv2" fill="none" stroke="#000" stroke-opacity=".16" stroke-width="${w * .92}" stroke-dasharray="1.4 11 2 15"/>`;
+  switch (G.kind) {
+    case 'bare': return `<path class="slv" fill="none" stroke="${sk}" stroke-width="${w * .82}" stroke-linecap="round"/><path class="slv2 hi" fill="none" stroke="#fff" stroke-opacity=".12" stroke-width="${w * .25}" stroke-linecap="round"/>`;
+    case 'tattoo': {
+      const ink = ['#24324a', '#5b1a24', '#1d1d1d', '#24324a'][l.tat], dash = ['7 3 2 3', '5 2 9 2', '3 3', '11 2 1 2 1 2'][l.tat];
+      return `<path class="slv" fill="none" stroke="${sk}" stroke-width="${w * .9}" stroke-linecap="round"/><path class="slv2" fill="none" stroke="${ink}" stroke-opacity=".6" stroke-width="${w * .5}" stroke-dasharray="${dash}"/>${l.tat === 1 ? `<path class="slv2" fill="none" stroke="#b3122a" stroke-opacity=".5" stroke-width="${w * .22}" stroke-dasharray="2 14"/>` : ''}${hi}`;
+    }
+    case 'tux': return base + folds + `<path class="slv2" fill="none" stroke="${mix(c, .2, '#ffffff')}" stroke-opacity=".5" stroke-width="${w * .1}"/>` + hi;
+    case 'plaid': return base + `<path class="slv2" fill="none" stroke="${dark}" stroke-opacity=".55" stroke-width="${w}" stroke-dasharray="3 5"/><path class="slv2" fill="none" stroke="${light}" stroke-opacity=".35" stroke-width="${w * .5}" stroke-dasharray="1.5 6.5"/>` + hi;
+    case 'knit': return base + `<path class="slv2" fill="none" stroke="#000" stroke-opacity=".18" stroke-width="${w * .8}" stroke-dasharray="2 3"/>` + hi;
+    case 'leather': return base + `<path class="slv2" fill="none" stroke="#000" stroke-opacity=".3" stroke-width="${w * .95}" stroke-dasharray="1 18"/><path class="slv2 hi" fill="none" stroke="#fff" stroke-opacity=".22" stroke-width="${w * .18}" stroke-linecap="round"/>`;
+    case 'track': return base + `<path class="slv2" fill="none" stroke="#f4f2ec" stroke-width="${w * .14}"/>` + folds + hi;
+    case 'satin': return base + `<path class="slv2 hi" fill="none" stroke="#fff" stroke-opacity=".28" stroke-width="${w * .22}" stroke-linecap="round"/>` + `<path class="slv2" fill="none" stroke="#000" stroke-opacity=".12" stroke-width="${w * .9}" stroke-dasharray="1 7"/>`;
+    case 'turtle': return base + `<path class="slv2" fill="none" stroke="#000" stroke-opacity=".14" stroke-width="${w * .85}" stroke-dasharray="1 2.5"/>` + hi;
+    default: return base + folds + hi;
+  }
+}
+function cuffMarkup(l, w) {
+  const G = garment(l), c = garmentColor(l), mix = ensureHandDefs.mix;
+  if (G.kind === 'bare' || G.kind === 'tattoo') return '';
+  if (G.kind === 'hoodie' || G.kind === 'knit' || G.kind === 'turtle' || G.kind === 'track') { const cc = mix(c, .15, '#000000'); return `<rect x="-9" y="${-w / 2 - .5}" width="10" height="${w + 1}" rx="3" fill="${cc}"/><path d="M-7,${-w / 2} v${w} M-4,${-w / 2} v${w} M-1,${-w / 2} v${w}" stroke="#0003" stroke-width="1"/>`; }
+  if (G.kind === 'shirt' || G.kind === 'plaid' || G.kind === 'satin') return `<rect x="-7" y="${-w / 2 - .5}" width="8" height="${w + 1}" rx="2.5" fill="${mix(c, .1, '#ffffff')}" stroke="#0002" stroke-width=".6"/>${G.links ? `<rect x="-5" y="${-w / 2 + 2}" width="4" height="4" rx="1" fill="#d9b25a" stroke="#8a6a24" stroke-width=".5"/>` : ''}`;
+  if (G.kind === 'tux' || G.kind === 'tailored') return (G.cuff ? `<rect x="-8" y="${-w / 2 - 1}" width="8" height="${w + 2}" rx="3" fill="${G.cuff}"/><rect x="-6" y="${-w / 2 + 2}" width="3.6" height="3.6" rx="1" fill="#c9ccd0"/>` : '') + `<rect x="-14" y="${-w / 2 - .5}" width="5" height="${w + 1}" rx="2" fill="${mix(c, .2, '#000000')}"/>`;
+  if (G.kind === 'leather') return `<rect x="-9" y="${-w / 2 - .5}" width="8" height="${w + 1}" rx="2" fill="${mix(c, .25, '#000000')}"/><rect x="-6" y="${-w / 2 + 2}" width="2.2" height="${w - 4}" fill="#c9ccd0" opacity=".8"/>`;
+  return '';
 }
 
 /* one-piece hand silhouette, generated from a pose; points +x, wrist at origin */
@@ -1082,21 +1186,24 @@ const FINGERS = [ // centre y, half width, full length, knuckle x
   { y: 4.4, w: 2.95, len: 21, k: 34.5 },
   { y: 9.9, w: 2.45, len: 15, k: 32 },
 ];
-function handGeom(poseName) {
+function handGeom(poseName, g = 'm') {
   const P = POSES[poseName] || POSES.relax;
+  const fem = g === 'f';
+  const WK = fem ? .8 : 1.08, LK = fem ? 1.14 : .97, YK = fem ? .86 : 1.05, KK = fem ? .93 : 1;
   const f = FINGERS.map((F, i) => {
-    const y = F.y * P.spread, len = Math.max(6, F.len * P.ext[i]);
-    return { y, w: F.w, k: F.k, tip: F.k + len, len };
+    const y = F.y * P.spread * YK, len = Math.max(6, F.len * P.ext[i] * LK);
+    return { y, w: F.w * WK, k: F.k * KK, tip: F.k * KK + len, len };
   });
   // thumb: base near the web, tip swings forward/out with P.thumb
   const ta = (-16 - 20 * P.thumb) * Math.PI / 180;   // angle from +x, thumb splays out with P.thumb
-  const tb = [8, -12], tl = 16.5 + 2 * P.thumb;
+  const tb = [8 * KK, -12 * YK], tl = (16.5 + 2 * P.thumb) * (fem ? 1.04 : .98);
   const tt = [tb[0] + Math.cos(ta) * tl, tb[1] + Math.sin(ta) * tl];
-  return { f, tb, tt, ta };
+  return { f, tb, tt, ta, fem, YK, WK };
 }
 function handPathD(g) {
   const f = g.f, r = n => n.toFixed(2);
-  let d = `M0,11 C7,13.2 15,15 23,14.2 C27,13.9 ${f[3].k - 2},${f[3].y + f[3].w + .9} ${f[3].k},${f[3].y + f[3].w}`;
+  const Y = g.YK || 1;
+  let d = `M0,${r(11 * Y)} C7,${r(13.2 * Y)} 15,${r(15 * Y)} 23,${r(14.2 * Y)} C27,${r(13.9 * Y)} ${f[3].k - 2},${f[3].y + f[3].w + .9} ${f[3].k},${f[3].y + f[3].w}`;
   for (let i = 3; i >= 0; i--) {
     const F = f[i];
     const lo = F.y + F.w, hi = F.y - F.w;
@@ -1107,11 +1214,11 @@ function handPathD(g) {
   // web of the thumb, then thumb out and back (one continuous outline)
   const [ax, ay] = g.tb, [tx, ty] = g.tt, ang = g.ta;
   const ux = Math.cos(ang), uy = Math.sin(ang), nx = -uy, ny = ux;   // n points into the hand
-  const w0 = 6, w1 = 3.9;
+  const w0 = 6 * (g.WK || 1), w1 = 3.9 * (g.WK || 1);
   const web = [tx + nx * w1 - ux * 10, ty + ny * w1 - uy * 10];
   d += ` C${r(f[0].k - 6)},${r(f[0].y - f[0].w - .6)} ${r(web[0] + 5)},${r(web[1] + 1.5)} ${r(web[0])},${r(web[1])}`;
   d += ` L${r(tx + nx * w1 - ux * 2)},${r(ty + ny * w1 - uy * 2)} Q${r(tx + ux * 4.2 + nx * w1 * .6)},${r(ty + uy * 4.2 + ny * w1 * .6)} ${r(tx + ux * 4.4)},${r(ty + uy * 4.4)} Q${r(tx + ux * 4.2 - nx * w1 * .6)},${r(ty + uy * 4.2 - ny * w1 * .6)} ${r(tx - nx * w1 - ux * 2)},${r(ty - ny * w1 - uy * 2)}`;
-  d += ` L${r(ax - nx * w0 + ux * 4)},${r(ay - ny * w0 + uy * 4)} C${r(ax - nx * w0 - 3)},${r(ay - ny * w0)} ${r(3)},${r(-13)} 0,-11 Z`;
+  d += ` L${r(ax - nx * w0 + ux * 4)},${r(ay - ny * w0 + uy * 4)} C${r(ax - nx * w0 - 3)},${r(ay - ny * w0)} ${r(3)},${r(-13 * Y)} 0,${r(-11 * Y)} Z`;
   return d;
 }
 const skinGradId = k => 'skg' + k, gloveGrad = 'skgG';
@@ -1129,33 +1236,64 @@ function ensureHandDefs() {
 }
 function handMarkup(look, mirror, pose = 'relax', glove = false) {
   ensureHandDefs();
-  const g = handGeom(pose);
+  const L0 = glove ? { g: 'm', skin: 0, acc: [], nail: 0 } : normLook(look);
+  const g = handGeom(pose, L0.g);
   const d = handPathD(g);
-  const [sk, skd] = glove ? ['#f5f5f1', '#bdbdb5'] : (SKINS[look.skin] || SKINS[0]);
+  const [sk, skd] = glove ? ['#f5f5f1', '#bdbdb5'] : (SKINS[L0.skin] || SKINS[0]);
   const mix = ensureHandDefs.mix;
-  const fill = glove ? `url(#${gloveGrad})` : `url(#${skinGradId(look.skin)})`;
+  const fill = glove ? `url(#${gloveGrad})` : `url(#${skinGradId(L0.skin)})`;
   const m = mirror ? ' transform="scale(1,-1)"' : '';
+  const nailC = L0.g === 'f' && NAILS[L0.nail] && NAILS[L0.nail][1];
+  const nailFill = nailC || mix(sk, .45, '#ffe9e4');
+  const nailLen = L0.g === 'f' ? 6.2 : 4.2;
   let det = '';
-  // knuckle highlights and joint creases
   g.f.forEach((F, i) => {
-    det += `<ellipse cx="${F.k + .5}" cy="${F.y}" rx="${2.6}" ry="${F.w * .7}" fill="#fff" opacity="${glove ? .35 : .22}"/>`;
+    det += `<ellipse cx="${(F.k + .5).toFixed(1)}" cy="${F.y.toFixed(1)}" rx="${L0.g === 'f' ? 2 : 2.8}" ry="${(F.w * .7).toFixed(1)}" fill="#fff" opacity="${glove ? .35 : (L0.g === 'f' ? .16 : .22)}"/>`;
     const j = F.k + F.len * .5;
-    if (F.len > 9) det += `<path d="M${(j).toFixed(1)},${(F.y - F.w * .55).toFixed(1)} q-1.1,${(F.w * .55).toFixed(1)} 0,${(F.w * 1.1).toFixed(1)}" stroke="${skd}" stroke-width=".7" fill="none" opacity=".55"/>`;
-    if (!glove && F.len > 7) { const nx = F.tip - 4.6; det += `<rect x="${nx.toFixed(1)}" y="${(F.y - F.w * .62).toFixed(1)}" width="4.4" height="${(F.w * 1.24).toFixed(1)}" rx="${(F.w * .55).toFixed(1)}" fill="${mix(sk, .45, '#ffe9e4')}" stroke="${skd}" stroke-width=".35"/><rect x="${(nx + 2.4).toFixed(1)}" y="${(F.y - F.w * .4).toFixed(1)}" width="1.3" height="${(F.w * .5).toFixed(1)}" rx=".6" fill="#fff" opacity=".7"/>`; }
+    if (F.len > 9) det += `<path d="M${j.toFixed(1)},${(F.y - F.w * .55).toFixed(1)} q-1.1,${(F.w * .55).toFixed(1)} 0,${(F.w * 1.1).toFixed(1)}" stroke="${skd}" stroke-width=".7" fill="none" opacity="${L0.g === 'f' ? .35 : .55}"/>`;
+    if (!glove && F.len > 7) {
+      const nx = F.tip - nailLen + (L0.g === 'f' ? 1.6 : 0), hh = F.w * (L0.g === 'f' ? 1.1 : 1.24);
+      det += L0.g === 'f'
+        ? `<path d="M${nx.toFixed(1)},${(F.y - hh / 2).toFixed(1)} L${(nx + nailLen - 2).toFixed(1)},${(F.y - hh / 2).toFixed(1)} Q${(nx + nailLen + 1.2).toFixed(1)},${F.y.toFixed(1)} ${(nx + nailLen - 2).toFixed(1)},${(F.y + hh / 2).toFixed(1)} L${nx.toFixed(1)},${(F.y + hh / 2).toFixed(1)} Q${(nx - .8).toFixed(1)},${F.y.toFixed(1)} ${nx.toFixed(1)},${(F.y - hh / 2).toFixed(1)}Z" fill="${nailFill}" stroke="${nailC ? mix(nailC, .35, '#000000') : skd}" stroke-width=".35"/><rect x="${(nx + 1.2).toFixed(1)}" y="${(F.y - hh * .32).toFixed(1)}" width="2.2" height="${(hh * .26).toFixed(1)}" rx=".6" fill="#fff" opacity="${nailC ? .55 : .7}"/>`
+        : `<rect x="${nx.toFixed(1)}" y="${(F.y - hh / 2).toFixed(1)}" width="${nailLen}" height="${hh.toFixed(1)}" rx="${(F.w * .55).toFixed(1)}" fill="${nailFill}" stroke="${skd}" stroke-width=".35"/><rect x="${(nx + 2.2).toFixed(1)}" y="${(F.y - F.w * .4).toFixed(1)}" width="1.3" height="${(F.w * .5).toFixed(1)}" rx=".6" fill="#fff" opacity=".7"/>`;
+    }
     if (glove && F.len > 8) det += `<path d="M${F.k + 2},${F.y - F.w} L${F.tip - 2},${F.y - F.w}" stroke="#c9c9c2" stroke-width=".5"/>`;
   });
-  // tendons on the back of the hand
-  if (!glove) det += `<path d="M5,-5 L${g.f[0].k - 3},${g.f[0].y} M6,-1 L${g.f[1].k - 3},${g.f[1].y} M6,3.5 L${g.f[2].k - 3},${g.f[2].y}" stroke="#fff" stroke-width="1" opacity=".05"/>`;
+  if (!glove) det += `<path d="M5,-5 L${g.f[0].k - 3},${g.f[0].y} M6,-1 L${g.f[1].k - 3},${g.f[1].y} M6,3.5 L${g.f[2].k - 3},${g.f[2].y}" stroke="#fff" stroke-width="1" opacity="${L0.g === 'f' ? .03 : .06}"/>`;
   else det += `<path d="M2,-8 Q14,-4 ${g.f[1].k - 6},${g.f[1].y}" stroke="#c9c9c2" stroke-width=".7" fill="none"/><path d="M2,8 Q14,4 ${g.f[2].k - 6},${g.f[2].y}" stroke="#c9c9c2" stroke-width=".7" fill="none"/>`;
-  // thumb nail
-  if (!glove) { const [tx, ty] = g.tt, a = g.ta * 180 / Math.PI; det += `<g transform="translate(${tx.toFixed(1)},${ty.toFixed(1)}) rotate(${a.toFixed(1)})"><rect x="-.6" y="-2" width="4.4" height="4" rx="1.8" fill="${mix(sk, .45, '#ffe9e4')}" stroke="${skd}" stroke-width=".35"/></g>`; }
-  // accessories
-  const acc = glove ? 0 : look.acc;
-  let a = '';
-  if (acc === 1 && mirror) a = `<rect x="-4" y="-12.5" width="9" height="25" rx="3" fill="#2a2420"/><circle cx="0.5" cy="0" r="7" fill="#d9b25a" stroke="#8a6a24" stroke-width="1.2"/><circle cx="0.5" cy="0" r="4.8" fill="#f7f3e6"/><path d="M.5,0 L.5,-3.2 M.5,0 L2.6,1.2" stroke="#222" stroke-width=".8"/><circle cx="-.6" cy="-1.5" r="1.3" fill="#fff" opacity=".8"/>`;
-  if (acc === 2 && !mirror) { const F = g.f[2]; a = `<rect x="${F.k + 2.2}" y="${F.y - F.w - .4}" width="3.2" height="${F.w * 2 + .8}" rx="1" fill="#d9b25a" stroke="#8a6a24" stroke-width=".5"/><circle cx="${F.k + 3.8}" cy="${F.y}" r="1.8" fill="#b3122a" stroke="#6d0f17" stroke-width=".4"/>`; }
-  if (acc === 3) a = `<rect x="-7" y="-12.5" width="3" height="25" rx="1.5" fill="#b02a2a"/><rect x="-3.2" y="-13" width="2.6" height="26" rx="1.3" fill="#2a2a2a"/><rect x=".2" y="-12.5" width="2.4" height="25" rx="1.2" fill="#d9b25a"/>`;
-  return `<g${m}><path d="${d}" fill="${fill}" stroke="${skd}" stroke-width=".6" stroke-linejoin="round"/>${det}${a}</g>`;
+  if (!glove) { const [tx, ty] = g.tt, a = g.ta * 180 / Math.PI; det += `<g transform="translate(${tx.toFixed(1)},${ty.toFixed(1)}) rotate(${a.toFixed(1)})"><rect x="${L0.g === 'f' ? .4 : -.6}" y="-2" width="${L0.g === 'f' ? 5.4 : 4.4}" height="4" rx="1.9" fill="${nailFill}" stroke="${nailC ? mix(nailC, .35, '#000000') : skd}" stroke-width=".35"/></g>`; }
+  return `<g${m}><path d="${d}" fill="${fill}" stroke="${skd}" stroke-width=".6" stroke-linejoin="round"/>${det}${glove ? '' : accMarkup(L0, g, mirror)}</g>`;
+}
+/* accessories by slot; wristL = left hand (mirrored), wristR = right hand */
+function accMarkup(L0, g, mirror) {
+  let out = '';
+  const ring = (F, col, stone) => `<rect x="${(F.k + 2.4).toFixed(1)}" y="${(F.y - F.w - .4).toFixed(1)}" width="${L0.g === 'f' ? 2 : 3}" height="${(F.w * 2 + .8).toFixed(1)}" rx="1" fill="${col}" stroke="#0004" stroke-width=".4"/>${stone ? `<circle cx="${(F.k + 3.4).toFixed(1)}" cy="${F.y.toFixed(1)}" r="${stone[1]}" fill="${stone[0]}" stroke="#0005" stroke-width=".4"/><circle cx="${(F.k + 3).toFixed(1)}" cy="${(F.y - .5).toFixed(1)}" r=".5" fill="#fff"/>` : ''}`;
+  for (const id of L0.acc) {
+    const A = ACCESSORIES[L0.g].find(x => x.id === id); if (!A) continue;
+    const onLeft = A.slot === 'wristL';
+    const onRight = A.slot === 'wristR' || A.slot === 'wristR2';
+    if (onLeft && !mirror) continue;
+    if (onRight && mirror) continue;
+    if (['pinky', 'ring', 'index', 'middle', 'stack'].includes(A.slot) && mirror === (A.slot === 'ring')) continue; // wedding on left, others on right
+    switch (id) {
+      case 'wgold': out += `<rect x="-4" y="-12.5" width="9" height="25" rx="3" fill="#2a2420"/><circle cx=".5" cy="0" r="7" fill="#d9b25a" stroke="#8a6a24" stroke-width="1.2"/><circle cx=".5" cy="0" r="4.8" fill="#f7f3e6"/><path d="M.5,0 L.5,-3.2 M.5,0 L2.6,1.2" stroke="#222" stroke-width=".8"/>`; break;
+      case 'wsteel': out += `<rect x="-4" y="-12.5" width="9" height="25" rx="2" fill="#a9adb3" stroke="#6d7178" stroke-width=".6"/><path d="M-4,-8 h9 M-4,-4 h9 M-4,4 h9 M-4,8 h9" stroke="#6d7178" stroke-width=".5"/><circle cx=".5" cy="0" r="7" fill="#c9ccd0" stroke="#6d7178" stroke-width="1.2"/><circle cx=".5" cy="0" r="4.9" fill="#1d2433"/><path d="M.5,0 L.5,-3.2 M.5,0 L2.6,1.2" stroke="#fff" stroke-width=".8"/>`; break;
+      case 'wsmart': out += `<rect x="-4" y="-12.5" width="9" height="25" rx="3" fill="#1f1f22"/><rect x="-5" y="-6" width="11" height="12" rx="3" fill="#111" stroke="#555" stroke-width=".8"/><rect x="-3.5" y="-4.5" width="8" height="9" rx="2" fill="#163a5a"/><path d="M-1.5,-1 h4 M-1.5,1.5 h2.5" stroke="#7fd0ff" stroke-width=".8"/>`; break;
+      case 'wlady': out += `<rect x="-2" y="-11" width="3" height="22" rx="1.5" fill="#d9b25a"/><circle cx="-.5" cy="0" r="4.6" fill="#d9b25a" stroke="#8a6a24" stroke-width=".8"/><circle cx="-.5" cy="0" r="3.2" fill="#fbf7ec"/><path d="M-.5,0 L-.5,-2 M-.5,0 L.8,.8" stroke="#222" stroke-width=".6"/>`; break;
+      case 'signet': out += ring(g.f[3], '#d9b25a', ['#1d1d1d', 1.9]); break;
+      case 'wedding': out += ring(g.f[2], '#d9b25a'); break;
+      case 'thinring': out += ring(g.f[0], '#e9e6de'); break;
+      case 'stone': out += ring(g.f[1], '#e9e6de', ['#5fc0e8', 1.8]); break;
+      case 'stack': out += ring(g.f[0], '#d9b25a') + ring(g.f[1], '#e9e6de') + ring(g.f[3], '#d9b25a', ['#b3122a', 1.2]); break;
+      case 'leatherb': out += `<rect x="-6" y="-12.5" width="4" height="25" rx="1.6" fill="#5a3518"/><rect x="-5.2" y="-2" width="2.4" height="4" rx=".6" fill="#c9ccd0"/>`; break;
+      case 'chain': out += `<path d="M-1,-12 L-1,12" stroke="#d9b25a" stroke-width="2.4" stroke-dasharray="2 1"/>`; break;
+      case 'beads': out += Array.from({ length: 7 }, (_, k) => `<circle cx="-9" cy="${-10.5 + k * 3.5}" r="1.7" fill="${k % 2 ? '#3b2a1e' : '#6b4a2e'}"/>`).join(''); break;
+      case 'thinb': out += `<rect x="-3" y="-11" width="1.8" height="22" rx=".9" fill="#d9b25a"/>`; break;
+      case 'bangles': out += `<rect x="-7" y="-12" width="2.4" height="24" rx="1.2" fill="#d9b25a"/><rect x="-4" y="-12" width="2" height="24" rx="1" fill="#e9e6de"/><rect x="-1.4" y="-12" width="2.4" height="24" rx="1.2" fill="#d9b25a"/>`; break;
+      case 'charm': out += `<rect x="-8" y="-11.5" width="1.6" height="23" rx=".8" fill="#e9e6de"/>` + [[-6, '#d98aa6'], [0, '#d9b25a'], [6, '#5fc0e8']].map(([y, c]) => `<circle cx="-10" cy="${y}" r="1.6" fill="${c}"/>`).join(''); break;
+    }
+  }
+  return out;
 }
 function setPose(seat, side, pose) {
   const st = PH[seat]; if (!st) return;
@@ -1193,19 +1331,14 @@ function buildHands() {
     if (PH[i] && PH[i].key === key) continue;
     if (PH[i]) PH[i].g.remove();
     const geo = handGeo(i);
-    const sv = SLEEVES[look.sleeve] || SLEEVES[0];
+    ensureHandDefs();
     const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-    const w = 23 * geo.scale;
-    const sleeveColor = sv.tattoo ? SKINS[look.skin][0] : sv.c;
+    const w = (look.g === 'f' ? 20 : 24) * geo.scale;
     let html = '';
     for (const side of ['A', 'B']) {
       html += `<g data-h="${side}">
-        <path class="slv" fill="none" stroke="${sleeveColor}" stroke-width="${w}" stroke-linecap="round"/>
-        ${sv.tattoo ? '' : `<path class="slv2" fill="none" stroke="#000" stroke-opacity=".16" stroke-width="${w * .92}" stroke-dasharray="1.4 11 2 15"/>`}
-        <path class="slv2 hi" fill="none" stroke="#fff" stroke-opacity="${sv.tattoo ? .12 : .1}" stroke-width="${w * .32}" stroke-linecap="round"/>
-        ${sv.knit ? `<path class="slv2" fill="none" stroke="#00000033" stroke-width="${w * .8}" stroke-dasharray="2 3"/>` : ''}
-        ${sv.tattoo ? `<path class="slv2" fill="none" stroke="#24324a" stroke-opacity=".55" stroke-width="${w * .45}" stroke-dasharray="7 3 2 3"/>` : ''}
-        <g class="cuf">${sv.cuff ? `<rect x="-9" y="${-w / 2 - 1}" width="${sv.rib ? 10 : 8}" height="${w + 2}" rx="3" fill="${sv.cuff}"/>` : ''}${sv.rib ? `<path d="M-7,${-w / 2} v${w} M-4,${-w / 2} v${w} M-1,${-w / 2} v${w}" stroke="#0003" stroke-width="1"/>` : ''}</g>
+        ${sleeveMarkup(look, w)}
+        <g class="cuf">${cuffMarkup(look, w)}</g>
         <g class="hnd"><g transform="scale(${geo.scale})">${handMarkup(look, side === 'A')}</g></g>
       </g>`;
     }
@@ -2344,7 +2477,6 @@ async function takeSeat(i) { cmd('sit', { seat: i }); }
 
 /* ===================== bots, solo mode, coach, tutorial ===================== */
 let solo = false, tut = null, coachOn = store.get('coach', true);
-const BOT_NAMES = ['Джек', 'Эмили', 'Майк', 'Оливия', 'Тони', 'София', 'Райан', 'Грейс', 'Фрэнк', 'Миа', 'Лео', 'Хлоя'];
 const LEVELS = { easy: 'Новичок', mid: 'Любитель', pro: 'Акула' };
 const isBot = u => !!(S && S.bots && S.bots[u]);
 const C = s => '♠♥♦♣'.indexOf(s.slice(-1)) * 13 + '23456789TJQKA'.indexOf(s.slice(0, -1).replace('10', 'T'));
@@ -2353,10 +2485,11 @@ function addBot(s, seat, level) {
   s.bots = s.bots || {}; s.names = s.names || {};
   const id = 'bot_' + Math.random().toString(36).slice(2, 9);
   const taken = new Set(Object.values(s.names));
-  const free = BOT_NAMES.filter(n => !taken.has(n));
+  const gender = Math.random() < .5 ? 'm' : 'f';
+  const free = (gender === 'f' ? F_NAMES : M_NAMES).filter(n => !taken.has(n));
   s.names[id] = free.length ? free[Math.floor(Math.random() * free.length)] : 'Бот ' + (Object.keys(s.bots).length + 1);
   s.bots[id] = { level: LEVELS[level] ? level : 'mid' };
-  Engine.setLook(s, id, { skin: Math.floor(Math.random() * 5), sleeve: Math.floor(Math.random() * 5), acc: Math.floor(Math.random() * 4) });
+  Engine.setLook(s, id, randomLook(gender));
   return Engine.sit(s, id, seat, Date.now());
 }
 
@@ -2855,25 +2988,46 @@ function openInvite() {
 }
 function myLook() {
   let l = store.get('look', null);
-  if (!l) { l = { skin: Math.floor(Math.random() * 5), sleeve: Math.floor(Math.random() * 5), acc: Math.floor(Math.random() * 4) }; store.set('look', l); }
-  return l;
+  if (!l) { l = randomLook('m'); store.set('look', l); }
+  return normLook(l);
 }
 function previewHands(l) {
-  const sv = SLEEVES[l.sleeve]; const col = sv.tattoo ? SKINS[l.skin][0] : sv.c;
-  const arm = (y, mir) => `<g transform="translate(0,${y})"><path d="M-70,0 L0,0" stroke="${col}" stroke-width="23" stroke-linecap="round"/>${sv.knit ? `<path d="M-70,0 L0,0" stroke="#0003" stroke-width="18" stroke-dasharray="2 3"/>` : ''}${sv.tattoo ? `<path d="M-70,0 L0,0" stroke="#24324a" stroke-opacity=".55" stroke-width="10" stroke-dasharray="7 3 2 3"/>` : ''}${sv.cuff ? `<rect x="-9" y="-12.5" width="${sv.rib ? 10 : 8}" height="25" rx="3" fill="${sv.cuff}"/>` : ''}<g transform="scale(1.4)">${handMarkup(l, mir)}</g></g>`;
-  return `<svg viewBox="-80 -70 160 140" width="190" height="166" aria-hidden="true"><g transform="rotate(-90)">${arm(-34, true)}${arm(34, false)}</g></svg>`;
+  ensureHandDefs();
+  const w = l.g === 'f' ? 20 : 24;
+  const pts = { A: [[-90, -40], [-6, -40]], B: [[-90, 40], [-6, 40]] };
+  const arm = (side) => {
+    const [e, h] = pts[side];
+    const d = `M${e[0]},${e[1]} L${h[0]},${h[1]}`;
+    return `<g>${sleeveMarkup(l, w).replace(/<path class="(slv[^"]*)"/g, `<path d="${d}" class="$1"`)}<g transform="translate(${h[0]},${h[1]})">${cuffMarkup(l, w)}</g><g transform="translate(${h[0]},${h[1]}) scale(1.4)">${handMarkup(l, side === 'A')}</g></g>`;
+  };
+  return `<svg viewBox="-80 -75 160 150" width="190" height="178" aria-hidden="true"><g transform="rotate(-90)">${arm('A')}${arm('B')}</g></svg>`;
 }
 function openLook(inGame, after) {
   const ov = $('#menu'); ov.hidden = false;
   const l = Object.assign({}, myLook());
   const draw = () => {
+    const G = garment(l), acc = ACCESSORIES[l.g];
     $('#menuPanel').innerHTML = `<h2>Мои руки</h2><div class="lookWrap"><div class="lookPrev">${previewHands(l)}</div><div class="lookOpts">
+      <h3>Руки</h3><div class="chipsel">${[['m', 'Мужские'], ['f', 'Женские']].map(([k, t]) => `<button class="${l.g === k ? 'on' : ''}" data-g="${k}">${t}</button>`).join('')}</div>
       <h3>Кожа</h3><div class="sw">${SKINS.map((s, k) => `<button class="swc ${l.skin === k ? 'on' : ''}" data-k="skin" data-v="${k}" style="background:${s[0]}" aria-label="Тон ${k + 1}"></button>`).join('')}</div>
-      <h3>Рукав</h3><div class="chipsel">${SLEEVES.map((s, k) => `<button class="${l.sleeve === k ? 'on' : ''}" data-k="sleeve" data-v="${k}">${s.name}</button>`).join('')}</div>
-      <h3>Аксессуар</h3><div class="chipsel">${ACCS.map((s, k) => `<button class="${l.acc === k ? 'on' : ''}" data-k="acc" data-v="${k}">${s}</button>`).join('')}</div>
-      </div></div><div class="row2" style="margin-top:12px"><button class="btn gold" id="lkSave">Готово</button></div>`;
-    $('#menuPanel').querySelectorAll('[data-k]').forEach(b => b.onclick = () => { l[b.dataset.k] = +b.dataset.v; draw(); });
-    $('#lkSave').onclick = () => { store.set('look', l); ov.hidden = true; if (inGame && S) cmd('look', { look: l }); if (after) after(); };
+      <h3>Одежда</h3><div class="chipsel">${WARDROBE[l.g].map(w => `<button class="${l.sl === w.id ? 'on' : ''}" data-sl="${w.id}">${w.name}</button>`).join('')}</div>
+      ${G.colors.length ? `<h3>Цвет</h3><div class="sw">${G.colors.map((c, k) => `<button class="swc ${l.col === k ? 'on' : ''}" data-k="col" data-v="${k}" style="background:${c}" aria-label="Цвет ${k + 1}"></button>`).join('')}</div>` : ''}
+      ${G.kind === 'tattoo' ? `<h3>Рисунок</h3><div class="chipsel">${TATTOOS.map((t, k) => `<button class="${l.tat === k ? 'on' : ''}" data-k="tat" data-v="${k}">${t}</button>`).join('')}</div>` : ''}
+      ${l.g === 'f' ? `<h3>Маникюр</h3><div class="sw">${NAILS.map(([t, c], k) => `<button class="swc ${l.nail === k ? 'on' : ''} ${c ? '' : 'none'}" data-k="nail" data-v="${k}" style="background:${c || '#f1e1d6'}" aria-label="${t}" title="${t}"></button>`).join('')}</div>` : ''}
+      <h3>Аксессуары <small>можно несколько</small></h3><div class="chipsel">${acc.map(a => `<button class="${l.acc.includes(a.id) ? 'on' : ''}" data-acc="${a.id}">${a.name}</button>`).join('')}</div>
+      </div></div><div class="row2" style="margin-top:12px"><button class="btn gold" id="lkSave">Готово</button><button class="btn dark" id="lkRand">Случайно</button></div>`;
+    const P = $('#menuPanel');
+    P.querySelectorAll('[data-g]').forEach(b => b.onclick = () => { if (l.g !== b.dataset.g) { Object.assign(l, normLook({ g: b.dataset.g, skin: l.skin, sl: WARDROBE[b.dataset.g][0].id, col: 0, acc: [] })); } draw(); });
+    P.querySelectorAll('[data-k]').forEach(b => b.onclick = () => { l[b.dataset.k] = +b.dataset.v; draw(); });
+    P.querySelectorAll('[data-sl]').forEach(b => b.onclick = () => { l.sl = b.dataset.sl; l.col = 0; draw(); });
+    P.querySelectorAll('[data-acc]').forEach(b => b.onclick = () => {
+      const id = b.dataset.acc, A = acc.find(x => x.id === id);
+      if (l.acc.includes(id)) l.acc = l.acc.filter(x => x !== id);
+      else { l.acc = l.acc.filter(x => (acc.find(y => y.id === x) || {}).slot !== A.slot); l.acc.push(id); if (l.acc.length > 4) l.acc.shift(); }
+      draw();
+    });
+    $('#lkRand').onclick = () => { Object.assign(l, randomLook(l.g)); draw(); };
+    $('#lkSave').onclick = () => { const n = normLook(l); store.set('look', n); ov.hidden = true; if (inGame && S) cmd('look', { look: n }); if (after) after(); };
   };
   draw();
 }
