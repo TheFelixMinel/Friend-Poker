@@ -316,7 +316,7 @@ table.led td:first-child,table.led th:first-child{text-align:left}
 .sw{flex-wrap:wrap}
 .lookOpts{max-height:360px;overflow:auto;padding-right:4px}
 
-#tableWrap{position:absolute;left:0;top:0;width:1120px;height:500px;transform-origin:0 0;transform:translate(-14px,50px) scale(.8)}
+#tableWrap{position:absolute;left:0;top:0;width:1120px;height:500px;transform-origin:0 0;transform:translate(0px,40px) scale(.86)}
 #sidePanel{position:absolute;left:854px;top:56px;width:260px;bottom:8px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-end;gap:8px;padding:8px;border-radius:12px;background:linear-gradient(#0d100ee6,#090b0af2);border:1px solid #ffffff14;box-shadow:inset 0 1px 0 #ffffff0d,0 8px 24px #0008}
 #sidePanel .waitNote{font-size:15px;padding:12px 10px}
 #sidePanel .btn{min-width:0}
@@ -338,6 +338,41 @@ table.led td:first-child,table.led th:first-child{text-align:left}
 #sidePanel .btn.pre.h3{font-size:13.5px;letter-spacing:0}
 #sidePanel .btn.pre .rd{width:13px;height:13px}
 #controls.turnMode .q{font-size:14px}
+
+/* ===== 1.0 layout: buttons float bottom-right, smaller ===== */
+#sidePanel{left:auto!important;top:auto!important;right:10px;bottom:8px;width:226px!important;background:none!important;border:none!important;box-shadow:none!important;padding:0!important;gap:6px!important;justify-content:flex-end}
+#controls.turnMode{grid-template-columns:1fr 1fr!important;gap:6px}
+#controls.turnMode .h2{grid-column:span 1!important;height:44px!important}
+#controls.turnMode .h3{grid-column:span 1!important;height:38px!important}
+#controls.turnMode .h6{grid-column:span 2!important;height:38px!important}
+#sidePanel .btn{font-size:15px!important;letter-spacing:.03em;text-transform:none;font-weight:700}
+#sidePanel .btn small{font-size:13px!important;font-weight:600;opacity:.85}
+#sidePanel .waitNote{font-size:14px;padding:9px 10px}
+#coach{font-size:12px!important;padding:7px 9px!important}
+#raisePanel{padding:8px!important;gap:6px!important}
+#raisePanel .amt b{font-size:20px}
+#raisePanel .q button{height:30px;font:700 13px var(--hud);letter-spacing:.03em}
+#raisePanel .q button.pulse{animation:pulse 1.2s ease-in-out infinite;border-color:#e3c27a}
+#raiseClose{font:700 13px var(--hud)!important;letter-spacing:.06em;text-transform:uppercase}
+/* pre-actions: identical to the action buttons, only a gold tick marks the chosen one */
+#sidePanel .btn.pre{font-size:15px!important;text-transform:none;letter-spacing:.03em;padding:0 8px!important;gap:6px!important;border:2px solid #0000}
+#sidePanel .btn.pre.h3{font-size:14px!important}
+.btn.pre .rd{display:none}
+.btn.pre .tk{width:15px;height:15px;border-radius:50%;flex:none;display:grid;place-items:center;font-size:10px;line-height:1;color:#0000;box-shadow:inset 0 0 0 1.5px currentColor;opacity:.4}
+.btn.pre.on .tk{opacity:1;color:#241a05;background:var(--gold);box-shadow:none}
+.btn.pre.on{border-color:var(--gold)!important}
+/* chip piles and winning cards */
+.pile .chip{transition:none}
+@keyframes winLift{from{translate:0 0}to{translate:0 -12px}}
+.verTag{font:700 11px var(--hud);color:#241a05;background:var(--gold);border-radius:4px;padding:2px 5px;margin-left:-2px;align-self:flex-start;margin-top:4px}
+.ver{font:600 13px var(--hud);letter-spacing:.04em;color:#a9a497;margin:-2px 0 10px}
+.ver a{color:var(--gold)}
+.news{margin:6px 0 0;padding-left:18px;display:flex;flex-direction:column;gap:6px;font:500 14px/1.4 var(--body);color:#ddd8cc}
+.news b{color:#f2e3b4}
+.fx{will-change:auto!important}
+#log{width:200px!important}
+
+#raisePanel .q button{font-size:12px!important;letter-spacing:0!important;white-space:nowrap;padding:0 2px}
 
 </style>
 </head>
@@ -424,7 +459,7 @@ table.led td:first-child,table.led th:first-child{text-align:left}
  </div>
 
   <div class="layer" id="hud">
-    <div class="hudTop" style="left:10px"><span id="title">Покер</span><span class="pill" id="tableInfo">Холдем</span></div>
+    <div class="hudTop" style="left:10px"><span id="title">Покер</span><span class="verTag">1.0</span><span class="pill" id="tableInfo">Холдем</span></div>
     <div class="hudTop" style="right:10px"><span class="pill" id="onlineInfo" hidden></span>
       <button class="pill barBtn" id="bBar">Бар</button>
       <button class="pill invite" id="bInvite">+ Пригласить</button>
@@ -434,10 +469,10 @@ table.led td:first-child,table.led th:first-child{text-align:left}
 
     <div id="sidePanel">
     <div id="raisePanel" hidden>
-      <div class="amt"><span>Ставка до</span><b id="raiseAmt">0</b></div>
+      <div class="amt"><span id="raiseLbl">Raise to</span><b id="raiseAmt">0</b></div>
       <input id="raiseRange" type="range" aria-label="Размер ставки">
-      <div class="q"><button id="q1">½ банка</button><button id="q2">¾</button><button id="q3">Банк</button><button id="q4">Олл-ин</button></div>
-      <button id="raiseClose" style="background:none;border:none;color:#aaa;font:600 13px var(--hud);cursor:pointer">Отменить</button>
+      <div class="q"><button id="q1">Min</button><button id="q2">3 BB</button><button id="q3">Pot</button><button id="q4">All-in</button></div>
+      <button id="raiseClose" style="background:none;border:none;color:#aaa;font:600 13px var(--hud);cursor:pointer">Cancel</button>
     </div>
     <div id="coach" hidden></div>
     <div id="controls"></div>
@@ -889,14 +924,18 @@ const fmt = n => (n || 0).toLocaleString('ru-RU').replace(/,/g, ' ');
 const clone = o => JSON.parse(JSON.stringify(o));
 
 /* visual slots, clockwise from bottom-left; viewer always sits at slot 0 */
-const SLOTS = [
-  { plate: [372, 470], cards: [372, 380], stack: [500, 444], bet: [474, 362], btn: [300, 404], drink: [556, 440], side: 'L' },
-  { plate: [128, 318], cards: [128, 256], stack: [226, 342], bet: [296, 302], btn: [212, 268], drink: [196, 212], side: 'L' },
-  { plate: [218, 122], cards: [218, 186], stack: [312, 150], bet: [338, 210], btn: [300, 112], drink: [150, 182], side: 'L' },
-  { plate: [902, 122], cards: [902, 186], stack: [808, 150], bet: [782, 210], btn: [820, 112], drink: [970, 182], side: 'R' },
-  { plate: [992, 318], cards: [992, 256], stack: [894, 342], bet: [824, 302], btn: [908, 268], drink: [924, 212], side: 'R' },
-  { plate: [748, 470], cards: [748, 392], stack: [642, 446], bet: [646, 362], btn: [828, 420], drink: [812, 380], side: 'R' },
-];
+// seats sit on the rail; everything else is placed along the line from the seat to the table centre.
+// d = towards the centre, n = the player's right-hand side, s = side of the chip stack (+1 right, -1 left)
+const SEAT_POS = [[372, 468], [104, 296], [318, 92], [802, 92], [1016, 296], [748, 468]];
+const STACK_SIDE = [1, -1, 1, -1, -1, -1];
+const SLOTS = SEAT_POS.map((P, i) => {
+  const C = i === 0 || i === 5 ? [560, 230] : [560, 300];
+  let dx = C[0] - P[0], dy = C[1] - P[1]; const l = Math.hypot(dx, dy); dx /= l; dy /= l;
+  const nx = -dy, ny = dx, s = STACK_SIDE[i];
+  const off = Math.abs(dx) * 62;     // side seats: step past the wide plate
+  const at = (f, sd) => [Math.round(P[0] + dx * (f + off) + nx * sd), Math.round(P[1] + dy * (f + off) + ny * sd)];
+  return { plate: P, d: [dx, dy], n: [nx, ny], s, off, cards: at(76, -s * 6), stack: at(50, s * 98), bet: i === 0 || i === 5 ? at(150, s * 40) : at(128, s * 16), btn: at(36, -s * 104), drink: at(30, -s * 142), side: P[0] < 560 ? 'L' : 'R' };
+});
 const BOARD_Y = 240, BOARD_X = k => CX + (k - 2) * 62;
 const POT = [CX, 162], DECK = [657, 108], MUCK = [470, 110], BUCKET = [430, 106];
 const SHOULDER = { L: [516, 22], R: [604, 22] }, REST = { L: [530, 96], R: [592, 100] };
@@ -909,6 +948,7 @@ const DENOMS = [
 let uid = null;
 let S = null;              // latest authoritative table state
 let disp = null;           // what is currently drawn
+let dropSeat = -1, winAt = 0;
 let lastSeq = 0, seenSeq = 0, queue = [], animating = false, calmAt = 0;
 let names = {}, online = new Set(), busy = false;
 let preAct = null, preCallAmt = 0, raiseOpen = false, raiseTo = 0;
@@ -919,18 +959,25 @@ let logOpen = true;
 
 const stage = $('#stage');
 const L = { felt: $('#feltItems'), fx: $('#fxLayer'), seats: $('#seatLayer'), hud: $('#hud'), txt: $('#txtLayer') };
-const TK = .8, TOX = -14, TOY = 50;          // table area is scaled into the left part of the stage
+const TK = .86, TOX = 0, TOY = 40;          // table area is scaled into the left part of the stage
 const toStage = (x, y) => [TOX + x * TK, TOY + y * TK];
 
 /* ---------------- scaling ---------------- */
 let force = false;
+const VERSION = '1.0', CODENAME = 'Royal Flush';
+const ZOOM_OK = !!(window.CSS && CSS.supports && CSS.supports('zoom', '2'));
 function fit() {
   const vw = innerWidth, vh = innerHeight;
   const sc = Math.min(vw / W, vh / H);
-  stage.style.transform = `scale(${sc}) translate(-50%,-50%)`;
-  stage.style.left = '50%'; stage.style.top = '50%';
-  stage.style.transform = `translate(-50%,-50%) scale(${sc})`;
-  stage.style.transformOrigin = '50% 50%';
+  if (ZOOM_OK) {
+    // zoom makes the browser lay out and paint at the real screen size, so it stays sharp on big monitors
+    stage.style.transform = 'none'; stage.style.zoom = sc;
+    stage.style.left = ((vw - W * sc) / 2 / sc) + 'px'; stage.style.top = ((vh - H * sc) / 2 / sc) + 'px';
+  } else {
+    stage.style.left = '50%'; stage.style.top = '50%';
+    stage.style.transform = `translate(-50%,-50%) scale(${sc})`;
+    stage.style.transformOrigin = '50% 50%';
+  }
 }
 addEventListener('resize', fit); fit();
 $('#rotateSkip').onclick = () => { $('#rotate').style.display = 'none'; };
@@ -1011,7 +1058,7 @@ function cardEl(c, size = '', down = false) {
   return el;
 }
 
-function cardSize(size) { return size === 'sm' ? [38, 54] : size === 'lg' ? [64, 92] : [56, 80]; }
+function cardSize(size) { return size === 'sm' ? [38, 54] : size === 'lg' ? [52, 75] : [56, 80]; }
 function place(el, x, y) { el.style.left = x + 'px'; el.style.top = y + 'px'; return el; }
 
 function breakdown(amount) {
@@ -1071,6 +1118,7 @@ const handTok = { L: 0, R: 0 }, handBusy = { L: 0, R: 0 };
 function moveHand(side, x, y, dur = 320, e = ease.io, carry) {
   // a newer move on the same hand cancels the older one, so two tweens never fight
   const a = arms[side], x0 = a.x, y0 = a.y, tok = ++handTok[side];
+  { const sh = SHOULDER[side], vx = x - sh[0], vy = y - sh[1], len = Math.hypot(vx, vy) || 1, k = Math.min(1, 190 / len); x = sh[0] + vx * k; y = sh[1] + vy * k; }
   handBusy[side]++;
   return tween(dur, t => {
     if (handTok[side] !== tok) { if (carry) carry(a.x, a.y, 1); return false; }
@@ -1334,24 +1382,21 @@ function setPose(seat, side, pose) {
   const st = PH[seat]; if (!st) return;
   const h = st[side]; if (h.pose === pose) return;
   h.pose = pose;
-  h.hnd.innerHTML = `<g transform="scale(${st.geo.scale})">${handMarkup(st.look, side === 'A', pose)}</g>`;
+  h.hnd.innerHTML = `<g transform="scale(${st.geo.scale})">${handMarkup(st.look, isLeftHand(st.geo, side), pose)}</g>`;
 }
 
 /* per-seat hand geometry in stage coordinates */
 function handGeo(seat) {
-  const sl = slot(seat), v = vis(seat);
-  const P = sl.plate, St = sl.stack, Cd = sl.cards;
-  const unit = (a, b) => { const dx = b[0] - a[0], dy = b[1] - a[1], l = Math.hypot(dx, dy) || 1; return [dx / l, dy / l]; };
-  if (v === 0) return { scale: 1.18, A: { elbow: [238, 552], rest: [286, 468] }, B: { elbow: [520, 556], rest: [506, 484] } };
-  if (v === 5) return { scale: 1, A: { elbow: [924, 548], rest: [874, 462] }, B: { elbow: [606, 556], rest: [618, 484] } };
-  const dS = unit(P, St), dC = unit(P, Cd);
-  const restB = [St[0] - dS[0] * 40, St[1] - dS[1] * 40];
-  const restA = [Cd[0] - dC[0] * 34 + dC[1] * 30, Cd[1] - dC[1] * 34 - dC[0] * 30];
-  const out = unit([CX, CY], P);
-  const elbowB = [restB[0] + out[0] * 80 - dS[0] * 30, restB[1] + out[1] * 80 - dS[1] * 30];
-  const elbowA = [restA[0] + out[0] * 80 - dC[0] * 30, restA[1] + out[1] * 80 - dC[1] * 30];
-  return { scale: 1, A: { elbow: elbowA, rest: restA }, B: { elbow: elbowB, rest: restB } };
+  // A = card hand, B = chip hand (on the stack's side); shoulders sit behind the plate
+  const sl = slot(seat), me = vis(seat) === 0 && S && S.seats[seat] && S.seats[seat].uid === uid;
+  const P = sl.plate, d = sl.d, n = sl.n, s = sl.s, sc = me ? 1.1 : 1;
+  const o = sl.off * .6;
+  const at = (f, sd) => [P[0] + d[0] * (f + o) + n[0] * sd, P[1] + d[1] * (f + o) + n[1] * sd];
+  return { scale: sc, flipB: s < 0, reach: 150 * sc, minReach: 46 * sc,
+    A: { elbow: at(-34, -s * 60), rest: at(30, -s * 84) },
+    B: { elbow: at(-34, s * 60), rest: at(30, s * 72) } };
 }
+const isLeftHand = (geo, side) => side === 'A' ? !geo.flipB : geo.flipB;
 
 const PH = {};          // seat -> { look, geo, A:{x,y,tok,busy,els}, B:{...}, key }
 const pLayer = $('#pArms');
@@ -1374,7 +1419,7 @@ function buildHands() {
       html += `<g data-h="${side}">
         ${sleeveMarkup(look, w)}
         <g class="cuf">${cuffMarkup(look, w)}</g>
-        <g class="hnd"><g transform="scale(${geo.scale})">${handMarkup(look, side === 'A')}</g></g>
+        <g class="hnd"><g transform="scale(${geo.scale})">${handMarkup(look, isLeftHand(geo, side))}</g></g>
       </g>`;
     }
     g.innerHTML = html;
@@ -1404,6 +1449,10 @@ function drawPH(seat, side) {
 function movePH(seat, side, x, y, dur = 260, e = ease.io, carry) {
   const st = PH[seat]; if (!st) return Promise.resolve();
   const h = st[side], x0 = h.x, y0 = h.y, tok = ++h.tok;
+  { // an arm can't stretch: reach as far as the arm allows, the chips/cards travel the rest
+    const e0 = st.geo[side].elbow, vx = x - e0[0], vy = y - e0[1], len = Math.hypot(vx, vy) || 1;
+    const k = Math.max(st.geo.minReach, Math.min(st.geo.reach, len)) / len; x = e0[0] + vx * k; y = e0[1] + vy * k;
+  }
   h.busy++;
   const ex = st.geo[side].elbow, a0 = Math.atan2(y0 - ex[1], x0 - ex[0]), a1 = Math.atan2(y - ex[1], x - ex[0]);
   const bend = Math.max(-14, Math.min(14, (a1 - a0) * 180 / Math.PI * .6));
@@ -1498,8 +1547,8 @@ async function trick(seat) {
       setPose(seat, 'A', 'pinch');
       await movePH(seat, 'A', ...tgt, 260);
       const cs = cardsAt(seat);
-      cs.forEach(c => c.animate([{ translate: '0 0' }, { translate: '0 -5px' }, { translate: '0 0' }], { duration: 700, easing: 'ease-in-out' }));
-      await liftPH(seat, 'A', 1, 200); await sleep(320); await liftPH(seat, 'A', 0, 200);
+      cs.forEach((c, k) => { c.style.transformOrigin = '50% 100%'; c.animate([{ rotate: '1 -.4 0 0deg' }, { rotate: `1 ${k ? .5 : -.5} 0 46deg`, offset: .3 }, { rotate: `1 ${k ? .5 : -.5} 0 46deg`, offset: .7 }, { rotate: '1 -.4 0 0deg' }], { duration: 1100, easing: 'ease-in-out', delay: k * 60 }); });
+      await liftPH(seat, 'A', .6, 260); await sleep(560); await liftPH(seat, 'A', 0, 260);
       await restPH(seat, 'A', 280);
     } else if (kind === 'sip') {
       const pos = drinkPos(seat); const gl = L.felt.querySelector(`.glass[data-seat="${seat}"]`); if (!gl) return;
@@ -1609,7 +1658,9 @@ function render() {
   L.felt.innerHTML = ''; L.seats.innerHTML = '';
   // board
   const WC = winCards(d);
-  d.board.forEach((c, k) => { const el = cardEl(c); place(el, BOARD_X(k) - 28, BOARD_Y - 40); if (WC) el.classList.add(WC.set.has(c) ? 'win' : 'dim'); L.felt.appendChild(el); });
+  if (WC && !winAt) winAt = Date.now(); if (!WC) winAt = 0;
+  const liftWin = el => { const t = Date.now() - winAt; el.style.animation = `winLift .45s ease-out ${-Math.min(t, 450)}ms both`; };
+  d.board.forEach((c, k) => { const el = cardEl(c); place(el, BOARD_X(k) - 28, BOARD_Y - 40); if (WC) { el.classList.add(WC.set.has(c) ? 'win' : 'dim'); if (WC.set.has(c)) liftWin(el); } L.felt.appendChild(el); });
   if (WC) { const lb = document.createElement('div'); lb.className = 'comboLbl'; lb.textContent = WC.name; place(lb, CX, BOARD_Y + 50); L.felt.appendChild(lb); }
   // pot
   const potAmt = d.pot || 0;
@@ -1633,21 +1684,22 @@ function render() {
     if (p.stack > 0) { const st = stackEl(p.stack, 3); st.dataset.seat = i; place(st, ...sl.stack); L.felt.appendChild(st); st.addEventListener('pointerdown', () => { if (isMe) emitRiffle(i); }); if (isMe) st.style.cursor = 'pointer'; }
     // bet
     if (p.bet > 0) {
-      const st = stackEl(p.bet, 2); place(st, sl.bet[0], sl.bet[1]); L.felt.appendChild(st);
-      const lb = document.createElement('div'); lb.className = 'betLbl'; lb.innerHTML = `<span class="coin"></span>${fmt(p.bet)}`; place(lb, sl.bet[0], sl.bet[1] + 12); L.felt.appendChild(lb);
+      const st = pileEl(p.bet, i); place(st, sl.bet[0], sl.bet[1]); L.felt.appendChild(st);
+      if (dropSeat === i) { dropSeat = -1; st.querySelectorAll('.chip').forEach((c, k) => c.animate([{ translate: `${(k % 3 - 1) * 4}px -18px`, opacity: .3 }, { translate: '0 2px', opacity: 1, offset: .7 }, { translate: '0 0' }], { duration: 260 + k * 35, easing: 'cubic-bezier(.3,1.5,.5,1)' })); }
+      const lb = document.createElement('div'); lb.className = 'betLbl'; lb.innerHTML = `<span class="coin"></span>${fmt(p.bet)}`; place(lb, sl.bet[0], sl.bet[1] + 20); L.felt.appendChild(lb);
     }
     // cards
     if (p.cards) {
       const big = isMe && vis(i) === 0;
       const size = big ? 'lg' : 'sm'; const [cw, ch] = cardSize(size);
-      const faceUp = isMe || p.show;
+      const faceUp = (isMe && !p.peekHide) || p.show;
       p.cards.forEach((c, k) => {
-        const el = cardEl(faceUp ? c : -1, size, !faceUp);
-        const off = big ? (k ? 34 : -34) : (k ? 21 : -21);
+        const el = cardEl(faceUp || (isMe && p.peekHide) ? c : -1, size, !faceUp);
+        const off = big ? (k ? 28 : -28) : (k ? 21 : -21);
         place(el, sl.cards[0] + off - cw / 2, sl.cards[1] - ch / 2);
         el.style.transform = (faceUp ? '' : 'rotateY(180deg) ') + `rotate(${k ? 4 : -4}deg)`;
         if (d.phase === 'showdown' && (p.show || isMe) && d.result) {
-          if (WC) el.classList.add(W8.has(i) && WC.set.has(c) ? 'win' : 'dim');
+          if (WC) { const w = W8.has(i) && WC.set.has(c); el.classList.add(w ? 'win' : 'dim'); if (w) liftWin(el); }
           else if (p.show) el.classList.add(W8.has(i) ? 'win' : 'dim');
         }
         L.felt.appendChild(el);
@@ -1741,20 +1793,12 @@ function renderHud() {
   if (p.sitOut) { c.innerHTML = `<button class="btn gold wide" id="bBack">Вернуться в игру</button>`; $('#bBack').onclick = () => cmd('sitout', { val: false }); return; }
   if (myTurn) {
     const lg = Engine.legal(st, i); if (!lg) return;
-    const bb = st.cfg.bb;
-    const qTo = n => Math.min(lg.maxTo, Math.max(lg.minTo, n * bb));
-    const q1 = qTo(1), q3 = qTo(3);
     c.classList.add('turnMode');
-    c.innerHTML = `<button class="btn dark h2" id="bFold">Фолд</button>
-      <button class="btn h2" id="bCall">${lg.canCheck ? 'Чек' : `Колл <small>${fmt(lg.toCall)}</small>`}</button>
-      ${lg.canRaise ? `<button class="btn gold q" id="bQ1"><b>1 ББ</b><small>${q1 >= lg.maxTo ? 'олл-ин' : 'до ' + fmt(q1)}</small></button>
-      <button class="btn gold q" id="bQ3"><b>3 ББ</b><small>${q3 >= lg.maxTo ? 'олл-ин' : 'до ' + fmt(q3)}</small></button>
-      <button class="btn red q" id="bQA"><b>Олл-ин</b><small>${fmt(lg.maxTo)}</small></button>` : ''}
-      <button class="btn gold h6" id="bRaise" ${lg.canRaise ? '' : 'disabled'}>${raiseOpen ? (raiseTo >= lg.maxTo ? 'Олл-ин' : (lg.curBet === 0 ? 'Бет' : 'Рейз') + ` до <small>${fmt(raiseTo)}</small>`) : (lg.curBet === 0 ? 'Своя ставка…' : 'Свой рейз…')}</button>`;
-    if (lg.canRaise) {
-      const qa = to => doAct(to >= lg.maxTo ? 'allin' : 'raise', to);
-      $('#bQ1').onclick = () => qa(q1); $('#bQ3').onclick = () => qa(q3); $('#bQA').onclick = () => doAct('allin');
-    }
+    const verb = lg.curBet === 0 ? 'Bet' : 'Raise';
+    const confirmTxt = raiseTo >= lg.maxTo ? `All-in <small>${fmt(lg.maxTo)}</small>` : (lg.curBet === 0 ? `Bet <small>${fmt(raiseTo)}</small>` : `Raise to <small>${fmt(raiseTo)}</small>`);
+    c.innerHTML = `<button class="btn dark h2" id="bFold">Fold</button>
+      <button class="btn h2" id="bCall">${lg.canCheck ? 'Check' : `Call <small>${fmt(lg.toCall)}</small>`}</button>
+      <button class="btn gold h6" id="bRaise" ${lg.canRaise ? '' : 'disabled'}>${raiseOpen ? confirmTxt : verb}</button>`;
     $('#bFold').onclick = () => doAct('fold');
     $('#bCall').onclick = () => doAct(lg.canCheck ? 'check' : 'call');
     $('#bRaise').onclick = () => {
@@ -1764,10 +1808,16 @@ function renderHud() {
     if (raiseOpen) showRaise(lg);
     // tutorial: only the taught action is available
     if (tut && tut.allow) {
-      const ids = { call: '#bCall', check: '#bCall', fold: '#bFold', q1: '#bQ1', q3: '#bQ3', allin: '#bQA', raise: '#bRaise' };
+      const ids = { call: '#bCall', check: '#bCall', fold: '#bFold', q1: '#bRaise', q3: '#bRaise', allin: '#bRaise', raise: '#bRaise' };
       const ok = new Set(tut.allow.map(a => ids[a]));
+      if (tut.allow.includes('q3') && raiseOpen) {   // inside the raise panel only "3 BB" and the confirm button work
+        $('#raisePanel').querySelectorAll('button, input').forEach(x => { if (x.id !== 'q2') x.disabled = true; });
+        const tgt = Math.max(lg.minTo, Math.min(lg.maxTo, 3 * st.cfg.bb));
+        const q = $('#q2'); q.disabled = false; q.classList.toggle('pulse', raiseTo !== tgt);
+        const br = $('#bRaise'); br.disabled = raiseTo !== tgt; br.classList.toggle('pulse', raiseTo === tgt);
+      }
       c.querySelectorAll('button').forEach(b => { if (ok.has('#' + b.id)) b.classList.add('pulse'); else b.disabled = true; });
-      $('#raisePanel').hidden = true;
+      if (!tut.allow.includes('q3')) $('#raisePanel').hidden = true;
     }
     // coach bubble
     const co = $('#coach');
@@ -1779,9 +1829,9 @@ function renderHud() {
     const toCall = Math.max(0, h.curBet - p.bet);
     if (preAct === 'call' && preCallAmt !== toCall) preAct = null;
     // same grid, size and places as the turn buttons: row 1 = Fold | Check/Call, row 2 = Check-Fold | Call any
-    const opts = [['fold', 'Фолд', 'dark h2'], toCall > 0 ? ['call', `Колл <small>${fmt(Math.min(toCall, p.stack))}</small>`, 'h2'] : ['check', 'Чек', 'h2'], ['checkfold', 'Чек / Фолд', 'dark h3'], ['callany', 'Колл любую', 'h3']];
+    const opts = [['fold', 'Fold', 'dark h2'], toCall > 0 ? ['call', `Call <small>${fmt(Math.min(toCall, p.stack))}</small>`, 'h2'] : ['check', 'Check', 'h2'], ['checkfold', 'Check / Fold', 'dark h3'], ['callany', 'Call any', 'h3']];
     c.classList.add('turnMode');
-    c.innerHTML = opts.map(([k, t, cls]) => `<button class="btn pre ${cls} ${preAct === k ? 'on' : ''}" data-k="${k}"><span class="rd"></span><span>${t}</span></button>`).join('');
+    c.innerHTML = opts.map(([k, t, cls]) => `<button class="btn pre ${cls} ${preAct === k ? 'on' : ''}" data-k="${k}" aria-pressed="${preAct === k}"><span class="tk">✓</span><span>${t}</span></button>`).join('');
     c.querySelectorAll('.pre').forEach(b => b.onclick = () => { const k = b.dataset.k; preAct = preAct === k ? null : k; preCallAmt = toCall; renderHud(); });
     return;
   }
@@ -1790,20 +1840,23 @@ function renderHud() {
 }
 function showRaise(lg) {
   const rp = $('#raisePanel'); rp.hidden = false;
-  const pot = lg.pot;
   const rng = $('#raiseRange'); rng.min = lg.minTo; rng.max = lg.maxTo; rng.step = Math.max(1, Math.round(S.cfg.bb / 2)); rng.value = raiseTo;
+  $('#raiseLbl').textContent = lg.curBet === 0 ? 'Bet' : 'Raise to';
   $('#raiseAmt').textContent = fmt(raiseTo);
-  const callFirst = lg.toCall;
-  const potTo = (f) => Math.min(lg.maxTo, Math.max(lg.minTo, Math.round(lg.curBet + (pot + callFirst) * f)));
-  $('#q1').onclick = () => setRaise(potTo(.5), lg); $('#q2').onclick = () => setRaise(potTo(.75), lg);
-  $('#q3').onclick = () => setRaise(potTo(1), lg); $('#q4').onclick = () => setRaise(lg.maxTo, lg);
+  const clampTo = v => Math.max(lg.minTo, Math.min(lg.maxTo, Math.round(v)));
+  const potTo = clampTo(lg.curBet + lg.pot + lg.toCall);           // pot-sized raise
+  $('#q1').onclick = () => setRaise(lg.minTo, lg);
+  $('#q2').onclick = () => setRaise(clampTo(3 * S.cfg.bb), lg);
+  $('#q3').onclick = () => setRaise(potTo, lg);
+  $('#q4').onclick = () => setRaise(lg.maxTo, lg);
   rng.oninput = () => setRaise(+rng.value, lg, true);
   $('#raiseClose').onclick = () => { raiseOpen = false; renderHud(); };
 }
 function setRaise(v, lg, fromRange) {
   raiseTo = Math.max(lg.minTo, Math.min(lg.maxTo, v)); if (raiseTo > lg.maxTo - S.cfg.bb / 4) raiseTo = lg.maxTo;
   $('#raiseAmt').textContent = fmt(raiseTo); if (!fromRange) $('#raiseRange').value = raiseTo;
-  const b = $('#bRaise'); if (b) b.innerHTML = (raiseTo >= lg.maxTo ? 'Олл-ин' : (lg.curBet === 0 ? 'Бет' : 'Рейз') + ` до <small>${fmt(raiseTo)}</small>`);
+  const b = $('#bRaise'); if (b) b.innerHTML = raiseTo >= lg.maxTo ? `All-in <small>${fmt(lg.maxTo)}</small>` : (lg.curBet === 0 ? `Bet <small>${fmt(raiseTo)}</small>` : `Raise to <small>${fmt(raiseTo)}</small>`);
+  if (tut && tut.allow && tut.allow.includes('q3')) renderHud();
 }
 function doAct(a, amt) { raiseOpen = false; preAct = null; cmd('act', { a, amt: amt || 0 }); if (tut && tut.actResolve) { const r = tut.actResolve; tut.actResolve = null; setTimeout(r, 60); } }
 function runPreAct() {
@@ -1876,7 +1929,7 @@ async function animate(e) {
         const sl = slot(i); const isMe = d.seats[i] && d.seats[i].uid === uid && vis(i) === 0;
         const el = cardEl(-1, isMe ? 'lg' : 'sm', true); const [cw, ch] = cardSize(isMe ? 'lg' : 'sm');
         const w = sprite(el, DECK[0] - cw / 2, DECK[1] - ch / 2); sprites.push(w);
-        const off = isMe ? (r ? 34 : -34) : (r ? 21 : -21);
+        const off = isMe ? (r ? 28 : -28) : (r ? 21 : -21);
         const to = [sl.cards[0] + off - cw / 2, sl.cards[1] - ch / 2];
         moveHand('R', DECK[0] - 10 + (to[0] > CX ? 8 : -8), DECK[1] + 8, 90, ease.out).then(() => moveHand('R', DECK[0] - 6, DECK[1] + 4, 90));
         moveSprite(w, [DECK[0] - cw / 2, DECK[1] - ch / 2], to, 340, ease.out, [0, 360 + (r ? 4 : -4)]);
@@ -1885,12 +1938,21 @@ async function animate(e) {
       }
       await sleep(360);
       e.order.forEach(i => { if (d.seats[i]) d.seats[i].cards = fs.seats[i] ? (fs.seats[i].cards || [-1, -1]) : [-1, -1]; });
-      L.fx.innerHTML = ''; render();
-      // flip my cards with a little lift
       const me = mySeat();
-      if (me >= 0 && e.order.includes(me)) {
-        const cs = L.felt.querySelectorAll('.card.lg'); cs.forEach(c => { c.animate([{ transform: 'rotateY(180deg) translateY(0)' }, { transform: 'rotateY(90deg) translateY(-14px)' }, { transform: c.style.transform || 'none' }], { duration: 480, easing: 'ease-out' }); });
+      if (me >= 0 && e.order.includes(me) && d.seats[me]) d.seats[me].peekHide = true;
+      L.fx.innerHTML = ''; render();
+      if (me >= 0 && e.order.includes(me) && d.seats[me]) {
+        const sl = slot(me);
+        if (PH[me]) { setPose(me, 'A', 'cup'); await movePH(me, 'A', ...reachFor(me, 'A', [sl.cards[0], sl.cards[1] + 18], 30), 260); }
+        const cs = [...L.felt.querySelectorAll('.card.lg')];
+        cs.forEach((c, k) => { c.style.transformOrigin = '50% 100%'; c.animate([{ rotate: '1 0 0 0deg' }, { rotate: `1 ${k ? .4 : -.4} 0 40deg` }, { rotate: '1 0 0 0deg' }], { duration: 620, easing: 'ease-in-out', delay: k * 80 }); });
+        if (PH[me]) liftPH(me, 'A', .7, 240);
+        await sleep(560);
+        d.seats[me].peekHide = false;
+        cs.forEach((c, k) => setTimeout(() => { c.style.transform = `rotate(${k ? 4 : -4}deg)`; c.classList.remove('down'); }, k * 120));
         sfx.flip();
+        if (PH[me]) { liftPH(me, 'A', 0, 200); restPH(me, 'A', 360); }
+        await sleep(420);
       }
       restHands(300);
       break;
@@ -1914,17 +1976,17 @@ async function animate(e) {
           const w = sprite(st, ...sl.stack); sfx.chips(3);
           const tgt = reachFor(e.seat, 'B', sl.bet, 28);
           await movePH(e.seat, 'B', ...tgt, 380, ease.io, (x, y, t) => setSprite(w, sl.stack[0] + (sl.bet[0] - sl.stack[0]) * t, sl.stack[1] + (sl.bet[1] - sl.stack[1]) * t, Math.sin(t * Math.PI) * 6));
-          settleChips(st); sfx.chips(2);
+          w.remove(); dropSeat = e.seat; p.bet = e.to; render(); sfx.chips(4);
           restPH(e.seat, 'B', 300);
-          await sleep(140);
+          await sleep(260);
         } else {
           const w = sprite(st, ...sl.stack);
           sfx.chips(3);
           const mid = [sl.stack[0] + (sl.bet[0] - sl.stack[0]) * .55, sl.stack[1] + (sl.bet[1] - sl.stack[1]) * .55];
           await moveSprite(w, sl.stack, mid, 200, ease.io, [0, 6]);
           await moveSprite(w, mid, sl.bet, 260, ease.back, [6, 0]);
-          settleChips(st); sfx.chips(2);
-          await sleep(120);
+          w.remove(); dropSeat = e.seat; p.bet = e.to; render(); sfx.chips(4);
+          await sleep(220);
         }
       }
       p.bet = e.to; render(); L.fx.innerHTML = '';
@@ -1933,7 +1995,7 @@ async function animate(e) {
     case 'check': {
       const p = d.seats[e.seat]; if (!p) break; p.last = 'Чек'; render();
       const sl = slot(e.seat);
-      const spot = [sl.plate[0] + (sl.bet[0] - sl.plate[0]) * .45, sl.plate[1] + (sl.bet[1] - sl.plate[1]) * .45];
+      const spot = [sl.plate[0] + sl.d[0] * 96 - sl.n[0] * sl.s * 34, sl.plate[1] + sl.d[1] * 96 - sl.n[1] * sl.s * 34];
       if (PH[e.seat]) { setPose(e.seat, 'A', 'knock'); await movePH(e.seat, 'A', ...reachFor(e.seat, 'A', spot, 26), 220); }
       for (let k = 0; k < 2; k++) {
         if (PH[e.seat]) { await liftPH(e.seat, 'A', 1, 80); await liftPH(e.seat, 'A', -.4, 70); }
@@ -1948,11 +2010,20 @@ async function animate(e) {
       const sl = slot(e.seat); const isMe = p.uid === uid && vis(e.seat) === 0;
       const size = isMe ? 'lg' : 'sm'; const [cw, ch] = cardSize(size);
       p.folded = true; p.last = 'Фолд'; const had = p.cards; p.cards = null; render();
-      if (had && PH[e.seat]) { setPose(e.seat, 'A', 'pinch'); await movePH(e.seat, 'A', ...reachFor(e.seat, 'A', sl.cards, 24), 200); rotPH(e.seat, 'A', -18, 120).then(() => rotPH(e.seat, 'A', 0, 200)); restPH(e.seat, 'A', 420); }
       if (had) {
-        const ps = [0, 1].map(k => { const w = sprite(cardEl(-1, size, true), sl.cards[0] + (k ? 21 : -21) - cw / 2, sl.cards[1] - ch / 2); return w; });
-        sfx.card();
-        await Promise.all(ps.map((w, k) => moveSprite(w, [sl.cards[0] + (k ? 21 : -21) - cw / 2, sl.cards[1] - ch / 2], [MUCK[0] - 19 + k * 3, MUCK[1] - 27], 420, ease.io, [0, (k ? 1 : -1) * 200 + 15], [1, isMe ? .6 : 1])));
+        const off = isMe ? 28 : 21;
+        const from = k => [sl.cards[0] + (k ? off : -off) - cw / 2, sl.cards[1] - ch / 2];
+        const ps = [0, 1].map(k => sprite(cardEl(-1, size, true), ...from(k)));
+        ps.forEach((w, k) => setSprite(w, ...from(k), k ? 4 : -4));
+        const push = 46, mid = k => [from(k)[0] + sl.d[0] * push, from(k)[1] + sl.d[1] * push];
+        if (PH[e.seat]) {
+          setPose(e.seat, 'A', 'flat');
+          await movePH(e.seat, 'A', ...reachFor(e.seat, 'A', sl.cards, 30), 220);
+          sfx.card();
+          await movePH(e.seat, 'A', ...reachFor(e.seat, 'A', [sl.cards[0] + sl.d[0] * push, sl.cards[1] + sl.d[1] * push], 30), 300, ease.io, (x, y, t) => ps.forEach((w, k) => setSprite(w, from(k)[0] + sl.d[0] * push * t, from(k)[1] + sl.d[1] * push * t, (k ? 4 : -4) * (1 - t))));
+          restPH(e.seat, 'A', 420);
+        } else sfx.card();
+        await Promise.all(ps.map((w, k) => moveSprite(w, PH[e.seat] ? mid(k) : from(k), [MUCK[0] - 19 + k * 4, MUCK[1] - 27], 460, ease.io, [0, (k ? 1 : -1) * 18], [1, isMe ? .7 : 1])));
         ps.forEach(w => w.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 200, fill: 'forwards' }));
         await sleep(160);
       }
@@ -2022,8 +2093,10 @@ async function animate(e) {
       const sl = slot(e.seat); const [cw, ch] = cardSize('sm');
       L.felt.querySelectorAll('.card.sm').forEach(c => { if (Math.abs(parseFloat(c.style.left) + cw / 2 - sl.cards[0]) < 30 && Math.abs(parseFloat(c.style.top) + ch / 2 - sl.cards[1]) < 6) c.remove(); });
       const flips = (p.cards || []).map((c, k) => { const el = cardEl(c, 'sm', true); const w = sprite(el, sl.cards[0] + (k ? 21 : -21) - cw / 2, sl.cards[1] - ch / 2); return el; });
-      await sleep(30); flips.forEach((el, k) => setTimeout(() => { el.classList.remove('down'); sfx.flip(); }, k * 110));
-      await sleep(560);
+      if (PH[e.seat]) { setPose(e.seat, 'A', 'pinch'); await movePH(e.seat, 'A', ...reachFor(e.seat, 'A', sl.cards, 22), 240); liftPH(e.seat, 'A', 1, 200); rotPH(e.seat, 'A', -16, 260); }
+      await sleep(60); flips.forEach((el, k) => setTimeout(() => { el.style.transformOrigin = '50% 100%'; el.animate([{ translate: '0 0' }, { translate: '0 -8px' }, { translate: '0 0' }], { duration: 450 }); el.classList.remove('down'); sfx.flip(); }, k * 150));
+      await sleep(620);
+      if (PH[e.seat]) { liftPH(e.seat, 'A', 0, 200); rotPH(e.seat, 'A', 0, 200); restPH(e.seat, 'A', 320); }
       p.show = true; L.fx.innerHTML = ''; render();
       break;
     }
@@ -2084,15 +2157,36 @@ async function pushAllIn(seat, amt, sl) {
   // wind-up: pull back a little
   const back = [sl.stack[0] - (sl.bet[0] - sl.stack[0]) * .12, sl.stack[1] - (sl.bet[1] - sl.stack[1]) * .12];
   if (PH[seat]) { setPose(seat, 'A', 'flat'); setPose(seat, 'B', 'flat'); }
-  if (PH[seat]) await Promise.all([movePH(seat, 'A', ...reachFor(seat, 'A', [sl.stack[0] - 22, sl.stack[1] + 4], 26), 220), movePH(seat, 'B', ...reachFor(seat, 'B', [sl.stack[0] + 22, sl.stack[1] + 4], 26), 220)]);
+  const nn = [sl.n[0] * sl.s, sl.n[1] * sl.s];   // towards the chip hand's side
+  const sideOf = (p, k) => [p[0] + nn[0] * k, p[1] + nn[1] * k];
+  if (PH[seat]) await Promise.all([movePH(seat, 'A', ...reachFor(seat, 'A', sideOf(sl.stack, -26), 26), 220), movePH(seat, 'B', ...reachFor(seat, 'B', sideOf(sl.stack, 22), 26), 220)]);
   await Promise.all(ws.map(o => moveSprite(o.w, sl.stack, [back[0] + o.off[0] * .5, back[1] + o.off[1] * .5], 180, ease.io)));
   sfx.chips(8);
-  if (PH[seat]) { movePH(seat, 'A', ...reachFor(seat, 'A', [sl.bet[0] - 26, sl.bet[1] + 6], 22), 420, ease.back); movePH(seat, 'B', ...reachFor(seat, 'B', [sl.bet[0] + 26, sl.bet[1] + 6], 22), 420, ease.back); }
+  if (PH[seat]) { movePH(seat, 'A', ...reachFor(seat, 'A', sideOf(sl.bet, -26), 22), 420, ease.back); movePH(seat, 'B', ...reachFor(seat, 'B', sideOf(sl.bet, 26), 22), 420, ease.back); }
   await Promise.all(ws.map((o, k) => moveSprite(o.w, [back[0] + o.off[0] * .5, back[1] + o.off[1] * .5], [sl.bet[0] + o.off[0], sl.bet[1] + o.off[1]], 380 + k * 40, ease.back, [0, (k - 1) * 9])));
   if (PH[seat]) { restPH(seat, 'A', 420); restPH(seat, 'B', 460); }
   ws.forEach(o => scatterChips(o.st));
   sfx.chips(5);
   await sleep(420);
+}
+/* a loose pile of chips (stable layout for the same amount and seat) */
+function pileEl(amount, seed) {
+  const el = document.createElement('div'); el.className = 'stack pile';
+  let r = (amount * 9301 + seed * 49297) % 233280; const rnd = () => (r = (r * 9301 + 49297) % 233280) / 233280;
+  const cols = breakdown(amount).slice(0, 4);
+  const spots = [[0, 0], [17, 5], [-16, 6], [5, 12], [-6, -9]];
+  cols.forEach((col, ci) => {
+    const cnt = Math.min(col.n, 7); const [bx, by] = spots[ci];
+    for (let k = 0; k < cnt; k++) {
+      const ch = document.createElement('i'); ch.className = 'chip';
+      ch.style.setProperty('--c', col.c); ch.style.setProperty('--e', col.e);
+      const jx = (rnd() - .5) * (k ? 4 : 0), jy = (rnd() - .5) * 2;
+      ch.style.left = (bx + jx) + 'px'; ch.style.top = (by - k * 3.2 + jy) + 'px'; ch.dataset.k = k;
+      if (k === cnt - 1) { ch.classList.add('lbl'); ch.dataset.v = denomLabel(col.v); }
+      el.appendChild(ch);
+    }
+  });
+  return el;
 }
 function settleChips(st) { st.querySelectorAll('.chip').forEach((c, k) => { const j = (Math.random() - .5) * 4; c.animate([{ transform: `translate(${j}px,-6px)` }, { transform: 'translate(0,0)' }], { duration: 160 + k * 25, easing: 'cubic-bezier(.3,1.6,.5,1)' }); }); }
 function scatterChips(st) { st.querySelectorAll('.chip').forEach((c, k) => { const a = Math.random() * Math.PI * 2, r = 4 + Math.random() * 10; c.animate([{ transform: 'translate(0,-10px)' }, { transform: `translate(${Math.cos(a) * r}px,${Math.sin(a) * r * .6}px)` }, { transform: 'translate(0,0)' }], { duration: 420 + k * 20, easing: 'ease-out' }); }); }
@@ -2456,7 +2550,8 @@ async function startClient(code) {
 const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 const standalone = () => matchMedia('(display-mode: fullscreen)').matches || matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
 const canFull = () => !!(document.documentElement.requestFullscreen || document.documentElement.webkitRequestFullscreen);
-function goFull() {
+function goFull(force) {
+  if (!force && !isTouch()) return;
   if (standalone() || document.fullscreenElement || !canFull() || isIOS) return;
   const el = document.documentElement;
   const p = el.requestFullscreen ? el.requestFullscreen({ navigationUI: 'hide' }) : el.webkitRequestFullscreen();
@@ -2473,7 +2568,7 @@ function fullHelp() {
   $('#fhClose').onclick = () => ov.hidden = true;
 }
 function onFullBtn() {
-  if (!isIOS && canFull() && !document.fullscreenElement) { goFull(); setTimeout(() => { if (!document.fullscreenElement && !standalone()) fullHelp(); }, 700); }
+  if (!isIOS && canFull() && !document.fullscreenElement) { goFull(true); setTimeout(() => { if (!document.fullscreenElement && !standalone()) fullHelp(); }, 700); }
   else if (document.fullscreenElement) { document.exitFullscreen().catch(() => { }); }
   else fullHelp();
 }
@@ -2482,7 +2577,9 @@ document.addEventListener('fullscreenchange', syncFullBtn);
 
 /* any tap goes fullscreen (browsers only allow it from a user gesture) */
 let fsHintShown = false;
+const isTouch = () => matchMedia('(pointer: coarse)').matches || (navigator.maxTouchPoints > 0 && !matchMedia('(pointer: fine)').matches);
 function autoFull() {
+  if (!isTouch()) return;           // on a computer fullscreen is only by the ⛶ button
   if (standalone() || document.fullscreenElement || document.webkitFullscreenElement) return;
   if (isIOS || !canFull()) { iosHint(); return; }
   goFull();
@@ -2662,10 +2759,10 @@ function coachTip() {
   const opp = Math.max(1, disp.seats.filter((p, j) => p && j !== i && p.inHand && !p.folded).length);
   const rel = eq * (opp + 1);
   const toCall = L.toCall, odds = toCall / (L.pot + toCall || 1), need = Math.round(odds * 100);
-  if (rel >= 1.7 && L.canRaise) return `<b>Сильная рука</b> — шанс ~${pct}% против ${opp}. Повышай: «3 ББ» или ставка около 2/3 банка, чтобы соперники платили.`;
-  if (toCall === 0) return rel >= 1.15 ? `<b>Выше среднего</b> (~${pct}%). Можно поставить около половины банка или чекнуть.` : `<b>Слабо</b> (~${pct}%). Чек — посмотришь следующую карту бесплатно.`;
-  if (eq >= odds + .04) return `<b>Колл выгоден</b>: доплатить ${fmt(toCall)}, нужно хотя бы ${need}% шансов, у тебя ~${pct}%.`;
-  return `<b>Лучше фолд</b>: чтобы уравнять ${fmt(toCall)}, нужно ${need}% шансов, а у тебя ~${pct}%.`;
+  if (rel >= 1.7 && L.canRaise) return `<b>Сильная рука</b> — шанс ~${pct}% против ${opp}. Повышай: <b>Raise → 3 BB</b> или около 2/3 банка, чтобы соперники платили.`;
+  if (toCall === 0) return rel >= 1.15 ? `<b>Выше среднего</b> (~${pct}%). Можно сделать <b>Bet</b> около половины банка или <b>Check</b>.` : `<b>Слабо</b> (~${pct}%). <b>Check</b> — посмотришь следующую карту бесплатно.`;
+  if (eq >= odds + .04) return `<b>Call выгоден</b>: доплатить ${fmt(toCall)}, нужно хотя бы ${need}% шансов, у тебя ~${pct}%.`;
+  return `<b>Лучше Fold</b>: чтобы уравнять ${fmt(toCall)}, нужно ${need}% шансов, а у тебя ~${pct}%.`;
 }
 function paintCoach() { const el = $('#coach'); if (el) el.innerHTML = '<span class="ct">Тренер</span>' + coachTip(); }
 
@@ -2808,7 +2905,7 @@ async function expectAct(allow, text, anchor) {
   await tutWait(myTurnNow);
   if (!tut) throw new Error('lesson-ended');
   tut.allow = allow; renderHud();
-  const btn = { call: '#bCall', check: '#bCall', fold: '#bFold', q1: '#bQ1', q3: '#bQ3', allin: '#bQA', raise: '#bRaise' }[allow[0]];
+  const btn = { call: '#bCall', check: '#bCall', fold: '#bFold', q1: '#bRaise', q3: '#bRaise', allin: '#bRaise', raise: '#bRaise' }[allow[0]];
   await bubble(text, anchor && anchor !== '#controls' && !anchor.startsWith('#b') ? anchor : btn, false);
   await new Promise((res, rej) => { tut.actResolve = res; tut.reject = rej; });
   if (tut) tut.allow = null; clearBubble();
@@ -2880,46 +2977,47 @@ const LESSON_FLOW = {
     tut.step = 'префлоп';
     await bubble('Тебе раздали <b>2 закрытые карты</b> — их видишь только ты. Туз и король одной масти — очень сильное начало.', 'cards', true);
     await bubble('Под стеком — подсказка: какая у тебя сейчас комбинация и <b>шанс выиграть</b> в процентах.', 'eq', true);
-    await expectAct(['call'], 'Сейчас <b>префлоп</b> — первый круг ставок, до общих карт. Ходят по очереди по часовой стрелке. Чтобы остаться в игре, нужно уравнять большой блайнд. Нажми <b>«Колл 500»</b>.');
+    await expectAct(['call'], 'Сейчас <b>префлоп</b> — первый круг ставок, до общих карт. Ходят по очереди по часовой стрелке. Чтобы остаться в игре, нужно уравнять большой блайнд. Нажми <b>Call 500</b>.');
     tut.step = 'флоп';
     await waitBoard(3);
     await bubble('<b>Флоп</b> — дилер открыл 3 общие карты. Ими пользуются все игроки. У тебя пара королей: король на руке + король на столе.', 'board', true);
-    await expectAct(['check'], 'Начался второй круг ставок. Если до тебя никто не ставил, можно <b>«Чек»</b> — пропустить ход без ставки. Нажми «Чек».');
+    await expectAct(['check'], 'Начался второй круг ставок. Если до тебя никто не ставил, можно <b>Check</b> — пропустить ход без ставки. Нажми «Чек».');
     tut.step = 'тёрн';
     await waitBoard(4);
     await bubble('<b>Тёрн</b> — четвёртая общая карта. Начинается третий круг ставок.', 'board:last', true);
-    await expectAct(['check'], 'Снова <b>«Чек»</b>.');
+    await expectAct(['check'], 'Снова <b>Check</b>.');
     tut.step = 'ривер';
     await waitBoard(5);
     await bubble('<b>Ривер</b> — пятая, последняя карта. Пришёл туз: у тебя теперь <b>две пары</b>, тузы и короли!', 'board:last', true);
-    await expectAct(['check'], 'Последний круг ставок. Нажми <b>«Чек»</b>, и игроки откроют карты.');
+    await expectAct(['check'], 'Последний круг ставок. Нажми <b>Check</b>, и игроки откроют карты.');
     tut.step = 'вскрытие';
     await waitShow();
     await bubble('<b>Вскрытие.</b> Каждый собирает лучшую руку из 5 карт: любые из своих 2 и 5 общих. Подсвечены карты победителя. Банк твой!', 'board', true);
   },
   async acts() {
     tut.step = 'фолд';
-    await bubble('За свой ход ты выбираешь одно из действий: <b>Фолд</b> — сбросить карты, <b>Чек</b> — пропустить, <b>Колл</b> — уравнять, <b>Рейз</b> — повысить ставку.', null, true);
+    await bubble('Кнопки — как в любом покерном руме, на английском: <b>Fold</b> — сбросить карты, <b>Check</b> — пропустить ход, <b>Call</b> — уравнять ставку, <b>Bet</b> — поставить первым, <b>Raise</b> — повысить чужую ставку.', null, true);
     await dealHand(HAND({ dealer: 3, hole: { 0: [C('7♣'), C('2♦')], 2: [C('A♦'), C('K♦')] }, script: { 'preflop:2': 'raise:1500', 'preflop:3': 'fold', 'preflop:5': 'fold' } }));
     await bubble('У тебя 7 и 2 разных мастей — <b>худшая стартовая рука</b> в холдеме. Ты на большом блайнде: твои 500 уже в банке.', 'cards', true);
     await tutWait(myTurnNow);
-    await expectAct(['fold'], 'Бот слева от тебя повысил ставку до 1 500. Со слабой рукой против повышения правильно <b>сбросить</b> — потеряешь только блайнд. Нажми <b>«Фолд»</b>.');
+    await expectAct(['fold'], 'Бот слева от тебя повысил ставку до 1 500. Со слабой рукой против повышения правильно <b>сбросить</b> — потеряешь только блайнд. Нажми <b>Fold</b>.');
     await tutWait(() => calm() && S.hand.phase === 'showdown');
-    await bubble('Фолд — это нормально. Хорошие игроки сбрасывают большинство рук и вступают в игру только с хорошими картами.', null, true);
+    await bubble('Fold — это нормально. Хорошие игроки сбрасывают большинство рук и вступают в игру только с хорошими картами.', null, true);
     tut.step = 'рейз';
     await dealHand(HAND({ dealer: 2, hole: { 0: [C('A♥'), C('A♣')], 5: [C('Q♥'), C('Q♠')] }, board: ['A♦', '8♠', '3♣', '2♦', 'K♣'].map(C), script: { 'preflop:2': 'fold', 'preflop:3': 'fold', 'preflop:5': 'call' } }));
     await bubble('А теперь <b>пара тузов</b> — лучшая стартовая рука. С сильной рукой нужно <b>повышать</b>: так в банке будет больше фишек, а слабые руки сбросят.', 'cards', true);
-    await expectAct(['q3'], 'Нажми <b>«3 ББ»</b> — это рейз до трёх больших блайндов (1 500). Сумма написана прямо на кнопке.', '#bQ3');
+    await bubble('Кнопка <b>Raise</b> открывает панель ставки: ползунок и быстрые кнопки. <b>Min</b> — минимальное повышение, <b>3 BB</b> — три больших блайнда, <b>Pot</b> — ставка размером с банк, <b>All-in</b> — все фишки.', null, true);
+    await expectAct(['q3'], 'Нажми <b>Raise</b>, выбери <b>3 BB</b> и подтверди кнопкой <b>Raise to 1 500</b>.', '#bRaise');
     tut.step = 'ставка';
     await waitBoard(3);
     await bubble('На флопе пришёл туз — у тебя <b>сет</b>, три туза. Соперник сделал чек.', 'board:flop', true);
-    await expectAct(['q3'], 'Когда до тебя не ставили, повышение называется <b>бет</b> (ставка). Поставь <b>«3 ББ»</b>, чтобы соперник с более слабой рукой доплатил.', '#bQ3');
+    await expectAct(['q3'], 'Когда до тебя никто не ставил, кнопка называется <b>Bet</b>. Нажми <b>Bet</b>, выбери <b>3 BB</b> и подтверди — пусть соперник с более слабой рукой доплатит.', '#bRaise');
     tut.step = 'пред-ходы';
     await waitBoard(4);
-    await bubble('Пока ходят другие, внизу видны <b>пред-ходы</b>: можно заранее выбрать «Чек / Фолд» или «Колл любую», и игра сходит за тебя, когда очередь дойдёт.', null, true);
-    await expectAct(['check'], 'Иногда сильную руку разыгрывают тихо, чтобы не спугнуть соперника. Нажми <b>«Чек»</b>.');
+    await bubble('Пока ходят другие, справа внизу видны <b>пред-ходы</b>: можно заранее выбрать <b>Check / Fold</b> или <b>Call any</b>, и игра сходит за тебя, когда очередь дойдёт. Выбранный отмечается золотой галочкой.', null, true);
+    await expectAct(['check'], 'Иногда сильную руку разыгрывают тихо, чтобы не спугнуть соперника. Нажми <b>Check</b>.');
     await waitBoard(5);
-    await expectAct(['check'], 'Ривер. Снова <b>«Чек»</b> — посмотрим карты.');
+    await expectAct(['check'], 'Ривер. Снова <b>Check</b> — посмотрим карты.');
     await waitShow();
     await bubble('Сет тузов побил пару дам. <b>Главное правило:</b> с сильной рукой — повышай, со слабой — не бойся сбросить.', 'board', true);
   },
@@ -2930,17 +3028,17 @@ const LESSON_FLOW = {
     await tutWait(myTurnNow);
     await bubble('Он пошёл <b>олл-ин</b> — поставил все фишки. Больше он ставить не может, но остаётся в раздаче до вскрытия.', 'seat:3', true);
     await bubble('Твой шанс выиграть — под стеком. С парой дам он высокий. Справа — сколько нужно доплатить.', 'eq', true);
-    await expectAct(['call'], 'Пара дам — сильная рука. Нажми <b>«Колл»</b>, чтобы уравнять олл-ин.');
+    await expectAct(['call'], 'Пара дам — сильная рука. Нажми <b>Call</b>, чтобы уравнять олл-ин.');
     tut.step = 'сайд-пот';
     await waitBoard(3);
     await bubble('Пришла дама — у тебя <b>сет</b>! Игрок в олл-ине может выиграть только то, что сам смог уравнять: это <b>основной банк</b>.', 'pot', true);
-    await expectAct(['check'], 'Нажми <b>«Чек»</b> и посмотри, что сделает третий игрок.');
+    await expectAct(['check'], 'Нажми <b>Check</b> и посмотри, что сделает третий игрок.');
     await tutWait(myTurnNow);
     await bubble('Он поставил 5 000. Эти фишки идут в <b>сайд-пот</b> (побочный банк). Его разыгрывают только те, у кого остались фишки, — ты и он.', 'seat:2', true);
     await bubble('<b>Шансы банка:</b> раздели доплату на банк после неё. Доплатить 5 000 в банк ~32 750 — нужно выигрывать хотя бы в ~15% случаев. Твой шанс гораздо больше — колл выгоден.', 'eq', true);
-    await expectAct(['call'], 'Нажми <b>«Колл»</b>.');
-    await waitBoard(4); await expectAct(['check'], 'Тёрн. <b>«Чек»</b>.');
-    await waitBoard(5); await expectAct(['check'], 'Ривер. <b>«Чек»</b>.');
+    await expectAct(['call'], 'Нажми <b>Call</b>.');
+    await waitBoard(4); await expectAct(['check'], 'Тёрн. <b>Check</b>.');
+    await waitBoard(5); await expectAct(['check'], 'Ривер. <b>Check</b>.');
     await waitShow();
     await bubble('Твой сет забрал и основной банк, и сайд-пот. Если бы лучшая рука была у игрока в олл-ине, он забрал бы только основной банк, а сайд-пот ушёл бы следующему.', 'board', true);
   },
@@ -2948,15 +3046,15 @@ const LESSON_FLOW = {
     tut.step = 'позиция';
     await dealHand(HAND({ dealer: 0, hole: { 0: [C('6♣'), C('5♣')], 2: [C('J♦'), C('3♥')], 3: [C('8♣'), C('4♠')], 5: [C('10♦'), C('2♣')] }, board: ['K♠', '9♦', '2♥', '7♥', 'Q♠'].map(C), script: { 'preflop:5': 'fold', 'river:2': ['check', 'fold'], 'river:3': ['check', 'fold'] } }));
     await bubble('Ты на кнопке <b>D</b>. После флопа дилер ходит <b>последним</b> — видит, что сделали все. Это называется <b>позиция</b>, и это большое преимущество.', 'dealer', true);
-    await expectAct(['call'], 'Рука средняя, зато позиция хорошая. Нажми <b>«Колл»</b>, чтобы дёшево посмотреть флоп.');
+    await expectAct(['call'], 'Рука средняя, зато позиция хорошая. Нажми <b>Call</b>, чтобы дёшево посмотреть флоп.');
     await waitBoard(3);
     await bubble('Флоп тебе не помог. Но смотри: оба соперника <b>чекнули</b> — значит, у них, скорее всего, тоже ничего сильного.', 'board', true);
-    await expectAct(['check'], 'Пока <b>«Чек»</b>.');
-    await waitBoard(4); await expectAct(['check'], 'Тёрн. Снова все чекают. <b>«Чек»</b>.');
+    await expectAct(['check'], 'Пока <b>Check</b>.');
+    await waitBoard(4); await expectAct(['check'], 'Тёрн. Снова все чекают. <b>Check</b>.');
     tut.step = 'блеф';
     await waitBoard(5);
     await bubble('Ривер. У тебя только шестёрка старшая — на вскрытии ты проиграешь. Но соперники всю раздачу показывали слабость.', 'cards', true);
-    await expectAct(['q3'], '<b>Блеф</b> — ставка со слабой рукой, чтобы соперники поверили в сильную и сбросили. Поставь <b>«3 ББ»</b>.', '#bQ3');
+    await expectAct(['q3'], '<b>Блеф</b> — ставка со слабой рукой, чтобы соперники поверили в сильную и сбросили. Нажми <b>Bet</b>, выбери <b>3 BB</b> и подтверди.', '#bRaise');
     await tutWait(() => calm() && S.hand.phase === 'showdown');
     await bubble('Оба сбросили — банк твой без вскрытия! Блефуй <b>редко</b> и когда соперники слабы: если блефовать всегда, тебя быстро раскусят.', 'pot', true);
     await bubble('<b>Шпаргалка:</b> играй мало рук, но активно. Сильная рука — повышай. Слабая против ставки — фолд. Считай шансы банка. Позиция — твой друг.', null, true);
@@ -2989,7 +3087,7 @@ function showLobby(kind, msg, keepButtons) {
     $('#bOther').onclick = e => { e.preventDefault(); history.replaceState(null, '', location.pathname); showLobby('home'); };
   } else if (kind === 'home') {
     const hc = store.get('hostCode', ''), hs = store.get('hostState', null), lc = store.get('lastCode', '');
-    pnl.innerHTML = `<h2>Покерный стол</h2><p>Техасский холдем без лимита до 6 игроков. Ваш телефон станет столом, друзья подключатся по ссылке — без регистрации.</p>
+    pnl.innerHTML = `<h2>Покерный стол</h2><div class="ver">Версия ${VERSION} «${CODENAME}» · <a href="#" id="bNews">Что нового</a></div><p>Техасский холдем без лимита до 6 игроков. Ваш телефон станет столом, друзья подключатся по ссылке — без регистрации.</p>
       <div class="fields one">${nameField()}</div>
       <p class="fine" style="margin:-6px 0 6px"><a href="#" id="bLook">Настроить свои руки</a></p>
       <div class="row2 modes"><button class="btn gold" id="bSolo">Игра с ботами</button><button class="btn ${tutDone().length ? '' : 'pulse'}" id="bTut">Обучение${tutDone().length ? ' · ' + tutDone().length + '/5' : ''}</button></div>
@@ -3002,6 +3100,7 @@ function showLobby(kind, msg, keepButtons) {
       <div class="row2" style="margin-top:8px">${installBtnHtml()}</div>
       <h3>Есть код от друга?</h3>
       <div class="row2"><input id="fCode" class="codeIn" maxlength="5" autocapitalize="characters" autocomplete="off" placeholder="КОД" value="${esc(lc)}" aria-label="Код стола"><button class="btn" id="bJoinCode">Подключиться</button></div>`;
+    $('#bNews').onclick = e => { e.preventDefault(); openNews(); };
     $('#bLook').onclick = e => { e.preventDefault(); const n = ($('#fName').value || '').trim(); if (n) store.set('name', n); ['fSb', 'fBb', 'fBuy'].forEach(k => store.set('cfg_' + k, $('#' + k).value)); openLook(false, () => showLobby('home')); };
     $('#bSolo').onclick = () => { const n = ($('#fName').value || '').trim(); if (n) store.set('name', n); openSoloSetup(); };
     $('#bTut').onclick = () => { const n = ($('#fName').value || '').trim(); if (n) store.set('name', n); openLessons(); };
@@ -3093,6 +3192,22 @@ function openBar() {
   $('#barClose').onclick = () => ov.hidden = true;
   $('#menuPanel').querySelectorAll('[data-d]').forEach(b => b.onclick = () => { ov.hidden = true; cmd('drink', { id: b.dataset.d, all: b.dataset.a === '1' }); });
 }
+function openNews() {
+  const ov = $('#menu'); ov.hidden = false;
+  $('#menuPanel').innerHTML = `<h2>Что нового</h2><div class="ver">Версия ${VERSION} «${CODENAME}» — первый релиз</div>
+    <ul class="news">
+      <li><b>Стол с друзьями</b> по ссылке без регистрации: прямое соединение и запасной канал через сервер.</li>
+      <li><b>Игра с ботами</b> трёх уровней — Новичок, Любитель, Акула. Ботов можно посадить и к друзьям.</li>
+      <li><b>Обучение</b>: 5 уроков на настоящем столе, тренер с подсказками и таблица комбинаций.</li>
+      <li><b>Живые руки</b>: мужские и женские, одежда, маникюр, аксессуары. Руки сами ставят, стучат, сбрасывают, подглядывают и переворачивают карты.</li>
+      <li><b>Дилер в перчатках</b> сдаёт, собирает ставки и пододвигает банк.</li>
+      <li><b>Кнопки как в покерных румах</b>: Fold, Check, Call, Bet, Raise; панель рейза с Min, 3 BB, Pot, All-in; пред-ходы.</li>
+      <li><b>Бар</b> с премиальными напитками себе или всему столу.</li>
+      <li><b>Учёт фишек</b>: кто сколько внёс, вывел и пропил.</li>
+    </ul>
+    <div class="row2" style="margin-top:12px"><button class="btn dark" id="nwClose">Закрыть</button></div>`;
+  $('#nwClose').onclick = () => { ov.hidden = true; if (!S) showLobby('home'); };
+}
 function openMenu() {
   if (!S) return;
   const ov = $('#menu'); ov.hidden = false;
@@ -3119,9 +3234,11 @@ function openMenu() {
     <label for="fBuy">Бай-ин<input id="fBuy" type="number" inputmode="numeric" value="${S.cfg.buyIn}"></label></div>
     <p>Новые блайнды начнут действовать со следующей раздачи.</p>
     <div class="row2"><button class="btn gold" id="mSave">Сохранить</button>${solo ? '<button class="btn dark" id="mExitSolo">Выйти из игры</button>' : '<button class="btn dark" id="mReset">Закрыть стол</button>'}</div>` : `<div class="row2" style="margin-top:12px"><button class="btn dark" id="mExit">Выйти из игры</button></div>`}
-    <div class="row2" style="margin-top:12px"><button class="btn dark" id="mClose">Закрыть меню</button></div>`;
+    <div class="row2" style="margin-top:12px"><button class="btn dark" id="mClose">Закрыть меню</button><button class="btn dark" id="mNews">Что нового</button></div>
+    <div class="ver" style="margin-top:8px">Покер ${VERSION} «${CODENAME}»</div>`;
   const close = () => ov.hidden = true;
   $('#mClose').onclick = close;
+  $('#mNews').onclick = openNews;
   if ($('#mInvite')) $('#mInvite').onclick = openInvite; wireInstall($('#menuPanel'));
   $('#mCombos').onclick = () => openCombos(false);
   $('#mLessons').onclick = () => { if (tut) endLesson(true); openLessons(); };
