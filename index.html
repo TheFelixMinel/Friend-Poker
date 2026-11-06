@@ -73,10 +73,10 @@ body{margin:0;background:var(--floor);color:var(--ui);font-family:var(--body);ov
   box-shadow:1px 1px 0 #ddd,2px 2px 0 #bbb,3px 3px 0 #999,4px 5px 8px #000a}
 
 /* pot */
-#pot{position:absolute;left:560px;top:146px;transform:translateX(-50%);text-align:center;background:#0b0d0bd9;border:1px solid #ffffff22;border-radius:8px;padding:5px 14px 6px;min-width:96px;
+#pot{position:absolute;left:560px;top:142px;transform:translateX(-50%);text-align:center;background:#0b0d0bd9;border:1px solid #ffffff22;border-radius:8px;padding:3px 14px 4px;min-width:96px;
   font-family:var(--hud);transition:transform .25s}
 #pot .k{font-size:12px;letter-spacing:.06em;color:#cfd3cc;text-transform:uppercase}
-#pot .v{font-size:21px;font-weight:700;font-variant-numeric:tabular-nums;display:flex;align-items:center;justify-content:center;gap:5px}
+#pot .v{font-size:19px;line-height:1.1;font-weight:700;font-variant-numeric:tabular-nums;display:flex;align-items:center;justify-content:center;gap:5px}
 #pot.bump{transform:translateX(-50%) scale(1.12)}
 .coin{display:inline-block;width:12px;height:12px;border-radius:50%;background:radial-gradient(circle,#ffd770 0 35%,#b8860b 36% 48%,#ffd770 50% 62%,#a6750a 64%);box-shadow:0 0 0 1px #0006;flex:none}
 
@@ -859,7 +859,7 @@ const SLOTS = [
   { plate: [992, 318], cards: [992, 256], stack: [894, 342], bet: [824, 302], btn: [908, 268], drink: [924, 212], side: 'R' },
   { plate: [748, 470], cards: [748, 392], stack: [642, 446], bet: [646, 362], btn: [828, 420], drink: [812, 380], side: 'R' },
 ];
-const BOARD_Y = 226, BOARD_X = k => CX + (k - 2) * 62;
+const BOARD_Y = 240, BOARD_X = k => CX + (k - 2) * 62;
 const POT = [CX, 162], DECK = [657, 108], MUCK = [470, 110], BUCKET = [430, 106];
 const SHOULDER = { L: [516, 22], R: [604, 22] }, REST = { L: [530, 96], R: [592, 100] };
 
