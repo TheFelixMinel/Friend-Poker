@@ -48,7 +48,7 @@ body{margin:0;background:var(--floor);color:var(--ui);font-family:var(--body);ov
 .layer > *{pointer-events:auto}
 
 /* ---------- table ---------- */
-#rail{position:absolute;left:96px;top:44px;width:928px;height:540px;border-radius:290px/270px;
+#rail{position:absolute;left:96px;top:18px;width:928px;height:470px;border-radius:290px/235px;
   background:
     repeating-linear-gradient(97deg, #ffffff08 0 2px, transparent 2px 7px, #00000012 7px 8px, transparent 8px 15px),
     linear-gradient(180deg, var(--wood-light), var(--wood) 30%, var(--wood-dark));
@@ -65,15 +65,15 @@ body{margin:0;background:var(--floor);color:var(--ui);font-family:var(--body);ov
   background:radial-gradient(circle, #1b1b1b 0 46%, #c9c9c9 50%, #777 58%, #ddd 66%, #555 74%, #0000 76%);box-shadow:0 2px 3px #000a}
 
 /* dealer */
-#dealerSvg{position:absolute;left:440px;top:-58px;width:240px;height:150px;overflow:visible}
-#tray{position:absolute;left:498px;top:68px;width:124px;height:38px;border-radius:5px;
+#dealerSvg{position:absolute;left:440px;top:-84px;width:240px;height:150px;overflow:visible}
+#tray{position:absolute;left:498px;top:44px;width:124px;height:38px;border-radius:5px;
   background:linear-gradient(#2a1b10,#4a3220);box-shadow:inset 0 3px 6px #000c, 0 1px 0 #ffffff22;display:flex;gap:2px;padding:4px 5px;box-sizing:border-box}
 #tray i{flex:1;border-radius:3px;background:repeating-linear-gradient(90deg, var(--c) 0 3px, #0004 3px 4px);box-shadow:inset 0 -6px 6px #0006}
-#deck{position:absolute;left:640px;top:84px;width:34px;height:48px;border-radius:4px;transform:rotate(8deg);
+#deck{position:absolute;left:640px;top:62px;width:34px;height:48px;border-radius:4px;transform:rotate(8deg);
   box-shadow:1px 1px 0 #ddd,2px 2px 0 #bbb,3px 3px 0 #999,4px 5px 8px #000a}
 
 /* pot */
-#pot{position:absolute;left:560px;top:142px;transform:translateX(-50%);text-align:center;background:#0b0d0bd9;border:1px solid #ffffff22;border-radius:8px;padding:3px 14px 4px;min-width:96px;
+#pot{position:absolute;left:560px;top:118px;transform:translateX(-50%);text-align:center;background:#0b0d0bd9;border:1px solid #ffffff22;border-radius:8px;padding:3px 14px 4px;min-width:96px;
   font-family:var(--hud);transition:transform .25s}
 #pot .k{font-size:12px;letter-spacing:.06em;color:#cfd3cc;text-transform:uppercase}
 #pot .v{font-size:19px;line-height:1.1;font-weight:700;font-variant-numeric:tabular-nums;display:flex;align-items:center;justify-content:center;gap:5px}
@@ -316,7 +316,7 @@ table.led td:first-child,table.led th:first-child{text-align:left}
 .sw{flex-wrap:wrap}
 .lookOpts{max-height:360px;overflow:auto;padding-right:4px}
 
-#tableWrap{position:absolute;left:0;top:0;width:1120px;height:500px;transform-origin:0 0;transform:translate(0px,40px) scale(.86)}
+#tableWrap{position:absolute;left:0;top:0;width:1120px;height:500px;transform-origin:0 0;transform:none}
 #sidePanel{position:absolute;left:854px;top:56px;width:260px;bottom:8px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-end;gap:8px;padding:8px;border-radius:12px;background:linear-gradient(#0d100ee6,#090b0af2);border:1px solid #ffffff14;box-shadow:inset 0 1px 0 #ffffff0d,0 8px 24px #0008}
 #sidePanel .waitNote{font-size:15px;padding:12px 10px}
 #sidePanel .btn{min-width:0}
@@ -373,6 +373,67 @@ table.led td:first-child,table.led th:first-child{text-align:left}
 #log{width:200px!important}
 
 #raisePanel .q button{font-size:12px!important;letter-spacing:0!important;white-space:nowrap;padding:0 2px}
+
+/* ===== 1.0 Beta: bold buttons like before ===== */
+#sidePanel{width:250px!important}
+#sidePanel .btn{font-size:17px!important;text-transform:uppercase!important;letter-spacing:.04em!important;font-weight:700}
+#sidePanel .btn small{font-size:14px!important;font-weight:600;opacity:.9;letter-spacing:.02em}
+#controls.turnMode{gap:7px!important}
+#controls.turnMode .h2{height:48px!important}
+#controls.turnMode .h3{height:42px!important}
+#controls.turnMode .h6{height:42px!important}
+#sidePanel .btn.pre{font-size:16px!important;text-transform:uppercase!important}
+#sidePanel .btn.pre.h3{font-size:14px!important;letter-spacing:.02em!important}
+#raisePanel .q{gap:5px!important}
+#raisePanel .q button{height:32px;font:700 13px var(--hud)!important;letter-spacing:.04em!important;text-transform:uppercase;background:#2b302c;color:#eee;border:none;border-radius:6px;box-shadow:0 2px 0 #111}
+#raisePanel .q button#q4{background:linear-gradient(#e04050,#b51c2a);color:#fff;box-shadow:0 2px 0 #6d0f17}
+#raisePanel .q button:active{transform:translateY(1px)}
+#sidePanel .btn.pre.h3{font-size:13px!important;letter-spacing:0!important;gap:5px!important}
+
+#felt{border-radius:262px/207px!important}
+#felt .line{top:118px!important;bottom:70px!important}
+#feltText{top:-12px}
+
+/* ===== 1.0 Beta palette: saturated bordeaux / graphite / dark gold / red, leather with stitching, white labels ===== */
+#sidePanel .btn,#raisePanel .q button{
+  --a:#3b464d;--b:#1a2024;--st:#e3c27a88;
+  position:relative;color:#fff!important;border:none!important;
+  background-image:repeating-linear-gradient(45deg,#ffffff07 0 2px,#0000 2px 5px),linear-gradient(var(--a),var(--b))!important;
+  box-shadow:0 3px 0 #000a,0 6px 12px #0008,inset 0 1px 0 #ffffff22!important;
+  justify-content:center!important;text-align:center;overflow:visible!important}
+#sidePanel .btn::before,#raisePanel .q button::before{content:"";position:absolute;inset:4px;border-radius:5px;border:1px dashed var(--st);pointer-events:none}
+#raisePanel .q button::before{inset:3px;border-radius:4px}
+#sidePanel .btn.dark,#sidePanel .btn.pre.dark{--a:#a3192e;--b:#5e0c19}
+#sidePanel .btn.gold,#raisePanel .q button{--a:#d9a94e;--b:#9a6f22;--st:#5a3a0a88;text-shadow:0 1px 2px #5a3a0a,0 0 1px #5a3a0a}
+#raisePanel .q button#q4{--a:#e8182f;--b:#8a0616;--st:#ffd9a088;text-shadow:none}
+#sidePanel .btn small{font-size:inherit!important;opacity:1!important;font-weight:700;margin-left:2px}
+#sidePanel .btn.pre{border:none!important}
+#sidePanel .btn.pre .tk{position:absolute;left:-7px;top:-7px;width:20px;height:20px;border-radius:50%;display:none;place-items:center;font-size:12px;line-height:1;background:var(--gold);color:#241a05;box-shadow:0 1px 3px #000a;opacity:1;z-index:1}
+#sidePanel .btn.pre.on .tk{display:grid}
+#sidePanel .btn.pre.on{outline:2px solid var(--gold);outline-offset:-1px}
+#sidePanel .btn:active,#raisePanel .q button:active{transform:translateY(2px);box-shadow:0 1px 0 #000a,inset 0 1px 0 #ffffff22!important}
+#sidePanel .btn[disabled]{opacity:.45}
+#raisePanel .q button{height:32px}
+
+#raisePanel .amt{justify-content:center!important}
+#raisePanel .amt b{font-size:24px!important}
+
+.cup{position:absolute;width:30px!important;height:30px!important;border-radius:50%;pointer-events:none;box-shadow:inset 0 3px 6px #000c,0 1px 0 #ffffff26!important;
+  background:radial-gradient(circle,#0d0d0d 0 42%,#2a2a2a 50%,#b9bcc0 56%,#6d7076 64%,#d9dcdf 70%,#4a4c50 78%,#0000 80%)!important}
+.glass{z-index:1}
+
+/* cupholder cut into the rail; the glass stands centred in it */
+.cup{width:26px!important;height:26px!important;border-radius:50%!important;
+  background:radial-gradient(circle,#0b0b0b 0 52%,#1f1f1f 58%,#9da1a6 62%,#e1e4e7 70%,#6d7076 80%,#3a2414 86%)!important;
+  box-shadow:inset 0 3px 5px #000d,0 0 0 1px #2a1a0e!important}
+.glass{margin:-29px 0 0 -14.4px!important}
+
+#pot{top:96px!important}
+
+.potLbl{font-size:12px;padding:2px 7px 3px;gap:0 3px;flex-wrap:wrap;justify-content:center;max-width:84px;line-height:1.05}
+.potLbl small{flex-basis:100%;text-align:center;font:600 9.5px var(--hud);color:#e9d9a6;text-transform:uppercase;letter-spacing:.3px}
+
+#pot{top:90px!important}
 
 </style>
 </head>
@@ -594,6 +655,7 @@ function sit(s, uid, seat, now) {
   const L = s.ledger[uid] || (s.ledger[uid] = { in: 0, out: 0, bar: 0 });
   L.in += s.cfg.buyIn;
   s.seats[seat] = { uid, stack: s.cfg.buyIn, bet: 0, contrib: 0, inHand: false, folded: false, allIn: false, acted: false, c: '', show: false, sitOut: false, missed: 0, leaving: false, last: '' };
+  pushEv(s, { t: 'sit', seat, amt: s.cfg.buyIn });
   pushLog(s, now, uid, 'сел за стол с ' + s.cfg.buyIn);
   maybeSchedule(s, now);
   return null;
@@ -663,7 +725,7 @@ function setLook(s, uid, look) {
   const str = v => typeof v === 'string' && /^[a-z0-9]{1,16}$/.test(v) ? v : '';
   const L = look || {};
   s.looks[uid] = { g: L.g === 'f' ? 'f' : 'm', skin: n(L.skin, 5), sl: str(L.sl), col: n(L.col, 12), tat: n(L.tat, 8), nail: n(L.nail, 12),
-    acc: Array.isArray(L.acc) ? L.acc.map(str).filter(Boolean).slice(0, 4) : [] };
+    acc: Array.isArray(L.acc) ? L.acc.map(str).filter(Boolean).slice(0, 4) : [], ai: L.ai === 'push' || L.ai === 'neat' ? L.ai : '' };
   return null;
 }
 /* tutorial: replace dealt cards with a scripted hand */
@@ -709,7 +771,7 @@ function startHand(s, now, rnd = Math.random) {
   order.forEach(i => { s.seats[i].c = obf(hole[i], h.salt + i + 17); });
   h.deck = obf(deck, h.salt + 5);
   h.phase = 'preflop'; h.nextAt = 0;
-  pushEv(s, { t: 'deal', order, dealer: h.dealer, no: h.no });
+  pushEv(s, { t: 'deal', order, dealer: h.dealer, no: h.no, stacks: s.seats.map(p => p ? p.stack : null) });
   const heads = order.length === 2;
   const sbI = heads ? h.dealer : nextIdx(s, h.dealer, p => p && p.inHand);
   const bbI = nextIdx(s, sbI, p => p && p.inHand);
@@ -924,21 +986,43 @@ const fmt = n => (n || 0).toLocaleString('ru-RU').replace(/,/g, ' ');
 const clone = o => JSON.parse(JSON.stringify(o));
 
 /* visual slots, clockwise from bottom-left; viewer always sits at slot 0 */
-// seats sit on the rail; everything else is placed along the line from the seat to the table centre.
-// d = towards the centre, n = the player's right-hand side, s = side of the chip stack (+1 right, -1 left)
-const SEAT_POS = [[372, 468], [104, 296], [318, 92], [802, 92], [1016, 296], [748, 468]];
-const STACK_SIDE = [1, -1, 1, -1, -1, -1];
-const SLOTS = SEAT_POS.map((P, i) => {
-  const C = i === 0 || i === 5 ? [560, 230] : [560, 300];
+// Hand-placed seat zones (table coordinates). Each player owns the strip of felt at their edge:
+// cards right in front of the plate, chip stack beside them, bet a little further in, never on the board.
+const ZONES = [
+  { plate: [372, 468], cards: [372, 398], stack: [508, 416], bet: [470, 336], btn: [296, 414], drink: [252, 440], ha: [246, 420], hb: [520, 470] },   // me (bottom-left)
+  { plate: [104, 262], cards: [226, 262], stack: [238, 370], bet: [330, 290], btn: [300, 370], drink: [270, 342], ha: [176, 206], hb: [196, 330] },   // left
+  { plate: [350, 92], cards: [350, 168], stack: [248, 180], bet: [444, 178], btn: [460, 112], drink: [196, 112], ha: [380, 128], hb: [250, 108], tilt: -22, cup: -1 },    // top-left
+  { plate: [770, 92], cards: [770, 168], stack: [872, 176], bet: [676, 178], btn: [660, 112], drink: [924, 112], ha: [740, 128], hb: [870, 108], tilt: 22, cup: 1 },    // top-right
+  { plate: [1016, 262], cards: [894, 262], stack: [802, 282], bet: [740, 338], btn: [846, 362], drink: [850, 342], ha: [930, 206], hb: [882, 330] },  // right
+  { plate: [722, 468], cards: [722, 398], stack: [610, 416], bet: [632, 336], btn: [812, 400], drink: [868, 440], ha: [790, 424], hb: [600, 470] },   // bottom-right
+];
+// centre line of the wooden rail: rounded rectangle (rail 96,18 928x470 r 290/235, felt inset 30) -> middle of the band
+const RAIL_PATH = (() => {
+  const x0 = 111, y0 = 33, w = 898, h = 440, rx = 275, ry = 220, pts = [];
+  const cxL = x0 + rx, cxR = x0 + w - rx, cy = y0 + ry;
+  for (let t = 0; t < 1; t += 1 / 1400) {             // walk: top edge -> right arc -> bottom edge -> left arc
+    const L1 = cxR - cxL, arc = Math.PI * (rx + ry) / 2, per = 2 * L1 + 2 * arc; let d = t * per;
+    if (d < L1) pts.push([cxL + d, y0]);
+    else if ((d -= L1) < arc) { const a = -Math.PI / 2 + d / arc * Math.PI; pts.push([cxR + Math.cos(a) * rx, cy + Math.sin(a) * ry]); }
+    else if ((d -= arc) < L1) pts.push([cxR - d, y0 + h]);
+    else { d -= L1; const a = Math.PI / 2 + d / arc * Math.PI; pts.push([cxL + Math.cos(a) * rx, cy + Math.sin(a) * ry]); }
+  }
+  return pts;
+})();
+const CUP_R = 13;
+const SLOTS = ZONES.map((z, i) => {
+  const P = z.plate, C = [560, i === 0 || i === 5 ? 236 : 262];
   let dx = C[0] - P[0], dy = C[1] - P[1]; const l = Math.hypot(dx, dy); dx /= l; dy /= l;
-  const nx = -dy, ny = dx, s = STACK_SIDE[i];
-  const off = Math.abs(dx) * 62;     // side seats: step past the wide plate
-  const at = (f, sd) => [Math.round(P[0] + dx * (f + off) + nx * sd), Math.round(P[1] + dy * (f + off) + ny * sd)];
-  return { plate: P, d: [dx, dy], n: [nx, ny], s, off, cards: at(76, -s * 6), stack: at(50, s * 98), bet: i === 0 || i === 5 ? at(150, s * 40) : at(128, s * 16), btn: at(36, -s * 104), drink: at(30, -s * 142), side: P[0] < 560 ? 'L' : 'R' };
+  const nx = -dy, ny = dx;
+  const s = ((z.stack[0] - P[0]) * nx + (z.stack[1] - P[1]) * ny) >= 0 ? 1 : -1;   // which hand holds the chips
+  return Object.assign({ d: [dx, dy], n: [nx, ny], s, off: 0, side: P[0] < 560 ? 'L' : 'R' }, z);
 });
-const BOARD_Y = 240, BOARD_X = k => CX + (k - 2) * 62;
-const POT = [CX, 162], DECK = [657, 108], MUCK = [470, 110], BUCKET = [430, 106];
-const SHOULDER = { L: [516, 22], R: [604, 22] }, REST = { L: [530, 96], R: [592, 100] };
+/* cupholders cut into the rail, each just to the right of that player's right hand (hand-placed, all inside the wooden band) */
+const CUPS = [[548, 473], [139, 350], [215, 81], [702, 33], [966, 135], [834, 458]];
+SLOTS.forEach((sl, i) => { sl.cup = CUPS[i]; sl.drink = CUPS[i]; });
+const BOARD_Y = 244, BOARD_X = k => CX + (k - 2) * 62;
+const POT = [CX, 140], DECK = [657, 86], MUCK = [470, 88], BUCKET = [430, 84];
+const SHOULDER = { L: [516, 0], R: [604, 0] }, REST = { L: [534, 56], R: [588, 58] };
 
 const DENOMS = [
   [100000, '#e05ca8', '#8e2f68'], [25000, '#2f6fd6', '#1b4185'], [5000, '#f08a24', '#a1560f'], [1000, '#e7c64a', '#94791d'],
@@ -949,6 +1033,13 @@ let uid = null;
 let S = null;              // latest authoritative table state
 let disp = null;           // what is currently drawn
 let dropSeat = -1, winAt = 0;
+// each player's two cards face that player: rotation so the card's bottom edge points at the plate
+function holeRot(seat) { const sl = slot(seat), vx = sl.plate[0] - sl.cards[0], vy = sl.plate[1] - sl.cards[1]; return Math.atan2(-vx, vy) * 180 / Math.PI + (sl.tilt || 0); }
+function holePos(seat, k, big) {
+  const sl = slot(seat), r = holeRot(seat), a = r * Math.PI / 180, off = (big ? 28 : 21) * (k ? 1 : -1);
+  return { cx: sl.cards[0] + Math.cos(a) * off, cy: sl.cards[1] + Math.sin(a) * off, rot: r + (k ? 4 : -4) };
+}
+function spriteC(el, cx, cy, cw, ch, rot = 0) { el.style.left = (-cw / 2) + 'px'; el.style.top = (-ch / 2) + 'px'; const w = sprite(el, cx, cy); setSprite(w, cx, cy, rot); return w; }
 let lastSeq = 0, seenSeq = 0, queue = [], animating = false, calmAt = 0;
 let names = {}, online = new Set(), busy = false;
 let preAct = null, preCallAmt = 0, raiseOpen = false, raiseTo = 0;
@@ -959,7 +1050,7 @@ let logOpen = true;
 
 const stage = $('#stage');
 const L = { felt: $('#feltItems'), fx: $('#fxLayer'), seats: $('#seatLayer'), hud: $('#hud'), txt: $('#txtLayer') };
-const TK = .86, TOX = 0, TOY = 40;          // table area is scaled into the left part of the stage
+const TK = 1, TOX = 0, TOY = 0;          // table area is scaled into the left part of the stage
 const toStage = (x, y) => [TOX + x * TK, TOY + y * TK];
 
 /* ---------------- scaling ---------------- */
@@ -1115,11 +1206,16 @@ function tween(dur, fn, e = ease.io) {
   });
 }
 const handTok = { L: 0, R: 0 }, handBusy = { L: 0, R: 0 };
-function moveHand(side, x, y, dur = 320, e = ease.io, carry) {
+async function moveHand(side, x, y, dur = 320, e = ease.io, carry) {
+  if (typeof waitWay === 'function' && Math.hypot(x - REST[side][0], y - REST[side][1]) > 30) await waitWay(() => [[SHOULDER[side], [x, y]]], 'D');
+  return moveHand0(side, x, y, dur, e, carry);
+}
+function moveHand0(side, x, y, dur = 320, e = ease.io, carry) {
   // a newer move on the same hand cancels the older one, so two tweens never fight
   const a = arms[side], x0 = a.x, y0 = a.y, tok = ++handTok[side];
   { const sh = SHOULDER[side], vx = x - sh[0], vy = y - sh[1], len = Math.hypot(vx, vy) || 1, k = Math.min(1, 190 / len); x = sh[0] + vx * k; y = sh[1] + vy * k; }
   handBusy[side]++;
+  if (typeof yieldFor === 'function' && Math.hypot(x - REST[side][0], y - REST[side][1]) > 30) { const tg = [x, y]; yieldFor(() => [[SHOULDER[side], [arms[side].x, arms[side].y]], [SHOULDER[side], tg], [[arms[side].x, arms[side].y], tg]], 'D'); }
   return tween(dur, t => {
     if (handTok[side] !== tok) { if (carry) carry(a.x, a.y, 1); return false; }
     a.x = x0 + (x - x0) * t; a.y = y0 + (y - y0) * t; drawArms(); if (carry) carry(a.x, a.y, t);
@@ -1202,7 +1298,8 @@ function normLook(l) {
   let acc = Array.isArray(l.acc) ? l.acc : (typeof l.acc === 'number' ? OLD_ACC[l.acc] || [] : []);
   const ok = new Set(ACCESSORIES[g].map(a => a.id));
   acc = [...new Set(acc.filter(a => ok.has(a)))].slice(0, 4);
-  return { g, skin: Math.max(0, Math.min(4, l.skin | 0)), sl, col, tat, nail, acc };
+  const ai = l.ai === 'push' ? 'push' : l.ai === 'neat' ? 'neat' : '';
+  return { g, skin: Math.max(0, Math.min(4, l.skin | 0)), sl, col, tat, nail, acc, ai };
 }
 function randomLook(g) {
   g = g || (Math.random() < .5 ? 'm' : 'f');
@@ -1387,14 +1484,11 @@ function setPose(seat, side, pose) {
 
 /* per-seat hand geometry in stage coordinates */
 function handGeo(seat) {
-  // A = card hand, B = chip hand (on the stack's side); shoulders sit behind the plate
+  // hands rest at the player's own edge; each forearm comes in from outside the table, pointing at the centre
   const sl = slot(seat), me = vis(seat) === 0 && S && S.seats[seat] && S.seats[seat].uid === uid;
-  const P = sl.plate, d = sl.d, n = sl.n, s = sl.s, sc = me ? 1.1 : 1;
-  const o = sl.off * .6;
-  const at = (f, sd) => [P[0] + d[0] * (f + o) + n[0] * sd, P[1] + d[1] * (f + o) + n[1] * sd];
-  return { scale: sc, flipB: s < 0, reach: 150 * sc, minReach: 46 * sc,
-    A: { elbow: at(-34, -s * 60), rest: at(30, -s * 84) },
-    B: { elbow: at(-34, s * 60), rest: at(30, s * 72) } };
+  const sc = me ? 1.08 : 1, C = [560, 262];
+  const arm = r => { const dx = r[0] - C[0], dy = r[1] - C[1], l = Math.hypot(dx, dy) || 1; return { elbow: [r[0] + dx / l * 84 * sc, r[1] + dy / l * 84 * sc], rest: r }; };
+  return { scale: sc, flipB: sl.s < 0, reach: 128 * sc, minReach: 40 * sc, A: arm(sl.ha), B: arm(sl.hb) };
 }
 const isLeftHand = (geo, side) => side === 'A' ? !geo.flipB : geo.flipB;
 
@@ -1446,13 +1540,62 @@ function drawPH(seat, side) {
   h.cuf.setAttribute('transform', `translate(${h.x},${h.y}) rotate(${ang})`);
   h.hnd.setAttribute('transform', `translate(${h.x},${h.y}) rotate(${ang + (h.rot || 0) + (h.wb || 0)}) scale(${lift})`);
 }
-function movePH(seat, side, x, y, dur = 260, e = ease.io, carry) {
+// hands get out of each other's way: before an arm sweeps somewhere, any idle hand lying on that path
+// pulls back toward its elbow and returns when the path is clear again
+function segDist(p, q, r, s) {
+  const d = (a, b, c) => { const vx = b[0] - a[0], vy = b[1] - a[1], L = vx * vx + vy * vy; let t = L ? ((c[0] - a[0]) * vx + (c[1] - a[1]) * vy) / L : 0; t = Math.max(0, Math.min(1, t)); return Math.hypot(a[0] + vx * t - c[0], a[1] + vy * t - c[1]); };
+  const cr = (a, b, c) => (b[0] - a[0]) * (c[1] - a[1]) - (b[1] - a[1]) * (c[0] - a[0]);
+  if (cr(p, q, r) * cr(p, q, s) < 0 && cr(r, s, p) * cr(r, s, q) < 0) return 0;
+  return Math.min(d(p, q, r), d(p, q, s), d(r, s, p), d(r, s, q));
+}
+function armOf(seat, side, at) {
+  const st = PH[seat], h = at || [st[side].x, st[side].y], e = st.geo[side].elbow, dx = h[0] - e[0], dy = h[1] - e[1], l = Math.hypot(dx, dy) || 1, k = 26 * st.geo.scale;
+  return [e, [h[0] + dx / l * k, h[1] + dy / l * k]];
+}
+// a hand that is busy right on the path is not pushed away: the mover waits for it (at most 1.5 s)
+function busyInWay(paths, except) {
+  for (const s of Object.keys(PH)) for (const sd of ['A', 'B']) {
+    const key = s + ':' + sd; if (key === except || YIELDED.has(key)) continue;
+    const st = PH[s]; if (!st[sd].busy) continue;
+    const [e, t] = armOf(+s, sd);
+    if (paths().some(([p, q]) => segDist(p, q, e, t) < 22)) return true;
+  }
+  return false;
+}
+async function waitWay(paths, except) { const t0 = performance.now(); while (busyInWay(paths, except) && performance.now() - t0 < 1500) await sleep(80); }
+const YIELDED = new Map();      // "seat:side" -> function telling whether the mover is still in the way
+function yieldFor(paths, except) {
+  for (const s of Object.keys(PH)) for (const sd of ['A', 'B']) {
+    const key = s + ':' + sd; if (key === except) continue;
+    const st = PH[s], h = st[sd]; if (h.busy && !YIELDED.has(key)) continue;
+    const [e, t] = armOf(+s, sd, st.geo[sd].rest);
+    const hit = () => paths().some(([p, q]) => segDist(p, q, e, t) < 26);
+    if (!hit()) continue;
+    if (!YIELDED.has(key)) {
+      YIELDED.set(key, hit);
+      // pick the spot (pulled back, or a little to either side) that is farthest from the moving arm
+      const r = st.geo[sd].rest, ux = r[0] - e[0], uy = r[1] - e[1], ul = Math.hypot(ux, uy) || 1, px = -uy / ul, py = ux / ul;
+      const cands = [[e[0] + ux * .3, e[1] + uy * .3], [r[0] + px * 46, r[1] + py * 46], [r[0] - px * 46, r[1] - py * 46], [e[0] + ux * .5 + px * 30, e[1] + uy * .5 + py * 30], [e[0] + ux * .5 - px * 30, e[1] + uy * .5 - py * 30]];
+      const clear = c => { const [ce, ct] = armOf(+s, sd, c); return Math.min(...paths().map(([p, q]) => segDist(p, q, ce, ct)), ...['A', 'B'].filter(o => o !== sd).map(o => segDist(...armOf(+s, o), ce, ct) + 8)); };
+      const back = cands.reduce((best, c) => clear(c) > clear(best) ? c : best, cands[0]);
+      movePH(+s, sd, ...back, 170, ease.out, null, true);
+      const wait = () => { const f = YIELDED.get(key); if (!f) return; if (!PH[s] || PH[s] !== st) { YIELDED.delete(key); return; } if (f()) { setTimeout(wait, 120); return; } YIELDED.delete(key); if (!st[sd].busy) restPH(+s, sd, 260); };
+      setTimeout(wait, 300);
+    } else YIELDED.set(key, hit);
+  }
+}
+async function movePH(seat, side, x, y, dur = 260, e = ease.io, carry, yielding) {
+  if (!yielding && PH[seat]) { const st0 = PH[seat], tg = [x, y]; await waitWay(() => PH[seat] === st0 ? [armOf(seat, side, tg), [armOf(seat, side)[1], armOf(seat, side, tg)[1]]] : [], seat + ':' + side); }
+  return movePH0(seat, side, x, y, dur, e, carry, yielding);
+}
+function movePH0(seat, side, x, y, dur = 260, e = ease.io, carry, yielding) {
   const st = PH[seat]; if (!st) return Promise.resolve();
   const h = st[side], x0 = h.x, y0 = h.y, tok = ++h.tok;
   { // an arm can't stretch: reach as far as the arm allows, the chips/cards travel the rest
     const e0 = st.geo[side].elbow, vx = x - e0[0], vy = y - e0[1], len = Math.hypot(vx, vy) || 1;
     const k = Math.max(st.geo.minReach, Math.min(st.geo.reach, len)) / len; x = e0[0] + vx * k; y = e0[1] + vy * k;
   }
+  if (!yielding) { const me = seat + ':' + side; YIELDED.delete(me); const tgt = [x, y]; yieldFor(() => { if (!PH[seat] || PH[seat] !== st) return []; const now = armOf(seat, side); const end = armOf(seat, side, tgt); return [now, end, [now[1], end[1]]]; }, me); }
   h.busy++;
   const ex = st.geo[side].elbow, a0 = Math.atan2(y0 - ex[1], x0 - ex[0]), a1 = Math.atan2(y - ex[1], x - ex[0]);
   const bend = Math.max(-14, Math.min(14, (a1 - a0) * 180 / Math.PI * .6));
@@ -1475,17 +1618,30 @@ function reachFor(seat, side, target, ahead = 38) {
 
 /* ---------------- chip tricks (automatic, cosmetic, local) ---------------- */
 const lastTrick = {};
+// tricks move the real top chip element itself; a re-render simply puts it back in place
+let TRICK_CHIPS = new Set();
+function borrowTop(seat) {
+  const el = chipsEl('stack', seat); if (!el) return null;
+  const chips = [...el.querySelectorAll('.chip')].filter(c => c.dataset.col === '0');
+  const top = chips[chips.length - 1]; if (!top || top.dataset.trick) return null;
+  top.dataset.trick = 1; top.style.zIndex = 30; TRICK_CHIPS.add(top);
+  const home = [parseFloat(top.style.left), parseFloat(top.style.top)];
+  // same API as a sprite: absolute table coordinates in, offsets applied to the real chip
+  return { el: top, home, at(x, y, extra = '') { if (!top.dataset.trick) return; top.style.transform = `translate(${x - home[0]}px,${y - home[1]}px) ${extra}`; } };
+}
+function returnTop(bt) { if (!bt) return; bt.el.style.transform = ''; bt.el.style.zIndex = ''; delete bt.el.dataset.trick; TRICK_CHIPS.delete(bt.el); }
+function cancelTricks() { TRICK_CHIPS.forEach(c => { c.style.transform = ''; c.style.zIndex = ''; delete c.dataset.trick; }); TRICK_CHIPS.clear(); }
 function oneChip(v) {
   const d = DENOMS.find(x => x[0] <= v) || DENOMS[DENOMS.length - 1];
   const el = document.createElement('div'); el.className = 'stack';
-  const ch = document.createElement('i'); ch.className = 'chip lbl'; ch.style.setProperty('--c', d[1]); ch.style.setProperty('--e', d[2]); ch.dataset.v = denomLabel(d[0]);
+  const ch = document.createElement('i'); ch.className = 'chip lbl'; ch.style.setProperty('--c', d[1]); ch.style.setProperty('--e', d[2]); ch.dataset.v = denomLabel(d[0]); ch.dataset.val = d[0];
   el.appendChild(ch); return el;
 }
 async function trick(seat) {
   const p = disp && disp.seats[seat]; if (!p || !PH[seat] || !p.stack) return;
   const sl = slot(seat), B = PH[seat].B;
   if (B.busy || PH[seat].A.busy) return;
-  const cand = ['riffle', 'riffle', 'roll', 'spin', 'cut'];
+  const cand = ['riffle', 'riffle', 'roll', 'spin'];
   if (p.cards && p.uid !== uid) cand.push('peek');
   if (S && S.drinks && S.drinks[p.uid]) cand.push('sip');
   const kind = cand[Math.floor(Math.random() * cand.length)];
@@ -1499,75 +1655,68 @@ async function trick(seat) {
       for (let k = 0; k < 4; k++) { await movePH(seat, 'B', tgt[0] + (k % 2 ? 3 : -3), tgt[1] + (k % 2 ? -2 : 2), 110); }
       await restPH(seat, 'B', 280);
     } else if (kind === 'roll') {
-      // a chip walks across the knuckles
-      const tgt = reachFor(seat, 'B', sl.stack, 30);
+      // the real top chip walks across the knuckles and goes back on its stack
+      const bt = borrowTop(seat); if (!bt) return;
+      const home = bt.home;
       setPose(seat, 'B', 'grip');
-      await movePH(seat, 'B', ...tgt, 220);
-      const w = sprite(oneChip(top), sl.stack[0], sl.stack[1] - 10);
+      await movePH(seat, 'B', ...reachFor(seat, 'B', home, 30), 220);
       const st = PH[seat], e = st.geo.B.elbow; const ang = Math.atan2(B.y - e[1], B.x - e[0]);
-      const back = [B.x + Math.cos(ang) * 4, B.y + Math.sin(ang) * 4];
-      await movePH(seat, 'B', back[0] - Math.cos(ang) * 22, back[1] - Math.sin(ang) * 22, 240, ease.io, (x, y, t) => setSprite(w, sl.stack[0] + (x + Math.cos(ang) * 30 - sl.stack[0]) * t, sl.stack[1] - 10 + (y + Math.sin(ang) * 30 - sl.stack[1] + 10) * t));
+      const hx0 = B.x + Math.cos(ang) * 30, hy0 = B.y + Math.sin(ang) * 30;
+      await tween(240, t => bt.at(...lerp2(home, [hx0, hy0], t)));
       setPose(seat, 'B', 'flat');
       const perp = [-Math.sin(ang), Math.cos(ang)];
-      const hx = B.x + Math.cos(ang) * 30, hy = B.y + Math.sin(ang) * 30;
       for (let k = 0; k < 6; k++) {
         const s0 = (k % 3) - 1, s1 = ((k + 1) % 3) - 1;
-        await tween(140, t => { const s = s0 + (s1 - s0) * t; w.style.transform = `translate(${hx + perp[0] * s * 9}px,${hy + perp[1] * s * 9 - Math.sin(t * Math.PI) * 5}px) rotate(${(k + t) * 180}deg) scaleX(${Math.cos(t * Math.PI) * .7 + .3})`; });
+        await tween(140, t => { const s = s0 + (s1 - s0) * t; bt.at(hx0 + perp[0] * s * 9, hy0 + perp[1] * s * 9 - Math.sin(t * Math.PI) * 5, `rotate(${(k + t) * 180}deg) scaleX(${Math.cos(t * Math.PI) * .7 + .3})`); });
       }
-      await tween(220, t => setSprite(w, hx + (sl.stack[0] - hx) * t, hy + (sl.stack[1] - 10 - hy) * t));
-      w.remove(); sfx.chips(1);
+      setPose(seat, 'B', 'grip');
+      await tween(220, t => bt.at(...lerp2([hx0, hy0], home, t)));
+      returnTop(bt); sfx.chips(1);
       await restPH(seat, 'B', 260);
     } else if (kind === 'spin') {
-      const spot = [sl.stack[0] + (sl.bet[0] - sl.stack[0]) * .35 + 8, sl.stack[1] + (sl.bet[1] - sl.stack[1]) * .35];
+      // the real top chip is spun on the felt right next to its stack, then put back
+      const bt = borrowTop(seat); if (!bt) return;
+      const home = bt.home, spot = [home[0] + sl.d[0] * 34, home[1] + sl.d[1] * 34 + CHIP_DY * 2];
       setPose(seat, 'B', 'pinch');
-      await movePH(seat, 'B', ...reachFor(seat, 'B', spot, 32), 240);
-      const w = sprite(oneChip(top), ...spot);
+      await movePH(seat, 'B', ...reachFor(seat, 'B', home, 30), 220);
+      await movePH(seat, 'B', ...reachFor(seat, 'B', spot, 32), 240, ease.io, (x, y, t) => bt.at(...lerp2(home, spot, t)));
       await rotPH(seat, 'B', -14, 90); rotPH(seat, 'B', 0, 160);
       noise(.4, 5200, 3, .12);
-      await tween(1100, t => { w.style.transform = `translate(${spot[0] + Math.sin(t * 9) * 2}px,${spot[1]}px) scaleX(${Math.abs(Math.cos(t * 26 * (1 - t * .5)))})`; }, x => x);
-      await tween(160, t => { w.style.transform = `translate(${spot[0]}px,${spot[1]}px) scaleX(${t})`; });
+      await tween(1100, t => bt.at(spot[0] + Math.sin(t * 9) * 2, spot[1], `scaleX(${Math.abs(Math.cos(t * 26 * (1 - t * .5)))})`), x => x);
+      await tween(160, t => bt.at(spot[0], spot[1], `scaleX(${t})`));
       await movePH(seat, 'B', ...reachFor(seat, 'B', spot, 30), 150);
-      await movePH(seat, 'B', ...reachFor(seat, 'B', sl.stack, 30), 240, ease.io, (x, y, t) => setSprite(w, spot[0] + (sl.stack[0] - spot[0]) * t, spot[1] + (sl.stack[1] - 10 - spot[1]) * t));
-      w.remove(); sfx.chips(1);
-      await restPH(seat, 'B', 260);
-    } else if (kind === 'cut') {
-      const n = Math.max(1, Math.floor(p.stack / 3));
-      const tgt = reachFor(seat, 'B', sl.stack, 30);
-      setPose(seat, 'B', 'grip');
-      await movePH(seat, 'B', ...tgt, 220);
-      const w = sprite(stackEl(n, 1), sl.stack[0], sl.stack[1] - 8);
-      const side2 = [sl.stack[0] + 26, sl.stack[1] + 6];
-      await movePH(seat, 'B', ...reachFor(seat, 'B', side2, 30), 260, ease.io, (x, y, t) => setSprite(w, sl.stack[0] + (side2[0] - sl.stack[0]) * t, sl.stack[1] - 8 + (side2[1] - sl.stack[1] + 8) * t - Math.sin(t * Math.PI) * 8));
-      sfx.chips(2); await sleep(240);
-      await movePH(seat, 'B', ...tgt, 260, ease.io, (x, y, t) => setSprite(w, side2[0] + (sl.stack[0] - side2[0]) * t, side2[1] + (sl.stack[1] - 8 - side2[1]) * t - Math.sin(t * Math.PI) * 8));
-      sfx.chips(2); w.remove();
+      await movePH(seat, 'B', ...reachFor(seat, 'B', home, 30), 240, ease.io, (x, y, t) => bt.at(...lerp2(spot, home, t)));
+      returnTop(bt); sfx.chips(1);
       await restPH(seat, 'B', 260);
     } else if (kind === 'peek') {
       const tgt = reachFor(seat, 'A', sl.cards, 26);
       setPose(seat, 'A', 'pinch');
       await movePH(seat, 'A', ...tgt, 260);
       const cs = cardsAt(seat);
-      cs.forEach((c, k) => { c.style.transformOrigin = '50% 100%'; c.animate([{ rotate: '1 -.4 0 0deg' }, { rotate: `1 ${k ? .5 : -.5} 0 46deg`, offset: .3 }, { rotate: `1 ${k ? .5 : -.5} 0 46deg`, offset: .7 }, { rotate: '1 -.4 0 0deg' }], { duration: 1100, easing: 'ease-in-out', delay: k * 60 }); });
+      cs.forEach((c, k) => { c.animate([{ rotate: '1 -.4 0 0deg' }, { rotate: `1 ${k ? .5 : -.5} 0 46deg`, offset: .3 }, { rotate: `1 ${k ? .5 : -.5} 0 46deg`, offset: .7 }, { rotate: '1 -.4 0 0deg' }], { duration: 1100, easing: 'ease-in-out', delay: k * 60 }); });
       await liftPH(seat, 'A', .6, 260); await sleep(560); await liftPH(seat, 'A', 0, 260);
       await restPH(seat, 'A', 280);
     } else if (kind === 'sip') {
-      const pos = drinkPos(seat); const gl = L.felt.querySelector(`.glass[data-seat="${seat}"]`); if (!gl) return;
-      const tgt = reachFor(seat, 'A', pos, 22);
-      setPose(seat, 'A', 'cup');
-      await movePH(seat, 'A', ...tgt, 280);
-      const mouth = [sl.plate[0] + (pos[0] - sl.plate[0]) * .3, sl.plate[1] + (pos[1] - sl.plate[1]) * .3];
+      const pos = drinkPos(seat); const gl = L.txt.querySelector(`.glass[data-seat="${seat}"]`); if (!gl) return;
+      const G = PH[seat].geo, H = Math.hypot(G.A.rest[0] - pos[0], G.A.rest[1] - pos[1]) <= Math.hypot(G.B.rest[0] - pos[0], G.B.rest[1] - pos[1]) ? 'A' : 'B';
+      if (!handFree(seat, H)) return;
+      const tgt = reachFor(seat, H, pos, 22);
+      setPose(seat, H, 'cup');
+      await movePH(seat, H, ...tgt, 280);
+      const mouth = [sl.plate[0] + (pos[0] - sl.plate[0]) * .55, sl.plate[1] + (pos[1] - sl.plate[1]) * .55];
       gl.style.transition = 'none';
-      await movePH(seat, 'A', ...reachFor(seat, 'A', mouth, 22), 420, ease.io, (x, y, t) => { gl.style.transform = `translate(${(mouth[0] - pos[0]) * t}px,${(mouth[1] - pos[1]) * t}px) scale(${1 + t * .25}) rotate(${t * -18}deg)`; });
-      await liftPH(seat, 'A', 1, 200); await sleep(500); await liftPH(seat, 'A', 0, 160);
-      await movePH(seat, 'A', ...tgt, 380, ease.io, (x, y, t) => { const k = 1 - t; gl.style.transform = `translate(${(mouth[0] - pos[0]) * k}px,${(mouth[1] - pos[1]) * k}px) scale(${1 + k * .25}) rotate(${k * -18}deg)`; });
+      await movePH(seat, H, ...reachFor(seat, H, mouth, 22), 420, ease.io, (x, y, t) => { gl.style.transform = `translate(${(mouth[0] - pos[0]) * t}px,${(mouth[1] - pos[1]) * t}px) scale(${1 + t * .25}) rotate(${t * -18}deg)`; });
+      await liftPH(seat, H, 1, 200); await sleep(500); await liftPH(seat, H, 0, 160);
+      await movePH(seat, H, ...tgt, 380, ease.io, (x, y, t) => { const k = 1 - t; gl.style.transform = `translate(${(mouth[0] - pos[0]) * k}px,${(mouth[1] - pos[1]) * k}px) scale(${1 + k * .25}) rotate(${k * -18}deg)`; });
       gl.style.transform = '';
-      await restPH(seat, 'A', 280);
+      await restPH(seat, H, 280);
     }
   } catch (err) { console.warn(err); }
 }
 function cardsAt(seat) {
   const sl = slot(seat);
-  return [...L.felt.querySelectorAll('.card')].filter(c => { const r = c.getBoundingClientRect ? null : null; const x = parseFloat(c.style.left) + c.offsetWidth / 2, y = parseFloat(c.style.top) + c.offsetHeight / 2; return Math.abs(x - sl.cards[0]) < 50 && Math.abs(y - sl.cards[1]) < 20; });
+  const pts = [0, 1].map(k => holePos(seat, k, vis(seat) === 0 && disp.seats[seat] && disp.seats[seat].uid === uid));
+  return [...L.felt.querySelectorAll('.card')].filter(c => { const x = parseFloat(c.style.left) + c.offsetWidth / 2, y = parseFloat(c.style.top) + c.offsetHeight / 2; return pts.some(q => Math.abs(x - q.cx) < 6 && Math.abs(y - q.cy) < 6); });
 }
 setInterval(() => {
   if (!disp || document.hidden || animating) return;
@@ -1583,6 +1732,8 @@ setInterval(() => {
 
 /* ---------------- drinks art ---------------- */
 function drinkPos(seat) { return slot(seat).drink; }
+// centre of each glass's base in its own drawing: this point stands on the centre of the cupholder
+const GLASS_BASE = { mug: [16, 36], shot: [18, 36], rocks: [18, 36], snifter: [18, 37.5], flute: [18, 37.5] };
 function glassSvg(id, size = 1) {
   const a = DRINK_ART[id]; if (!a) return '';
   const L = a.liquid;
@@ -1593,7 +1744,8 @@ function glassSvg(id, size = 1) {
     snifter: `<path d="M9,14 Q4,28 18,31 Q32,28 27,14 Z" fill="#ffffff2a" stroke="#fff9" stroke-width="1.4"/><path d="M7.8,22 Q8,29.5 18,30 Q28,29.5 28.2,22 Z" fill="${L}"/><path d="M18,31 V37 M12,37.5 H24" stroke="#fff9" stroke-width="1.6"/>`,
     flute: `<path d="M13,6 L23,6 L22,26 Q18,29 14,26 Z" fill="#ffffff2a" stroke="#fff9" stroke-width="1.3"/><path d="M13.6,11 L22.4,11 L21.6,25.3 Q18,27.6 14.4,25.3 Z" fill="${L}"/><circle cx="17" cy="16" r=".9" fill="#fff"/><circle cx="19" cy="20" r=".7" fill="#fff"/><circle cx="17.6" cy="23" r=".6" fill="#fff"/><path d="M18,28 V37 M13,37.5 H23" stroke="#fff9" stroke-width="1.5"/>`,
   }[a.glass];
-  return `<svg viewBox="0 0 36 40" width="${36 * size}" height="${40 * size}" aria-hidden="true"><ellipse cx="18" cy="38" rx="11" ry="2.5" fill="#0006"/>${g}</svg>`;
+  const bs = GLASS_BASE[a.glass];
+  return `<svg viewBox="0 0 36 40" width="${36 * size}" height="${40 * size}" aria-hidden="true"><ellipse cx="${bs[0]}" cy="${bs[1]}" rx="8" ry="2" fill="#0007"/>${g}</svg>`;
 }
 function bottleSvg(id, h = 120) {
   const a = DRINK_ART[id]; if (!a) return '';
@@ -1651,6 +1803,511 @@ function winnersSet(d) { return new Set(((d.result && d.result.winners) || []).m
 function nameOf(u) { if (u === uid) return 'Вы'; return names[u] || ('Игрок ' + (S ? (S.seats.findIndex(p => p && p.uid === u) + 1) : '')); }
 function initials(u) { if (u === uid) return 'Я'; const n = names[u]; if (!n) return '♠'; return n.split(/\s+/).map(w => w[0]).slice(0, 2).join('').toUpperCase(); }
 
+/* ===================== physical chips: real composition per stack / bet / pot ===================== */
+// Every pile of chips on the table has a real set of chips {value: count}. Amounts only change by
+// moving chips: a hand carries them, a push slides them, the dealer brings change from his tray.
+const TRAY = [560, 63], POTZ = [CX, 182];
+const CHIP_DY = 3.2, CHIP_R = 12;
+// zones per visual slot (table coords). o = base of the first column, u = next column, v = next row,
+// per = columns per row, rows, h = max chips per column, lbl = where the bet amount is written
+const CZ = [
+  { stack: { o: [508, 416], far: [0, -1], per: 3, rows: 2, h: 8 }, bet: { o: [470, 336], far: [0, -1], heap: [480, 322], per: 3, rows: 2, h: 8 }, lbl: [480, 344] },
+  { stack: { o: [238, 370], far: [.7, -.7], per: 3, rows: 2, h: 8 }, bet: { o: [330, 290], far: [0, -1], per: 3, rows: 2, h: 10 }, lbl: [330, 318] },
+  { stack: { o: [248, 180], far: [.3, .95], per: 3, rows: 2, h: 10 }, bet: { o: [444, 178], far: [0, 1], per: 3, rows: 2, h: 8 }, lbl: [370, 224] },
+  { stack: { o: [872, 176], far: [-.3, .95], per: 3, rows: 2, h: 10 }, bet: { o: [676, 178], far: [0, 1], per: 3, rows: 2, h: 8 }, lbl: [750, 224] },
+  { stack: { o: [802, 282], far: [-.7, -.7], per: 3, rows: 2, h: 8 }, bet: { o: [740, 338], far: [0, -1], per: 3, rows: 2, h: 8 }, lbl: [802, 348] },
+  { stack: { o: [610, 416], far: [0, -1], per: 3, rows: 2, h: 8 }, bet: { o: [632, 336], far: [0, -1], heap: [626, 322], per: 3, rows: 2, h: 8 }, lbl: [632, 346] },
+];
+const POTZONE = { o: [CX, 182], far: [0, -1], per: 5, rows: 2, h: 8, seed: 11 };
+const DEN_INFO = Object.fromEntries(DENOMS.map(d => [d[0], d]));
+const DVALS = DENOMS.map(d => d[0]);                     // descending
+
+const compOf = amt => { const c = {}; let r = Math.max(0, Math.round(amt)); for (const v of DVALS) { const n = Math.floor(r / v); if (n) { c[v] = n; r -= n * v; } } return c; };
+const compVal = c => Object.entries(c).reduce((a, [v, n]) => a + v * n, 0);
+const compAdd = (a, b) => { const c = Object.assign({}, a); for (const [v, n] of Object.entries(b)) c[v] = (c[v] || 0) + n; return c; };
+const compEmpty = c => !Object.values(c).some(n => n > 0);
+const compCols = (c, h) => { const out = []; for (const v of DVALS) { let n = c[v] || 0; while (n > 0) { const k = Math.min(n, h); out.push({ v, n: k }); n -= k; } } return out; };
+// take exactly `amt` if the chips allow; otherwise take the closest set above it (over = overpay)
+function compTake(c, amt) {
+  const t = {}; let rem = amt;
+  for (const v of DVALS) { const k = Math.min(c[v] || 0, Math.floor(rem / v)); if (k) { t[v] = k; c[v] -= k; rem -= k * v; } }
+  if (rem > 0) {                                                 // need one bigger chip, change comes back from the dealer
+    for (const v of [...DVALS].reverse()) if ((c[v] || 0) > 0 && v >= rem) { t[v] = (t[v] || 0) + 1; c[v] -= 1; rem -= v; break; }
+    if (rem > 0) { for (const v of DVALS) while ((c[v] || 0) > 0 && rem > 0) { t[v] = (t[v] || 0) + 1; c[v]--; rem -= v; } }
+  }
+  for (const v of Object.keys(c)) if (!c[v]) delete c[v];
+  return { taken: t, over: Math.max(0, -rem) };
+}
+
+/* the table's chips, indexed by seat */
+const CH = { stack: [{}, {}, {}, {}, {}, {}], bet: [{}, {}, {}, {}, {}, {}], betPile: [0, 0, 0, 0, 0, 0], pot: {}, potPile: false, resync: 0 };
+function chipSync(d) {
+  for (let i = 0; i < 6; i++) {
+    const p = d.seats[i];
+    const st = p ? p.stack : 0, bt = p ? p.bet : 0;
+    if (compVal(CH.stack[i]) !== st) { if (st && compVal(CH.stack[i])) { CH.resync++; (CH.rlog = CH.rlog || []).push(`stack${i} ${compVal(CH.stack[i])}->${st} @${AUDIT.cur}`); } CH.stack[i] = compOf(st); }
+    if (compVal(CH.bet[i]) !== bt) { if (bt && compVal(CH.bet[i])) { CH.resync++; (CH.rlog = CH.rlog || []).push(`bet${i} ${compVal(CH.bet[i])}->${bt} @${AUDIT.cur}`); } CH.bet[i] = compOf(bt); CH.betPile[i] = 0; }
+  }
+  const pot = d.pot || 0;
+  if (CH.piles && CH.piles.length) return;
+  if (compVal(CH.pot) !== pot) { if (pot && compVal(CH.pot)) { CH.resync++; (CH.rlog = CH.rlog || []).push(`pot ${compVal(CH.pot)}->${pot} @${AUDIT.cur}`); } CH.pot = compOf(pot); if (!pot) CH.potPile = false; }
+}
+
+/* layouts -> list of columns {x, y, v, n} (x,y = base chip centre) */
+// columns stand in a tight honeycomb cluster (3 = triangle, 4 = rhombus, 5-6 = shifted rows),
+// big chips at the back (away from the player), small ones near the hand; slightly irregular, stable per zone
+const HEX = 24.6, HEXR = HEX * .866;
+function rowSizes(n, per, rows) {
+  if (n <= 2) return [n];
+  const nr = Math.min(rows, Math.max(2, Math.ceil(n / per)));
+  const base = Math.floor(n / nr), extra = n % nr;
+  return Array.from({ length: nr }, (_, r) => base + (r < extra ? 1 : 0));     // near row first
+}
+function zoneCols(z, comp) {
+  let cols = compCols(comp, z.h); const cap = z.per * z.rows;
+  // more piles than the zone holds: the smallest chips are stacked on top of the lowest columns (mixed columns)
+  while (cols.length > cap) {
+    const e = cols.pop(); let t = cols[0]; cols.forEach(c => { if (c.n < t.n) t = c; });
+    t.list = (t.list || Array(t.n).fill(t.v)).concat(e.list || Array(e.n).fill(e.v)); t.n = t.list.length;
+  }
+  const n = cols.length; if (!n) return [];
+  const far = z.far || (() => { const dx = CX - z.o[0], dy = CY - z.o[1], l = Math.hypot(dx, dy) || 1; return [dx / l, dy / l]; })();
+  const tan = [-far[1], far[0]];
+  let sd = Math.abs(Math.round((z.seed != null ? z.seed : z.o[0] * 7 + z.o[1] * 13) * 9301)) % 233280;
+  const rnd = () => (sd = (sd * 9301 + 49297) % 233280) / 233280;
+  const sizes = rowSizes(n, z.per, z.rows);
+  // local slots, near row first; equal neighbouring rows shift half a chip so they nest
+  const slots = []; const rowShift = (rnd() - .5) * .3;
+  sizes.forEach((sz, r) => {
+    const prev = r ? sizes[r - 1] : 0; const half = r && sz === prev ? ((r % 2) ? .5 : 0) : 0;
+    for (let k = 0; k < sz; k++) slots.push({ r, a: (k - (sz - 1) / 2 + half + (r ? rowShift : 0)) * HEX, b: r * HEXR });
+  });
+  // the biggest chips go to the far rows
+  const order = slots.map((s, i) => i).sort((p, q) => slots[q].r - slots[p].r || slots[p].a - slots[q].a);
+  const ma = slots.reduce((s, q) => s + q.a, 0) / slots.length, mb = slots.reduce((s, q) => s + q.b, 0) / slots.length;
+  const out = cols.map((c, k) => {
+    const s = slots[order[k]], a = s.a - ma + (rnd() - .5) * 3, b = s.b - mb + (rnd() - .5) * 3;
+    return { x: z.o[0] + tan[0] * a + far[0] * b, y: z.o[1] + tan[1] * a + far[1] * b, v: c.v, n: c.n, list: c.list, dy: c.n > z.h ? CHIP_DY * (z.h - 1) / (c.n - 1) : undefined };
+  });
+  return out.sort((p, q) => p.y - q.y);      // back columns are drawn first
+}
+function pileCols(comp, cx, cy, seed, rx = 34, ry = 16) {
+  // a loose heap: chips in little clumps of 1-3, scattered in an ellipse, stable for the same seed
+  let r = (seed * 9301 + 49297) % 233280; const rnd = () => (r = (r * 9301 + 49297) % 233280) / 233280;
+  const chips = []; for (const v of DVALS) for (let k = 0; k < (comp[v] || 0); k++) chips.push(v);
+  const out = []; let i = 0, ring = 0;
+  while (i < chips.length) {
+    const n = Math.min(chips.length - i, 1 + Math.floor(rnd() * 3));
+    const a = rnd() * Math.PI * 2, d = Math.sqrt(rnd()) * (1 + ring * .04);
+    const x = cx + Math.cos(a) * rx * Math.min(1.25, d), y = cy + Math.sin(a) * ry * Math.min(1.25, d);
+    for (let k = 0; k < n; k++) out.push({ x: x + (rnd() - .5) * 3, y: y - k * CHIP_DY, v: chips[i + k], n: 1, tilt: (rnd() - .5) * 20 });
+    i += n; ring++;
+  }
+  return out.sort((a, b) => a.y - b.y);
+}
+function stackLayout(seat, comp) { return zoneCols(Object.assign({ seed: vis(seat) * 31 + 1 }, CZ[vis(seat)].stack), comp); }
+function betLayout(seat, comp, pile) { const z = Object.assign({ seed: vis(seat) * 31 + 7 }, CZ[vis(seat)].bet); const hp = z.heap || z.o; return pile ? pileCols(comp, hp[0], hp[1], seat + 7, 22, 10) : zoneCols(z, comp); }
+function potLayout(comp, pile) { return pile ? pileCols(comp, POTZ[0], POTZ[1], 3, 60, 8) : zoneCols(POTZONE, comp); }
+
+/* drawing: one container, columns of chips; every chip carries its value for checks */
+function chipColsEl(cols, ox = 0, oy = 0) {
+  const el = document.createElement('div'); el.className = 'stack';
+  cols.forEach((c, ci) => {
+    for (let k = 0; k < c.n; k++) {
+      const cv = c.list ? c.list[k] : c.v, d = DEN_INFO[cv];
+      const ch = document.createElement('i'); ch.className = 'chip';
+      ch.style.setProperty('--c', d[1]); ch.style.setProperty('--e', d[2]);
+      ch.style.left = (c.x - ox + (k % 2 ? .5 : -.4)) + 'px'; ch.style.top = (c.y - oy - k * (c.dy || CHIP_DY)) + 'px';
+      if (c.tilt) ch.style.rotate = c.tilt + 'deg';
+      ch.dataset.k = k; ch.dataset.col = ci; ch.dataset.val = cv;
+      if (k === c.n - 1 || (c.list && c.list[k + 1] !== cv)) { ch.classList.add('lbl'); ch.dataset.v = denomLabel(cv); }
+      el.appendChild(ch);
+    }
+  });
+  return el;
+}
+/* a group of chips as a moving sprite, drawn around its own centre */
+function chipSprite(comp, x, y, layout) {
+  const cols = layout || zoneCols({ o: [0, 0], far: [0, -1], per: 3, rows: 3, h: 12, seed: 5 }, comp);
+  const el = chipColsEl(cols, 0, 0);
+  return sprite(el, x, y);
+}
+const colsCenter = cols => { if (!cols.length) return [0, 0]; let x = 0, y = 0; cols.forEach(c => { x += c.x; y += c.y; }); return [x / cols.length, y / cols.length]; };
+const relCols = (cols, c) => cols.map(k => Object.assign({}, k, { x: k.x - c[0], y: k.y - c[1] }));
+
+function drawChips(d) {
+  if (!animating) chipSync(d);
+  if (AUDIT.log) { const bad = (c, k) => { for (const [v, n] of Object.entries(c)) if (n < 0 || n !== Math.floor(n) || !DEN_INFO[v]) { AUDIT.log.push(`bad ${k} ${v}:${n} @${AUDIT.cur} ${new Error().stack.split('\n').slice(2, 6).join(' | ')}`); return; } };
+    for (let i = 0; i < 6; i++) { bad(CH.stack[i], 'stack' + i); bad(CH.bet[i], 'bet' + i); } bad(CH.pot, 'pot'); (CH.piles || []).forEach((p, k) => bad(p.comp, 'pile' + k)); }   // while an animation runs, the chips themselves are the truth
+  for (let i = 0; i < 6; i++) {
+    const p = d.seats[i]; if (!p) continue;
+    if (!compEmpty(CH.stack[i])) {
+      const el = chipColsEl(stackLayout(i, CH.stack[i])); el.dataset.seat = i; el.dataset.kind = 'stack';
+      L.felt.appendChild(el);
+      if (p.uid === uid) { el.style.cursor = 'pointer'; el.addEventListener('pointerdown', () => emitRiffle(i)); }
+    }
+    if (!compEmpty(CH.bet[i])) {
+      const el = chipColsEl(betLayout(i, CH.bet[i], CH.betPile[i])); el.dataset.kind = 'bet'; el.dataset.seat = i; L.felt.appendChild(el);
+      const lb = document.createElement('div'); lb.className = 'betLbl'; lb.innerHTML = `<span class="coin"></span>${fmt(compVal(CH.bet[i]))}`;
+      const lp = CZ[vis(i)].lbl; place(lb, lp[0], lp[1]); L.felt.appendChild(lb);
+    }
+  }
+  if (!compEmpty(CH.pot)) { const el = chipColsEl(potLayout(CH.pot, CH.potPile)); el.dataset.kind = 'pot'; L.felt.appendChild(el); }
+  drawPiles();
+}
+const chipsEl = (kind, seat) => L.felt.querySelector(`.stack[data-kind="${kind}"]` + (seat != null ? `[data-seat="${seat}"]` : ''));
+
+/* ---------- moves ---------- */
+const lerp2 = (a, b, t) => [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t];
+// a hand carries `comp` from point a to point b (hand limited by its reach: the chips slide the rest)
+// chips never slide over the player's own cards: the path bends around them on the table side
+function detour(seat, a, b) {
+  const c = slot(seat).cards, R = 58;
+  if (segDist(a, b, c, c) >= R) return null;
+  let dx = CX - c[0], dy = CY - c[1]; const l = Math.hypot(dx, dy) || 1; dx /= l; dy /= l;
+  return [c[0] + dx * (R + 8), c[1] + dy * (R + 8)];
+}
+async function carryChips(seat, side, comp, a, b, layout, dur = 420) {
+  const w = chipSprite(comp, ...a, layout); sfx.chips(3);
+  if (PH[seat]) {
+    setPose(seat, side, 'cup');
+    await movePH(seat, side, ...reachFor(seat, side, a, 26), 200);
+    setPose(seat, side, 'grip');
+    const wp = detour(seat, a, b);
+    if (wp) { const a0 = a; await movePH(seat, side, ...reachFor(seat, side, wp, 26), dur * .55, ease.io, (x, y, t) => setSprite(w, ...lerp2(a0, wp, t))); a = wp; }
+    const st = PH[seat], e0 = st.geo[side].elbow, reach = st.geo.reach;
+    const far = Math.hypot(b[0] - e0[0], b[1] - e0[1]) > reach - 10;
+    if (!far) {
+      await movePH(seat, side, ...reachFor(seat, side, b, 26), dur, ease.io, (x, y, t) => setSprite(w, ...lerp2(a, b, t)));
+    } else {
+      // push to the end of the reach, the chips slide on and stop with friction
+      const hx = e0[0] + (b[0] - e0[0]) / Math.hypot(b[0] - e0[0], b[1] - e0[1]) * (reach - 12), hy = e0[1] + (b[1] - e0[1]) / Math.hypot(b[0] - e0[0], b[1] - e0[1]) * (reach - 12);
+      const tm = Math.min(.85, Math.hypot(hx - a[0], hy - a[1]) / (Math.hypot(b[0] - a[0], b[1] - a[1]) || 1));
+      await movePH(seat, side, hx, hy, dur * .8, ease.io, (x, y, t) => setSprite(w, ...lerp2(a, b, t * tm)));
+      restPH(seat, side, 320);
+      await tween(320, t => setSprite(w, ...lerp2(a, b, tm + (1 - tm) * t)), ease.out);
+    }
+  } else await moveSprite(w, a, b, dur, ease.io);
+  sfx.chips(4);
+  return w;
+}
+// the dealer moves chips between the tray / pot and a spot (his reach is limited too)
+const AUDIT = { tray: 0, left: 0, cur: '' };   // chips that went into the dealer's tray / left the table with a player
+async function dealerCarry(comp, a, b, layout, dur = 420, rake = false) {
+  const side = (a[0] + b[0]) / 2 < CX ? 'L' : 'R';
+  const w = chipSprite(comp, ...a, layout);
+  if (a === TRAY) AUDIT.tray -= compVal(comp);
+  if (b === TRAY) { const v = compVal(comp), rm = w.remove.bind(w); w.remove = () => { if (w.isConnected) AUDIT.tray += v; rm(); }; }
+  await moveHand(side, a[0] + (side === 'L' ? 14 : -14), a[1] - 16, 260, ease.io);
+  sfx.chips(4);
+  const sh = SHOULDER[side], reachPt = p => { const vx = p[0] - sh[0], vy = p[1] - sh[1], l = Math.hypot(vx, vy) || 1, k = Math.min(1, 190 / l); return [sh[0] + vx * k, sh[1] + vy * k]; };
+  const bh = reachPt(b), within = Math.hypot(bh[0] - b[0], bh[1] - b[1]) < 4;
+  if (within) await moveHand(side, b[0] + (side === 'L' ? 14 : -14), b[1] - 16, dur, ease.io, (x, y, t) => setSprite(w, ...lerp2(a, b, t)));
+  else {
+    const tm = Math.min(.85, Math.max(.2, Math.hypot(bh[0] - a[0], bh[1] - a[1]) / (Math.hypot(b[0] - a[0], b[1] - a[1]) || 1)));
+    await moveHand(side, ...bh, dur * .8, ease.io, (x, y, t) => setSprite(w, ...lerp2(a, b, t * tm)));
+    restHands(320);
+    await tween(340, t => setSprite(w, ...lerp2(a, b, tm + (1 - tm) * t)), ease.out);
+  }
+  sfx.chips(3);
+  return w;
+}
+// the dealer makes change: the big chip goes to his tray, the right small chips come back
+async function dealerChange(destPoint, bigComp, backToDest, backToOther, otherPoint, onDest, onOther, keepOther) {
+  const w1 = await dealerCarry(bigComp, destPoint, TRAY, null, 360); w1.remove();
+  const tasks = [];
+  // each piece of change joins its pile the moment it lands
+  if (!compEmpty(backToDest)) tasks.push(dealerCarry(backToDest, TRAY, destPoint, null, 380).then(w => { onDest(); w.remove(); render(); }));
+  if (backToOther && !compEmpty(backToOther)) tasks.push(dealerCarry(backToOther, TRAY, otherPoint, null, 420).then(w => { onOther(w); w.remove(); render(); }));
+  await Promise.all(tasks);
+  restHands(300);
+}
+function scatterEl(el) { if (!el) return; el.querySelectorAll('.chip').forEach((c, k) => { const a = Math.random() * Math.PI * 2, r = 6 + Math.random() * 14; c.animate([{ translate: '0 0' }, { translate: `${Math.cos(a) * r}px ${Math.sin(a) * r * .5 - 8}px`, offset: .5 }, { translate: '0 0' }], { duration: 380 + k * 8, easing: 'ease-out' }); }); }
+function dropEl(el) { if (!el) return; el.querySelectorAll('.chip').forEach((c, k) => c.animate([{ translate: `0 -16px`, opacity: .4 }, { translate: '0 2px', opacity: 1, offset: .75 }, { translate: '0 0' }], { duration: 240 + (+c.dataset.k || 0) * 28, easing: 'cubic-bezier(.3,1.5,.5,1)' })); }
+
+/* ---------- event handlers (called from animate) ---------- */
+function allinStyle(u) { const l = lookOf(u); if (l.ai === 'neat' || l.ai === 'push') return l.ai; let h = 0; for (const ch of String(u)) h = (h * 31 + ch.charCodeAt(0)) >>> 0; return h % 2 ? 'push' : 'neat'; }
+// the dealer never reaches into a player's stack: chips are handed over at the betting line in front of the player
+const handoff = seat => { const z = CZ[vis(seat)].bet; return z.heap || z.o; };
+async function playerToLine(seat, comp) {           // the player's hand pushes chips from the stack to the line
+  const p = disp.seats[seat];
+  for (const [v, n] of Object.entries(comp)) { CH.stack[seat][v] -= n; if (!CH.stack[seat][v]) delete CH.stack[seat][v]; }
+  const from = colsCenter(stackLayout(seat, compAdd(CH.stack[seat], comp)));
+  if (p) p.stack = compVal(CH.stack[seat]); render();
+  const w = await carryChips(seat, 'B', comp, from, handoff(seat), null, 400); restPH(seat, 'B', 300);
+  return w;
+}
+async function lineToPlayer(seat, comp, w) {        // ...and pulls chips from the line into the stack
+  const p = disp.seats[seat]; if (w) w.remove();
+  const to = colsCenter(stackLayout(seat, compAdd(CH.stack[seat], comp)));
+  const w2 = await carryChips(seat, 'B', comp, handoff(seat), to, null, 400); w2.remove();
+  CH.stack[seat] = compAdd(CH.stack[seat], comp); if (p) p.stack = compVal(CH.stack[seat]); render(); restPH(seat, 'B', 300);
+}
+async function animBet(e, d) {
+  const p = d.seats[e.seat]; const i = e.seat;
+  if (e.kind !== 'sb' && e.kind !== 'bb') p.last = e.allIn ? 'Олл-ин' : ({ call: 'Колл', bet: 'Бет', raise: 'Рейз' }[e.kind] || '');
+  else p.last = e.kind === 'sb' ? 'МБ' : 'ББ';
+  chipSync(d);
+  const bz = CZ[vis(i)].bet;
+  if (e.allIn && allinStyle(p.uid) === 'push' && !compEmpty(CH.stack[i])) {
+    // both hands shove the whole stack forward, it falls into a heap
+    const cols = stackLayout(i, CH.stack[i]), c0 = colsCenter(cols);
+    const moving = CH.stack[i]; CH.stack[i] = {}; p.stack = Math.max(0, p.stack - e.amt); render();
+    const w = chipSprite(moving, ...c0, relCols(cols, c0));
+    const sl = slot(i); let nn = [sl.n[0], sl.n[1]];
+    if (PH[i]) {
+      // each hand takes the side of the pile nearer to its own elbow, so the arms never cross
+      const eA = PH[i].geo.A.elbow, dA = p => Math.hypot(p[0] - eA[0], p[1] - eA[1]);
+      if (dA([c0[0] - nn[0] * 30, c0[1] - nn[1] * 30]) > dA([c0[0] + nn[0] * 30, c0[1] + nn[1] * 30])) nn = [-nn[0], -nn[1]];
+      setPose(i, 'A', 'flat'); setPose(i, 'B', 'flat');
+      await Promise.all([movePH(i, 'A', ...reachFor(i, 'A', [c0[0] - nn[0] * 30, c0[1] - nn[1] * 30], 22), 240), movePH(i, 'B', ...reachFor(i, 'B', [c0[0] + nn[0] * 30, c0[1] + nn[1] * 30], 22), 240)]);
+      sfx.chips(8);
+      const tgt = bz.heap || bz.o;
+      movePH(i, 'A', ...reachFor(i, 'A', [tgt[0] - nn[0] * 30, tgt[1] - nn[1] * 30], 22), 420, ease.out); movePH(i, 'B', ...reachFor(i, 'B', [tgt[0] + nn[0] * 30, tgt[1] + nn[1] * 30], 22), 420, ease.out);
+      const wp = detour(i, c0, tgt);
+      if (wp) await tween(300, t => setSprite(w, ...lerp2(c0, wp, t)), ease.io);
+      await tween(wp ? 300 : 460, t => setSprite(w, ...lerp2(wp || c0, tgt, t)), ease.out);
+    } else await moveSprite(w, c0, bz.heap || bz.o, 420, ease.out);
+    w.remove();
+    CH.bet[i] = compAdd(CH.bet[i], moving); CH.betPile[i] = 1; p.bet = e.to;
+    render(); scatterEl(chipsEl('bet', i)); sfx.chips(6);
+    if (PH[i]) { restPH(i, 'A', 420); restPH(i, 'B', 460); }
+    await sleep(420);
+    return;
+  }
+  if (e.allIn) {
+    // neat all-in: the hand carries the stacks one by one
+    const cols = stackLayout(i, CH.stack[i]);
+    for (let k = 0; k < cols.length; k++) {
+      const c = cols[k], one = {}; (c.list || Array(c.n).fill(c.v)).forEach(v => one[v] = (one[v] || 0) + 1);
+      for (const [v, n] of Object.entries(one)) { CH.stack[i][v] -= n; if (!CH.stack[i][v]) delete CH.stack[i][v]; }
+      p.stack = compVal(CH.stack[i]); render();
+      const futureBet = compAdd(CH.bet[i], one), lay = betLayout(i, futureBet, CH.betPile[i]);
+      const dst = lay.find(q => q.v === c.v) || lay[lay.length - 1];
+      const w = await carryChips(i, 'B', one, [c.x, c.y], [dst.x, dst.y], [{ x: 0, y: 0, v: c.v, n: c.n, list: c.list }], 340);
+      w.remove(); CH.bet[i] = futureBet; p.bet = compVal(CH.bet[i]); render(); dropEl(chipsEl('bet', i));
+    }
+    restPH(i, 'B', 300); p.bet = e.to; await sleep(200); return;
+  }
+  // ordinary bet / call / blind: take the chips from the stack, place them on the line
+  const st = CH.stack[i]; const { taken, over } = compTake(st, e.amt);
+  p.stack = compVal(st); render();
+  const from = colsCenter(stackLayout(i, compAdd(st, taken)));
+  const futureBet = compAdd(CH.bet[i], taken), lay = betLayout(i, futureBet, CH.betPile[i]), to = colsCenter(lay);
+  const w = await carryChips(i, 'B', taken, from, to, null, 420);
+  w.remove(); CH.bet[i] = futureBet; p.bet = compVal(futureBet); render(); dropEl(chipsEl('bet', i));
+  restPH(i, 'B', 300);
+  if (over > 0) {
+    // overpaid with a bigger chip: the dealer swaps it for exact change
+    const big = Math.min(...Object.keys(taken).map(Number).filter(v => v > over || true));
+    const bigV = Object.keys(taken).map(Number).sort((a, b) => b - a)[0];
+    CH.bet[i][bigV]--; if (!CH.bet[i][bigV]) delete CH.bet[i][bigV];
+    p.bet = compVal(CH.bet[i]); render();
+    const toBet = compOf(bigV - over), toStack = compOf(over);
+    let back = null;
+    await dealerChange(to, { [bigV]: 1 }, toBet, toStack, handoff(i),
+      () => { CH.bet[i] = compAdd(CH.bet[i], toBet); p.bet = compVal(CH.bet[i]); },
+      () => { back = chipSprite(toStack, ...handoff(i)); }, true);
+    render();
+    await lineToPlayer(i, toStack, back);
+  }
+  p.bet = e.to; await sleep(160);
+}
+async function animRefund(e, d) {
+  const i = e.seat, p = d.seats[i]; chipSync(d);
+  const test = compTake(Object.assign({}, CH.bet[i]), e.amt);
+  if (test.over > 0) {
+    // the dealer breaks the bet down so the exact amount can be handed back
+    const all = CH.bet[i], at = colsCenter(betLayout(i, all, CH.betPile[i])), rest = compVal(all) - e.amt;
+    CH.bet[i] = {}; p.bet = 0; render();
+    const w1 = await dealerCarry(all, at, TRAY, null, 360); w1.remove();
+    const fresh = compAdd(compOf(e.amt), compOf(rest));
+    const w2 = await dealerCarry(fresh, TRAY, at, null, 380); w2.remove();
+    CH.bet[i] = fresh; CH.betPile[i] = 0; p.bet = compVal(fresh); render(); restHands(300);
+  }
+  const { taken } = compTake(CH.bet[i], e.amt);
+  const from = colsCenter(betLayout(i, compAdd(CH.bet[i], taken), CH.betPile[i]));
+  p.bet = compVal(CH.bet[i]); render();
+  const to = colsCenter(stackLayout(i, compAdd(CH.stack[i], taken)));
+  const w = await carryChips(i, 'B', taken, from, to, null, 380); w.remove();
+  CH.stack[i] = compAdd(CH.stack[i], taken); p.stack = compVal(CH.stack[i]);
+  render(); restPH(i, 'B', 300);
+}
+async function animCollect(e, d) {
+  chipSync(d);
+  const seats = [0, 1, 2, 3, 4, 5].filter(i => d.seats[i] && !compEmpty(CH.bet[i]));
+  if (!seats.length) { d.pot = e.pot; chipSync(d); render(); return; }
+  const rake = CH.potPile || seats.some(i => CH.betPile[i]);
+  d.potLbl = e.pot;
+  if (rake && !CH.potPile && !compEmpty(CH.pot)) { CH.potPile = true; render(); scatterEl(chipsEl('pot')); sfx.chips(5); await sleep(260); }
+  if (rake) CH.potPile = true;
+  // the dealer's hands work their own side of the table
+  const work = async side => {
+    for (const i of seats.filter(i => slot(i).side === side)) {
+      const comp = CH.bet[i], cols = betLayout(i, comp, CH.betPile[i]), c0 = colsCenter(cols);
+      CH.bet[i] = {}; CH.betPile[i] = 0; d.seats[i].bet = 0;
+      const future = compAdd(CH.pot, comp); const lay = potLayout(future, CH.potPile);
+      render();
+      const dst = rake ? [POTZ[0] + (side === 'L' ? -20 : 20), POTZ[1] - 6] : colsCenter(lay);
+      const v0 = compVal(comp), p0 = compVal(CH.pot);
+      const w = await dealerCarry(comp, c0, dst, relCols(cols, c0), 420, rake);
+      if (compVal(comp) !== v0 || compVal(CH.pot) !== p0) (AUDIT.log = AUDIT.log || []).push(`collect seat${i} comp ${v0}->${compVal(comp)} pot ${p0}->${compVal(CH.pot)} side ${side}`);
+      w.remove(); CH.pot = compAdd(CH.pot, comp); d.pot = compVal(CH.pot); render();
+      if (rake) scatterEl(chipsEl('pot')); else dropEl(chipsEl('pot'));
+    }
+  };
+  await Promise.all([work('L'), work('R')]);
+  d.pot = e.pot; d.potLbl = null; render(); const pt = $('#pot'); pt.classList.add('bump'); setTimeout(() => pt.classList.remove('bump'), 220);
+  restHands(320); await sleep(160);
+}
+// side pots and split pots are laid out as separate labelled piles before they go to the winners
+CH.piles = [];
+function pilePos(n, k) { const gap = n > 4 ? 84 : n > 3 ? 100 : 118; return [CX + (k - (n - 1) / 2) * gap, POTZ[1]]; }
+function drawPiles() {
+  CH.piles.forEach((pl, k) => {
+    if (compEmpty(pl.comp)) return;
+    const el = chipColsEl(zoneCols({ o: pl.at, far: [0, -1], per: 3, rows: 2, h: 8, seed: k + 3 }, pl.comp));
+    el.dataset.kind = 'pile'; el.dataset.k = k; L.felt.appendChild(el);
+    const lb = document.createElement('div'); lb.className = 'betLbl potLbl'; lb.innerHTML = `${CH.piles.length > 4 ? '' : `<small>${esc(pl.name)}</small>`}<span class="coin"></span>${fmt(compVal(pl.comp))}`;
+    place(lb, pl.at[0], 102); L.felt.appendChild(lb);
+  });
+}
+async function splitPiles(e, d) {
+  // one pile per share: main pot first, then side pots; a split pot is cut in two
+  const shares = []; e.pots.forEach((pt, pi) => pt.seats.forEach((s, k) => shares.push({ pi, seat: s, amt: pt.shares[k] })));
+  const potName = pi => e.pots.length < 2 ? 'Банк' : pi === 0 ? 'Основной' : e.pots.length > 2 ? 'Побочный ' + pi : 'Побочный';
+  // the dealer squares the pot into exact amounts (a quick shuffle in the middle)
+  const parts = shares.map(s => compOf(s.amt));
+  const total = parts.reduce((a, c) => compAdd(a, c), {});
+  if (compVal(total) !== compVal(CH.pot) || shares.length > 5) return null;   // too many shares for the middle of the table: paid one by one
+  await Promise.all([moveHand('L', POTZ[0] - 30, POTZ[1] - 14, 260), moveHand('R', POTZ[0] + 30, POTZ[1] - 14, 260)]);
+  CH.pot = total; CH.potPile = true; render(); scatterEl(chipsEl('pot')); sfx.chips(5); await sleep(320);
+  // first the pots, then each pot cut into shares
+  // every share gets its own spot in a row; a pot first sits in the middle of its shares' spots
+  const spots = shares.map((s, k) => pilePos(shares.length, k));
+  const potAt = e.pots.map((pt, pi) => { const ks = shares.map((s, k) => s.pi === pi ? k : -1).filter(k => k >= 0); return [ks.reduce((a, k) => a + spots[k][0], 0) / ks.length, POTZ[1]]; });
+  const potComp = e.pots.map((pt, pi) => shares.reduce((a, s, k) => s.pi === pi ? compAdd(a, parts[k]) : a, {}));
+  CH.piles = []; const pc = colsCenter(potLayout(CH.pot, true));
+  for (let pi = 0; pi < e.pots.length; pi++) {
+    let rest = Object.assign({}, CH.pot); for (const [v, n] of Object.entries(potComp[pi])) { rest[v] -= n; if (!rest[v]) delete rest[v]; }
+    CH.pot = rest; d.pot = compVal(rest); render();
+    const w = await dealerCarry(potComp[pi], pc, potAt[pi], null, 380, true); w.remove();
+    CH.piles.push({ comp: potComp[pi], at: potAt[pi], name: potName(pi) }); render(); dropEl(L.felt.querySelector(`.stack[data-kind="pile"][data-k="${pi}"]`));
+  }
+  CH.potPile = false;
+  const out = [];
+  const final = [];
+  shares.forEach((s, k) => {
+    const n = e.pots[s.pi].seats.length, at = spots[k];
+    final.push({ comp: parts[k], at, name: n > 1 ? 'Пополам' : potName(s.pi), seat: s.seat, amt: s.amt, pi: s.pi });
+  });
+  for (let pi = 0; pi < e.pots.length; pi++) {
+    const mine = final.filter(f => f.pi === pi); if (mine.length < 2) continue;
+    await sleep(200);
+    // the dealer cuts the pile: one share slides each way
+    const pile = CH.piles[pi]; pile.comp = {}; render();
+    moveHand(potAt[pi][0] < CX ? 'L' : 'R', potAt[pi][0], potAt[pi][1] - 12, 200);
+    const ws = await Promise.all(mine.map((f, k) => { const s = chipSprite(f.comp, ...potAt[pi]); return moveSprite(s, potAt[pi], f.at, 360, ease.io).then(() => s); }));
+    CH.piles.push(...mine.map(f => ({ comp: f.comp, at: f.at, name: 'Пополам' })));
+    ws.forEach(w => w.remove()); render(); sfx.chips(3);
+  }
+  CH.piles = final.map(f => ({ comp: f.comp, at: f.at, name: final.filter(g => g.pi === f.pi).length > 1 ? 'Пополам' : f.name, seat: f.seat, amt: f.amt })); render(); sfx.chips(3);
+  restHands(300); await sleep(700);
+  return CH.piles;
+}
+async function animWin(e, d) {
+  chipSync(d);
+  const multi = e.pots.length > 1 || e.pots.some(pt => pt.seats.length > 1);
+  if (multi) {
+    const piles = await splitPiles(e, d);
+    if (piles) {
+      for (const pl of piles.slice()) {
+        const p = d.seats[pl.seat]; if (!p) continue;
+        const sl = slot(pl.seat), bz = CZ[vis(pl.seat)].bet, dst = [bz.o[0], bz.o[1]], got = pl.comp;
+        const k = CH.piles.indexOf(pl); CH.piles[k] = Object.assign({}, pl, { comp: {} }); render();
+        const w = await dealerCarry(got, pl.at, dst, null, 520); w.remove();
+        CH.bet[pl.seat] = got; CH.betPile[pl.seat] = 0; p.bet = compVal(got); render();
+        const from = colsCenter(betLayout(pl.seat, got, 0));
+        CH.bet[pl.seat] = {}; p.bet = 0; render();
+        const to = colsCenter(stackLayout(pl.seat, compAdd(CH.stack[pl.seat], got)));
+        const w2 = await carryChips(pl.seat, 'B', got, from, to, null, 420); w2.remove();
+        CH.stack[pl.seat] = compAdd(CH.stack[pl.seat], got); p.stack = compVal(CH.stack[pl.seat]);
+        const tx = document.createElement('div'); tx.className = 'winTxt'; tx.textContent = '+' + fmt(pl.amt); place(tx, sl.plate[0], sl.plate[1] - 46); L.txt.appendChild(tx); setTimeout(() => tx.remove(), 2500);
+        render(); restPH(pl.seat, 'B', 300);
+      }
+      CH.piles = []; CH.potPile = false; d.pot = 0; render(); await sleep(300);
+      return;
+    }
+  }
+  for (const pt of e.pots) {
+    for (let k = 0; k < pt.seats.length; k++) {
+      const seat = pt.seats[k], amt = pt.shares[k]; const p = d.seats[seat]; if (!p) continue;
+      const sl = slot(seat);
+      const potCols = potLayout(CH.pot, CH.potPile), pc = colsCenter(potCols);
+      const { taken, over } = compTake(CH.pot, amt);
+      d.pot = compVal(CH.pot); render();
+      const bz = CZ[vis(seat)].bet, dst = [bz.o[0], bz.o[1]];
+      // the dealer pushes the winnings toward the winner
+      const w = await dealerCarry(taken, pc, dst, null, 520, CH.potPile);
+      w.remove();
+      let got = taken;
+      if (over > 0) {
+        const bigV = Object.keys(got).map(Number).sort((a, b) => b - a)[0];
+        got = Object.assign({}, got); got[bigV]--; if (!got[bigV]) delete got[bigV];
+        CH.bet[seat] = got; p.bet = compVal(got); render();
+        const toWinner = compOf(bigV - over), toPot = compOf(over);
+        await dealerChange(dst, { [bigV]: 1 }, toWinner, toPot, pc,
+          () => { got = compAdd(got, toWinner); CH.bet[seat] = got; p.bet = compVal(got); },
+          () => { CH.pot = compAdd(CH.pot, toPot); d.pot = compVal(CH.pot); });
+      }
+      CH.bet[seat] = got; CH.betPile[seat] = 0; p.bet = compVal(got); render();
+      // the winner's hand pulls them into the stack
+      const from = colsCenter(betLayout(seat, got, 0));
+      CH.bet[seat] = {}; p.bet = 0; render();
+      const to = colsCenter(stackLayout(seat, compAdd(CH.stack[seat], got)));
+      const w2 = await carryChips(seat, 'B', got, from, to, null, 420); w2.remove();
+      CH.stack[seat] = compAdd(CH.stack[seat], got); p.stack = compVal(CH.stack[seat]);
+      const tx = document.createElement('div'); tx.className = 'winTxt'; tx.textContent = '+' + fmt(amt); place(tx, sl.plate[0], sl.plate[1] - 46); L.txt.appendChild(tx); setTimeout(() => tx.remove(), 2500);
+      render(); restPH(seat, 'B', 300);
+    }
+  }
+  CH.potPile = false; d.pot = 0; render();
+  await sleep(300);
+}
+// chips to / from the dealer's tray (bar, buy-ins)
+async function animToTray(seat, amt, d) {
+  chipSync(d);
+  const { taken, over } = compTake(Object.assign({}, CH.stack[seat]), amt);
+  const w = await playerToLine(seat, taken); w.remove();
+  const w1 = await dealerCarry(taken, handoff(seat), TRAY, null, 460); w1.remove();
+  if (over > 0) { const back = compOf(over); const w2 = await dealerCarry(back, TRAY, handoff(seat), null, 420); restHands(300); await lineToPlayer(seat, back, w2); }
+  restHands(300);
+}
+async function animFromTray(seat, amt, d) {
+  chipSync(d); const give = compOf(amt);
+  const w = await dealerCarry(give, TRAY, handoff(seat), null, 520); restHands(300);
+  await lineToPlayer(seat, give, w); dropEl(chipsEl('stack', seat));
+}
+// colour-up: too many small chips -> the player hands them in at the line, the dealer brings big ones back
+async function colourUp(d) {
+  chipSync(d);
+  for (let i = 0; i < 6; i++) {
+    const p = d.seats[i]; if (!p || compEmpty(CH.stack[i])) continue;
+    const z = CZ[vis(i)].stack;
+    const ideal = compOf(compVal(CH.stack[i]));
+    const cnt = c => Object.values(c).reduce((a, n) => a + n, 0);
+    const tall = zoneCols(z, CH.stack[i]).some(c => c.n > z.h);
+    if (!tall && cnt(CH.stack[i]) <= cnt(ideal) + 4) continue;
+    if (cnt(CH.stack[i]) === cnt(ideal)) continue;
+    const old = Object.assign({}, CH.stack[i]);
+    const w = await playerToLine(i, old); w.remove();
+    const w1 = await dealerCarry(old, handoff(i), TRAY, null, 460); w1.remove();
+    const w2 = await dealerCarry(ideal, TRAY, handoff(i), null, 460); restHands(300);
+    await lineToPlayer(i, ideal, w2); dropEl(chipsEl('stack', i));
+  }
+  restHands(300);
+}
+
 function render() {
   if (!disp) return;
   const d = disp, me = mySeat();
@@ -1664,9 +2321,9 @@ function render() {
   if (WC) { const lb = document.createElement('div'); lb.className = 'comboLbl'; lb.textContent = WC.name; place(lb, CX, BOARD_Y + 50); L.felt.appendChild(lb); }
   // pot
   const potAmt = d.pot || 0;
-  $('#pot').hidden = !potAmt && !(d.phase !== 'idle' && d.phase !== 'showdown');
+  $('#pot').hidden = (!potAmt && !(d.phase !== 'idle' && d.phase !== 'showdown')) || !!(CH.piles && CH.piles.length);
   $('#potV').textContent = fmt(d.potLbl != null ? d.potLbl : potAmt + d.seats.reduce((a, p) => a + (p ? p.bet : 0), 0));
-  if (potAmt) { const st = stackEl(potAmt, 4); place(st, POT[0], POT[1] - 34); st.style.transform = 'scale(.85)'; L.felt.appendChild(st); }
+  drawChips(d);
   // dealer button
   if (d.dealer >= 0 && d.seats[d.dealer]) { const b = slot(d.dealer).btn; const dbt = $('#dbtn'); dbt.hidden = false; place(dbt, b[0], b[1]); } else $('#dbtn').hidden = true;
   // seats
@@ -1680,14 +2337,6 @@ function render() {
       place(e, ...sl.plate); L.seats.appendChild(e); continue;
     }
     const isMe = p.uid === uid;
-    // chips in front of player
-    if (p.stack > 0) { const st = stackEl(p.stack, 3); st.dataset.seat = i; place(st, ...sl.stack); L.felt.appendChild(st); st.addEventListener('pointerdown', () => { if (isMe) emitRiffle(i); }); if (isMe) st.style.cursor = 'pointer'; }
-    // bet
-    if (p.bet > 0) {
-      const st = pileEl(p.bet, i); place(st, sl.bet[0], sl.bet[1]); L.felt.appendChild(st);
-      if (dropSeat === i) { dropSeat = -1; st.querySelectorAll('.chip').forEach((c, k) => c.animate([{ translate: `${(k % 3 - 1) * 4}px -18px`, opacity: .3 }, { translate: '0 2px', opacity: 1, offset: .7 }, { translate: '0 0' }], { duration: 260 + k * 35, easing: 'cubic-bezier(.3,1.5,.5,1)' })); }
-      const lb = document.createElement('div'); lb.className = 'betLbl'; lb.innerHTML = `<span class="coin"></span>${fmt(p.bet)}`; place(lb, sl.bet[0], sl.bet[1] + 20); L.felt.appendChild(lb);
-    }
     // cards
     if (p.cards) {
       const big = isMe && vis(i) === 0;
@@ -1695,9 +2344,9 @@ function render() {
       const faceUp = (isMe && !p.peekHide) || p.show;
       p.cards.forEach((c, k) => {
         const el = cardEl(faceUp || (isMe && p.peekHide) ? c : -1, size, !faceUp);
-        const off = big ? (k ? 28 : -28) : (k ? 21 : -21);
-        place(el, sl.cards[0] + off - cw / 2, sl.cards[1] - ch / 2);
-        el.style.transform = (faceUp ? '' : 'rotateY(180deg) ') + `rotate(${k ? 4 : -4}deg)`;
+        const hp = holePos(i, k, big);
+        place(el, hp.cx - cw / 2, hp.cy - ch / 2);
+        el.style.transform = `rotate(${hp.rot}deg)` + (faceUp ? '' : ' rotateY(180deg)');
         if (d.phase === 'showdown' && (p.show || isMe) && d.result) {
           if (WC) { const w = W8.has(i) && WC.set.has(c); el.classList.add(w ? 'win' : 'dim'); if (w) liftWin(el); }
           else if (p.show) el.classList.add(W8.has(i) ? 'win' : 'dim');
@@ -1723,10 +2372,13 @@ function render() {
     if (bot && isHost && !tut && !demo) { pl.style.cursor = 'pointer'; pl.onclick = () => openBotMenu(i); }
   }
   // drinks on the table
+  L.txt.querySelectorAll('.cup,.glass').forEach(x => x.remove());
+  for (let i = 0; i < 6; i++) { const cp = slot(i).cup; const h = document.createElement('div'); h.className = 'cup'; place(h, cp[0] - CUP_R, cp[1] - CUP_R); L.txt.appendChild(h); }
   if (S && S.drinks) for (let i = 0; i < 6; i++) {
     const p = d.seats[i]; if (!p) continue; const id = S.drinks[p.uid]; if (!id) continue;
-    const g = document.createElement('div'); g.className = 'glass'; g.dataset.seat = i; g.innerHTML = glassSvg(id, vis(i) === 0 && p.uid === uid ? 1.15 : 1);
-    place(g, ...slot(i).drink); L.felt.appendChild(g);
+    const g = document.createElement('div'); g.className = 'glass'; g.dataset.seat = i; g.innerHTML = glassSvg(id, .8);
+    const bs = GLASS_BASE[(DRINK_ART[id] || {}).glass] || [18, 36]; g.style.setProperty('margin', `${-bs[1] * .8}px 0 0 ${-bs[0] * .8}px`, 'important'); g.style.transformOrigin = `${bs[0] * .8}px ${bs[1] * .8}px`;
+    place(g, ...slot(i).drink); L.txt.appendChild(g);
   }
   if (S && S.tableBottle) { const b = document.createElement('div'); b.className = 'bucket'; b.innerHTML = bucketSvg(S.tableBottle.id); place(b, ...BUCKET); L.felt.appendChild(b); }
   buildHands();
@@ -1795,7 +2447,7 @@ function renderHud() {
     const lg = Engine.legal(st, i); if (!lg) return;
     c.classList.add('turnMode');
     const verb = lg.curBet === 0 ? 'Bet' : 'Raise';
-    const confirmTxt = raiseTo >= lg.maxTo ? `All-in <small>${fmt(lg.maxTo)}</small>` : (lg.curBet === 0 ? `Bet <small>${fmt(raiseTo)}</small>` : `Raise to <small>${fmt(raiseTo)}</small>`);
+    const confirmTxt = raiseTo >= lg.maxTo ? `All-in <small>${fmt(lg.maxTo)}</small>` : (lg.curBet === 0 ? `Bet <small>${fmt(raiseTo)}</small>` : `Raise <small>${fmt(raiseTo)}</small>`);
     c.innerHTML = `<button class="btn dark h2" id="bFold">Fold</button>
       <button class="btn h2" id="bCall">${lg.canCheck ? 'Check' : `Call <small>${fmt(lg.toCall)}</small>`}</button>
       <button class="btn gold h6" id="bRaise" ${lg.canRaise ? '' : 'disabled'}>${raiseOpen ? confirmTxt : verb}</button>`;
@@ -1841,7 +2493,7 @@ function renderHud() {
 function showRaise(lg) {
   const rp = $('#raisePanel'); rp.hidden = false;
   const rng = $('#raiseRange'); rng.min = lg.minTo; rng.max = lg.maxTo; rng.step = Math.max(1, Math.round(S.cfg.bb / 2)); rng.value = raiseTo;
-  $('#raiseLbl').textContent = lg.curBet === 0 ? 'Bet' : 'Raise to';
+  $('#raiseLbl').textContent = '';
   $('#raiseAmt').textContent = fmt(raiseTo);
   const clampTo = v => Math.max(lg.minTo, Math.min(lg.maxTo, Math.round(v)));
   const potTo = clampTo(lg.curBet + lg.pot + lg.toCall);           // pot-sized raise
@@ -1855,7 +2507,7 @@ function showRaise(lg) {
 function setRaise(v, lg, fromRange) {
   raiseTo = Math.max(lg.minTo, Math.min(lg.maxTo, v)); if (raiseTo > lg.maxTo - S.cfg.bb / 4) raiseTo = lg.maxTo;
   $('#raiseAmt').textContent = fmt(raiseTo); if (!fromRange) $('#raiseRange').value = raiseTo;
-  const b = $('#bRaise'); if (b) b.innerHTML = raiseTo >= lg.maxTo ? `All-in <small>${fmt(lg.maxTo)}</small>` : (lg.curBet === 0 ? `Bet <small>${fmt(raiseTo)}</small>` : `Raise to <small>${fmt(raiseTo)}</small>`);
+  const b = $('#bRaise'); if (b) b.innerHTML = raiseTo >= lg.maxTo ? `All-in <small>${fmt(lg.maxTo)}</small>` : (lg.curBet === 0 ? `Bet <small>${fmt(raiseTo)}</small>` : `Raise <small>${fmt(raiseTo)}</small>`);
   if (tut && tut.allow && tut.allow.includes('q3')) renderHud();
 }
 function doAct(a, amt) { raiseOpen = false; preAct = null; cmd('act', { a, amt: amt || 0 }); if (tut && tut.actResolve) { const r = tut.actResolve; tut.actResolve = null; setTimeout(r, 60); } }
@@ -1886,16 +2538,16 @@ $('#logHd').onclick = () => { logOpen = !logOpen; $('#log').classList.toggle('cl
 /* ---------------- event animations ---------------- */
 async function playQueue() {
   if (animating) return;
-  animating = true;
+  animating = true; cancelTricks();
   try {
     while (queue.length) {
       const e = queue.shift();
       if (document.hidden || queue.length > 30) { lastSeq = e.s; if (!queue.length || document.hidden) { queue.forEach(q => lastSeq = q.s); queue = []; } continue; }
-      try { await animate(e); } catch (err) { console.warn(err); }
+      AUDIT.cur = e.t + '#' + e.s; try { await animate(e); } catch (err) { console.warn(err); } AUDIT.cur = '';
       lastSeq = e.s;
     }
   } finally {
-    animating = false; calmAt = Date.now();
+    animating = false; calmAt = Date.now(); CH.piles = [];
     if (S) { disp = fromState(S); render(); renderLog(); }
     L.fx.innerHTML = '';
     restHands(300);
@@ -1917,22 +2569,25 @@ async function animate(e) {
       const fs = fromState(S);
       d.board = []; d.pot = 0; d.result = null; d.phase = 'preflop'; d.turn = -1; d.dealer = e.dealer;
       for (let i = 0; i < 6; i++) {
-        const p = fs.seats[i];
-        if (!p) { d.seats[i] = null; continue; }
-        d.seats[i] = Object.assign({}, p, { cards: null, bet: 0, show: false, folded: false, last: '', stack: S.hand.no === e.no ? p.stack + p.bet : p.stack });
+        // stacks as they were when this hand was dealt (the state may already be further on)
+        const st0 = e.stacks ? e.stacks[i] : undefined;
+        const p = fs.seats[i] || (st0 != null ? d.seats[i] : null);
+        if (!p || st0 === null) { d.seats[i] = null; continue; }
+        d.seats[i] = Object.assign({}, p, { cards: null, bet: 0, show: false, folded: false, last: '', inHand: e.order.includes(i), stack: st0 != null ? st0 : (S.hand.no === e.no ? p.stack + p.bet : p.stack) });
       }
-      render();
+      CH.piles = []; chipSync(d); render();
+      await colourUp(d);
       await moveHand('R', DECK[0] - 6, DECK[1] + 4, 260);
       const sprites = [];
       let n = 0;
       for (let r = 0; r < 2; r++) for (const i of e.order) {
         const sl = slot(i); const isMe = d.seats[i] && d.seats[i].uid === uid && vis(i) === 0;
         const el = cardEl(-1, isMe ? 'lg' : 'sm', true); const [cw, ch] = cardSize(isMe ? 'lg' : 'sm');
-        const w = sprite(el, DECK[0] - cw / 2, DECK[1] - ch / 2); sprites.push(w);
-        const off = isMe ? (r ? 28 : -28) : (r ? 21 : -21);
-        const to = [sl.cards[0] + off - cw / 2, sl.cards[1] - ch / 2];
+        const w = spriteC(el, DECK[0], DECK[1], cw, ch); sprites.push(w);
+        const hp = holePos(i, r, isMe);
+        const to = [hp.cx, hp.cy];
         moveHand('R', DECK[0] - 10 + (to[0] > CX ? 8 : -8), DECK[1] + 8, 90, ease.out).then(() => moveHand('R', DECK[0] - 6, DECK[1] + 4, 90));
-        moveSprite(w, [DECK[0] - cw / 2, DECK[1] - ch / 2], to, 340, ease.out, [0, 360 + (r ? 4 : -4)]);
+        moveSprite(w, [DECK[0], DECK[1]], to, 340, ease.out, [0, 360 + hp.rot]);
         sfx.card();
         n++; await sleep(115);
       }
@@ -1949,7 +2604,7 @@ async function animate(e) {
         if (PH[me]) liftPH(me, 'A', .7, 240);
         await sleep(560);
         d.seats[me].peekHide = false;
-        cs.forEach((c, k) => setTimeout(() => { c.style.transform = `rotate(${k ? 4 : -4}deg)`; c.classList.remove('down'); }, k * 120));
+        cs.forEach((c, k) => setTimeout(() => { c.style.transform = `rotate(${holePos(me, k, true).rot}deg)`; c.classList.remove('down'); }, k * 120));
         sfx.flip();
         if (PH[me]) { liftPH(me, 'A', 0, 200); restPH(me, 'A', 360); }
         await sleep(420);
@@ -1959,37 +2614,7 @@ async function animate(e) {
     }
     case 'bet': {
       const p = d.seats[e.seat]; if (!p) break;
-      const sl = slot(e.seat);
-      p.stack = Math.max(0, p.stack - e.amt);
-      if (e.kind !== 'sb' && e.kind !== 'bb') p.last = e.allIn ? 'Олл-ин' : ({ call: 'Колл', bet: 'Бет', raise: 'Рейз' }[e.kind] || '');
-      else p.last = e.kind === 'sb' ? 'МБ' : 'ББ';
-      render();
-      if (e.allIn) {
-        await pushAllIn(e.seat, e.amt, sl);
-      } else {
-        const st = stackEl(e.amt, 2);
-        if (PH[e.seat]) {
-          // the player's hand takes chips off the stack and slides them onto the line
-          setPose(e.seat, 'B', 'cup');
-          await movePH(e.seat, 'B', ...reachFor(e.seat, 'B', sl.stack, 28), 200);
-          setPose(e.seat, 'B', 'grip');
-          const w = sprite(st, ...sl.stack); sfx.chips(3);
-          const tgt = reachFor(e.seat, 'B', sl.bet, 28);
-          await movePH(e.seat, 'B', ...tgt, 380, ease.io, (x, y, t) => setSprite(w, sl.stack[0] + (sl.bet[0] - sl.stack[0]) * t, sl.stack[1] + (sl.bet[1] - sl.stack[1]) * t, Math.sin(t * Math.PI) * 6));
-          w.remove(); dropSeat = e.seat; p.bet = e.to; render(); sfx.chips(4);
-          restPH(e.seat, 'B', 300);
-          await sleep(260);
-        } else {
-          const w = sprite(st, ...sl.stack);
-          sfx.chips(3);
-          const mid = [sl.stack[0] + (sl.bet[0] - sl.stack[0]) * .55, sl.stack[1] + (sl.bet[1] - sl.stack[1]) * .55];
-          await moveSprite(w, sl.stack, mid, 200, ease.io, [0, 6]);
-          await moveSprite(w, mid, sl.bet, 260, ease.back, [6, 0]);
-          w.remove(); dropSeat = e.seat; p.bet = e.to; render(); sfx.chips(4);
-          await sleep(220);
-        }
-      }
-      p.bet = e.to; render(); L.fx.innerHTML = '';
+      render(); await animBet(e, d); render();
       break;
     }
     case 'check': {
@@ -2011,19 +2636,18 @@ async function animate(e) {
       const size = isMe ? 'lg' : 'sm'; const [cw, ch] = cardSize(size);
       p.folded = true; p.last = 'Фолд'; const had = p.cards; p.cards = null; render();
       if (had) {
-        const off = isMe ? 28 : 21;
-        const from = k => [sl.cards[0] + (k ? off : -off) - cw / 2, sl.cards[1] - ch / 2];
-        const ps = [0, 1].map(k => sprite(cardEl(-1, size, true), ...from(k)));
-        ps.forEach((w, k) => setSprite(w, ...from(k), k ? 4 : -4));
+        const from = k => { const hp = holePos(e.seat, k, isMe); return [hp.cx, hp.cy]; };
+        const rot0 = k => holePos(e.seat, k, isMe).rot;
+        const ps = [0, 1].map(k => spriteC(cardEl(-1, size, true), ...from(k), cw, ch, rot0(k)));
         const push = 46, mid = k => [from(k)[0] + sl.d[0] * push, from(k)[1] + sl.d[1] * push];
         if (PH[e.seat]) {
           setPose(e.seat, 'A', 'flat');
           await movePH(e.seat, 'A', ...reachFor(e.seat, 'A', sl.cards, 30), 220);
           sfx.card();
-          await movePH(e.seat, 'A', ...reachFor(e.seat, 'A', [sl.cards[0] + sl.d[0] * push, sl.cards[1] + sl.d[1] * push], 30), 300, ease.io, (x, y, t) => ps.forEach((w, k) => setSprite(w, from(k)[0] + sl.d[0] * push * t, from(k)[1] + sl.d[1] * push * t, (k ? 4 : -4) * (1 - t))));
+          await movePH(e.seat, 'A', ...reachFor(e.seat, 'A', [sl.cards[0] + sl.d[0] * push, sl.cards[1] + sl.d[1] * push], 30), 300, ease.io, (x, y, t) => ps.forEach((w, k) => setSprite(w, from(k)[0] + sl.d[0] * push * t, from(k)[1] + sl.d[1] * push * t, rot0(k))));
           restPH(e.seat, 'A', 420);
         } else sfx.card();
-        await Promise.all(ps.map((w, k) => moveSprite(w, PH[e.seat] ? mid(k) : from(k), [MUCK[0] - 19 + k * 4, MUCK[1] - 27], 460, ease.io, [0, (k ? 1 : -1) * 18], [1, isMe ? .7 : 1])));
+        await Promise.all(ps.map((w, k) => moveSprite(w, PH[e.seat] ? mid(k) : from(k), [MUCK[0] + k * 4, MUCK[1]], 460, ease.io, [rot0(k), rot0(k) + (k ? 1 : -1) * 18], [1, isMe ? .7 : 1])));
         ps.forEach(w => w.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 200, fill: 'forwards' }));
         await sleep(160);
       }
@@ -2031,32 +2655,10 @@ async function animate(e) {
       break;
     }
     case 'refund': {
-      const p = d.seats[e.seat]; if (!p) break; const sl = slot(e.seat);
-      p.bet = Math.max(0, p.bet - e.amt); render();
-      const w = sprite(stackEl(e.amt, 2), ...sl.bet); await moveSprite(w, sl.bet, sl.stack, 380, ease.io);
-      p.stack += e.amt; render(); L.fx.innerHTML = '';
-      break;
+      const p = d.seats[e.seat]; if (!p) break;
+      await animRefund(e, d); break;
     }
-    case 'collect': {
-      const bets = d.seats.map((p, i) => p && p.bet > 0 ? { i, amt: p.bet } : null).filter(Boolean);
-      if (!bets.length) { d.pot = e.pot; render(); break; }
-      d.potLbl = e.pot; d.seats.forEach(p => { if (p) p.bet = 0; }); render();
-      const left = bets.filter(b => slot(b.i).side === 'L'), right = bets.filter(b => slot(b.i).side === 'R');
-      const sweep = async (side, list) => {
-        for (const b of list) {
-          const sl = slot(b.i); const st = stackEl(b.amt, 2); const w = sprite(st, ...sl.bet);
-          await moveHand(side, sl.bet[0] + (side === 'L' ? 10 : -10), sl.bet[1] - 18, 280, ease.io);
-          sfx.chips(4);
-          const from = [...sl.bet];
-          await moveHand(side, POT[0] + (side === 'L' ? -16 : 16), POT[1] - 50, 360, ease.io, (x, y, t) => setSprite(w, from[0] + (POT[0] - from[0]) * t, from[1] + (POT[1] - 34 - from[1]) * t, t * (side === 'L' ? 12 : -12)));
-          w.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 160, fill: 'forwards' });
-        }
-      };
-      await Promise.all([sweep('L', left), sweep('R', right)]);
-      d.pot = e.pot; d.potLbl = null; render(); const pt = $('#pot'); pt.classList.add('bump'); setTimeout(() => pt.classList.remove('bump'), 220);
-      restHands(320); await sleep(160); L.fx.innerHTML = '';
-      break;
-    }
+    case 'collect': { await animCollect(e, d); break; }
     case 'board': {
       await sleep(e.runout ? 600 : 1000);
       const start = d.board.length;
@@ -2091,8 +2693,8 @@ async function animate(e) {
       p.cards = fs.length === 2 ? fs : p.cards; p.show = false; render();
       // flip the two backs at the seat
       const sl = slot(e.seat); const [cw, ch] = cardSize('sm');
-      L.felt.querySelectorAll('.card.sm').forEach(c => { if (Math.abs(parseFloat(c.style.left) + cw / 2 - sl.cards[0]) < 30 && Math.abs(parseFloat(c.style.top) + ch / 2 - sl.cards[1]) < 6) c.remove(); });
-      const flips = (p.cards || []).map((c, k) => { const el = cardEl(c, 'sm', true); const w = sprite(el, sl.cards[0] + (k ? 21 : -21) - cw / 2, sl.cards[1] - ch / 2); return el; });
+      cardsAt(e.seat).forEach(c => c.remove());
+      const flips = (p.cards || []).map((c, k) => { const hp = holePos(e.seat, k, false); const el = cardEl(c, 'sm', true); spriteC(el, hp.cx, hp.cy, cw, ch, hp.rot); return el; });
       if (PH[e.seat]) { setPose(e.seat, 'A', 'pinch'); await movePH(e.seat, 'A', ...reachFor(e.seat, 'A', sl.cards, 22), 240); liftPH(e.seat, 'A', 1, 200); rotPH(e.seat, 'A', -16, 260); }
       await sleep(60); flips.forEach((el, k) => setTimeout(() => { el.style.transformOrigin = '50% 100%'; el.animate([{ translate: '0 0' }, { translate: '0 -8px' }, { translate: '0 0' }], { duration: 450 }); el.classList.remove('down'); sfx.flip(); }, k * 150));
       await sleep(620);
@@ -2102,42 +2704,17 @@ async function animate(e) {
     }
     case 'win': {
       d.phase = 'showdown'; d.turn = -1; d.result = S.hand.no === d.no ? S.hand.result : d.result;
-      render();
-      let potLeft = d.pot;
-      for (const pt of e.pots) {
-        for (let k = 0; k < pt.seats.length; k++) {
-          const seat = pt.seats[k], amt = pt.shares[k]; const p = d.seats[seat]; if (!p) continue;
-          const sl = slot(seat); const side = sl.side;
-          const st = stackEl(amt, 3); const w = sprite(st, POT[0], POT[1] - 34);
-          potLeft = Math.max(0, potLeft - amt); d.pot = potLeft; $('#potV').textContent = fmt(potLeft);
-          await moveHand(side, POT[0] + (side === 'L' ? 22 : -22), POT[1] - 50, 300, ease.io);
-          sfx.chips(6);
-          const from = [POT[0], POT[1] - 34];
-          await moveHand(side, sl.bet[0] + (side === 'L' ? -14 : 14), sl.bet[1] - 12, 520, ease.io, (x, y, t) => setSprite(w, from[0] + (sl.bet[0] - from[0]) * t, from[1] + (sl.bet[1] - from[1]) * t));
-          restHands(380);
-          if (PH[seat]) {
-            setPose(seat, 'B', 'cup');
-            await movePH(seat, 'B', ...reachFor(seat, 'B', sl.bet, 30), 220);
-            await movePH(seat, 'B', ...reachFor(seat, 'B', sl.stack, 30), 420, ease.io, (x, y, t) => setSprite(w, sl.bet[0] + (sl.stack[0] - sl.bet[0]) * t, sl.bet[1] + (sl.stack[1] - sl.bet[1]) * t));
-            restPH(seat, 'B', 300);
-          } else await moveSprite(w, sl.bet, sl.stack, 380, ease.back);
-          p.stack += amt;
-          const tx = document.createElement('div'); tx.className = 'winTxt'; tx.textContent = '+' + fmt(amt); place(tx, sl.plate[0], sl.plate[1] - 46); L.txt.appendChild(tx); setTimeout(() => tx.remove(), 2500);
-          w.remove(); render();
-        }
-      }
-      d.pot = 0; render(); L.fx.innerHTML = '';
-      await sleep(400);
-      break;
+      render(); await animWin(e, d); break;
     }
     case 'turn': { d.turn = e.seat; d.deadline = S.hand.turn === e.seat ? S.hand.deadline : Date.now() + Engine.turnMs(); render(); break; }
     case 'drink': {
-      const p = d.seats[e.seat]; if (p) p.stack = Math.max(0, p.stack - e.price);
+      const p = d.seats[e.seat];
+      if (p) await animToTray(e.seat, e.price, d);
       render();
       const targets = e.all ? d.seats.map((q, i) => q ? i : -1).filter(i => i >= 0) : [e.seat];
       if (e.all) { const b = L.felt.querySelector('.bucket'); if (b) b.animate([{ transform: 'translate(0,-30px) scale(.4)', opacity: 0 }, { transform: 'translate(0,4px) scale(1.08)', opacity: 1 }, { transform: 'none' }], { duration: 600, easing: 'ease-out' }); }
       for (const i of targets) {
-        const g = L.felt.querySelector(`.glass[data-seat="${i}"]`);
+        const g = L.txt.querySelector(`.glass[data-seat="${i}"]`);
         if (g) g.animate([{ transform: 'translateY(-26px) scale(.3)', opacity: 0 }, { transform: 'translateY(3px) scale(1.1)', opacity: 1 }, { transform: 'none' }], { duration: 480, easing: 'cubic-bezier(.3,1.4,.5,1)' });
         noise(.05, 6000, 8, .3); await sleep(e.all ? 120 : 0);
       }
@@ -2145,7 +2722,31 @@ async function animate(e) {
       await sleep(420);
       break;
     }
-    case 'leave': case 'rebuy': { break; }
+    case 'rebuy': { if (d.seats[e.seat]) await animFromTray(e.seat, e.amt, d); break; }
+    case 'sit': {
+      const ps = S.seats[e.seat]; if (!ps) break;
+      d.seats[e.seat] = { uid: ps.uid, stack: 0, bet: 0, inHand: false, folded: false, allIn: false, sitOut: ps.sitOut, leaving: false, last: '', cards: null, show: false };
+      CH.stack[e.seat] = {}; render(); await sleep(300);
+      await animFromTray(e.seat, e.amt, d); break;
+    }
+    case 'leave': {
+      const p = d.seats[e.seat]; if (!p) break;
+      chipSync(d);
+      if (!compEmpty(CH.stack[e.seat])) {
+        // the player sweeps the chips off the table toward himself
+        const cols = stackLayout(e.seat, CH.stack[e.seat]), c0 = colsCenter(cols), sl = slot(e.seat);
+        const moving = CH.stack[e.seat]; CH.stack[e.seat] = {}; p.stack = 0; render();
+        const w = chipSprite(moving, ...c0, relCols(cols, c0));
+        const out = [c0[0] - sl.n[0] * 90, c0[1] - sl.n[1] * 90];
+        if (PH[e.seat]) { setPose(e.seat, 'B', 'cup'); await movePH(e.seat, 'B', ...reachFor(e.seat, 'B', c0, 26), 220); }
+        sfx.chips(5);
+        if (PH[e.seat]) movePH(e.seat, 'B', ...reachFor(e.seat, 'B', out, 26), 420);
+        await tween(460, t => { setSprite(w, ...lerp2(c0, out, t)); w.style.opacity = String(1 - Math.max(0, t - .55) / .45); });
+        AUDIT.left += compVal(moving); w.remove();
+      }
+      d.seats[e.seat] = null; render();
+      break;
+    }
   }
 }
 async function pushAllIn(seat, amt, sl) {
@@ -2193,18 +2794,17 @@ function scatterChips(st) { st.querySelectorAll('.chip').forEach((c, k) => { con
 
 /* chip riffle (теребение) */
 function riffle(seat) {
-  const st = L.felt.querySelector(`.stack[data-seat="${seat}"]`); if (!st) return;
+  const st = chipsEl('stack', seat); if (!st) return;
   const chips = [...st.querySelectorAll('.chip')].filter(c => c.dataset.col === '0');
-  if (chips.length < 2) { st.animate([{ transform: 'rotate(0)' }, { transform: 'rotate(8deg)' }, { transform: 'rotate(-6deg)' }, { transform: 'rotate(0)' }], { duration: 360 }); return; }
+  if (chips.length < 2) { chips.forEach(c => c.animate([{ rotate: '0deg' }, { rotate: '8deg' }, { rotate: '-6deg' }, { rotate: '0deg' }], { duration: 360 })); return; }
   const half = Math.ceil(chips.length / 2);
   chips.forEach((c, k) => {
     const left = k < half; const dx = left ? -12 : 12;
     const lift = left ? -(k * 3.2) : -((k - half) * 3.2);
     const fin = -(k * 3.2);
-    const base = parseFloat(c.style.top);
     c.animate([
       { transform: 'translate(0,0)' },
-      { transform: `translate(${dx}px,${lift - base + 2}px) rotate(${left ? -10 : 10}deg)`, offset: .35 },
+      { transform: `translate(${dx}px,${lift + k * CHIP_DY + 2}px) rotate(${left ? -10 : 10}deg)`, offset: .35 },
       { transform: `translate(${dx * .4}px,${(k % 2 ? 1 : -1) * 1.6}px)`, offset: .7 },
       { transform: 'translate(0,0)' }], { duration: 620 + Math.random() * 80, easing: 'ease-in-out' });
   });
@@ -3007,7 +3607,7 @@ const LESSON_FLOW = {
     await dealHand(HAND({ dealer: 2, hole: { 0: [C('A♥'), C('A♣')], 5: [C('Q♥'), C('Q♠')] }, board: ['A♦', '8♠', '3♣', '2♦', 'K♣'].map(C), script: { 'preflop:2': 'fold', 'preflop:3': 'fold', 'preflop:5': 'call' } }));
     await bubble('А теперь <b>пара тузов</b> — лучшая стартовая рука. С сильной рукой нужно <b>повышать</b>: так в банке будет больше фишек, а слабые руки сбросят.', 'cards', true);
     await bubble('Кнопка <b>Raise</b> открывает панель ставки: ползунок и быстрые кнопки. <b>Min</b> — минимальное повышение, <b>3 BB</b> — три больших блайнда, <b>Pot</b> — ставка размером с банк, <b>All-in</b> — все фишки.', null, true);
-    await expectAct(['q3'], 'Нажми <b>Raise</b>, выбери <b>3 BB</b> и подтверди кнопкой <b>Raise to 1 500</b>.', '#bRaise');
+    await expectAct(['q3'], 'Нажми <b>Raise</b>, выбери <b>3 BB</b> и подтверди кнопкой <b>Raise 1 500</b>.', '#bRaise');
     tut.step = 'ставка';
     await waitBoard(3);
     await bubble('На флопе пришёл туз — у тебя <b>сет</b>, три туза. Соперник сделал чек.', 'board:flop', true);
@@ -3158,11 +3758,13 @@ function openLook(inGame, after) {
       ${G.colors.length ? `<h3>Цвет</h3><div class="sw">${G.colors.map((c, k) => `<button class="swc ${l.col === k ? 'on' : ''}" data-k="col" data-v="${k}" style="background:${c}" aria-label="Цвет ${k + 1}"></button>`).join('')}</div>` : ''}
       ${G.kind === 'tattoo' ? `<h3>Рисунок</h3><div class="chipsel">${TATTOOS.map((t, k) => `<button class="${l.tat === k ? 'on' : ''}" data-k="tat" data-v="${k}">${t}</button>`).join('')}</div>` : ''}
       ${l.g === 'f' ? `<h3>Маникюр</h3><div class="sw">${NAILS.map(([t, c], k) => `<button class="swc ${l.nail === k ? 'on' : ''} ${c ? '' : 'none'}" data-k="nail" data-v="${k}" style="background:${c || '#f1e1d6'}" aria-label="${t}" title="${t}"></button>`).join('')}</div>` : ''}
+      <h3>Олл-ин</h3><div class="chipsel">${[['', 'Как получится'], ['neat', 'Аккуратно стопками'], ['push', 'Толкнуть всё разом']].map(([k, t]) => `<button class="${(l.ai || '') === k ? 'on' : ''}" data-ai="${k}">${t}</button>`).join('')}</div>
       <h3>Аксессуары <small>можно несколько</small></h3><div class="chipsel">${acc.map(a => `<button class="${l.acc.includes(a.id) ? 'on' : ''}" data-acc="${a.id}">${a.name}</button>`).join('')}</div>
       </div></div><div class="row2" style="margin-top:12px"><button class="btn gold" id="lkSave">Готово</button><button class="btn dark" id="lkRand">Случайно</button></div>`;
     const P = $('#menuPanel');
-    P.querySelectorAll('[data-g]').forEach(b => b.onclick = () => { if (l.g !== b.dataset.g) { Object.assign(l, normLook({ g: b.dataset.g, skin: l.skin, sl: WARDROBE[b.dataset.g][0].id, col: 0, acc: [] })); } draw(); });
+    P.querySelectorAll('[data-g]').forEach(b => b.onclick = () => { if (l.g !== b.dataset.g) { Object.assign(l, normLook({ g: b.dataset.g, skin: l.skin, sl: WARDROBE[b.dataset.g][0].id, col: 0, acc: [], ai: l.ai })); } draw(); });
     P.querySelectorAll('[data-k]').forEach(b => b.onclick = () => { l[b.dataset.k] = +b.dataset.v; draw(); });
+    P.querySelectorAll('[data-ai]').forEach(b => b.onclick = () => { l.ai = b.dataset.ai; draw(); });
     P.querySelectorAll('[data-sl]').forEach(b => b.onclick = () => { l.sl = b.dataset.sl; l.col = 0; draw(); });
     P.querySelectorAll('[data-acc]').forEach(b => b.onclick = () => {
       const id = b.dataset.acc, A = acc.find(x => x.id === id);
@@ -3170,7 +3772,7 @@ function openLook(inGame, after) {
       else { l.acc = l.acc.filter(x => (acc.find(y => y.id === x) || {}).slot !== A.slot); l.acc.push(id); if (l.acc.length > 4) l.acc.shift(); }
       draw();
     });
-    $('#lkRand').onclick = () => { Object.assign(l, randomLook(l.g)); draw(); };
+    $('#lkRand').onclick = () => { const ai = l.ai; Object.assign(l, randomLook(l.g), { ai }); draw(); };
     $('#lkSave').onclick = () => { const n = normLook(l); store.set('look', n); ov.hidden = true; if (inGame && S) cmd('look', { look: n }); if (after) after(); };
   };
   draw();
@@ -3199,10 +3801,12 @@ function openNews() {
       <li><b>Стол с друзьями</b> по ссылке без регистрации: прямое соединение и запасной канал через сервер.</li>
       <li><b>Игра с ботами</b> трёх уровней — Новичок, Любитель, Акула. Ботов можно посадить и к друзьям.</li>
       <li><b>Обучение</b>: 5 уроков на настоящем столе, тренер с подсказками и таблица комбинаций.</li>
-      <li><b>Живые руки</b>: мужские и женские, одежда, маникюр, аксессуары. Руки сами ставят, стучат, сбрасывают, подглядывают и переворачивают карты.</li>
-      <li><b>Дилер в перчатках</b> сдаёт, собирает ставки и пододвигает банк.</li>
+      <li><b>Живые фишки</b>: настоящие стопки по номиналам плотными кучками, фишки только двигаются руками игроков или дилером — никогда не появляются и не исчезают сами.</li>
+      <li><b>Олл-ин со своим характером</b>: аккуратно стопками или толчком всё разом в кучу — выбор в «Мои руки».</li>
+      <li><b>Дилер в перчатках</b> сдаёт, собирает ставки, сгребает кучи, даёт сдачу, меняет мелочь на крупные фишки и раскладывает побочные банки отдельными кучками.</li>
+      <li><b>Живые руки</b>: мужские и женские, одежда, маникюр, аксессуары. Руки сами ставят, стучат, сбрасывают, подглядывают в карты и уступают друг другу дорогу.</li>
       <li><b>Кнопки как в покерных румах</b>: Fold, Check, Call, Bet, Raise; панель рейза с Min, 3 BB, Pot, All-in; пред-ходы.</li>
-      <li><b>Бар</b> с премиальными напитками себе или всему столу.</li>
+      <li><b>Бар</b> с премиальными напитками себе или всему столу — стаканы стоят в подстаканниках на борту.</li>
       <li><b>Учёт фишек</b>: кто сколько внёс, вывел и пропил.</li>
     </ul>
     <div class="row2" style="margin-top:12px"><button class="btn dark" id="nwClose">Закрыть</button></div>`;
@@ -3303,6 +3907,8 @@ async function boot(again) {
   if (code) { if (store.get('name', '') && store.get('lastCode', '') === code) { startClient(code); } else showLobby('join', code); return; }
   showLobby('home');
 }
+if (/[?&]dbg=1/.test(location.search)) window.__dbg = { get S() { return S; }, get disp() { return disp; }, get animating() { return animating || queue.length > 0; }, render, fromState, hostMutate, Engine, CH, AUDIT, CZ, ZONES, vis, slot, PH, addBot, get uid() { return uid; }, arms, SHOULDER };
+AUDIT.log = [];
 window.addEventListener('load', () => boot());
 if ('serviceWorker' in navigator && location.protocol === 'https:') navigator.serviceWorker.register('sw.js').catch(() => {});
 })();
