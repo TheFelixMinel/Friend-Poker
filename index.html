@@ -363,7 +363,7 @@ table.led td:first-child,table.led th:first-child{text-align:left}
 .btn.pre.on{border-color:var(--gold)!important}
 /* chip piles and winning cards */
 .pile .chip{transition:none}
-@keyframes winLift{from{translate:0 0}to{translate:0 -12px}}
+@keyframes winLift{from{translate:0 0}to{translate:var(--lx,0) var(--ly,-12px)}}
 .verTag{font:700 11px var(--hud);color:#241a05;background:var(--gold);border-radius:4px;padding:2px 5px;margin-left:-2px;align-self:flex-start;margin-top:4px}
 .ver{font:600 13px var(--hud);letter-spacing:.04em;color:#a9a497;margin:-2px 0 10px}
 .ver a{color:var(--gold)}
@@ -434,6 +434,20 @@ table.led td:first-child,table.led th:first-child{text-align:left}
 .potLbl small{flex-basis:100%;text-align:center;font:600 9.5px var(--hud);color:#e9d9a6;text-transform:uppercase;letter-spacing:.3px}
 
 #pot{top:90px!important}
+
+/* dealer button inside the name plate */
+.plate .dbadge{position:absolute;right:8px;top:50%;width:20px;height:20px;margin-top:-10px;border-radius:5px;background:linear-gradient(#e8243a,#a3121e);color:#fff;font:800 12px/20px var(--hud);text-align:center;box-shadow:0 1px 0 #ffffff40 inset,0 2px 4px #0008}
+.plate.hasD{padding-right:34px}
+.plate .dbadge.hop{animation:dHop .6s cubic-bezier(.3,1.6,.5,1)}
+@keyframes dHop{0%{transform:scale(0) rotate(-90deg);opacity:0}100%{transform:none;opacity:1}}
+
+/* chips and cards never climb above menus: their z-order stays inside the table */
+#tableWrap{isolation:isolate}
+#feltItems .stack{isolation:isolate}
+.ov{z-index:50}
+/* a folded / away plate stays solid (arms pass under it), only its contents dim */
+.plate.folded,.plate.away{opacity:1}
+.plate.folded>*,.plate.away>*{opacity:.5}
 
 </style>
 </head>
@@ -520,7 +534,7 @@ table.led td:first-child,table.led th:first-child{text-align:left}
  </div>
 
   <div class="layer" id="hud">
-    <div class="hudTop" style="left:10px"><span id="title">Покер</span><span class="verTag">1.0</span><span class="pill" id="tableInfo">Холдем</span></div>
+    <div class="hudTop" style="left:10px"><span id="title">Покер</span><span class="verTag">1.0.1</span><span class="pill" id="tableInfo">Холдем</span></div>
     <div class="hudTop" style="right:10px"><span class="pill" id="onlineInfo" hidden></span>
       <button class="pill barBtn" id="bBar">Бар</button>
       <button class="pill invite" id="bInvite">+ Пригласить</button>
@@ -991,8 +1005,8 @@ const clone = o => JSON.parse(JSON.stringify(o));
 const ZONES = [
   { plate: [372, 468], cards: [372, 398], stack: [508, 416], bet: [470, 336], btn: [296, 414], drink: [252, 440], ha: [246, 420], hb: [520, 470] },   // me (bottom-left)
   { plate: [104, 262], cards: [226, 262], stack: [238, 370], bet: [330, 290], btn: [300, 370], drink: [270, 342], ha: [176, 206], hb: [196, 330] },   // left
-  { plate: [350, 92], cards: [350, 168], stack: [248, 180], bet: [444, 178], btn: [460, 112], drink: [196, 112], ha: [380, 128], hb: [250, 108], tilt: -22, cup: -1 },    // top-left
-  { plate: [770, 92], cards: [770, 168], stack: [872, 176], bet: [676, 178], btn: [660, 112], drink: [924, 112], ha: [740, 128], hb: [870, 108], tilt: 22, cup: 1 },    // top-right
+  { plate: [250, 78], cards: [345, 150], stack: [252, 180], bet: [440, 176], btn: [0, 0], drink: [150, 150], ha: [300, 120], hb: [214, 150], tilt: 0, cup: -1 },    // top-left (on the rail, upper corner)
+  { plate: [870, 78], cards: [775, 150], stack: [868, 180], bet: [680, 176], btn: [0, 0], drink: [745, 33], ha: [820, 120], hb: [898, 138], tilt: 0, cup: 1 },    // top-right
   { plate: [1016, 262], cards: [894, 262], stack: [802, 282], bet: [740, 338], btn: [846, 362], drink: [850, 342], ha: [930, 206], hb: [882, 330] },  // right
   { plate: [722, 468], cards: [722, 398], stack: [610, 416], bet: [632, 336], btn: [812, 400], drink: [868, 440], ha: [790, 424], hb: [600, 470] },   // bottom-right
 ];
@@ -1018,7 +1032,7 @@ const SLOTS = ZONES.map((z, i) => {
   return Object.assign({ d: [dx, dy], n: [nx, ny], s, off: 0, side: P[0] < 560 ? 'L' : 'R' }, z);
 });
 /* cupholders cut into the rail, each just to the right of that player's right hand (hand-placed, all inside the wooden band) */
-const CUPS = [[548, 473], [139, 350], [215, 81], [702, 33], [966, 135], [834, 458]];
+const CUPS = [[548, 473], [139, 350], [150, 150], [745, 33], [966, 135], [834, 458]];
 SLOTS.forEach((sl, i) => { sl.cup = CUPS[i]; sl.drink = CUPS[i]; });
 const BOARD_Y = 244, BOARD_X = k => CX + (k - 2) * 62;
 const POT = [CX, 140], DECK = [657, 86], MUCK = [470, 88], BUCKET = [430, 84];
@@ -1040,6 +1054,7 @@ function holePos(seat, k, big) {
   return { cx: sl.cards[0] + Math.cos(a) * off, cy: sl.cards[1] + Math.sin(a) * off, rot: r + (k ? 4 : -4) };
 }
 function spriteC(el, cx, cy, cw, ch, rot = 0) { el.style.left = (-cw / 2) + 'px'; el.style.top = (-ch / 2) + 'px'; const w = sprite(el, cx, cy); setSprite(w, cx, cy, rot); return w; }
+let lastDealer = -2, dealerHop = -1, dealerHopT = 0;
 let lastSeq = 0, seenSeq = 0, queue = [], animating = false, calmAt = 0;
 let names = {}, online = new Set(), busy = false;
 let preAct = null, preCallAmt = 0, raiseOpen = false, raiseTo = 0;
@@ -1055,7 +1070,7 @@ const toStage = (x, y) => [TOX + x * TK, TOY + y * TK];
 
 /* ---------------- scaling ---------------- */
 let force = false;
-const VERSION = '1.0', CODENAME = 'Royal Flush';
+const VERSION = '1.0.1', CODENAME = 'Royal Flush';
 const ZOOM_OK = !!(window.CSS && CSS.supports && CSS.supports('zoom', '2'));
 function fit() {
   const vw = innerWidth, vh = innerHeight;
@@ -1487,8 +1502,11 @@ function handGeo(seat) {
   // hands rest at the player's own edge; each forearm comes in from outside the table, pointing at the centre
   const sl = slot(seat), me = vis(seat) === 0 && S && S.seats[seat] && S.seats[seat].uid === uid;
   const sc = me ? 1.08 : 1, C = [560, 262];
-  const arm = r => { const dx = r[0] - C[0], dy = r[1] - C[1], l = Math.hypot(dx, dy) || 1; return { elbow: [r[0] + dx / l * 84 * sc, r[1] + dy / l * 84 * sc], rest: r }; };
-  return { scale: sc, flipB: sl.s < 0, reach: 128 * sc, minReach: 40 * sc, A: arm(sl.ha), B: arm(sl.hb) };
+  // every forearm comes from beyond the outer edge of the wooden rail (from the player's body)
+  const outside = (x, y) => { const cx = Math.min(Math.max(x, 386), 734), dx = (x - cx) / 290, dy = (y - 253) / 235; return dx * dx + dy * dy > 1; };
+  const arm = r => { const dx = r[0] - C[0], dy = r[1] - C[1], l = Math.hypot(dx, dy) || 1; let k = 84 * sc; while (k < 260 && !outside(r[0] + dx / l * (k - 14), r[1] + dy / l * (k - 14))) k += 4; return { elbow: [r[0] + dx / l * k, r[1] + dy / l * k], rest: r, len: k }; };
+  const A = arm(sl.ha), B = arm(sl.hb), longest = Math.max(A.len, B.len);
+  return { scale: sc, flipB: sl.s < 0, reach: Math.max(128 * sc, longest + 44 * sc), minReach: 40 * sc, A, B };
 }
 const isLeftHand = (geo, side) => side === 'A' ? !geo.flipB : geo.flipB;
 
@@ -1563,25 +1581,32 @@ function busyInWay(paths, except) {
   return false;
 }
 async function waitWay(paths, except) { const t0 = performance.now(); while (busyInWay(paths, except) && performance.now() - t0 < 1500) await sleep(80); }
-const YIELDED = new Map();      // "seat:side" -> function telling whether the mover is still in the way
+const YIELDED = new Map();      // "seat:side" -> list of functions returning the paths of arms it is avoiding
 function yieldFor(paths, except) {
   for (const s of Object.keys(PH)) for (const sd of ['A', 'B']) {
     const key = s + ':' + sd; if (key === except) continue;
     const st = PH[s], h = st[sd]; if (h.busy && !YIELDED.has(key)) continue;
     const [e, t] = armOf(+s, sd, st.geo[sd].rest);
-    const hit = () => paths().some(([p, q]) => segDist(p, q, e, t) < 26);
-    if (!hit()) continue;
-    if (!YIELDED.has(key)) {
-      YIELDED.set(key, hit);
-      // pick the spot (pulled back, or a little to either side) that is farthest from the moving arm
-      const r = st.geo[sd].rest, ux = r[0] - e[0], uy = r[1] - e[1], ul = Math.hypot(ux, uy) || 1, px = -uy / ul, py = ux / ul;
-      const cands = [[e[0] + ux * .3, e[1] + uy * .3], [r[0] + px * 46, r[1] + py * 46], [r[0] - px * 46, r[1] - py * 46], [e[0] + ux * .5 + px * 30, e[1] + uy * .5 + py * 30], [e[0] + ux * .5 - px * 30, e[1] + uy * .5 - py * 30]];
-      const clear = c => { const [ce, ct] = armOf(+s, sd, c); return Math.min(...paths().map(([p, q]) => segDist(p, q, ce, ct)), ...['A', 'B'].filter(o => o !== sd).map(o => segDist(...armOf(+s, o), ce, ct) + 8)); };
-      const back = cands.reduce((best, c) => clear(c) > clear(best) ? c : best, cands[0]);
-      movePH(+s, sd, ...back, 170, ease.out, null, true);
-      const wait = () => { const f = YIELDED.get(key); if (!f) return; if (!PH[s] || PH[s] !== st) { YIELDED.delete(key); return; } if (f()) { setTimeout(wait, 120); return; } YIELDED.delete(key); if (!st[sd].busy) restPH(+s, sd, 260); };
-      setTimeout(wait, 300);
-    } else YIELDED.set(key, hit);
+    if (!paths().some(([p, q]) => segDist(p, q, e, t) < 26)) continue;
+    const list = YIELDED.get(key) || []; list.push(paths); YIELDED.set(key, list);
+    const allPaths = () => { const out = []; (YIELDED.get(key) || []).forEach(f => out.push(...f())); return out; };
+    // the spot (pulled back, or a little to either side) farthest from every arm it has to avoid, its partner included
+    const r = st.geo[sd].rest, ux = r[0] - e[0], uy = r[1] - e[1], ul = Math.hypot(ux, uy) || 1, px = -uy / ul, py = ux / ul;
+    const cands = [[e[0] + ux * .3, e[1] + uy * .3], [r[0] + px * 46, r[1] + py * 46], [r[0] - px * 46, r[1] - py * 46], [e[0] + ux * .5 + px * 30, e[1] + uy * .5 + py * 30], [e[0] + ux * .5 - px * 30, e[1] + uy * .5 - py * 30], [e[0] + ux * .15, e[1] + uy * .15]];
+    const other = sd === 'A' ? 'B' : 'A';
+    const clear = c => { const [ce, ct] = armOf(+s, sd, c); const ps = allPaths(); return Math.min(...(ps.length ? ps.map(([p, q]) => segDist(p, q, ce, ct)) : [99]), segDist(...armOf(+s, other), ce, ct)); };
+    const cur = [h.x, h.y];
+    if (list.length > 1 && clear(cur) >= 26) continue;            // already standing clear of everything
+    const back = cands.reduce((best, c) => clear(c) > clear(best) ? c : best, cands[0]);
+    movePH(+s, sd, ...back, 170, ease.out, null, true);
+    if (list.length > 1) continue;                                   // the waiting loop is already running
+    const wait = () => {
+      const fs = YIELDED.get(key); if (!fs) return;
+      if (!PH[s] || PH[s] !== st) { YIELDED.delete(key); return; }
+      if (fs.some(f => f().some(([p, q]) => segDist(p, q, e, t) < 26))) { setTimeout(wait, 120); return; }
+      YIELDED.delete(key); if (!st[sd].busy) restPH(+s, sd, 260);
+    };
+    setTimeout(wait, 300);
   }
 }
 async function movePH(seat, side, x, y, dur = 260, e = ease.io, carry, yielding) {
@@ -1624,7 +1649,7 @@ function borrowTop(seat) {
   const el = chipsEl('stack', seat); if (!el) return null;
   const chips = [...el.querySelectorAll('.chip')].filter(c => c.dataset.col === '0');
   const top = chips[chips.length - 1]; if (!top || top.dataset.trick) return null;
-  top.dataset.trick = 1; top.style.zIndex = 30; TRICK_CHIPS.add(top);
+  top.dataset.trick = 1; top.style.zIndex = 3; TRICK_CHIPS.add(top);
   const home = [parseFloat(top.style.left), parseFloat(top.style.top)];
   // same API as a sprite: absolute table coordinates in, offsets applied to the real chip
   return { el: top, home, at(x, y, extra = '') { if (!top.dataset.trick) return; top.style.transform = `translate(${x - home[0]}px,${y - home[1]}px) ${extra}`; } };
@@ -1641,6 +1666,7 @@ async function trick(seat) {
   const p = disp && disp.seats[seat]; if (!p || !PH[seat] || !p.stack) return;
   const sl = slot(seat), B = PH[seat].B;
   if (B.busy || PH[seat].A.busy) return;
+  if (document.querySelector('.ov:not([hidden])')) return;     // no fidgeting while a menu is open
   const cand = ['riffle', 'riffle', 'roll', 'spin'];
   if (p.cards && p.uid !== uid) cand.push('peek');
   if (S && S.drinks && S.drinks[p.uid]) cand.push('sip');
@@ -1813,8 +1839,8 @@ const CHIP_DY = 3.2, CHIP_R = 12;
 const CZ = [
   { stack: { o: [508, 416], far: [0, -1], per: 3, rows: 2, h: 8 }, bet: { o: [470, 336], far: [0, -1], heap: [480, 322], per: 3, rows: 2, h: 8 }, lbl: [480, 344] },
   { stack: { o: [238, 370], far: [.7, -.7], per: 3, rows: 2, h: 8 }, bet: { o: [330, 290], far: [0, -1], per: 3, rows: 2, h: 10 }, lbl: [330, 318] },
-  { stack: { o: [248, 180], far: [.3, .95], per: 3, rows: 2, h: 10 }, bet: { o: [444, 178], far: [0, 1], per: 3, rows: 2, h: 8 }, lbl: [370, 224] },
-  { stack: { o: [872, 176], far: [-.3, .95], per: 3, rows: 2, h: 10 }, bet: { o: [676, 178], far: [0, 1], per: 3, rows: 2, h: 8 }, lbl: [750, 224] },
+  { stack: { o: [252, 180], far: [.45, .9], per: 3, rows: 2, h: 10 }, bet: { o: [440, 176], far: [0, 1], per: 3, rows: 2, h: 8 }, lbl: [440, 112] },
+  { stack: { o: [868, 180], far: [-.45, .9], per: 3, rows: 2, h: 10 }, bet: { o: [680, 176], far: [0, 1], per: 3, rows: 2, h: 8 }, lbl: [680, 112] },
   { stack: { o: [802, 282], far: [-.7, -.7], per: 3, rows: 2, h: 8 }, bet: { o: [740, 338], far: [0, -1], per: 3, rows: 2, h: 8 }, lbl: [802, 348] },
   { stack: { o: [610, 416], far: [0, -1], per: 3, rows: 2, h: 8 }, bet: { o: [632, 336], far: [0, -1], heap: [626, 322], per: 3, rows: 2, h: 8 }, lbl: [632, 346] },
 ];
@@ -2225,7 +2251,8 @@ async function animWin(e, d) {
         const p = d.seats[pl.seat]; if (!p) continue;
         const sl = slot(pl.seat), bz = CZ[vis(pl.seat)].bet, dst = [bz.o[0], bz.o[1]], got = pl.comp;
         const k = CH.piles.indexOf(pl); CH.piles[k] = Object.assign({}, pl, { comp: {} }); render();
-        const w = await dealerCarry(got, pl.at, dst, null, 520); w.remove();
+        const lay = betLayout(pl.seat, got, 0), lc = colsCenter(lay);
+        const w = await dealerCarry(got, pl.at, lc, relCols(lay, lc), 520); w.remove();
         CH.bet[pl.seat] = got; CH.betPile[pl.seat] = 0; p.bet = compVal(got); render();
         const from = colsCenter(betLayout(pl.seat, got, 0));
         CH.bet[pl.seat] = {}; p.bet = 0; render();
@@ -2248,7 +2275,8 @@ async function animWin(e, d) {
       d.pot = compVal(CH.pot); render();
       const bz = CZ[vis(seat)].bet, dst = [bz.o[0], bz.o[1]];
       // the dealer pushes the winnings toward the winner
-      const w = await dealerCarry(taken, pc, dst, null, 520, CH.potPile);
+      const lay = betLayout(seat, taken, 0), lc = colsCenter(lay);
+      const w = await dealerCarry(taken, pc, lc, relCols(lay, lc), 520, CH.potPile);
       w.remove();
       let got = taken;
       if (over > 0) {
@@ -2316,7 +2344,7 @@ function render() {
   // board
   const WC = winCards(d);
   if (WC && !winAt) winAt = Date.now(); if (!WC) winAt = 0;
-  const liftWin = el => { const t = Date.now() - winAt; el.style.animation = `winLift .45s ease-out ${-Math.min(t, 450)}ms both`; };
+  const liftWin = (el, dir) => { const t = Date.now() - winAt; if (dir) { el.style.setProperty('--lx', (dir[0] * 12).toFixed(1) + 'px'); el.style.setProperty('--ly', (dir[1] * 12).toFixed(1) + 'px'); } el.style.animation = `winLift .45s ease-out ${-Math.min(t, 450)}ms both`; };
   d.board.forEach((c, k) => { const el = cardEl(c); place(el, BOARD_X(k) - 28, BOARD_Y - 40); if (WC) { el.classList.add(WC.set.has(c) ? 'win' : 'dim'); if (WC.set.has(c)) liftWin(el); } L.felt.appendChild(el); });
   if (WC) { const lb = document.createElement('div'); lb.className = 'comboLbl'; lb.textContent = WC.name; place(lb, CX, BOARD_Y + 50); L.felt.appendChild(lb); }
   // pot
@@ -2325,7 +2353,9 @@ function render() {
   $('#potV').textContent = fmt(d.potLbl != null ? d.potLbl : potAmt + d.seats.reduce((a, p) => a + (p ? p.bet : 0), 0));
   drawChips(d);
   // dealer button
-  if (d.dealer >= 0 && d.seats[d.dealer]) { const b = slot(d.dealer).btn; const dbt = $('#dbtn'); dbt.hidden = false; place(dbt, b[0], b[1]); } else $('#dbtn').hidden = true;
+  // the dealer button lives in the name plate; it hops in once when it moves to a new player
+  $('#dbtn').hidden = true;
+  if (d.dealer !== lastDealer) { dealerHop = lastDealer === -2 ? -1 : d.dealer; lastDealer = d.dealer; clearTimeout(dealerHopT); dealerHopT = setTimeout(() => { dealerHop = -1; }, 700); }
   // seats
   for (let i = 0; i < 6; i++) {
     const sl = slot(i), p = d.seats[i];
@@ -2348,7 +2378,7 @@ function render() {
         place(el, hp.cx - cw / 2, hp.cy - ch / 2);
         el.style.transform = `rotate(${hp.rot}deg)` + (faceUp ? '' : ' rotateY(180deg)');
         if (d.phase === 'showdown' && (p.show || isMe) && d.result) {
-          if (WC) { const w = W8.has(i) && WC.set.has(c); el.classList.add(w ? 'win' : 'dim'); if (w) liftWin(el); }
+          if (WC) { const w = W8.has(i) && WC.set.has(c); el.classList.add(w ? 'win' : 'dim'); if (w) liftWin(el, slot(i).d); }
           else if (p.show) el.classList.add(W8.has(i) ? 'win' : 'dim');
         }
         L.felt.appendChild(el);
@@ -2367,7 +2397,9 @@ function render() {
       <div class="info"><div class="nm">${bot ? '<span class="botTag">🤖</span>' : ''}${esc(nameOf(p.uid))}${online1 || demo ? '' : ' <span class="dbg">· офлайн</span>'}</div><div class="st"><span class="coin"></span>${fmt(p.stack)}</div>
       ${isMe && p.cards ? `<div class="hn" id="eqName"></div>` : ''}</div>
       ${act ? `<div class="act${actCls}">${esc(act)}</div>` : ''}
-      ${isMe && p.cards ? '<div class="eq"><i id="eqBar"></i></div>' : ''}`;
+      ${isMe && p.cards ? '<div class="eq"><i id="eqBar"></i></div>' : ''}
+      ${d.dealer === i ? `<div class="dbadge${dealerHop === i ? ' hop' : ''}" aria-label="Дилер">D</div>` : ''}`;
+    if (d.dealer === i) pl.classList.add('hasD');
     place(pl, ...sl.plate); L.seats.appendChild(pl);
     if (bot && isHost && !tut && !demo) { pl.style.cursor = 'pointer'; pl.onclick = () => openBotMenu(i); }
   }
@@ -3468,7 +3500,7 @@ function anchorRect(a) {
   if (a === 'board:flop') return RT({ x: BOARD_X(0) - 31, y: BOARD_Y - 43, w: 186, h: 86 });
   if (a === 'pot') { const el = $('#pot'); return el && !el.hidden ? stageRect(el) : R0(POT[0], POT[1], 120, 50); }
   if (a === 'eq') { const p = slot(me).plate; return R0(p[0], p[1] + 18, 196, 24); }
-  if (a === 'dealer') { if (S.hand.dealer < 0) return null; const b = slot(S.hand.dealer).btn; return R0(b[0], b[1], 36, 36); }
+  if (a === 'dealer') { if (S.hand.dealer < 0) return null; const el = document.querySelector(`#plate${S.hand.dealer} .dbadge`); if (el) return stageRect(el); const b = slot(S.hand.dealer).plate; return R0(b[0], b[1], 36, 36); }
   if (a.startsWith('seat:')) { const el = $('#plate' + a.slice(5)); return el ? stageRect(el) : null; }
   if (a.startsWith('#')) { const el = $(a); return el && el.offsetParent !== null ? stageRect(el) : null; }
   return null;
@@ -3572,7 +3604,7 @@ const LESSON_FLOW = {
     await bubble('Внизу — ты. В покере играют на фишки: здесь они ничего не стоят, просто очки.', 'seat:0', true);
     await dealHand(HAND({ dealer: 2, hole: { 0: [C('A♠'), C('K♠')], 2: [C('Q♣'), C('J♣')], 3: [C('8♦'), C('6♦')], 5: [C('5♠'), C('4♥')] }, board: ['K♦', '7♣', '2♥', '9♠', 'A♦'].map(C) }));
     tut.step = 'блайнды';
-    await bubble('Кнопка <b>D</b> — дилер этой раздачи. Каждую раздачу она сдвигается на одно место по часовой стрелке.', 'dealer', true);
+    await bubble('Значок <b>D</b> в табличке — дилер этой раздачи. Каждую раздачу он переходит на одно место по часовой стрелке.', 'dealer', true);
     await bubble('Двое слева от дилера ставят обязательные ставки — <b>блайнды</b>: малый (МБ) и большой (ББ). Так в банке всегда есть за что бороться.', 'seat:5', true);
     tut.step = 'префлоп';
     await bubble('Тебе раздали <b>2 закрытые карты</b> — их видишь только ты. Туз и король одной масти — очень сильное начало.', 'cards', true);
@@ -3645,7 +3677,7 @@ const LESSON_FLOW = {
   async bluff() {
     tut.step = 'позиция';
     await dealHand(HAND({ dealer: 0, hole: { 0: [C('6♣'), C('5♣')], 2: [C('J♦'), C('3♥')], 3: [C('8♣'), C('4♠')], 5: [C('10♦'), C('2♣')] }, board: ['K♠', '9♦', '2♥', '7♥', 'Q♠'].map(C), script: { 'preflop:5': 'fold', 'river:2': ['check', 'fold'], 'river:3': ['check', 'fold'] } }));
-    await bubble('Ты на кнопке <b>D</b>. После флопа дилер ходит <b>последним</b> — видит, что сделали все. Это называется <b>позиция</b>, и это большое преимущество.', 'dealer', true);
+    await bubble('У тебя значок <b>D</b>. После флопа дилер ходит <b>последним</b> — видит, что сделали все. Это называется <b>позиция</b>, и это большое преимущество.', 'dealer', true);
     await expectAct(['call'], 'Рука средняя, зато позиция хорошая. Нажми <b>Call</b>, чтобы дёшево посмотреть флоп.');
     await waitBoard(3);
     await bubble('Флоп тебе не помог. Но смотри: оба соперника <b>чекнули</b> — значит, у них, скорее всего, тоже ничего сильного.', 'board', true);
@@ -3797,6 +3829,7 @@ function openBar() {
 function openNews() {
   const ov = $('#menu'); ov.hidden = false;
   $('#menuPanel').innerHTML = `<h2>Что нового</h2><div class="ver">Версия ${VERSION} «${CODENAME}» — первый релиз</div>
+    <p class="ver" style="margin-top:6px">1.0.1: значок дилера «D» теперь в табличке с именем; верхние игроки сидят у борта; фишки и карты больше не наезжают друг на друга и не вылезают поверх меню.</p>
     <ul class="news">
       <li><b>Стол с друзьями</b> по ссылке без регистрации: прямое соединение и запасной канал через сервер.</li>
       <li><b>Игра с ботами</b> трёх уровней — Новичок, Любитель, Акула. Ботов можно посадить и к друзьям.</li>
