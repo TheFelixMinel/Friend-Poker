@@ -449,6 +449,19 @@ table.led td:first-child,table.led th:first-child{text-align:left}
 .plate.folded,.plate.away{opacity:1}
 .plate.folded>*,.plate.away>*{opacity:.5}
 
+/* friends table: the right-hand buttons sit in two short rows in the free corner, clear of the players' plates */
+.hudTop.two{display:grid;grid-template-columns:repeat(3,auto);justify-content:end;justify-items:end;gap:6px 8px}
+.hudTop.two #onlineInfo{order:1}.hudTop.two #bBar{order:2}.hudTop.two #bMenu{order:3}
+.hudTop.two #bInvite{order:4}.hudTop.two #bFull{order:5}.hudTop.two #bSound{order:6}
+
+#pot{top:86px!important}
+
+/* 1.0.2: the pot label stands to the left of the pot chips; cupholders 24px so they sit wholly in the wood */
+#pot{left:466px!important;top:122px!important}
+.cup{width:24px!important;height:24px!important}
+#deck{left:655px!important}
+#cupLayer{isolation:isolate}
+
 </style>
 </head>
 <body>
@@ -504,6 +517,7 @@ table.led td:first-child,table.led th:first-child{text-align:left}
   <div class="dbtn" id="dbtn" hidden>D</div>
   <div class="layer" id="fxLayer"></div>
 
+  <div class="layer" id="cupLayer"></div>
   <svg class="layer" id="pArms" viewBox="0 0 1120 500" aria-hidden="true" style="overflow:visible"></svg>
 
   <svg class="layer" id="arms" viewBox="0 0 1120 500" aria-hidden="true" style="overflow:visible">
@@ -534,7 +548,7 @@ table.led td:first-child,table.led th:first-child{text-align:left}
  </div>
 
   <div class="layer" id="hud">
-    <div class="hudTop" style="left:10px"><span id="title">Покер</span><span class="verTag">1.0.1</span><span class="pill" id="tableInfo">Холдем</span></div>
+    <div class="hudTop" style="left:10px"><span id="title">Покер</span><span class="verTag">1.0.2</span><span class="pill" id="tableInfo">Холдем</span></div>
     <div class="hudTop" style="right:10px"><span class="pill" id="onlineInfo" hidden></span>
       <button class="pill barBtn" id="bBar">Бар</button>
       <button class="pill invite" id="bInvite">+ Пригласить</button>
@@ -1004,10 +1018,10 @@ const clone = o => JSON.parse(JSON.stringify(o));
 // cards right in front of the plate, chip stack beside them, bet a little further in, never on the board.
 const ZONES = [
   { plate: [372, 468], cards: [372, 398], stack: [508, 416], bet: [470, 336], btn: [296, 414], drink: [252, 440], ha: [246, 420], hb: [520, 470] },   // me (bottom-left)
-  { plate: [104, 262], cards: [226, 262], stack: [238, 370], bet: [330, 290], btn: [300, 370], drink: [270, 342], ha: [176, 206], hb: [196, 330] },   // left
-  { plate: [250, 78], cards: [345, 150], stack: [252, 180], bet: [440, 176], btn: [0, 0], drink: [150, 150], ha: [300, 120], hb: [214, 150], tilt: 0, cup: -1 },    // top-left (on the rail, upper corner)
-  { plate: [870, 78], cards: [775, 150], stack: [868, 180], bet: [680, 176], btn: [0, 0], drink: [745, 33], ha: [820, 120], hb: [898, 138], tilt: 0, cup: 1 },    // top-right
-  { plate: [1016, 262], cards: [894, 262], stack: [802, 282], bet: [740, 338], btn: [846, 362], drink: [850, 342], ha: [930, 206], hb: [882, 330] },  // right
+  { plate: [104, 262], cards: [226, 262], stack: [238, 370], bet: [330, 290], btn: [300, 370], drink: [270, 342], ha: [172, 250], hb: [196, 330] },   // left
+  { plate: [356, 40], cards: [356, 108], stack: [262, 128], bet: [262, 196], btn: [0, 0], drink: [167, 120], ha: [392, 92], hb: [196, 172], body: [356, -60], tilt: 0, cup: -1 },    // top-left: on the rail beside the dealer
+  { plate: [764, 40], cards: [764, 108], stack: [858, 128], bet: [858, 196], btn: [0, 0], drink: [952, 119], ha: [728, 92], hb: [924, 172], body: [764, -60], tilt: 0, cup: 1 },    // top-right
+  { plate: [1016, 262], cards: [894, 262], stack: [806, 280], bet: [740, 338], btn: [846, 362], drink: [850, 342], ha: [948, 250], hb: [882, 330] },  // right
   { plate: [722, 468], cards: [722, 398], stack: [610, 416], bet: [632, 336], btn: [812, 400], drink: [868, 440], ha: [790, 424], hb: [600, 470] },   // bottom-right
 ];
 // centre line of the wooden rail: rounded rectangle (rail 96,18 928x470 r 290/235, felt inset 30) -> middle of the band
@@ -1023,7 +1037,7 @@ const RAIL_PATH = (() => {
   }
   return pts;
 })();
-const CUP_R = 13;
+const CUP_R = 12;
 const SLOTS = ZONES.map((z, i) => {
   const P = z.plate, C = [560, i === 0 || i === 5 ? 236 : 262];
   let dx = C[0] - P[0], dy = C[1] - P[1]; const l = Math.hypot(dx, dy); dx /= l; dy /= l;
@@ -1032,10 +1046,10 @@ const SLOTS = ZONES.map((z, i) => {
   return Object.assign({ d: [dx, dy], n: [nx, ny], s, off: 0, side: P[0] < 560 ? 'L' : 'R' }, z);
 });
 /* cupholders cut into the rail, each just to the right of that player's right hand (hand-placed, all inside the wooden band) */
-const CUPS = [[548, 473], [139, 350], [150, 150], [745, 33], [966, 135], [834, 458]];
+const CUPS = [[548, 473], [139, 350], [167, 120], [952, 119], [995, 183], [834, 458]];   // each fitted so the whole cup lies inside the wooden band
 SLOTS.forEach((sl, i) => { sl.cup = CUPS[i]; sl.drink = CUPS[i]; });
 const BOARD_Y = 244, BOARD_X = k => CX + (k - 2) * 62;
-const POT = [CX, 140], DECK = [657, 86], MUCK = [470, 88], BUCKET = [430, 84];
+const POT = [CX, 140], DECK = [672, 86], MUCK = [470, 88], BUCKET = [452, 58];
 const SHOULDER = { L: [516, 0], R: [604, 0] }, REST = { L: [534, 56], R: [588, 58] };
 
 const DENOMS = [
@@ -1064,13 +1078,13 @@ let demo = true;
 let logOpen = true;
 
 const stage = $('#stage');
-const L = { felt: $('#feltItems'), fx: $('#fxLayer'), seats: $('#seatLayer'), hud: $('#hud'), txt: $('#txtLayer') };
+const L = { felt: $('#feltItems'), fx: $('#fxLayer'), seats: $('#seatLayer'), hud: $('#hud'), txt: $('#txtLayer'), cups: $('#cupLayer') };
 const TK = 1, TOX = 0, TOY = 0;          // table area is scaled into the left part of the stage
 const toStage = (x, y) => [TOX + x * TK, TOY + y * TK];
 
 /* ---------------- scaling ---------------- */
 let force = false;
-const VERSION = '1.0.1', CODENAME = 'Royal Flush';
+const VERSION = '1.0.2', CODENAME = 'Royal Flush';
 const ZOOM_OK = !!(window.CSS && CSS.supports && CSS.supports('zoom', '2'));
 function fit() {
   const vw = innerWidth, vh = innerHeight;
@@ -1504,7 +1518,7 @@ function handGeo(seat) {
   const sc = me ? 1.08 : 1, C = [560, 262];
   // every forearm comes from beyond the outer edge of the wooden rail (from the player's body)
   const outside = (x, y) => { const cx = Math.min(Math.max(x, 386), 734), dx = (x - cx) / 290, dy = (y - 253) / 235; return dx * dx + dy * dy > 1; };
-  const arm = r => { const dx = r[0] - C[0], dy = r[1] - C[1], l = Math.hypot(dx, dy) || 1; let k = 84 * sc; while (k < 260 && !outside(r[0] + dx / l * (k - 14), r[1] + dy / l * (k - 14))) k += 4; return { elbow: [r[0] + dx / l * k, r[1] + dy / l * k], rest: r, len: k }; };
+  const arm = r => { const o = sl.body ? [2 * r[0] - sl.body[0], 2 * r[1] - sl.body[1]] : C; const dx = r[0] - o[0], dy = r[1] - o[1], l = Math.hypot(dx, dy) || 1; let k = 84 * sc; while (k < 260 && !outside(r[0] + dx / l * (k - 14), r[1] + dy / l * (k - 14))) k += 4; return { elbow: [r[0] + dx / l * k, r[1] + dy / l * k], rest: r, len: k }; };
   const A = arm(sl.ha), B = arm(sl.hb), longest = Math.max(A.len, B.len);
   return { scale: sc, flipB: sl.s < 0, reach: Math.max(128 * sc, longest + 44 * sc), minReach: 40 * sc, A, B };
 }
@@ -1723,7 +1737,7 @@ async function trick(seat) {
       await liftPH(seat, 'A', .6, 260); await sleep(560); await liftPH(seat, 'A', 0, 260);
       await restPH(seat, 'A', 280);
     } else if (kind === 'sip') {
-      const pos = drinkPos(seat); const gl = L.txt.querySelector(`.glass[data-seat="${seat}"]`); if (!gl) return;
+      const pos = drinkPos(seat); const gl = L.cups.querySelector(`.glass[data-seat="${seat}"]`); if (!gl) return;
       const G = PH[seat].geo, H = Math.hypot(G.A.rest[0] - pos[0], G.A.rest[1] - pos[1]) <= Math.hypot(G.B.rest[0] - pos[0], G.B.rest[1] - pos[1]) ? 'A' : 'B';
       if (!handFree(seat, H)) return;
       const tgt = reachFor(seat, H, pos, 22);
@@ -1832,19 +1846,19 @@ function initials(u) { if (u === uid) return 'Я'; const n = names[u]; if (!n) r
 /* ===================== physical chips: real composition per stack / bet / pot ===================== */
 // Every pile of chips on the table has a real set of chips {value: count}. Amounts only change by
 // moving chips: a hand carries them, a push slides them, the dealer brings change from his tray.
-const TRAY = [560, 63], POTZ = [CX, 182];
+const TRAY = [560, 63], POTZ = [594, 141];
 const CHIP_DY = 3.2, CHIP_R = 12;
 // zones per visual slot (table coords). o = base of the first column, u = next column, v = next row,
 // per = columns per row, rows, h = max chips per column, lbl = where the bet amount is written
 const CZ = [
   { stack: { o: [508, 416], far: [0, -1], per: 3, rows: 2, h: 8 }, bet: { o: [470, 336], far: [0, -1], heap: [480, 322], per: 3, rows: 2, h: 8 }, lbl: [480, 344] },
   { stack: { o: [238, 370], far: [.7, -.7], per: 3, rows: 2, h: 8 }, bet: { o: [330, 290], far: [0, -1], per: 3, rows: 2, h: 10 }, lbl: [330, 318] },
-  { stack: { o: [252, 180], far: [.45, .9], per: 3, rows: 2, h: 10 }, bet: { o: [440, 176], far: [0, 1], per: 3, rows: 2, h: 8 }, lbl: [440, 112] },
-  { stack: { o: [868, 180], far: [-.45, .9], per: 3, rows: 2, h: 10 }, bet: { o: [680, 176], far: [0, 1], per: 3, rows: 2, h: 8 }, lbl: [680, 112] },
-  { stack: { o: [802, 282], far: [-.7, -.7], per: 3, rows: 2, h: 8 }, bet: { o: [740, 338], far: [0, -1], per: 3, rows: 2, h: 8 }, lbl: [802, 348] },
+  { stack: { o: [262, 128], far: [0, 1], per: 3, rows: 2, h: 8 }, bet: { o: [262, 196], far: [0, 1], per: 3, rows: 2, h: 8 }, lbl: [348, 198] },
+  { stack: { o: [858, 128], far: [0, 1], per: 3, rows: 2, h: 8 }, bet: { o: [858, 196], far: [0, 1], per: 3, rows: 2, h: 8 }, lbl: [772, 198] },
+  { stack: { o: [806, 280], far: [-.7, -.7], per: 3, rows: 2, h: 8 }, bet: { o: [740, 338], far: [0, -1], per: 3, rows: 2, h: 8 }, lbl: [802, 348] },
   { stack: { o: [610, 416], far: [0, -1], per: 3, rows: 2, h: 8 }, bet: { o: [632, 336], far: [0, -1], heap: [626, 322], per: 3, rows: 2, h: 8 }, lbl: [632, 346] },
 ];
-const POTZONE = { o: [CX, 182], far: [0, -1], per: 5, rows: 2, h: 8, seed: 11 };
+const POTZONE = { o: [594, 141], far: [0, -1], per: 4, rows: 2, h: 8, seed: 11 };
 const DEN_INFO = Object.fromEntries(DENOMS.map(d => [d[0], d]));
 const DVALS = DENOMS.map(d => d[0]);                     // descending
 
@@ -1933,7 +1947,7 @@ function pileCols(comp, cx, cy, seed, rx = 34, ry = 16) {
 }
 function stackLayout(seat, comp) { return zoneCols(Object.assign({ seed: vis(seat) * 31 + 1 }, CZ[vis(seat)].stack), comp); }
 function betLayout(seat, comp, pile) { const z = Object.assign({ seed: vis(seat) * 31 + 7 }, CZ[vis(seat)].bet); const hp = z.heap || z.o; return pile ? pileCols(comp, hp[0], hp[1], seat + 7, 22, 10) : zoneCols(z, comp); }
-function potLayout(comp, pile) { return pile ? pileCols(comp, POTZ[0], POTZ[1], 3, 60, 8) : zoneCols(POTZONE, comp); }
+function potLayout(comp, pile) { return pile ? pileCols(comp, POTZ[0], POTZ[1], 3, 40, 8) : zoneCols(POTZONE, comp); }
 
 /* drawing: one container, columns of chips; every chip carries its value for checks */
 function chipColsEl(cols, ox = 0, oy = 0) {
@@ -2188,14 +2202,15 @@ async function animCollect(e, d) {
 }
 // side pots and split pots are laid out as separate labelled piles before they go to the winners
 CH.piles = [];
-function pilePos(n, k) { const gap = n > 4 ? 84 : n > 3 ? 100 : 118; return [CX + (k - (n - 1) / 2) * gap, POTZ[1]]; }
+const PILE_Y = 160;
+function pilePos(n, k) { const gap = n > 4 ? 84 : n > 3 ? 100 : 118; return [CX + (k - (n - 1) / 2) * gap, PILE_Y]; }
 function drawPiles() {
   CH.piles.forEach((pl, k) => {
     if (compEmpty(pl.comp)) return;
-    const el = chipColsEl(zoneCols({ o: pl.at, far: [0, -1], per: 3, rows: 2, h: 8, seed: k + 3 }, pl.comp));
+    const el = chipColsEl(zoneCols({ o: pl.at, far: [0, -1], per: 4, rows: 1, h: 6, seed: k + 3 }, pl.comp));
     el.dataset.kind = 'pile'; el.dataset.k = k; L.felt.appendChild(el);
     const lb = document.createElement('div'); lb.className = 'betLbl potLbl'; lb.innerHTML = `${CH.piles.length > 4 ? '' : `<small>${esc(pl.name)}</small>`}<span class="coin"></span>${fmt(compVal(pl.comp))}`;
-    place(lb, pl.at[0], 102); L.felt.appendChild(lb);
+    place(lb, pl.at[0], 98); L.felt.appendChild(lb);
   });
 }
 async function splitPiles(e, d) {
@@ -2211,7 +2226,7 @@ async function splitPiles(e, d) {
   // first the pots, then each pot cut into shares
   // every share gets its own spot in a row; a pot first sits in the middle of its shares' spots
   const spots = shares.map((s, k) => pilePos(shares.length, k));
-  const potAt = e.pots.map((pt, pi) => { const ks = shares.map((s, k) => s.pi === pi ? k : -1).filter(k => k >= 0); return [ks.reduce((a, k) => a + spots[k][0], 0) / ks.length, POTZ[1]]; });
+  const potAt = e.pots.map((pt, pi) => { const ks = shares.map((s, k) => s.pi === pi ? k : -1).filter(k => k >= 0); return [ks.reduce((a, k) => a + spots[k][0], 0) / ks.length, PILE_Y]; });
   const potComp = e.pots.map((pt, pi) => shares.reduce((a, s, k) => s.pi === pi ? compAdd(a, parts[k]) : a, {}));
   CH.piles = []; const pc = colsCenter(potLayout(CH.pot, true));
   for (let pi = 0; pi < e.pots.length; pi++) {
@@ -2404,13 +2419,13 @@ function render() {
     if (bot && isHost && !tut && !demo) { pl.style.cursor = 'pointer'; pl.onclick = () => openBotMenu(i); }
   }
   // drinks on the table
-  L.txt.querySelectorAll('.cup,.glass').forEach(x => x.remove());
-  for (let i = 0; i < 6; i++) { const cp = slot(i).cup; const h = document.createElement('div'); h.className = 'cup'; place(h, cp[0] - CUP_R, cp[1] - CUP_R); L.txt.appendChild(h); }
+  L.cups.querySelectorAll('.cup,.glass').forEach(x => x.remove());   // cups and glasses lie under every hand
+  for (let i = 0; i < 6; i++) { const cp = slot(i).cup; const h = document.createElement('div'); h.className = 'cup'; place(h, cp[0] - CUP_R, cp[1] - CUP_R); L.cups.appendChild(h); }
   if (S && S.drinks) for (let i = 0; i < 6; i++) {
     const p = d.seats[i]; if (!p) continue; const id = S.drinks[p.uid]; if (!id) continue;
     const g = document.createElement('div'); g.className = 'glass'; g.dataset.seat = i; g.innerHTML = glassSvg(id, .8);
     const bs = GLASS_BASE[(DRINK_ART[id] || {}).glass] || [18, 36]; g.style.setProperty('margin', `${-bs[1] * .8}px 0 0 ${-bs[0] * .8}px`, 'important'); g.style.transformOrigin = `${bs[0] * .8}px ${bs[1] * .8}px`;
-    place(g, ...slot(i).drink); L.txt.appendChild(g);
+    place(g, ...slot(i).drink); L.cups.appendChild(g);
   }
   if (S && S.tableBottle) { const b = document.createElement('div'); b.className = 'bucket'; b.innerHTML = bucketSvg(S.tableBottle.id); place(b, ...BUCKET); L.felt.appendChild(b); }
   buildHands();
@@ -2456,11 +2471,14 @@ requestAnimationFrame(tick);
 function renderHud() {
   const s = S || disp && null;
   const st = S;
-  $('#tableInfo').innerHTML = st ? `Холдем · блайнды <b>${fmt(st.cfg.sb)}/${fmt(st.cfg.bb)}</b> · бай-ин <b>${fmt(st.cfg.buyIn)}</b>` : 'Холдем · демо-стол';
-  $('#onlineInfo').textContent = st ? `стол ${tableCode} · онлайн ${Math.max(1, online.size)}${isHost ? '' : linkKind === 'relay' ? ' · через сервер' : linkKind === 'p2p' ? ' · напрямую' : ''}` : '';
+  $('#tableInfo').innerHTML = st ? `Друзья · <b>${fmt(st.cfg.sb)}/${fmt(st.cfg.bb)}</b>` : 'Холдем';
+  // short: who is online; the table code and the connection type are in the ☰ menu and in the tooltip
+  $('#onlineInfo').textContent = st ? `👥 ${Math.max(1, online.size)}` : '';
+  $('#onlineInfo').title = st ? `стол ${tableCode} · онлайн ${Math.max(1, online.size)}${isHost ? '' : linkKind === 'relay' ? ' · через сервер' : linkKind === 'p2p' ? ' · напрямую' : ''}` : '';
+  $('#bFull').closest('.hudTop').classList.toggle('two', !!st && !solo);
   $('#onlineInfo').hidden = !st || solo;
   $('#bInvite').hidden = solo || demo;
-  if (st && solo) $('#tableInfo').innerHTML = (tut ? '<b>Обучение</b>' : '<b>Игра с ботами</b>') + ` · блайнды <b>${fmt(st.cfg.sb)}/${fmt(st.cfg.bb)}</b>`;
+  if (st && solo) $('#tableInfo').innerHTML = (tut ? 'Обучение' : 'Боты') + ` · <b>${fmt(st.cfg.sb)}/${fmt(st.cfg.bb)}</b>`;
   const c = $('#controls'); c.innerHTML = ''; c.classList.remove('turnMode'); $('#raisePanel').hidden = true; if ($('#coach')) $('#coach').hidden = true;
   if (!st || demo) return;
   const i = mySeat();
@@ -2746,7 +2764,7 @@ async function animate(e) {
       const targets = e.all ? d.seats.map((q, i) => q ? i : -1).filter(i => i >= 0) : [e.seat];
       if (e.all) { const b = L.felt.querySelector('.bucket'); if (b) b.animate([{ transform: 'translate(0,-30px) scale(.4)', opacity: 0 }, { transform: 'translate(0,4px) scale(1.08)', opacity: 1 }, { transform: 'none' }], { duration: 600, easing: 'ease-out' }); }
       for (const i of targets) {
-        const g = L.txt.querySelector(`.glass[data-seat="${i}"]`);
+        const g = L.cups.querySelector(`.glass[data-seat="${i}"]`);
         if (g) g.animate([{ transform: 'translateY(-26px) scale(.3)', opacity: 0 }, { transform: 'translateY(3px) scale(1.1)', opacity: 1 }, { transform: 'none' }], { duration: 480, easing: 'cubic-bezier(.3,1.4,.5,1)' });
         noise(.05, 6000, 8, .3); await sleep(e.all ? 120 : 0);
       }
@@ -3830,6 +3848,7 @@ function openNews() {
   const ov = $('#menu'); ov.hidden = false;
   $('#menuPanel').innerHTML = `<h2>Что нового</h2><div class="ver">Версия ${VERSION} «${CODENAME}» — первый релиз</div>
     <p class="ver" style="margin-top:6px">1.0.1: значок дилера «D» теперь в табличке с именем; верхние игроки сидят у борта; фишки и карты больше не наезжают друг на друга и не вылезают поверх меню.</p>
+    <p class="ver" style="margin-top:4px">1.0.2: верхние игроки сидят на бортике рядом с дилером, карты у них под рукой; подстаканники и стаканы под руками; короткая плашка стола.</p>
     <ul class="news">
       <li><b>Стол с друзьями</b> по ссылке без регистрации: прямое соединение и запасной канал через сервер.</li>
       <li><b>Игра с ботами</b> трёх уровней — Новичок, Любитель, Акула. Ботов можно посадить и к друзьям.</li>
@@ -3856,7 +3875,8 @@ function openMenu() {
     return `<tr><td>${isBot(u) ? '🤖 ' : ''}${esc(nameOf(u))}${seat ? '' : ' <span style="color:#888">· ушёл</span>'}</td><td>${fmt(l.in)}</td><td>${fmt(l.out)}</td><td>${fmt(l.bar || 0)}</td><td>${seat ? fmt(stack) : '—'}</td><td class="${net > 0 ? 'pos' : net < 0 ? 'neg' : ''}">${net > 0 ? '+' : ''}${fmt(net)}</td></tr>`;
   }).join('');
   const live = ['preflop', 'flop', 'turn', 'river'].includes(S.hand.phase);
-  $('#menuPanel').innerHTML = `<h2>Стол ${esc(tableCode)}</h2>
+  $('#menuPanel').innerHTML = `<h2>${solo ? (tut ? 'Обучение' : 'Игра с ботами') : 'Стол ' + esc(tableCode)}</h2>
+    <p style="margin:-4px 0 10px;color:#cfc6a8">Холдем без лимита · блайнды <b>${fmt(S.cfg.sb)}/${fmt(S.cfg.bb)}</b> · бай-ин <b>${fmt(S.cfg.buyIn)}</b>${solo ? '' : ` · онлайн ${Math.max(1, online.size)}${isHost ? '' : linkKind === 'relay' ? ' · через сервер' : linkKind === 'p2p' ? ' · напрямую' : ''}`}</p>
     ${installEvt && !standalone() ? `<div class="row2" style="margin-bottom:8px">${installBtnHtml()}</div>` : ''}
     <div class="row2">${solo ? '' : '<button class="btn gold" id="mInvite">Пригласить друзей</button>'}<button class="btn" id="mBar">Бар</button><button class="btn" id="mLook">Мои руки</button></div>
     <div class="row2" style="margin-top:8px"><button class="btn" id="mCombos">Комбинации</button><button class="btn" id="mLessons">Обучение</button><button class="btn ${coachOn ? 'gold' : 'dark'}" id="mCoach">Тренер: ${coachOn ? 'вкл' : 'выкл'}</button></div>
