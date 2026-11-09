@@ -402,7 +402,12 @@ table.led td:first-child,table.led th:first-child{text-align:left}
 #felt .line{top:118px!important;bottom:70px!important}
 /* 1.0.3: every marking is symmetric about the centre of the playing area (x 560, y 277 on the stage) */
 #felt .line2{top:62px!important;bottom:14px!important}
+/* 1.0.4: the betting line runs between the pot area, the players' cards and the board, touching none of them */
+#felt .line{top:140px!important;bottom:122px!important;left:156px!important;right:156px!important;border-radius:74px!important}
+#feltSuits{position:absolute;inset:0;pointer-events:none}
+#feltSuits span{position:absolute;width:24px;height:24px;margin:-12px 0 0 -12px;text-align:center;line-height:24px;font:18px serif;color:#f2e3b440}
 #feltText{top:-12px}
+#feltMarks{position:absolute;inset:0;pointer-events:none}
 
 /* ===== 1.0 Beta palette: saturated bordeaux / graphite / dark gold / red, leather with stitching, white labels ===== */
 #sidePanel .btn,#raisePanel .q button{
@@ -467,10 +472,12 @@ table.led td:first-child,table.led th:first-child{text-align:left}
 #pot{top:86px!important}
 
 /* 1.0.2: the pot label stands to the left of the pot chips; cupholders 24px so they sit wholly in the wood */
-#pot{left:560px!important;top:122px!important;transition:left .35s ease}
-#pot.side{left:466px!important}
+#pot{left:560px!important;top:126px!important;transition:left .35s ease;width:124px;min-width:0!important;box-sizing:border-box;padding-left:6px!important;padding-right:6px!important}
+#pot.side{left:483px!important}
 .cup{width:28px!important;height:28px!important}
 .cmark{position:absolute;border:1.5px solid #f2e3b440;border-radius:9px;box-sizing:border-box;pointer-events:none}
+.potLbl.mini{font-size:11px;max-width:96px}
+.cmark.potz{border-radius:14px;background:repeating-linear-gradient(135deg,#f2e3b41c 0 1.5px,transparent 1.5px 9px)}
 #deck{left:655px!important}
 #cupLayer{isolation:isolate}
 
@@ -482,23 +489,17 @@ table.led td:first-child,table.led th:first-child{text-align:left}
  <div id="tableWrap">
   <div id="rail">
     <div id="felt">
+      <div id="feltMarks">
       <div class="line2"></div>
       <div class="line"></div>
       <svg id="feltText" viewBox="0 0 868 480" aria-hidden="true">
         <defs>
-          <path id="arcB" d="M214,262 A220,120 0 0 0 654,262"/>
-          <path id="arcT" d="M214,242 A220,120 0 0 1 654,242"/>
+          <path id="arcB" d="M134,332 A300,60 0 0 0 734,332"/>
         </defs>
-        <text font-family="Bodoni Moda, Georgia, serif" font-style="italic" font-weight="700" font-size="30" fill="#f2e3b4" fill-opacity=".22" letter-spacing="6"><textPath href="#arcB" startOffset="50%" text-anchor="middle">Texas Hold’em</textPath></text>
-        <text font-family="Barlow Condensed, sans-serif" font-weight="600" font-size="13" fill="#f2e3b4" fill-opacity=".28" letter-spacing="4"><textPath href="#arcT" startOffset="50%" text-anchor="middle" id="feltBlinds">♦ NO LIMIT · CASH TABLE ♣</textPath></text>
-        <g fill="none" stroke="#f2e3b4" stroke-opacity=".25" stroke-width="1.5">
-          <rect x="70" y="224" width="34" height="34" transform="rotate(45 87 241)"/>
-          <rect x="764" y="224" width="34" height="34" transform="rotate(45 781 241)"/>
-        </g>
-        <g fill="#f2e3b4" fill-opacity=".25" font-size="18" text-anchor="middle" font-family="serif">
-          <text x="87" y="247">♠</text><text x="781" y="247">♥</text>
-        </g>
+        <text font-family="Bodoni Moda, Georgia, serif" font-style="italic" font-weight="700" font-size="22" fill="#f2e3b4" fill-opacity=".22" letter-spacing="3"><textPath href="#arcB" startOffset="50%" text-anchor="middle">Texas Hold’em</textPath></text>
       </svg>
+      </div>
+      <div id="feltSuits"><span style="left:156px;top:214px">♠</span><span style="left:712px;top:214px">♥</span></div>
     </div>
   </div>
 
@@ -560,7 +561,7 @@ table.led td:first-child,table.led th:first-child{text-align:left}
  </div>
 
   <div class="layer" id="hud">
-    <div class="hudTop" style="left:10px"><span id="title">Покер</span><span class="verTag">1.0.3</span><span class="pill" id="tableInfo">Холдем</span></div>
+    <div class="hudTop" style="left:10px"><span id="title">Покер</span><span class="verTag">1.0.4</span><span class="pill" id="tableInfo">Холдем</span></div>
     <div class="hudTop" style="right:10px"><span class="pill" id="onlineInfo" hidden></span>
       <button class="pill barBtn" id="bBar">Бар</button>
       <button class="pill invite" id="bInvite">+ Пригласить</button>
@@ -1034,11 +1035,11 @@ const clone = o => JSON.parse(JSON.stringify(o));
 // Hand-placed seat zones (table coordinates). Each player owns the strip of felt at their edge:
 // cards right in front of the plate, chip stack beside them, bet a little further in, never on the board.
 const ZONES = [
-  { plate: [372, 468], cards: [372, 398], stack: [508, 416], bet: [470, 336], btn: [296, 414], drink: [252, 440], ha: [246, 420], hb: [504, 470] },   // me (bottom-left)
-  { plate: [104, 262], cards: [226, 262], stack: [238, 370], bet: [330, 290], btn: [300, 370], drink: [270, 342], ha: [172, 250], hb: [212, 320], bodyB: [60, 180] },   // left: the right forearm comes from the body, the cup stands below it
-  { plate: [356, 40], cards: [356, 108], stack: [262, 128], bet: [262, 196], btn: [0, 0], drink: [167, 120], ha: [392, 92], hb: [196, 172], body: [356, -60], tilt: 0, cup: -1 },    // top-left: on the rail beside the dealer
-  { plate: [764, 40], cards: [764, 108], stack: [858, 128], bet: [858, 196], btn: [0, 0], drink: [952, 119], ha: [728, 92], hb: [924, 172], body: [764, -60], tilt: 0, cup: 1 },    // top-right
-  { plate: [1016, 262], cards: [894, 262], stack: [882, 370], bet: [790, 290], btn: [820, 370], drink: [850, 342], ha: [948, 250], hb: [908, 320], bodyB: [1060, 240] },  // right: chips mirror the left seat, the chip hand rests clear of them
+  { plate: [372, 468], cards: [372, 398], stack: [508, 416], bet: [470, 336], btn: [296, 414], drink: [252, 440], ha: [296, 406], hb: [504, 470], bodyA: [372, 568] },   // me: the left forearm comes from under the plate, leaving the corner of the rail free (bottom-left)
+  { plate: [104, 262], cards: [226, 262], stack: [238, 370], bet: [330, 290], btn: [300, 370], drink: [270, 342], ha: [170, 206], hb: [196, 328] },   // left: both forearms from under the plate, the upper hand clear of the cards
+  { plate: [356, 40], cards: [356, 108], stack: [262, 128], bet: [262, 196], btn: [0, 0], drink: [167, 120], ha: [392, 92], hb: [214, 140], body: [356, -60], tilt: 0, cup: -1 },    // top-left: on the rail beside the dealer
+  { plate: [764, 40], cards: [764, 108], stack: [858, 128], bet: [858, 196], btn: [0, 0], drink: [952, 119], ha: [728, 92], hb: [906, 140], body: [764, -60], tilt: 0, cup: 1 },    // top-right
+  { plate: [1016, 262], cards: [894, 262], stack: [882, 370], bet: [790, 290], btn: [820, 370], drink: [850, 342], ha: [950, 206], hb: [924, 328] },  // right: mirror of the left seat
   { plate: [722, 468], cards: [722, 398], stack: [610, 416], bet: [632, 336], btn: [812, 400], drink: [868, 440], ha: [794, 406], hb: [618, 470], bodyA: [722, 568] },   // bottom-right: the right forearm comes from the body, clear of the buttons
 ];
 // centre line of the wooden rail: rounded rectangle (rail 96,18 928x470 r 290/235, felt inset 30) -> middle of the band
@@ -1064,9 +1065,9 @@ const SLOTS = ZONES.map((z, i) => {
 });
 /* cupholders cut into the rail: on the centre line of the wooden band, to the player's right of the right hand,
    computed from the resting arms so that no resting hand, name plate or button covers the holder or the glass */
-const CUPS = [[563, 473], [138, 348], [204, 88], [655, 33], [1003, 208], [834, 458]];
+const CUPS = [[563, 473], [240, 440], [197, 94], [655, 33], [984, 161], [834, 458]];
 SLOTS.forEach((sl, i) => { sl.cup = CUPS[i]; sl.drink = CUPS[i]; });
-const BOARD_Y = 258, BOARD_X = k => CX + (k - 2) * 62;
+const BOARD_Y = 243, BOARD_X = k => CX + (k - 2) * 62;
 const POT = [CX, 140], DECK = [672, 86], MUCK = [470, 88], BUCKET = [452, 58];
 const SHOULDER = { L: [516, 0], R: [604, 0] }, REST = { L: [534, 56], R: [588, 58] };
 
@@ -1102,7 +1103,7 @@ const toStage = (x, y) => [TOX + x * TK, TOY + y * TK];
 
 /* ---------------- scaling ---------------- */
 let force = false;
-const VERSION = '1.0.3', CODENAME = 'Royal Flush';
+const VERSION = '1.0.4', CODENAME = 'Royal Flush';
 const ZOOM_OK = !!(window.CSS && CSS.supports && CSS.supports('zoom', '2'));
 function fit() {
   const vw = innerWidth, vh = innerHeight;
@@ -1196,7 +1197,7 @@ function cardEl(c, size = '', down = false) {
   return el;
 }
 
-function cardSize(size) { return size === 'sm' ? [38, 54] : size === 'lg' ? [52, 75] : [56, 80]; }
+function cardSize(size) { return size === 'sm' ? [38, 54] : size === 'lg' ? [64, 92] : [56, 80]; }   // must match the .card CSS sizes
 function place(el, x, y) { el.style.left = x + 'px'; el.style.top = y + 'px'; return el; }
 
 function breakdown(amount) {
@@ -1873,7 +1874,7 @@ function initials(u) { if (u === uid) return 'Я'; const n = names[u]; if (!n) r
 /* ===================== physical chips: real composition per stack / bet / pot ===================== */
 // Every pile of chips on the table has a real set of chips {value: count}. Amounts only change by
 // moving chips: a hand carries them, a push slides them, the dealer brings change from his tray.
-const TRAY = [560, 63], POTZ = [594, 141];
+const TRAY = [560, 63], POTZ = [625, 163];
 const CHIP_DY = 3.2, CHIP_R = 12;
 // zones per visual slot (table coords). o = base of the first column, u = next column, v = next row,
 // per = columns per row, rows, h = max chips per column, lbl = where the bet amount is written
@@ -1885,7 +1886,7 @@ const CZ = [
   { stack: { o: [882, 370], far: [-.7, -.7], per: 3, rows: 2, h: 8 }, bet: { o: [790, 290], far: [0, -1], per: 3, rows: 2, h: 10 }, lbl: [790, 318] },
   { stack: { o: [610, 416], far: [0, -1], per: 3, rows: 2, h: 8 }, bet: { o: [632, 336], far: [0, -1], heap: [626, 322], per: 3, rows: 2, h: 8 }, lbl: [632, 346] },
 ];
-const POTZONE = { o: [594, 141], far: [0, -1], per: 4, rows: 2, h: 8, seed: 11 };
+const POTZONE = { o: [625, 163], far: [0, -1], per: 5, rows: 1, h: 7, seed: 11 };   // one row of at most 5 columns: fits the pot area
 const DEN_INFO = Object.fromEntries(DENOMS.map(d => [d[0], d]));
 const DVALS = DENOMS.map(d => d[0]);                     // descending
 
@@ -1974,7 +1975,7 @@ function pileCols(comp, cx, cy, seed, rx = 34, ry = 16) {
 }
 function stackLayout(seat, comp) { return zoneCols(Object.assign({ seed: vis(seat) * 31 + 1 }, CZ[vis(seat)].stack), comp); }
 function betLayout(seat, comp, pile) { const z = Object.assign({ seed: vis(seat) * 31 + 7 }, CZ[vis(seat)].bet); const hp = z.heap || z.o; return pile ? pileCols(comp, hp[0], hp[1], seat + 7, 22, 10) : zoneCols(z, comp); }
-function potLayout(comp, pile) { return pile ? pileCols(comp, POTZ[0], POTZ[1], 3, 40, 8) : zoneCols(POTZONE, comp); }
+function potLayout(comp, pile) { return pile ? pileCols(comp, POTZ[0], POTZ[1] - 12, 3, 40, 6) : zoneCols(POTZONE, comp); }   // the heap stays inside the pot area
 
 /* drawing: one container, columns of chips; every chip carries its value for checks */
 function chipColsEl(cols, ox = 0, oy = 0) {
@@ -2198,7 +2199,7 @@ async function animCollect(e, d) {
       CH.bet[i] = {}; CH.betPile[i] = 0; d.seats[i].bet = 0;
       const future = compAdd(CH.pot, comp); const lay = potLayout(future, CH.potPile);
       render();
-      const dst = rake ? [POTZ[0] + (side === 'L' ? -20 : 20), POTZ[1] - 6] : colsCenter(lay);
+      const dst = rake ? [POTZ[0] + (side === 'L' ? -20 : 20), POTZ[1] - 12] : colsCenter(lay);
       const v0 = compVal(comp), p0 = compVal(CH.pot);
       const w = await dealerCarry(comp, c0, dst, relCols(cols, c0), 420, rake);
       if (compVal(comp) !== v0 || compVal(CH.pot) !== p0) (AUDIT.log = AUDIT.log || []).push(`collect seat${i} comp ${v0}->${compVal(comp)} pot ${p0}->${compVal(CH.pot)} side ${side}`);
@@ -2212,15 +2213,15 @@ async function animCollect(e, d) {
 }
 // side pots and split pots are laid out as separate labelled piles before they go to the winners
 CH.piles = [];
-const PILE_Y = 160;
-function pilePos(n, k) { const gap = n > 4 ? 84 : n > 3 ? 100 : 118; return [CX + (k - (n - 1) / 2) * gap, PILE_Y]; }
+const PILE_Y = 166;                                   // inside the pot area
+function pilePos(n, k) { const gap = n > 2 ? 100 : 130; return [CX + (k - (n - 1) / 2) * gap, PILE_Y]; }
 function drawPiles() {
   CH.piles.forEach((pl, k) => {
     if (compEmpty(pl.comp)) return;
-    const el = chipColsEl(zoneCols({ o: pl.at, far: [0, -1], per: 4, rows: 1, h: 6, seed: k + 3 }, pl.comp));
+    const el = chipColsEl(zoneCols({ o: pl.at, far: [0, -1], per: CH.piles.length > 2 ? 3 : 4, rows: 1, h: 6, seed: k + 3 }, pl.comp));
     el.dataset.kind = 'pile'; el.dataset.k = k; L.felt.appendChild(el);
-    const lb = document.createElement('div'); lb.className = 'betLbl potLbl'; lb.innerHTML = `${CH.piles.length > 4 ? '' : `<small>${esc(pl.name)}</small>`}<span class="coin"></span>${fmt(compVal(pl.comp))}`;
-    place(lb, pl.at[0], 98); L.felt.appendChild(lb);
+    const lb = document.createElement('div'); lb.className = 'betLbl potLbl mini'; lb.innerHTML = `<small>${esc(pl.name)}</small><span class="coin"></span>${fmt(compVal(pl.comp))}`;
+    place(lb, pl.at[0], 104); L.felt.appendChild(lb);
   });
 }
 async function splitPiles(e, d) {
@@ -2230,7 +2231,7 @@ async function splitPiles(e, d) {
   // the dealer squares the pot into exact amounts (a quick shuffle in the middle)
   const parts = shares.map(s => compOf(s.amt));
   const total = parts.reduce((a, c) => compAdd(a, c), {});
-  if (compVal(total) !== compVal(CH.pot) || shares.length > 5) return null;   // too many shares for the middle of the table: paid one by one
+  if (compVal(total) !== compVal(CH.pot) || shares.length > 3) return null;   // more shares than fit in the pot area: paid one by one
   await Promise.all([moveHand('L', POTZ[0] - 30, POTZ[1] - 14, 260), moveHand('R', POTZ[0] + 30, POTZ[1] - 14, 260)]);
   CH.pot = total; CH.potPile = true; render(); scatterEl(chipsEl('pot')); sfx.chips(5); await sleep(320);
   // first the pots, then each pot cut into shares
@@ -2396,7 +2397,8 @@ function render() {
   // pot
   const potAmt = d.pot || 0;
   $('#pot').hidden = (!potAmt && !(d.phase !== 'idle' && d.phase !== 'showdown')) || !!(CH.piles && CH.piles.length);
-  $('#potV').textContent = fmt(d.potLbl != null ? d.potLbl : potAmt + d.seats.reduce((a, p) => a + (p ? p.bet : 0), 0));
+  const potTxt = fmt(d.potLbl != null ? d.potLbl : potAmt + d.seats.reduce((a, p) => a + (p ? p.bet : 0), 0));
+  $('#potV').textContent = potTxt; $('#pot .v').style.fontSize = potTxt.length > 9 ? '14px' : potTxt.length > 7 ? '17px' : '';
   drawChips(d);
   $('#pot').classList.toggle('side', !compEmpty(CH.pot));
   // dealer button
@@ -2425,7 +2427,7 @@ function render() {
         place(el, hp.cx - cw / 2, hp.cy - ch / 2);
         el.style.transform = `rotate(${hp.rot}deg)` + (faceUp ? '' : ' rotateY(180deg)');
         if (d.phase === 'showdown' && (p.show || isMe) && d.result) {
-          if (WC) { const w = W8.has(i) && WC.set.has(c); el.classList.add(w ? 'win' : 'dim'); if (w) liftWin(el, slot(i).d); }
+          if (WC) { const w = W8.has(i) && WC.set.has(c); el.classList.add(w ? 'win' : 'dim'); }   // players' cards stay inside their outline: glow only
           else if (p.show) el.classList.add(W8.has(i) ? 'win' : 'dim');
         }
         L.felt.appendChild(el);
@@ -2465,20 +2467,32 @@ function render() {
   renderEquity();
   renderHud();
 }
-/* outlines on the felt where each seat's two cards lie */
+/* outlines on the felt where each seat's two cards lie, plus the hatched pot area; the table lines and lettering
+   are masked out under them, so no marking ever crosses another */
+const POT_AREA = { x: 411, y: 120, w: 298, h: 60 };      // centred; holds the label in both places and the pot chips of any all-in
 let marksKey = '';
+const MARK_GAP = 6;                                    // clear felt between a marking and any outline
 function drawMarks() {
   const big0 = mySeat() >= 0 && !demo, key = big0 + '';
   if (key === marksKey) return; marksKey = key;
   const ly = $('#markLayer'); ly.innerHTML = '';
+  const FX = 126, FY = 48, holes = [];
+  const add = (cls, cx, cy, w, h, rot, r) => {
+    const m = document.createElement('div'); m.className = cls; m.style.width = w + 'px'; m.style.height = h + 'px';
+    m.style.left = (cx - w / 2) + 'px'; m.style.top = (cy - h / 2) + 'px'; if (rot) m.style.transform = `rotate(${rot}deg)`; ly.appendChild(m);
+    const g = MARK_GAP; holes.push(`<rect x="${cx - FX - w / 2 - g}" y="${cy - FY - h / 2 - g}" width="${w + 2 * g}" height="${h + 2 * g}" rx="${r + g}" transform="rotate(${rot || 0} ${cx - FX} ${cy - FY})"/>`);
+  };
   SLOTS.forEach((sl, v) => {
     const big = v === 0 && big0, [cw, ch] = cardSize(big ? 'lg' : 'sm'), off = big ? 28 : 21;
     const rot = Math.atan2(-(sl.plate[0] - sl.cards[0]), sl.plate[1] - sl.cards[1]) * 180 / Math.PI + (sl.tilt || 0);
-    const w = 2 * off + cw + 14, h = ch + 12, m = document.createElement('div');
-    m.className = 'cmark'; m.style.width = w + 'px'; m.style.height = h + 'px';
-    m.style.left = (sl.cards[0] - w / 2) + 'px'; m.style.top = (sl.cards[1] - h / 2) + 'px'; m.style.transform = `rotate(${rot}deg)`;
-    ly.appendChild(m);
+    add('cmark', sl.cards[0], sl.cards[1], 2 * off + cw + 14, ch + 12, rot, 9);
   });
+  add('cmark potz', POT_AREA.x + POT_AREA.w / 2, POT_AREA.y + POT_AREA.h / 2, POT_AREA.w, POT_AREA.h, 0, 14);
+  [[282, 262], [838, 262]].forEach(([x, y]) => holes.push(`<circle cx="${x - FX}" cy="${y - FY}" r="16"/>`));   // gaps for the ♠ and ♥
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="868" height="410"><rect width="868" height="410" fill="white"/><g fill="black">${holes.join('')}</g></svg>`;
+  const fm = $('#feltMarks'), url = `url("data:image/svg+xml;utf8,${encodeURIComponent(svg)}")`;
+  fm.style.webkitMaskImage = fm.style.maskImage = url; fm.style.webkitMaskSize = fm.style.maskSize = '868px 410px';
+  fm.style.webkitMaskRepeat = fm.style.maskRepeat = 'no-repeat';
 }
 function winCards(d) {
   if (d.phase !== 'showdown' || !d.result || !d.result.winners || !d.result.winners.length || d.board.length < 5) return null;
@@ -2718,11 +2732,12 @@ async function animate(e) {
     }
     case 'bet': {
       const p = d.seats[e.seat]; if (!p) break;
+      if (d.turn === e.seat) d.turn = -1;          // the move is made: the clock stops at once, not after the animation
       render(); await animBet(e, d); render();
       break;
     }
     case 'check': {
-      const p = d.seats[e.seat]; if (!p) break; p.last = 'Чек'; render();
+      const p = d.seats[e.seat]; if (!p) break; if (d.turn === e.seat) d.turn = -1; p.last = 'Чек'; render();
       const sl = slot(e.seat);
       const spot = [sl.plate[0] + sl.d[0] * 96 - sl.n[0] * sl.s * 34, sl.plate[1] + sl.d[1] * 96 - sl.n[1] * sl.s * 34];
       if (PH[e.seat]) { setPose(e.seat, 'A', 'knock'); await movePH(e.seat, 'A', ...reachFor(e.seat, 'A', spot, 26), 220); }
@@ -2735,7 +2750,7 @@ async function animate(e) {
       break;
     }
     case 'fold': {
-      const p = d.seats[e.seat]; if (!p) break;
+      const p = d.seats[e.seat]; if (!p) break; if (d.turn === e.seat) d.turn = -1;
       const sl = slot(e.seat); const isMe = p.uid === uid && vis(e.seat) === 0;
       const size = isMe ? 'lg' : 'sm'; const [cw, ch] = cardSize(size);
       p.folded = true; p.last = 'Фолд'; const had = p.cards; p.cards = null; render();
@@ -3912,6 +3927,7 @@ function openNews() {
     <p class="ver" style="margin-top:6px">1.0.1: значок дилера «D» теперь в табличке с именем; верхние игроки сидят у борта; фишки и карты больше не наезжают друг на друга и не вылезают поверх меню.</p>
     <p class="ver" style="margin-top:4px">1.0.2: верхние игроки сидят на бортике рядом с дилером, карты у них под рукой; подстаканники и стаканы под руками; короткая плашка стола.</p>
     <p class="ver" style="margin-top:4px">1.0.3: подстаканники в борту справа от правой руки каждого игрока, стаканы крупнее; фишки правого игрока у борта; общие карты и разметка стола ровно по центру, контуры под карты игроков; «Общий банк» по центру и отъезжает, когда появляются фишки; дилер меняет фишки прямо в стопке, цифра стека не прыгает; таймер ровный на всех телефонах; боты пользуются предходами; лог сворачивается в угол.</p>
+    <p class="ver" style="margin-top:4px">1.0.4: руки боковых игроков снова выходят из-под таблички; твоя левая рука из-под твоей таблички, подстаканник левого игрока в углу борта; контуры под карты и заштрихованная зона банка, разметка нигде не пересекается; твои карты стоят точно на месте.</p>
     <ul class="news">
       <li><b>Стол с друзьями</b> по ссылке без регистрации: прямое соединение и запасной канал через сервер.</li>
       <li><b>Игра с ботами</b> трёх уровней — Новичок, Любитель, Акула. Ботов можно посадить и к друзьям.</li>
