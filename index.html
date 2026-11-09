@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-<title>Покерный стол</title>
+<title>Royal Flush</title>
 <meta name="theme-color" content="#0f1611">
 <meta name="description" content="Техасский холдем с друзьями без регистрации">
 <link rel="manifest" href="manifest.webmanifest">
@@ -12,7 +12,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Покер">
+<meta name="apple-mobile-web-app-title" content="Royal Flush">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://unpkg.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@1,700&family=Barlow+Condensed:wght@500;600;700;800&family=Barlow:wght@500;600&display=swap">
@@ -95,9 +95,9 @@ body{margin:0;background:var(--floor);color:var(--ui);font-family:var(--body);ov
    repeating-linear-gradient(45deg, #ffffff2e 0 1.5px, transparent 1.5px 7px),
    repeating-linear-gradient(-45deg, #ffffff2e 0 1.5px, transparent 1.5px 7px),
    linear-gradient(135deg,#6d37a0,#47206e)}
-.card.sm{width:38px;height:54px}
+.card.sm{width:50px;height:72px}
 .card.sm .f .r{font-size:23px}.card.sm .f .s{font-size:19px}
-.card.lg{width:64px;height:92px}
+.card.lg{width:50px;height:72px}
 .card.lg .f .r{font-size:40px}.card.lg .f .s{font-size:34px}
 .card.win .f{box-shadow:0 0 0 2px #fff, 0 0 14px 3px #ffffffcc, 0 0 28px #ffe9a0aa}
 .card.dim{filter:brightness(.55)}
@@ -209,6 +209,10 @@ table.led th{font-weight:600;color:#a9a497;text-align:right;font-size:12px;lette
 table.led td{text-align:right;padding:5px 6px;border-bottom:1px solid #ffffff10}
 table.led td:first-child,table.led th:first-child{text-align:left}
 .pos{color:#7fd08f}.neg{color:#f07a7a}
+#treatAsk{position:absolute;left:50%;top:58px;transform:translateX(-50%);z-index:30;display:flex;align-items:center;gap:10px;background:#141815f2;border:1px solid #e3c27a99;border-radius:12px;padding:8px 10px 8px 14px;font:600 15px var(--hud);color:#fff;box-shadow:0 6px 20px #000a;white-space:nowrap}
+#treatAsk .t{color:#e9c46a}
+#treatAsk .c{font-variant-numeric:tabular-nums;color:#aab1a6;font-size:13px;min-width:22px}
+#treatAsk button{min-height:34px;padding:0 12px;font-size:14px}
 #toast{position:absolute;left:50%;top:60px;transform:translateX(-50%);background:#1d211ef2;border:1px solid #e3c27a77;color:#fff;border-radius:8px;padding:8px 14px;font:600 15px var(--hud);transition:opacity .3s;pointer-events:none}
 #rotate{position:fixed;inset:0;display:none;place-items:center;text-align:center;background:#0b0f0cf2;z-index:50;padding:24px;color:#eee;font:600 18px var(--hud)}
 #rotate .ph{width:44px;height:74px;border:3px solid var(--gold);border-radius:9px;margin:0 auto 16px;animation:rot 2.2s ease-in-out infinite}
@@ -236,7 +240,7 @@ table.led td:first-child,table.led th:first-child{text-align:left}
 
 .chip.lbl::after{content:attr(data-v);position:absolute;inset:6px;border-radius:50%;display:grid;place-items:center;font:800 8px/1 var(--hud);color:#fff;text-shadow:0 0 2px #000,0 0 2px #000;letter-spacing:-.02em}
 .glass{position:absolute;transform-origin:50% 90%;margin:-36px 0 0 -18px;pointer-events:none;filter:drop-shadow(0 2px 2px #0008)}
-.bucket{position:absolute;margin:-31px 0 0 -31px;pointer-events:none;filter:drop-shadow(0 3px 4px #000a)}
+.bucket{position:absolute;margin:-27px 0 0 -27px;pointer-events:none;filter:drop-shadow(0 3px 4px #000a)}
 #pArms{pointer-events:none}
 .pill.barBtn{cursor:pointer;color:#f2e3b4;background:#2a1a10e6;border-color:#e3c27a66}
 .bar{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
@@ -264,6 +268,9 @@ table.led td:first-child,table.led th:first-child{text-align:left}
 .comboLbl{position:absolute;transform:translate(-50%,0);background:#d0111f;color:#fff;font:700 16px/1 var(--hud);letter-spacing:.06em;text-transform:uppercase;padding:6px 12px 5px;border-radius:4px;box-shadow:0 4px 12px #0008;white-space:nowrap;animation:comboIn .4s ease-out}
 @keyframes comboIn{from{opacity:0;transform:translate(-50%,8px)}to{opacity:1;transform:translate(-50%,0)}}
 .card.dim{filter:brightness(.45) saturate(.8)}
+/* 1.0.5: a kicker belongs to the hand but only breaks ties: softer glow, slightly dimmed */
+.card.win.kick{filter:brightness(.8)}
+.card.win.kick .f{box-shadow:0 0 0 1.5px #ffffffaa, 0 0 8px 1px #ffe9a066!important}
 
 .hintBar{position:fixed;left:50%;top:max(10px,env(safe-area-inset-top,0px));transform:translateX(-50%);z-index:60;max-width:min(92vw,560px);display:flex;gap:10px;align-items:center;background:#1d211ef5;border:1px solid #e3c27a88;color:#eee;border-radius:10px;padding:9px 10px 9px 14px;font:500 14px/1.35 var(--body);box-shadow:0 8px 24px #000a}
 .hintBar b{color:var(--gold)}
@@ -300,7 +307,7 @@ table.led td:first-child,table.led th:first-child{text-align:left}
 .cname span{background:#d0111f;border-radius:3px;padding:1px 5px;font-size:11px}
 .crow{display:flex;gap:3px}
 .cslot{position:relative;width:38px;height:54px;flex:none}
-.cslot.sm .card{position:absolute;left:0;top:0}
+.cslot.sm .card{position:absolute;left:0;top:0;width:38px;height:54px}
 .cslot:not(.sm){width:56px;height:80px}
 .cslot .card{position:absolute;left:0;top:0}
 .bigRow{margin:8px 0 10px}
@@ -372,6 +379,17 @@ table.led td:first-child,table.led th:first-child{text-align:left}
 .ver a{color:var(--gold)}
 .news{margin:6px 0 0;padding-left:18px;display:flex;flex-direction:column;gap:6px;font:500 14px/1.4 var(--body);color:#ddd8cc}
 .news b{color:#f2e3b4}
+.vlog{margin-top:10px;display:flex;flex-direction:column;gap:6px}
+.vrow{border:1px solid #ffffff1c;border-radius:10px;background:#ffffff08}
+.vrow summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:10px;padding:9px 12px;font-weight:700;user-select:none}
+.vrow summary::-webkit-details-marker{display:none}
+.vrow summary::before{content:'▸';color:#f2e3b4;transition:transform .2s;display:inline-block;width:10px}
+.vrow[open] summary::before{transform:rotate(90deg)}
+.vrow .vnum{font-size:16px;color:#f2e3b4}
+.vrow .vdate{font-size:13px;color:#aab1a6;font-weight:500}
+.vrow .vnew{margin-left:auto;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#1a1a1a;background:#e9c46a;border-radius:6px;padding:2px 7px}
+.vrow ul.news{margin:0;padding:0 14px 10px 32px}
+.vrow ul.news li{margin:5px 0}
 .fx{will-change:auto!important}
 #log{width:200px!important}
 /* 1.0.3: the log is anchored to the bottom-left corner; folded it becomes a small tab right in the corner */
@@ -407,7 +425,7 @@ table.led td:first-child,table.led th:first-child{text-align:left}
 #feltSuits{position:absolute;inset:0;pointer-events:none}
 #feltSuits span{position:absolute;width:24px;height:24px;margin:-12px 0 0 -12px;text-align:center;line-height:24px;font:18px serif;color:#f2e3b440}
 #feltText{top:-12px}
-#feltMarks{position:absolute;inset:0;pointer-events:none}
+#feltLines{position:absolute;left:0;top:0;width:868px;height:410px;pointer-events:none}
 
 /* ===== 1.0 Beta palette: saturated bordeaux / graphite / dark gold / red, leather with stitching, white labels ===== */
 #sidePanel .btn,#raisePanel .q button{
@@ -458,8 +476,12 @@ table.led td:first-child,table.led th:first-child{text-align:left}
 
 /* chips and cards never climb above menus: their z-order stays inside the table */
 #tableWrap{isolation:isolate}
+/* 1.0.5: the table fills the screen top to bottom: 4% wider and 7% taller; the HUD (title, buttons, log) is outside and stays put */
+#tableWrap{transform-origin:560px 253px!important;transform:scale(1.04,1.07)!important}
 #feltItems .stack{isolation:isolate}
 .ov{z-index:50}
+/* 1.0.5: menus blur and dim the whole screen, also what sticks out of the stage (dealer's head, sleeves) */
+.ov{inset:-700px!important;backdrop-filter:blur(7px)!important;-webkit-backdrop-filter:blur(7px)!important;background:#060806c4!important}
 /* a folded / away plate stays solid (arms pass under it), only its contents dim */
 .plate.folded,.plate.away{opacity:1}
 .plate.folded>*,.plate.away>*{opacity:.5}
@@ -489,17 +511,22 @@ table.led td:first-child,table.led th:first-child{text-align:left}
  <div id="tableWrap">
   <div id="rail">
     <div id="felt">
-      <div id="feltMarks">
-      <div class="line2"></div>
-      <div class="line"></div>
-      <svg id="feltText" viewBox="0 0 868 480" aria-hidden="true">
+      <!-- 1.0.5: every table marking is drawn in one SVG and cut by an SVG mask (works in every browser) -->
+      <svg id="feltLines" viewBox="0 0 868 410" aria-hidden="true">
         <defs>
-          <path id="arcB" d="M134,332 A300,60 0 0 0 734,332"/>
+          <mask id="feltCut" maskUnits="userSpaceOnUse" x="0" y="0" width="868" height="410"><rect width="868" height="410" fill="#fff"/><g id="feltHoles" fill="#000"></g></mask>
+          <path id="arcB" d="M134,320 A300,60 0 0 0 734,320"/>
         </defs>
-        <text font-family="Bodoni Moda, Georgia, serif" font-style="italic" font-weight="700" font-size="22" fill="#f2e3b4" fill-opacity=".22" letter-spacing="3"><textPath href="#arcB" startOffset="50%" text-anchor="middle">Texas Hold’em</textPath></text>
+        <g mask="url(#feltCut)">
+          <rect x="46.5" y="62.5" width="775" height="333" rx="183.7" ry="167" fill="none" stroke="#f2e3b4" stroke-opacity=".18" stroke-width="1"/>
+          <rect x="157" y="141" width="554" height="146" rx="73" ry="73" fill="none" stroke="#f2e3b4" stroke-opacity=".4" stroke-width="2"/>
+          <text font-family="Bodoni Moda, Georgia, serif" font-style="italic" font-weight="700" font-size="22" fill="#f2e3b4" fill-opacity=".22" letter-spacing="3"><textPath href="#arcB" startOffset="50%" text-anchor="middle">Texas Hold’em</textPath></text>
+        </g>
+        <g fill="#f2e3b4" fill-opacity=".38">
+          <path transform="translate(190 214) scale(11)" d="M0,-.9 C-.32,-.48 -1.1,-.12 -.76,.34 C-.52,.64 -.16,.56 -.06,.32 L-.26,.86 L.26,.86 L.06,.32 C.16,.56 .52,.64 .76,.34 C1.1,-.12 .32,-.48 0,-.9Z"/>
+          <path transform="translate(678 214) scale(11)" d="M0,-.42 C-.46,-1.02 -1.16,-.42 -.78,.12 C-.56,.42 -.22,.6 0,.86 C.22,.6 .56,.42 .78,.12 C1.16,-.42 .46,-1.02 0,-.42Z"/>
+        </g>
       </svg>
-      </div>
-      <div id="feltSuits"><span style="left:156px;top:214px">♠</span><span style="left:712px;top:214px">♥</span></div>
     </div>
   </div>
 
@@ -527,6 +554,7 @@ table.led td:first-child,table.led th:first-child{text-align:left}
 
   <div class="layer" id="markLayer"></div>
   <div class="layer" id="feltItems"></div>
+  <div class="layer" id="collectLayer"></div>
   <div class="dbtn" id="dbtn" hidden>D</div>
   <div class="layer" id="fxLayer"></div>
 
@@ -545,23 +573,71 @@ table.led td:first-child,table.led th:first-child{text-align:left}
       </g>
     </defs>
     <g id="armL">
-      <path id="sleeveL" fill="none" stroke="#0d0d0e" stroke-width="25" stroke-linecap="round"/>
-      <g id="cuffL"><rect x="-5" y="-11" width="10" height="22" rx="3" fill="#f4f2ec"/></g>
+      <g id="sleeveL" fill="none" stroke-linecap="round">
+        <path stroke="#0b0b0c" stroke-width="26"/>
+        <path stroke="#000" stroke-opacity=".55" stroke-width="26" stroke-dasharray="1.4 11 2 15"/>
+        <path stroke="#26262b" stroke-width="24" stroke-dasharray="2 9 1 13" stroke-opacity=".9"/>
+        <path stroke="#4a4a52" stroke-opacity=".35" stroke-width="14" stroke-dasharray="0.6 22"/>
+        <path stroke="#fff" stroke-opacity=".13" stroke-width="7"/>
+      </g>
+      <g id="cuffL">
+        <rect x="-15" y="-13.5" width="7" height="27" rx="3" fill="#050506"/>
+        <rect x="-9" y="-12.5" width="10" height="25" rx="3" fill="#f6f4ee" stroke="#d4d0c4" stroke-width=".8"/>
+        <path d="M-6,-12 v24" stroke="#e2ded2" stroke-width="1"/>
+        <rect x="-7" y="-9" width="4.4" height="4.4" rx="1.2" fill="#d9b25a" stroke="#8a6a24" stroke-width=".6"/>
+      </g>
       <g id="handL"><use href="#glove" fill="#f8f8f4" stroke="#bfbfb6" stroke-width="1"/></g>
     </g>
     <g id="armR">
-      <path id="sleeveR" fill="none" stroke="#0d0d0e" stroke-width="25" stroke-linecap="round"/>
-      <g id="cuffR"><rect x="-5" y="-11" width="10" height="22" rx="3" fill="#f4f2ec"/></g>
+      <g id="sleeveR" fill="none" stroke-linecap="round">
+        <path stroke="#0b0b0c" stroke-width="26"/>
+        <path stroke="#000" stroke-opacity=".55" stroke-width="26" stroke-dasharray="1.4 11 2 15"/>
+        <path stroke="#26262b" stroke-width="24" stroke-dasharray="2 9 1 13" stroke-opacity=".9"/>
+        <path stroke="#4a4a52" stroke-opacity=".35" stroke-width="14" stroke-dasharray="0.6 22"/>
+        <path stroke="#fff" stroke-opacity=".13" stroke-width="7"/>
+      </g>
+      <g id="cuffR">
+        <rect x="-15" y="-13.5" width="7" height="27" rx="3" fill="#050506"/>
+        <rect x="-9" y="-12.5" width="10" height="25" rx="3" fill="#f6f4ee" stroke="#d4d0c4" stroke-width=".8"/>
+        <path d="M-6,-12 v24" stroke="#e2ded2" stroke-width="1"/>
+        <rect x="-7" y="-9" width="4.4" height="4.4" rx="1.2" fill="#d9b25a" stroke="#8a6a24" stroke-width=".6"/>
+      </g>
       <g id="handR"><use href="#glove" fill="#f8f8f4" stroke="#bfbfb6" stroke-width="1"/></g>
     </g>
   </svg>
 
-  <div class="layer" id="seatLayer"></div>
+  <!-- 1.0.5: the waiter reaches in from behind a player's seat with a silver tray -->
+  <svg class="layer" id="waiterSvg" viewBox="0 0 1120 500" aria-hidden="true" style="overflow:visible;pointer-events:none">
+    <defs>
+      <radialGradient id="trayG" cx="42%" cy="38%" r="70%"><stop offset="0" stop-color="#ffffff"/><stop offset=".35" stop-color="#dfe3e8"/><stop offset=".75" stop-color="#a9afb7"/><stop offset="1" stop-color="#7d838b"/></radialGradient>
+      <linearGradient id="trayRim" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f4f6f8"/><stop offset=".5" stop-color="#8e949c"/><stop offset="1" stop-color="#d4d8dd"/></linearGradient>
+    </defs>
+    <g id="waiter" style="display:none">
+      <g id="wSleeve" fill="none" stroke-linecap="round">
+        <path stroke="#e9e6dd" stroke-width="27"/>
+        <path stroke="#000" stroke-opacity=".08" stroke-width="27" stroke-dasharray="1.6 10 2.4 14"/>
+        <path stroke="#fff" stroke-opacity=".55" stroke-width="8"/>
+      </g>
+      <g id="wTray">
+        <ellipse cx="0" cy="3" rx="31" ry="30" fill="#0006"/>
+        <circle r="29" fill="url(#trayRim)"/>
+        <circle r="25.5" fill="url(#trayG)"/>
+        <circle r="25.5" fill="none" stroke="#6f757d" stroke-opacity=".5" stroke-width=".8"/>
+        <circle r="20" fill="none" stroke="#ffffff" stroke-opacity=".35" stroke-width=".7"/>
+        <path d="M-17,-14 A22,22 0 0 1 4,-22" fill="none" stroke="#fff" stroke-opacity=".8" stroke-width="2.4" stroke-linecap="round"/>
+      </g>
+      <g id="wCuff"><rect x="-9" y="-13.5" width="11" height="27" rx="3.5" fill="#f7f5ef" stroke="#cfcac0" stroke-width=".8"/><rect x="-6.5" y="-10" width="4.6" height="4.6" rx="2.3" fill="#c9ccd0" stroke="#6d7178" stroke-width=".6"/></g>
+      <g id="wHand"></g>
+    </g>
+  </svg>
+  <div class="layer" id="waiterItems"></div>
   <div class="layer" id="txtLayer"></div>
  </div>
+  <!-- name plates sit outside the scaled table: they keep their place at the screen edge while the table grows under them -->
+  <div class="layer" id="seatLayer"></div>
 
   <div class="layer" id="hud">
-    <div class="hudTop" style="left:10px"><span id="title">Покер</span><span class="verTag">1.0.4</span><span class="pill" id="tableInfo">Холдем</span></div>
+    <div class="hudTop" style="left:10px"><span id="title">Royal Flush</span><span class="verTag">1.0.5</span><span class="pill" id="tableInfo">Холдем</span></div>
     <div class="hudTop" style="right:10px"><span class="pill" id="onlineInfo" hidden></span>
       <button class="pill barBtn" id="bBar">Бар</button>
       <button class="pill invite" id="bInvite">+ Пригласить</button>
@@ -585,6 +661,7 @@ table.led td:first-child,table.led th:first-child{text-align:left}
       <div class="rows" id="logRows"></div>
     </div>
     <div id="toast" style="opacity:0"></div>
+    <div id="treatAsk" hidden></div>
   </div>
 
   <div class="ov" id="lobby"><div class="panel" id="lobbyPanel"></div></div>
@@ -712,10 +789,17 @@ function rebuy(s, uid, now) {
 }
 function setSitOut(s, uid, val, now) {
   const i = seatOf(s, uid); if (i < 0) return 'Вы не за столом';
-  s.seats[i].sitOut = val; if (!val) s.seats[i].missed = 0;
+  s.seats[i].sitOut = val; if (!val) { s.seats[i].missed = 0; s.seats[i].away = false; s.seats[i].returnNext = false; }
   pushLog(s, now, uid, val ? 'отошёл' : 'вернулся за стол');
   if (!val) maybeSchedule(s, now);
   return null;
+}
+// the phone went dark: the player is marked away (his turns are played at once: check, or fold to any bet)
+function setAway(s, uid, val, now, returnNext) {
+  const i = seatOf(s, uid); if (i < 0) return 'skip';
+  const p = s.seats[i];
+  if (val) { if (!p.away) pushLog(s, now, uid, 'отошёл от телефона'); p.away = true; p.sitOut = true; p.returnNext = !!returnNext; return null; }
+  return setSitOut(s, uid, false, now);
 }
 function leave(s, uid, now) {
   const i = seatOf(s, uid); if (i < 0) return null;
@@ -734,32 +818,87 @@ function leave(s, uid, now) {
   return null;
 }
 const DRINKS = [
-  { id: 'beer', name: 'Пиво «Бочка №7»', bb: 1 },
-  { id: 'vodka', name: 'Водка «Полярная звезда»', bb: 3 },
-  { id: 'whisky', name: 'Виски «Хайленд 18 лет»', bb: 5 },
-  { id: 'tequila', name: 'Текила «Сеньора» в керамике', bb: 12 },
-  { id: 'cognac', name: 'Коньяк «Шато Руж XO»', bb: 20 },
-  { id: 'champagne', name: 'Шампанское «Гранд Кюве Престиж»', bb: 40 },
+  { id: 'beer', name: 'Пиво «Бочка №7»', bb: 1, sips: 6 },
+  { id: 'vodka', name: 'Водка «Полярная звезда»', bb: 3, sips: 1 },
+  { id: 'whisky', name: 'Виски «Хайленд 18 лет»', bb: 5, sips: 4 },
+  { id: 'tequila', name: 'Текила «Сеньора» в керамике', bb: 12, sips: 2 },
+  { id: 'cognac', name: 'Коньяк «Шато Руж XO»', bb: 20, sips: 4 },
+  { id: 'champagne', name: 'Шампанское «Гранд Кюве Престиж»', bb: 40, sips: 3 },
 ];
 function drinkPrice(s, id, all) {
   const d = DRINKS.find(x => x.id === id); if (!d) return 0;
   const n = all ? s.seats.filter(Boolean).length : 1;
   return d.bb * s.cfg.bb * n;
 }
+// a glass on the table: { id, sips, left, n } (n = order number, tg = the treat it came from)
+function glassOf(s, uid) {
+  const g = s.drinks && s.drinks[uid]; if (!g) return null;
+  if (typeof g === 'string') { const d = DRINKS.find(x => x.id === g); return d ? { id: g, sips: d.sips, left: d.sips, n: 0 } : null; }
+  return g;
+}
+function pourFor(s, uid, id, tg) {
+  const d = DRINKS.find(x => x.id === id); s.drinks = s.drinks || {}; s.drinkN = (s.drinkN || 0) + 1;
+  s.drinks[uid] = { id, sips: d.sips, left: d.sips, n: s.drinkN, tg: tg || 0 };
+  return s.drinks[uid];
+}
 function drink(s, uid, id, all, now) {
   const i = seatOf(s, uid); if (i < 0) return 'Сначала сядьте за стол';
   const d = DRINKS.find(x => x.id === id); if (!d) return 'Нет такого напитка';
+  if (all && s.treat) return 'Стол уже угощают — подождите минутку';
   const price = drinkPrice(s, id, all);
   const p = s.seats[i];
   if (p.stack < price) return 'Не хватает фишек: нужно ' + price;
   p.stack -= price;
   const L = s.ledger[uid]; L.bar = (L.bar || 0) + price;
-  s.drinks = s.drinks || {};
-  if (all) { s.seats.forEach(q => { if (q) s.drinks[q.uid] = id; }); s.tableBottle = { id, by: uid }; }
-  else s.drinks[uid] = id;
-  pushEv(s, { t: 'drink', seat: i, id, all: !!all, price });
-  pushLog(s, now, uid, all ? 'угощает стол: ' + d.name + ' (' + price + ')' : 'заказал ' + d.name + ' (' + price + ')');
+  if (all) {
+    // everyone else gets 10 s to accept or decline; silence means yes; the host refunds the declined glasses
+    const ans = {}; s.seats.forEach(q => { if (q && q.uid !== uid) ans[q.uid] = null; });
+    s.treatN = (s.treatN || 0) + 1;
+    s.treat = { by: uid, id, unit: d.bb * s.cfg.bb, until: now + 10000, ans, tg: s.treatN };
+    pushEv(s, { t: 'treat', seat: i, id, price });
+    pushLog(s, now, uid, 'угощает стол: ' + d.name);
+    return null;
+  }
+  const old = glassOf(s, uid), g = pourFor(s, uid, id);
+  pushEv(s, { t: 'drink', seat: i, id, price, n: g.n, replace: !!old });
+  pushLog(s, now, uid, 'заказал ' + d.name + ' (' + price + ')');
   return null;
+}
+function treatAnswer(s, uid, yes, now) {
+  const t = s.treat; if (!t || !(uid in t.ans) || t.ans[uid] !== null) return 'skip';
+  t.ans[uid] = !!yes;
+  if (!yes) pushLog(s, now, uid, 'отказался от угощения');
+  if (Object.values(t.ans).every(v => v !== null)) resolveTreat(s, now);
+  return null;
+}
+function resolveTreat(s, now) {
+  const t = s.treat; if (!t) return 'skip';
+  s.treat = null;
+  const bi = seatOf(s, t.by), to = [];
+  let declined = 0;
+  for (const [u, v] of Object.entries(t.ans)) { if (v === false || seatOf(s, u) < 0) declined++; }
+  if (bi >= 0) { pourFor(s, t.by, t.id, t.tg); to.push(bi); }
+  else declined++;
+  for (const [u, v] of Object.entries(t.ans)) { const k = seatOf(s, u); if (v !== false && k >= 0) { pourFor(s, u, t.id, t.tg); to.push(k); } }
+  const refund = declined * t.unit, L = s.ledger[t.by];
+  if (refund && L) { L.bar -= refund; if (bi >= 0) s.seats[bi].stack += refund; else L.out += refund; }
+  if (to.length) s.tableBottle = { id: t.id, by: t.by, tg: t.tg };
+  pushEv(s, { t: 'treatDone', seat: bi, id: t.id, to, refund: bi >= 0 ? refund : 0, ns: to.map(k => s.drinks[s.seats[k].uid].n) });
+  return null;
+}
+function sip(s, uid, now) {
+  const i = seatOf(s, uid), g = glassOf(s, uid); if (i < 0 || !g || g.left <= 0) return 'skip';
+  g.left--; s.drinks[uid] = g;
+  pushEv(s, { t: 'sip', seat: i, left: g.left, n: g.n });
+  return null;
+}
+// between hands the waiter clears the empty glasses (and the bucket once its glasses are gone)
+function clearEmpty(s, now) {
+  let any = false;
+  s.seats.forEach((q, i) => { if (!q) return; const g = glassOf(s, q.uid); if (g && g.left <= 0) { delete s.drinks[q.uid]; pushEv(s, { t: 'unglass', seat: i, n: g.n }); any = true; } });
+  for (const u of Object.keys(s.drinks || {})) if (seatOf(s, u) < 0) { delete s.drinks[u]; any = true; }
+  if (s.tableBottle && !Object.values(s.drinks || {}).some(g => g && g.tg === s.tableBottle.tg)) { s.tableBottle = null; pushEv(s, { t: 'unbucket' }); any = true; }
+  return any ? null : 'skip';
 }
 function setLook(s, uid, look) {
   s.looks = s.looks || {};
@@ -1015,7 +1154,7 @@ function timeout(s, now) {
   return null;
 }
 
-const API = { TURN_MS, setTurnMs, turnMs, rig, bestFive, DRINKS, drinkPrice, drink, setLook, newTable, sit, leave, rebuy, setCfg, setSitOut, startHand, act, timeout, legal, evalHand, handName, equity, holeCards, board, totalPot, deobf, obf, HAND_NAMES, handCategory, cardStr, seatOf };
+const API = { glassOf, treatAnswer, resolveTreat, sip, clearEmpty, setAway, TURN_MS, setTurnMs, turnMs, rig, bestFive, DRINKS, drinkPrice, drink, setLook, newTable, sit, leave, rebuy, setCfg, setSitOut, startHand, act, timeout, legal, evalHand, handName, equity, holeCards, board, totalPot, deobf, obf, HAND_NAMES, handCategory, cardStr, seatOf };
 
 if (typeof module !== 'undefined') module.exports = API;
 return API;
@@ -1035,12 +1174,12 @@ const clone = o => JSON.parse(JSON.stringify(o));
 // Hand-placed seat zones (table coordinates). Each player owns the strip of felt at their edge:
 // cards right in front of the plate, chip stack beside them, bet a little further in, never on the board.
 const ZONES = [
-  { plate: [372, 468], cards: [372, 398], stack: [508, 416], bet: [470, 336], btn: [296, 414], drink: [252, 440], ha: [296, 406], hb: [504, 470], bodyA: [372, 568] },   // me: the left forearm comes from under the plate, leaving the corner of the rail free (bottom-left)
-  { plate: [104, 262], cards: [226, 262], stack: [238, 370], bet: [330, 290], btn: [300, 370], drink: [270, 342], ha: [170, 206], hb: [196, 328] },   // left: both forearms from under the plate, the upper hand clear of the cards
-  { plate: [356, 40], cards: [356, 108], stack: [262, 128], bet: [262, 196], btn: [0, 0], drink: [167, 120], ha: [392, 92], hb: [214, 140], body: [356, -60], tilt: 0, cup: -1 },    // top-left: on the rail beside the dealer
-  { plate: [764, 40], cards: [764, 108], stack: [858, 128], bet: [858, 196], btn: [0, 0], drink: [952, 119], ha: [728, 92], hb: [906, 140], body: [764, -60], tilt: 0, cup: 1 },    // top-right
-  { plate: [1016, 262], cards: [894, 262], stack: [882, 370], bet: [790, 290], btn: [820, 370], drink: [850, 342], ha: [950, 206], hb: [924, 328] },  // right: mirror of the left seat
-  { plate: [722, 468], cards: [722, 398], stack: [610, 416], bet: [632, 336], btn: [812, 400], drink: [868, 440], ha: [794, 406], hb: [618, 470], bodyA: [722, 568] },   // bottom-right: the right forearm comes from the body, clear of the buttons
+  { plate: [372, 468], cards: [372, 382], stack: [508, 416], bet: [470, 336], btn: [296, 414], drink: [252, 440], ha: [296, 406], hb: [504, 470], bodyA: [372, 568] },   // me: the left forearm comes from under the plate, leaving the corner of the rail free (bottom-left)
+  { plate: [104, 262], cards: [250, 262], stack: [238, 370], bet: [330, 290], btn: [300, 370], drink: [270, 342], ha: [170, 206], hb: [196, 328] },   // left: both forearms from under the plate, the upper hand clear of the cards
+  { plate: [356, 40], cards: [356, 128], stack: [262, 128], bet: [262, 196], btn: [0, 0], drink: [167, 120], ha: [392, 92], hb: [214, 140], body: [356, -60], tilt: 0, cup: -1 },    // top-left: on the rail beside the dealer
+  { plate: [764, 40], cards: [764, 128], stack: [858, 128], bet: [858, 196], btn: [0, 0], drink: [952, 119], ha: [728, 92], hb: [906, 140], body: [764, -60], tilt: 0, cup: 1 },    // top-right
+  { plate: [1016, 262], cards: [870, 262], stack: [882, 370], bet: [790, 290], btn: [820, 370], drink: [850, 342], ha: [950, 206], hb: [924, 328] },  // right: mirror of the left seat
+  { plate: [722, 468], cards: [722, 382], stack: [610, 416], bet: [632, 336], btn: [812, 400], drink: [868, 440], ha: [794, 406], hb: [618, 470], bodyA: [722, 568] },   // bottom-right: the right forearm comes from the body, clear of the buttons
 ];
 // centre line of the wooden rail: rounded rectangle (rail 96,18 928x470 r 290/235, felt inset 30) -> middle of the band
 const RAIL_PATH = (() => {
@@ -1068,8 +1207,14 @@ const SLOTS = ZONES.map((z, i) => {
 const CUPS = [[563, 473], [240, 440], [197, 94], [655, 33], [984, 161], [834, 458]];
 SLOTS.forEach((sl, i) => { sl.cup = CUPS[i]; sl.drink = CUPS[i]; });
 const BOARD_Y = 243, BOARD_X = k => CX + (k - 2) * 62;
-const POT = [CX, 140], DECK = [672, 86], MUCK = [470, 88], BUCKET = [452, 58];
-const SHOULDER = { L: [516, 0], R: [604, 0] }, REST = { L: [534, 56], R: [588, 58] };
+const POT = [CX, 140], DECK = [672, 86], MUCK = [470, 88], BUCKET = [312, 246], PILE = [560, 100];
+// folded cards lie face down in a small untidy pile in front of the dealer
+// the ice bucket stands on the felt by the player who treated the table: between his cards and the centre, clear of cards, chips and the pot
+const BUCKET_AT = [[388, 306], [373, 250], [312, 246], [808, 246], [747, 250], [732, 306]];
+function bucketSpot(by) { const i = S ? S.seats.findIndex(p => p && p.uid === by) : -1; return i < 0 ? BUCKET : BUCKET_AT[vis(i)]; }
+const muckPos = k => [MUCK[0] + ((k * 37) % 9) - 4, MUCK[1] + ((k * 23) % 7) - 3, ((k * 53) % 34) - 17];
+let collectedNo = -1, collecting = false;
+const SHOULDER = { L: [516, 0], R: [604, 0] }, REST = { L: [520, 74], R: [600, 74] };
 
 const DENOMS = [
   [100000, '#e05ca8', '#8e2f68'], [25000, '#2f6fd6', '#1b4185'], [5000, '#f08a24', '#a1560f'], [1000, '#e7c64a', '#94791d'],
@@ -1081,9 +1226,10 @@ let S = null;              // latest authoritative table state
 let disp = null;           // what is currently drawn
 let dropSeat = -1, winAt = 0;
 // each player's two cards face that player: rotation so the card's bottom edge points at the plate
+const HOLE_OFF = 26;   // every player's hole cards are the same size (50×72)
 function holeRot(seat) { const sl = slot(seat), vx = sl.plate[0] - sl.cards[0], vy = sl.plate[1] - sl.cards[1]; return Math.atan2(-vx, vy) * 180 / Math.PI + (sl.tilt || 0); }
 function holePos(seat, k, big) {
-  const sl = slot(seat), r = holeRot(seat), a = r * Math.PI / 180, off = (big ? 28 : 21) * (k ? 1 : -1);
+  const sl = slot(seat), r = holeRot(seat), a = r * Math.PI / 180, off = HOLE_OFF * (k ? 1 : -1);
   return { cx: sl.cards[0] + Math.cos(a) * off, cy: sl.cards[1] + Math.sin(a) * off, rot: r + (k ? 4 : -4) };
 }
 function spriteC(el, cx, cy, cw, ch, rot = 0) { el.style.left = (-cw / 2) + 'px'; el.style.top = (-ch / 2) + 'px'; const w = sprite(el, cx, cy); setSprite(w, cx, cy, rot); return w; }
@@ -1099,11 +1245,12 @@ let logOpen = true;
 const stage = $('#stage');
 const L = { felt: $('#feltItems'), fx: $('#fxLayer'), seats: $('#seatLayer'), hud: $('#hud'), txt: $('#txtLayer'), cups: $('#cupLayer') };
 const TK = 1, TOX = 0, TOY = 0;          // table area is scaled into the left part of the stage
-const toStage = (x, y) => [TOX + x * TK, TOY + y * TK];
+const TSX = 1.04, TSY = 1.07, TOC = [560, 253];   // must match the #tableWrap transform
+const toStage = (x, y) => [TOX + (TOC[0] + (x - TOC[0]) * TSX) * TK, TOY + (TOC[1] + (y - TOC[1]) * TSY) * TK];
 
 /* ---------------- scaling ---------------- */
 let force = false;
-const VERSION = '1.0.4', CODENAME = 'Royal Flush';
+const VERSION = '1.0.5', CODENAME = 'Royal Flush';
 const ZOOM_OK = !!(window.CSS && CSS.supports && CSS.supports('zoom', '2'));
 function fit() {
   const vw = innerWidth, vh = innerHeight;
@@ -1197,7 +1344,7 @@ function cardEl(c, size = '', down = false) {
   return el;
 }
 
-function cardSize(size) { return size === 'sm' ? [38, 54] : size === 'lg' ? [64, 92] : [56, 80]; }   // must match the .card CSS sizes
+function cardSize(size) { return size === 'sm' || size === 'lg' ? [50, 72] : [56, 80]; }   // must match the .card CSS sizes
 function place(el, x, y) { el.style.left = x + 'px'; el.style.top = y + 'px'; return el; }
 
 function breakdown(amount) {
@@ -1231,13 +1378,20 @@ const arms = { L: { x: REST.L[0], y: REST.L[1] }, R: { x: REST.R[0], y: REST.R[1
 const armSvg = $('#arms');
 function drawArms() {
   for (const side of ['L', 'R']) {
-    const [sx, sy] = SHOULDER[side]; const { x, y } = arms[side];
-    const dx = x - sx, dy = y - sy, len = Math.hypot(dx, dy), ang = Math.atan2(dy, dx) * 180 / Math.PI;
-    // elbow bends outward a little
-    const out = side === 'L' ? -1 : 1;
-    const mx = sx + dx * .5 + (-dy / len) * 14 * out * (side === 'L' ? -1 : 1), my = sy + dy * .5 + (dx / len) * 14 * out * (side === 'L' ? -1 : 1);
-    const wx = x - dx / len * 18, wy = y - dy / len * 18;
-    $('#sleeve' + side, armSvg).setAttribute('d', `M${sx},${sy} Q${mx},${my} ${wx},${wy}`);
+    const [sx, sy] = SHOULDER[side]; let { x, y } = arms[side];
+    // the two hands never cross or pile up on each other: keep a palm's width between them
+    const gap = arms.R.x - arms.L.x, need = 46;
+    if (gap < need && Math.abs(arms.R.y - arms.L.y) < 40) x += (side === 'L' ? -1 : 1) * (need - gap) / 2;
+    const dx = x - sx, dy = y - sy, len = Math.hypot(dx, dy) || 1;
+    // the elbow bends outward (left arm to the left, right arm to the right), more on a long reach
+    const out = side === 'L' ? 1 : -1, bend = Math.max(8, Math.min(30, len * .14));
+    const mx = sx + dx * .5 + (-dy / len) * bend * out, my = sy + dy * .5 + (dx / len) * bend * out;
+    // the cuff and the glove follow the end of the curved sleeve, so the hand never looks twisted
+    let tx = x - mx, ty = y - my; const tl = Math.hypot(tx, ty) || 1; tx /= tl; ty /= tl;
+    const ang = Math.atan2(ty, tx) * 180 / Math.PI, wx = x, wy = y;
+    // built like the players' hands: sleeve, cuff and glove all meet at the wrist point, the glove's wrist starts right at the cuff
+    const ex = x - tx * 8, ey = y - ty * 8, d = `M${sx},${sy} Q${mx},${my} ${ex},${ey}`;
+    $('#sleeve' + side, armSvg).querySelectorAll('path').forEach(p => p.setAttribute('d', d));
     $('#cuff' + side, armSvg).setAttribute('transform', `translate(${wx},${wy}) rotate(${ang})`);
     $('#hand' + side, armSvg).setAttribute('transform', `translate(${x},${y}) rotate(${ang})${side === 'L' ? ' scale(1,-1)' : ''}`);
   }
@@ -1261,7 +1415,7 @@ async function moveHand(side, x, y, dur = 320, e = ease.io, carry) {
 function moveHand0(side, x, y, dur = 320, e = ease.io, carry) {
   // a newer move on the same hand cancels the older one, so two tweens never fight
   const a = arms[side], x0 = a.x, y0 = a.y, tok = ++handTok[side];
-  { const sh = SHOULDER[side], vx = x - sh[0], vy = y - sh[1], len = Math.hypot(vx, vy) || 1, k = Math.min(1, 190 / len); x = sh[0] + vx * k; y = sh[1] + vy * k; }
+  { const sh = SHOULDER[side], vx = x - sh[0], vy = y - sh[1], len = Math.hypot(vx, vy) || 1, k = Math.max(70, Math.min(190, len)) / len; x = sh[0] + vx * k; y = Math.max(40, sh[1] + vy * k); }   // the arm neither over-stretches nor folds up into the body
   handBusy[side]++;
   if (typeof yieldFor === 'function' && Math.hypot(x - REST[side][0], y - REST[side][1]) > 30) { const tg = [x, y]; yieldFor(() => [[SHOULDER[side], [arms[side].x, arms[side].y]], [SHOULDER[side], tg], [[arms[side].x, arms[side].y], tg]], 'D'); }
   return tween(dur, t => {
@@ -1271,7 +1425,7 @@ function moveHand0(side, x, y, dur = 320, e = ease.io, carry) {
 }
 // safety net: idle hands always drift back to rest
 setInterval(() => {
-  if (animating) return;
+  if (animating || collecting) return;
   for (const s of ['L', 'R']) if (!handBusy[s] && Math.hypot(arms[s].x - REST[s][0], arms[s].y - REST[s][1]) > 2) moveHand(s, ...REST[s], 380);
 }, 700);
 function restHands(dur = 380) { return Promise.all([moveHand('L', ...REST.L, dur), moveHand('R', ...REST.R, dur)]); }
@@ -1695,14 +1849,79 @@ function oneChip(v) {
   const ch = document.createElement('i'); ch.className = 'chip lbl'; ch.style.setProperty('--c', d[1]); ch.style.setProperty('--e', d[2]); ch.dataset.v = denomLabel(d[0]); ch.dataset.val = d[0];
   el.appendChild(ch); return el;
 }
+// a player looks at his hole cards: the hand covers them and lifts the corners; everyone sees the gesture, nobody the faces
+async function peekCards(seat) {
+  const p = disp && disp.seats[seat]; if (!p || !p.cards || p.folded || !PH[seat] || collectedNo === disp.no) return;
+  const h = PH[seat].A; if (h.busy) return;
+  const sl = slot(seat);
+  setPose(seat, 'A', 'cup');
+  await movePH(seat, 'A', ...reachFor(seat, 'A', sl.cards, 26), 260);
+  const tok = h.tok;
+  const cs = cardsAt(seat);
+  cs.forEach((c, k) => { c.animate([{ rotate: '1 -.4 0 0deg' }, { rotate: `1 ${k ? .5 : -.5} 0 46deg`, offset: .3 }, { rotate: `1 ${k ? .5 : -.5} 0 46deg`, offset: .7 }, { rotate: '1 -.4 0 0deg' }], { duration: 1100 * ANIM_K, easing: 'ease-in-out', delay: k * 60 }); });
+  await liftPH(seat, 'A', .6, 260); await sleep(560); await liftPH(seat, 'A', 0, 260);
+  if (PH[seat] && PH[seat].A.tok === tok) await restPH(seat, 'A', 280);     // a fold/bet that took the hand over keeps it
+}
+/* after the hand, in the break: the dealer sweeps in every card on the table (board, hole cards, the muck),
+   squares them into one face-down stack in front of him and puts it back with the deck */
+const CL = () => $('#collectLayer');
+let collectTok = 0;
+function collectStop() { collectTok++; collecting = false; CL().innerHTML = ''; }
+function cSprite(c, size, x, y, rot, faceUp, sc = 1) {
+  const el = cardEl(faceUp ? c : -1, size, !faceUp); const [cw, ch] = cardSize(size);
+  el.style.left = (-cw / 2) + 'px'; el.style.top = (-ch / 2) + 'px';
+  const w = document.createElement('div'); w.className = 'fx'; w.appendChild(el); CL().appendChild(w);
+  const o = { w, el, x, y, rot, sc, at(x2, y2, r2 = o.rot, s2 = o.sc) { o.x = x2; o.y = y2; o.rot = r2; o.sc = s2; w.style.transform = `translate(${x2}px,${y2}px) rotate(${r2}deg) scale(${s2})`; } };
+  o.at(x, y, rot, sc); return o;
+}
+async function collectCards() {
+  const d = disp; if (!d || collecting || collectedNo === d.no) return;
+  const tok = ++collectTok, live = () => collectTok === tok;
+  const L0 = [], R0 = [], WC = winCards(d);
+  d.board.forEach((c, k) => R0.push(cSprite(c, '', BOARD_X(k), BOARD_Y, 0, true)));
+  d.seats.forEach((p, i) => {
+    if (!p || !p.cards) return;
+    const isMe = p.uid === uid && vis(i) === 0, up = (isMe && !p.peekHide) || p.show, size = isMe ? 'lg' : 'sm';
+    p.cards.forEach((c, k) => { const hp = holePos(i, k, isMe); (slot(i).side === 'L' ? L0 : R0).push(cSprite(c, size, hp.cx, hp.cy, hp.rot, up)); });
+  });
+  const M0 = []; for (let k = 0; k < (d.muck || 0); k++) { const [mx, my, mr] = muckPos(k); M0.push(cSprite(-1, 'sm', mx, my, mr, false, .8)); }
+  if (!L0.length && !R0.length && !M0.length) { collectedNo = d.no; return; }
+  collecting = true; collectedNo = d.no; render();
+  const all = [...L0, ...R0, ...M0];
+  try {
+    // 1) both hands reach out, the cards on each half of the table slide together under the glove, faces turn down
+    const meetL = [452, 176], meetR = [668, 176];
+    const gather = (arr, m) => Promise.all(arr.map((o, k) => { const f = [o.x, o.y], r0 = o.rot; o.el.classList.add('down'); return tween(380, t => { if (!live()) return false; o.at(f[0] + (m[0] - f[0]) * t, f[1] + (m[1] - f[1]) * t, r0 + ((k % 5) * 3 - 6 - r0) * t, o.sc + (.8 - o.sc) * t); }); }));
+    await Promise.all([moveHand('L', ...meetL, 260), moveHand('R', ...meetR, 260)]); if (!live()) return;
+    sfx.card();
+    await Promise.all([gather(L0, meetL), gather(R0, meetR)]); if (!live()) return;
+    // 2) the two heaps come to the front of the dealer; the left hand rakes in the muck on the way
+    const carry = (arr, from, to) => (x, y, t) => { if (!live()) return; arr.forEach((o, k) => o.at(from[0] + (to[0] - from[0]) * t + (k % 3) - 1, from[1] + (to[1] - from[1]) * t, o.rot)); };
+    await Promise.all([moveHand('L', PILE[0] - 26, PILE[1] + 6, 300, ease.io, carry(L0, meetL, PILE)), moveHand('R', PILE[0] + 26, PILE[1] + 6, 300, ease.io, carry(R0, meetR, PILE))]); if (!live()) return;
+    if (M0.length) { await moveHand('L', MUCK[0] + 8, MUCK[1] + 10, 160); sfx.card(); await moveHand('L', PILE[0] - 26, PILE[1] + 6, 220, ease.io, (x, y, t) => { if (live()) M0.forEach(o => o.at(o.x + (PILE[0] - o.x) * t, o.y + (PILE[1] - o.y) * t, o.rot * (1 - t))); }); if (!live()) return; }
+    // 3) squared up into one stack and put back with the deck
+    await tween(140, t => { if (!live()) return false; all.forEach((o, k) => o.at(PILE[0] + (o.x - PILE[0]) * (1 - t), PILE[1] - k * .25 * t + (o.y - PILE[1]) * (1 - t), o.rot * (1 - t), .8)); });
+    if (!live()) return;
+    moveHand('L', ...REST.L, 300);
+    const p0 = all.map(o => [o.x, o.y]);
+    await moveHand('R', DECK[0] - 6, DECK[1] + 4, 300, ease.io, (x, y, t) => { if (live()) all.forEach((o, k) => o.at(p0[k][0] + (DECK[0] - p0[k][0]) * t, p0[k][1] + (DECK[1] - p0[k][1]) * t, o.rot, .8 + .2 * t)); });
+    if (!live()) return;
+    sfx.card();
+    await restHands(280);
+  } finally { if (live()) { CL().innerHTML = ''; collecting = false; } }
+}
+setInterval(() => {
+  const d = disp;
+  if (!d || animating || queue.length || collecting || document.hidden || collectedNo === d.no || (typeof tut !== 'undefined' && tut)) return;   // lessons keep the cards on the table to talk about them
+  if (d.phase === 'showdown' && d.result && Date.now() - calmAt > 2200) collectCards();
+}, 250);
 async function trick(seat) {
   const p = disp && disp.seats[seat]; if (!p || !PH[seat] || !p.stack) return;
   const sl = slot(seat), B = PH[seat].B;
   if (B.busy || PH[seat].A.busy) return;
   if (document.querySelector('.ov:not([hidden])')) return;     // no fidgeting while a menu is open
   const cand = ['riffle', 'riffle', 'roll', 'spin'];
-  if (p.cards && p.uid !== uid) cand.push('peek');
-  if (S && S.drinks && S.drinks[p.uid]) cand.push('sip');
+  if (p.cards && p.uid !== uid && collectedNo !== disp.no) cand.push('peek');
   const kind = cand[Math.floor(Math.random() * cand.length)];
   const top = Math.max(1, ...breakdown(p.stack).map(b => b.v).slice(-1));
   try {
@@ -1748,29 +1967,27 @@ async function trick(seat) {
       returnTop(bt); sfx.chips(1);
       await restPH(seat, 'B', 260);
     } else if (kind === 'peek') {
-      const tgt = reachFor(seat, 'A', sl.cards, 26);
-      setPose(seat, 'A', 'pinch');
-      await movePH(seat, 'A', ...tgt, 260);
-      const cs = cardsAt(seat);
-      cs.forEach((c, k) => { c.animate([{ rotate: '1 -.4 0 0deg' }, { rotate: `1 ${k ? .5 : -.5} 0 46deg`, offset: .3 }, { rotate: `1 ${k ? .5 : -.5} 0 46deg`, offset: .7 }, { rotate: '1 -.4 0 0deg' }], { duration: 1100, easing: 'ease-in-out', delay: k * 60 }); });
-      await liftPH(seat, 'A', .6, 260); await sleep(560); await liftPH(seat, 'A', 0, 260);
-      await restPH(seat, 'A', 280);
-    } else if (kind === 'sip') {
-      const pos = drinkPos(seat); const gl = L.cups.querySelector(`.glass[data-seat="${seat}"]`); if (!gl) return;
-      const G = PH[seat].geo, H = Math.hypot(G.A.rest[0] - pos[0], G.A.rest[1] - pos[1]) <= Math.hypot(G.B.rest[0] - pos[0], G.B.rest[1] - pos[1]) ? 'A' : 'B';
-      if (!handFree(seat, H)) return;
-      const tgt = reachFor(seat, H, pos, 22);
-      setPose(seat, H, 'cup');
-      await movePH(seat, H, ...tgt, 280);
-      const mouth = [sl.plate[0] + (pos[0] - sl.plate[0]) * .55, sl.plate[1] + (pos[1] - sl.plate[1]) * .55];
-      gl.style.transition = 'none';
-      await movePH(seat, H, ...reachFor(seat, H, mouth, 22), 420, ease.io, (x, y, t) => { gl.style.transform = `translate(${(mouth[0] - pos[0]) * t}px,${(mouth[1] - pos[1]) * t}px) scale(${1 + t * .25}) rotate(${t * -18}deg)`; });
-      await liftPH(seat, H, 1, 200); await sleep(500); await liftPH(seat, H, 0, 160);
-      await movePH(seat, H, ...tgt, 380, ease.io, (x, y, t) => { const k = 1 - t; gl.style.transform = `translate(${(mouth[0] - pos[0]) * k}px,${(mouth[1] - pos[1]) * k}px) scale(${1 + k * .25}) rotate(${k * -18}deg)`; });
-      gl.style.transform = '';
-      await restPH(seat, H, 280);
+      await peekCards(seat);
     }
   } catch (err) { console.warn(err); }
+}
+// one sip: the hand nearer to the cup lifts the glass to the mouth; onDrink runs while the glass is at the mouth
+async function sipAnim(seat, onDrink) {
+  const sl = slot(seat), pos = drinkPos(seat), gl = L.cups.querySelector(`.glass[data-seat="${seat}"]`);
+  if (!gl || !PH[seat]) { if (onDrink) onDrink(); return; }
+  const G = PH[seat].geo, H = Math.hypot(G.A.rest[0] - pos[0], G.A.rest[1] - pos[1]) <= Math.hypot(G.B.rest[0] - pos[0], G.B.rest[1] - pos[1]) ? 'A' : 'B';
+  for (let k = 0; k < 20 && !handFree(seat, H); k++) await sleep(200);
+  if (!handFree(seat, H)) { if (onDrink) onDrink(); return; }
+  const tgt = reachFor(seat, H, pos, 22);
+  setPose(seat, H, 'cup');
+  await movePH(seat, H, ...tgt, 280);
+  const mouth = [sl.plate[0] + (pos[0] - sl.plate[0]) * .55, sl.plate[1] + (pos[1] - sl.plate[1]) * .55];
+  gl.style.transition = 'none';
+  await movePH(seat, H, ...reachFor(seat, H, mouth, 22), 420, ease.io, (x, y, t) => { gl.style.transform = `translate(${(mouth[0] - pos[0]) * t}px,${(mouth[1] - pos[1]) * t}px) scale(${1 + t * .25}) rotate(${t * -18}deg)`; });
+  await liftPH(seat, H, 1, 200); if (onDrink) onDrink(gl); await sleep(500); await liftPH(seat, H, 0, 160);
+  await movePH(seat, H, ...tgt, 380, ease.io, (x, y, t) => { const k = 1 - t; gl.style.transform = `translate(${(mouth[0] - pos[0]) * k}px,${(mouth[1] - pos[1]) * k}px) scale(${1 + k * .25}) rotate(${k * -18}deg)`; });
+  gl.style.transform = '';
+  await restPH(seat, H, 280);
 }
 function cardsAt(seat) {
   const sl = slot(seat);
@@ -1794,42 +2011,269 @@ function drinkPos(seat) { return slot(seat).drink; }
 // centre of each glass's base in its own drawing: this point stands on the centre of the cupholder
 const GLASS_K = 1.2;        // glasses on the table: 1.5x the old .8
 const GLASS_BASE = { mug: [16, 36], shot: [18, 36], rocks: [18, 36], snifter: [18, 37.5], flute: [18, 37.5] };
-function glassSvg(id, size = 1) {
+// 1.0.5: detailed glasses; level 0..1 is how much is left (each sip lowers it)
+let glassSeq = 0;
+function glassSvg(id, size = 1, level = 1) {
   const a = DRINK_ART[id]; if (!a) return '';
-  const L = a.liquid;
-  const g = {
-    mug: `<rect x="6" y="10" width="20" height="26" rx="3" fill="#ffffff30" stroke="#fff9" stroke-width="1.4"/><rect x="7.5" y="16" width="17" height="18.5" rx="2" fill="${L}"/><rect x="7.5" y="11.5" width="17" height="5.5" rx="2" fill="#fffbea"/><path d="M26,15 h4 a4,4 0 0 1 4,4 v6 a4,4 0 0 1 -4,4 h-4" fill="none" stroke="#fff9" stroke-width="2"/>`,
-    shot: `<path d="M10,16 L26,16 L24,36 L12,36 Z" fill="#ffffff30" stroke="#fff9" stroke-width="1.4"/><path d="M11.2,21 L24.8,21 L23.4,34.5 L12.6,34.5 Z" fill="${L}"/>`,
-    rocks: `<rect x="7" y="16" width="22" height="20" rx="2.5" fill="#ffffff2a" stroke="#fff9" stroke-width="1.4"/><rect x="8.5" y="23" width="19" height="11.5" rx="1.5" fill="${L}"/><rect x="11" y="19" width="7" height="7" rx="1.5" fill="#e8f6ff" opacity=".85" transform="rotate(12 14 22)"/>`,
-    snifter: `<path d="M9,14 Q4,28 18,31 Q32,28 27,14 Z" fill="#ffffff2a" stroke="#fff9" stroke-width="1.4"/><path d="M7.8,22 Q8,29.5 18,30 Q28,29.5 28.2,22 Z" fill="${L}"/><path d="M18,31 V37 M12,37.5 H24" stroke="#fff9" stroke-width="1.6"/>`,
-    flute: `<path d="M13,6 L23,6 L22,26 Q18,29 14,26 Z" fill="#ffffff2a" stroke="#fff9" stroke-width="1.3"/><path d="M13.6,11 L22.4,11 L21.6,25.3 Q18,27.6 14.4,25.3 Z" fill="${L}"/><circle cx="17" cy="16" r=".9" fill="#fff"/><circle cx="19" cy="20" r=".7" fill="#fff"/><circle cx="17.6" cy="23" r=".6" fill="#fff"/><path d="M18,28 V37 M13,37.5 H23" stroke="#fff9" stroke-width="1.5"/>`,
+  const k = ++glassSeq, L = a.liquid, lv = Math.max(0, Math.min(1, level));
+  const G = {   // body outline, liquid area (x0..x1 at the top, y0 = full top, y1 = bottom), the liquid's own shape
+    mug: { body: 'M6,8 h20 a2,2 0 0 1 2,2 v22.4 a4.6,4.6 0 0 1 -4.6,4.6 h-14.8 a4.6,4.6 0 0 1 -4.6,-4.6 v-22.4 a2,2 0 0 1 2,-2z', liq: 'M4.9,9.4 h22.2 v22.6 a4,4 0 0 1 -4,4 h-14.2 a4,4 0 0 1 -4,-4z', y0: 10.5, y1: 36.1, x0: 4.9, x1: 27.1, extra: '<path d="M26,14 h3.5 a4.5,4.5 0 0 1 4.5,4.5 v5 a4.5,4.5 0 0 1 -4.5,4.5 h-3.5" fill="none" stroke="#ffffffb8" stroke-width="2.4"/><path d="M26,14 h3.5 a4.5,4.5 0 0 1 4.5,4.5 v5 a4.5,4.5 0 0 1 -4.5,4.5 h-3.5" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width=".8"/>' },
+    shot: { body: 'M9.5,15 L26.5,15 L24.4,36.6 Q18,37.6 11.6,36.6 Z', liq: 'M10.3,15.7 L25.7,15.7 L23.95,33.2 Q23.75,35.3 21.6,35.3 L14.4,35.3 Q12.25,35.3 12.05,33.2 Z', y0: 18, y1: 35.3, x0: 10.3, x1: 25.7, extra: '<path d="M12.2,35.3 L23.8,35.3 L23.7,36.5 Q18,37.3 12.3,36.5 Z" fill="#ffffff30"/>' },
+    rocks: { body: 'M6.5,15 h23 l-.86,18.9 a3.6,3.6 0 0 1 -3.6,3.4 h-14.08 a3.6,3.6 0 0 1 -3.6,-3.4 z', liq: 'M7.3,15.7 L28.7,15.7 L27.87,32.6 Q27.73,35.4 24.9,35.4 L11.1,35.4 Q8.27,35.4 8.13,32.6 Z', y0: 20, y1: 35.4, x0: 7.3, x1: 28.7, extra: '<rect x="7.9" y="35.4" width="20.2" height="1.6" rx=".8" fill="#ffffff30"/>' },
+    snifter: { body: 'M12.6,11.5 Q5.6,19.5 7.6,26.6 Q10.4,32.6 18,32.6 Q25.6,32.6 28.4,26.6 Q30.4,19.5 23.4,11.5 Z', liq: 'M8.2,21 Q7.6,27 10.6,30 Q13.6,31.9 18,31.9 Q22.4,31.9 25.4,30 Q28.4,27 27.8,21 Z', y0: 22, y1: 31.9, x0: 7.9, x1: 28.1, extra: '<path d="M18,32.5 V36.4" stroke="#ffffffb0" stroke-width="2"/><ellipse cx="18" cy="37.4" rx="6.5" ry="1.6" fill="#ffffff55" stroke="#ffffffb0" stroke-width="1"/>' },
+    flute: { body: 'M12.6,4.5 h10.8 L22.6,25.5 Q18,29.6 13.4,25.5 Z', liq: 'M13.5,7 h9 L21.8,24.9 Q18,28 14.2,24.9 Z', y0: 9, y1: 27, x0: 13.5, x1: 22.5, extra: '<path d="M18,28.4 V36.4" stroke="#ffffffb0" stroke-width="1.6"/><ellipse cx="18" cy="37.4" rx="5.6" ry="1.4" fill="#ffffff55" stroke="#ffffffb0" stroke-width="1"/>' },
   }[a.glass];
-  const bs = GLASS_BASE[a.glass];
-  return `<svg viewBox="0 0 36 40" width="${36 * size}" height="${40 * size}" aria-hidden="true"><ellipse cx="${bs[0]}" cy="${bs[1]}" rx="8" ry="2" fill="#0007"/>${g}</svg>`;
+  const bs = GLASS_BASE[a.glass], top = G.y1 - (G.y1 - G.y0) * lv;
+  const dark = ensureHandDefs.mix ? ensureHandDefs.mix(L, .35, '#000000') : L, light = ensureHandDefs.mix ? ensureHandDefs.mix(L, .35, '#ffffff') : L;
+  let inside = '';
+  if (lv > 0) {
+    // everything liquid (surface, foam, bubbles) is cut to the inside of the glass, so a low level never spills past the walls
+    inside += `<clipPath id="gl${k}"><rect x="0" y="${top}" width="36" height="40"/></clipPath><clipPath id="gk${k}"><path d="${G.liq}"/></clipPath>
+      <g clip-path="url(#gl${k})"><path d="${G.liq}" fill="url(#gq${k})"/></g><g clip-path="url(#gk${k})">
+      <ellipse cx="${(G.x0 + G.x1) / 2}" cy="${top}" rx="${(G.x1 - G.x0) / 2 - .4}" ry="1.1" fill="${light}" opacity=".9"/>`;
+    if (id === 'beer') inside += `<rect x="${G.x0}" y="${top - 3.2}" width="${G.x1 - G.x0}" height="3.6" rx="1.6" fill="#fff8e4"/><g fill="#fff" opacity=".9"><circle cx="10" cy="${top - 3}" r="1.6"/><circle cx="14" cy="${top - 3.4}" r="1.9"/><circle cx="19" cy="${top - 3.1}" r="1.7"/><circle cx="22.6" cy="${top - 3}" r="1.3"/></g>`;
+    if (id === 'champagne' || id === 'beer') inside += `<g fill="#fff" opacity=".75">${[[.3, .2], [.55, .5], [.42, .75], [.68, .3], [.36, .9]].map(([fx, fy]) => { const y = top + (G.y1 - top) * fy; return y < G.y1 - 1 ? `<circle cx="${G.x0 + (G.x1 - G.x0) * fx}" cy="${y}" r="${.4 + fy * .35}"/>` : ''; }).join('')}</g>`;
+    inside += '</g>';
+    if (id === 'whisky') inside += `<g transform="translate(0,${Math.max(0, top - G.y0) * .7})"><rect x="10" y="${G.y0 - 3}" width="7.5" height="7.5" rx="1.6" fill="#eaf6fb" fill-opacity=".8" stroke="#fff" stroke-width=".6" transform="rotate(14 13.7 ${G.y0})"/><rect x="18" y="${G.y0 - 1.5}" width="6.5" height="6.5" rx="1.4" fill="#dff0f7" fill-opacity=".75" stroke="#fff" stroke-width=".6" transform="rotate(-10 21 ${G.y0 + 1.5})"/></g>`;
+  }
+  const cold = ['beer', 'vodka', 'champagne', 'tequila'].includes(id) && lv > 0 ? `<g fill="#fff" opacity=".55">${[[.2, .4], [.75, .55], [.3, .8], [.85, .25], [.55, .7]].map(([fx, fy]) => `<ellipse cx="${G.x0 + (G.x1 - G.x0) * fx}" cy="${G.y0 + (G.y1 - G.y0) * fy}" rx=".55" ry=".8"/>`).join('')}</g>` : '';
+  return `<svg viewBox="0 0 36 40" width="${36 * size}" height="${40 * size}" aria-hidden="true"><defs>
+      <linearGradient id="gq${k}" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="${dark}"/><stop offset=".35" stop-color="${L}"/><stop offset=".7" stop-color="${light}"/><stop offset="1" stop-color="${dark}"/></linearGradient>
+      <linearGradient id="gb${k}" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity=".45"/><stop offset=".25" stop-color="#fff" stop-opacity=".08"/><stop offset=".8" stop-color="#fff" stop-opacity=".05"/><stop offset="1" stop-color="#fff" stop-opacity=".35"/></linearGradient></defs>
+    <ellipse cx="${bs[0]}" cy="${bs[1]}" rx="9.5" ry="2.4" fill="#0008"/>
+    ${G.extra}<path d="${G.body}" fill="url(#gb${k})"/>${inside}${cold}
+    <path d="${G.body}" fill="none" stroke="#ffffffc8" stroke-width=".8"/>
+    <path d="M${G.x0 + 1.4},${G.y0 - 1} v${(G.y1 - G.y0) * .62}" stroke="#fff" stroke-opacity=".75" stroke-width="1.2" stroke-linecap="round"/>
+  </svg>`;
 }
+// 1.0.5: every bottle is one smooth, symmetric silhouette (a profile mirrored around the axis), glass shading over all of it,
+// a label that wraps around the cylinder, cap or foil cut from the same outline — nothing glued together from pieces
+const BOTTLES = {
+  beer: { p: [[3, 6.4], [11, 6], [14, 5.4], [26, 5.8], [36, 9.5], [46, 15], [54, 16.4], [106, 16.4], [110, 14.6]], cap: [2, 9, '#c9a23a'], lab: [58, 92], neck: [27, 37], neckTxt: '№7', neckInk: '#a3121e', level: 30, crest: true, year: 'С 1874', frame: '#a3121e', ink: '#5a3410', txt: (L) => `<text x="30" y="74" font-size="6.5" text-anchor="middle" fill="#5a3410" font-family="Georgia,serif" font-style="italic">Бочка</text><text x="30" y="84.4" font-size="9" text-anchor="middle" fill="#a3121e" font-family="Georgia,serif" font-weight="700">№7</text>` },
+  tall: { p: [[3, 5.2], [30, 5.2], [37, 8], [45, 14.5], [53, 16.6], [106, 16.6], [110, 14.8]], cap: [1, 13, '#1f4c7a'], lab: [60, 96], clear: true, level: 44, labFill: '#ffffffe8', frame: '#1f4c7a', ink: '#1f4c7a', year: '40%  ·  0,7 л', neck: [18, 25], neckFill: '#1f4c7a', neckTxt: '★', txt: (L) => `<path d="M30,65 l2,5 5.4,0 -4.4,3.2 1.8,5.2 -4.8,-3.2 -4.8,3.2 1.8,-5.2 -4.4,-3.2 5.4,0z" fill="${L}"/><text x="30" y="86" font-size="5" text-anchor="middle" fill="${L}" font-family="Georgia,serif" letter-spacing=".3" textLength="27" lengthAdjust="spacingAndGlyphs">ПОЛЯРНАЯ</text>` },
+  square: { p: [[5, 6.2], [30, 6.2], [34, 10.5], [37.5, 16.6], [41, 19.1], [45, 19.4], [106, 19.4], [110, 18]], cap: [3, 15, '#3a2214'], lab: [56, 94], labFill: '#f2e6c8', level: 34, crest: true, year: 'ВЫДЕРЖКА 1999', frame: '#8a1f1f', ink: '#2a1a10', neck: [19, 28], neckFill: '#f2e6c8', neckTxt: '18', neckInk: '#8a1f1f', txt: (L) => `<text x="30" y="72" font-size="5.6" text-anchor="middle" fill="#2a1a10" font-family="Georgia,serif" letter-spacing=".3" textLength="28" lengthAdjust="spacingAndGlyphs">ХАЙЛЕНД</text><text x="30" y="86" font-size="13" text-anchor="middle" fill="#8a1f1f" font-family="Georgia,serif" font-weight="700">18</text>` },
+  ceramic: { p: [[3, 8], [15, 8], [19, 12], [30, 18.6], [42, 20.6], [104, 20.6], [110, 17]], cap: [1, 12, '#d9b25a'], emboss: 'dots', txt: (L) => `<g fill="none" stroke="${L}" stroke-width="2"><path d="M11,52 q19,-9 38,0"/><path d="M10,62 q20,-9 40,0"/><path d="M10,72 q20,-9 40,0"/></g><path d="M22,88 q8,-8 16,0 q-8,10 -16,0" fill="${L}"/><circle cx="30" cy="98" r="2.6" fill="#d9b25a"/>` },
+  round: { p: [[4, 5.2], [26, 5.2], [33, 7.4], [42, 13], [52, 20.4], [64, 24.4], [78, 24.6], [92, 21.6], [102, 15], [108, 9], [110, 6]], cap: [1, 14, '#d9b25a'], medal: [30, 80, 12.5], level: 46, emboss: 'facets', neck: [20, 27], neckFill: '#d9b25a', neckTxt: 'XO', neckInk: '#3b1606', txt: (L) => `<text x="30" y="80" font-size="7" text-anchor="middle" fill="#3b1606" font-family="Georgia,serif" font-weight="700">XO</text><text x="30" y="87.5" font-size="3.8" text-anchor="middle" fill="#3b1606" font-family="Georgia,serif" textLength="18" lengthAdjust="spacingAndGlyphs">ШАТО РУЖ</text>` },
+  champ: { p: [[3, 6.6], [28, 7], [40, 11], [51, 16.6], [60, 18.6], [106, 18.6], [110, 16.8]], cap: [3, 40, '#d9b25a'], foil: true, lab: [66, 98], band: [44, 49], level: 56, crest: true, year: 'MMXVIII', frame: '#a8823a', ink: '#14301f', txt: (L) => `<text x="30" y="80.5" font-size="5" text-anchor="middle" fill="#14301f" font-family="Georgia,serif" letter-spacing=".3" textLength="28" lengthAdjust="spacingAndGlyphs">ГРАНД КЮВЕ</text><text x="30" y="89" font-size="6" text-anchor="middle" fill="#a8823a" font-family="Georgia,serif" font-style="italic">Престиж</text>` },
+};
+// a smooth closed outline through the profile points (Catmull-Rom), mirrored around x = 30
+function bottlePath(p) {
+  const R = p.map(([y, w]) => [30 + w, y]), Lp = p.slice().reverse().map(([y, w]) => [30 - w, y]);
+  const seg = pts => { let d = ''; for (let i = 0; i < pts.length - 1; i++) { const p0 = pts[Math.max(0, i - 1)], p1 = pts[i], p2 = pts[i + 1], p3 = pts[Math.min(pts.length - 1, i + 2)]; d += ` C${(p1[0] + (p2[0] - p0[0]) / 6).toFixed(2)},${(p1[1] + (p2[1] - p0[1]) / 6).toFixed(2)} ${(p2[0] - (p3[0] - p1[0]) / 6).toFixed(2)},${(p2[1] - (p3[1] - p1[1]) / 6).toFixed(2)} ${p2[0].toFixed(2)},${p2[1].toFixed(2)}`; } return d; };
+  return `M${Lp[Lp.length - 1][0]},${Lp[Lp.length - 1][1]} L${R[0][0]},${R[0][1]}${seg(R)} Q30,${p[p.length - 1][0] + 1.2} ${Lp[0][0]},${Lp[0][1]}${seg(Lp)} Z`;
+}
+const halfW = (p, y) => { for (let i = 0; i < p.length - 1; i++) if (y >= p[i][0] && y <= p[i + 1][0]) { const t = (y - p[i][0]) / (p[i + 1][0] - p[i][0]); return p[i][1] + (p[i + 1][1] - p[i][1]) * t; } return p[p.length - 1][1]; };
 function bottleSvg(id, h = 120) {
   const a = DRINK_ART[id]; if (!a) return '';
-  const B = a.bottle, Lb = a.label;
-  const shapes = {
-    beer: `<path d="M24,6 h12 v20 q8,8 8,20 v58 a6,6 0 0 1 -6,6 h-16 a6,6 0 0 1 -6,-6 v-58 q0,-12 8,-20 z" fill="${B}"/><rect x="23" y="4" width="14" height="6" rx="2" fill="#c9a23a"/><rect x="16" y="56" width="28" height="30" rx="3" fill="${Lb}"/><text x="30" y="70" font-size="6.5" text-anchor="middle" fill="#5a3410" font-family="Georgia,serif" font-style="italic">Бочка</text><text x="30" y="79" font-size="8" text-anchor="middle" fill="#a3121e" font-family="Georgia,serif" font-weight="700">№7</text>`,
-    tall: `<path d="M25,4 h10 v28 q10,6 10,18 v58 a5,5 0 0 1 -5,5 h-20 a5,5 0 0 1 -5,-5 v-58 q0,-12 10,-18 z" fill="${B}" stroke="#9fb3bf" stroke-width="1"/><rect x="24" y="2" width="12" height="7" rx="2" fill="#1f4c7a"/><path d="M15,60 h30 v30 h-30 z" fill="#fff" opacity=".85"/><path d="M30,64 l2,5 5,0 -4,3 2,5 -5,-3 -5,3 2,-5 -4,-3 5,0z" fill="${Lb}"/><text x="30" y="86" font-size="5.5" text-anchor="middle" fill="${Lb}" font-family="Georgia,serif" letter-spacing=".5">ПОЛЯРНАЯ</text><path d="M18,36 q-3,30 0,60" stroke="#fff" stroke-width="2" opacity=".6" fill="none"/>`,
-    square: `<rect x="12" y="34" width="36" height="76" rx="4" fill="${B}" opacity=".95"/><rect x="24" y="12" width="12" height="24" fill="${B}"/><rect x="22" y="6" width="16" height="9" rx="2" fill="#2a1a10"/><rect x="16" y="58" width="28" height="30" fill="#f2e6c8"/><text x="30" y="70" font-size="5.5" text-anchor="middle" fill="${Lb}" font-family="Georgia,serif" letter-spacing=".4">ХАЙЛЕНД</text><text x="30" y="82" font-size="11" text-anchor="middle" fill="#8a1f1f" font-family="Georgia,serif" font-weight="700">18</text><path d="M16,40 v64" stroke="#fff" stroke-width="2" opacity=".35"/>`,
-    ceramic: `<path d="M22,6 h16 v12 q12,6 12,22 v62 a8,8 0 0 1 -8,8 h-24 a8,8 0 0 1 -8,-8 v-62 q0,-16 12,-22 z" fill="${B}"/><rect x="20" y="2" width="20" height="8" rx="3" fill="#d9b25a"/><path d="M14,50 q16,-10 32,0 M14,62 q16,-10 32,0 M14,74 q16,-10 32,0" stroke="${Lb}" stroke-width="2.2" fill="none"/><path d="M22,86 q8,-8 16,0 q-8,10 -16,0" fill="${Lb}"/><circle cx="30" cy="96" r="3" fill="#d9b25a"/>`,
-    round: `<ellipse cx="30" cy="78" rx="24" ry="32" fill="${B}"/><rect x="25" y="16" width="10" height="34" fill="${B}"/><path d="M22,4 h16 v8 q-8,6 -16,0z" fill="#d9b25a"/><circle cx="30" cy="10" r="7" fill="#d9b25a"/><ellipse cx="30" cy="82" rx="14" ry="12" fill="${Lb}"/><text x="30" y="80" font-size="6" text-anchor="middle" fill="#3b1606" font-family="Georgia,serif" font-weight="700">XO</text><text x="30" y="88" font-size="4.2" text-anchor="middle" fill="#3b1606" font-family="Georgia,serif">ШАТО РУЖ</text><path d="M14,64 q-4,16 2,30" stroke="#fff" stroke-width="2" opacity=".35" fill="none"/>`,
-    champ: `<path d="M25,14 h10 v18 q14,10 14,26 v50 a5,5 0 0 1 -5,5 h-28 a5,5 0 0 1 -5,-5 v-50 q0,-16 14,-26 z" fill="${B}"/><path d="M23,2 h14 v28 q-7,6 -14,0 z" fill="#d9b25a"/><path d="M15,44 h30 l-2,6 h-26 z" fill="#d9b25a"/><path d="M12,70 h36 v28 h-36z" fill="#f4ecd4"/><text x="30" y="81" font-size="5" text-anchor="middle" fill="#14301f" font-family="Georgia,serif" letter-spacing=".5">ГРАНД КЮВЕ</text><text x="30" y="91" font-size="5.5" text-anchor="middle" fill="#a8823a" font-family="Georgia,serif" font-style="italic">Престиж</text><path d="M15,60 v46" stroke="#fff" stroke-width="2" opacity=".25"/>`,
-  }[a.shape];
-  return `<svg viewBox="0 0 60 116" height="${h}" width="${h * 60 / 116}" aria-hidden="true">${shapes}</svg>`;
+  const S = BOTTLES[a.shape], k = ++glassSeq, B0 = a.bottle, Lb = a.label, mix = ensureHandDefs.mix || (c => c), path = bottlePath(S.p);
+  const hw = y => halfW(S.p, y);
+  const band = (y0, y1, fill, extra = '', ins = 0) => { const w0 = hw(y0) + .3 - ins, w1 = hw(y1) + .3 - ins, c = 2.2; return `<path d="M${30 - w0},${y0} Q30,${y0 + c} ${30 + w0},${y0} L${30 + w1},${y1} Q30,${y1 + c} ${30 - w1},${y1} Z" fill="${fill}" ${extra}/>`; };
+  const crest = (cx, cy, s, c) => `<g transform="translate(${cx},${cy}) scale(${s})"><path d="M-3,-3.4 h6 v2.6 q0,3 -3,4.4 q-3,-1.4 -3,-4.4z" fill="none" stroke="${c}" stroke-width=".7"/><path d="M-1.6,-1.6 l1.6,1.6 1.6,-1.6 M0,0 v2.4" stroke="${c}" stroke-width=".55" fill="none"/><path d="M-4.6,-3 q-1.2,2.4 .4,5 M4.6,-3 q1.2,2.4 -.4,5" stroke="${c}" stroke-width=".45" fill="none"/></g>`;
+  let parts = '';
+  // the drink inside: glass above the level is lighter (empty), with a bright meniscus line at the level
+  if (S.clear) parts += `<rect x="0" y="${S.level}" width="60" height="${110 - S.level}" fill="${a.liquid}" opacity=".55"/><rect x="0" y="${S.level}" width="60" height="1.2" fill="#fff" opacity=".75"/>`;
+  else if (S.level) parts += `<rect x="0" y="${S.cap[1]}" width="60" height="${S.level - S.cap[1]}" fill="#fff" opacity=".13"/><path d="M${30 - hw(S.level)},${S.level} Q30,${S.level + 1.6} ${30 + hw(S.level)},${S.level}" stroke="#fff" stroke-opacity=".45" stroke-width=".8" fill="none"/>`;
+  // a thick glass bottom with the punt's highlight
+  parts += `<rect x="0" y="105" width="60" height="6" fill="#fff" opacity=".1"/><path d="M${30 - hw(106) + 3},107.6 Q30,103.6 ${30 + hw(106) - 3},107.6" stroke="#fff" stroke-opacity=".3" stroke-width=".8" fill="none"/>`;
+  // embossing in the glass
+  if (S.emboss === 'dots') parts += `<g>${Array.from({ length: 9 }, (_, i) => `<circle cx="${12 + i * 4.5}" cy="44" r="1.1" fill="#000" opacity=".16"/><circle cx="${11.6 + i * 4.5}" cy="43.6" r="1.1" fill="#fff" opacity=".55"/>`).join('')}${Array.from({ length: 8 }, (_, i) => `<circle cx="${14.2 + i * 4.5}" cy="104" r="1" fill="#000" opacity=".14"/><circle cx="${13.8 + i * 4.5}" cy="103.6" r="1" fill="#fff" opacity=".5"/>`).join('')}</g>`;
+  if (S.emboss === 'facets') parts += [-17, -9, 9, 17].map(dx => `<path d="M${30 + dx},${56 + Math.abs(dx) * .4} Q${30 + dx * 1.18},80 ${30 + dx * .8},${102 - Math.abs(dx) * .3}" stroke="#fff" stroke-opacity=".2" stroke-width="1.1" fill="none"/><path d="M${30 + dx + .8},${56 + Math.abs(dx) * .4} Q${30 + dx * 1.18 + .8},80 ${30 + dx * .8 + .8},${102 - Math.abs(dx) * .3}" stroke="#000" stroke-opacity=".22" stroke-width=".8" fill="none"/>`).join('');
+  if (S.band) parts += band(...S.band, '#d9b25a');
+  if (S.neck) parts += band(...S.neck, S.neckFill || Lb, 'opacity=".95"') + band(S.neck[0] + 1.2, S.neck[1] - 1.2, 'none', 'stroke="#d9b25a" stroke-width=".5"', .9) + `<text x="30" y="${(S.neck[0] + S.neck[1]) / 2 + 1.3}" font-size="3.4" text-anchor="middle" fill="${S.neckInk || '#d9b25a'}" font-family="Georgia,serif" font-weight="700">${S.neckTxt || ''}</text>`;
+  if (S.lab) {
+    parts += band(...S.lab, S.labFill || Lb, 'stroke="#0003" stroke-width=".5"');
+    parts += band(S.lab[0] + 1.6, S.lab[1] - 1.6, 'none', `stroke="${S.frame || '#d9b25a'}" stroke-width=".6"`, 1.6);   // the label's printed frame
+    if (S.crest) parts += crest(30, S.lab[0] + 5.6, .8, S.frame || '#a8823a');
+    if (S.year) parts += `<text x="30" y="${S.lab[1] - 3.2}" font-size="3.2" text-anchor="middle" fill="${S.ink || '#5a4a30'}" font-family="Georgia,serif" letter-spacing=".4">${S.year}</text>`;
+    if (S.fine) parts += `<g fill="${S.ink || '#5a4a30'}" opacity=".45">${S.fine.map(y => `<rect x="21" y="${y}" width="18" height=".7" rx=".35"/>`).join('')}</g>`;
+  }
+  if (S.medal) parts += `<ellipse cx="${S.medal[0]}" cy="${S.medal[1]}" rx="${S.medal[2] + 1.6}" ry="${S.medal[2] * .9 + 1.4}" fill="#d9b25a"/><ellipse cx="${S.medal[0]}" cy="${S.medal[1]}" rx="${S.medal[2]}" ry="${S.medal[2] * .9}" fill="${Lb}"/><ellipse cx="${S.medal[0]}" cy="${S.medal[1]}" rx="${S.medal[2] - 1.4}" ry="${S.medal[2] * .9 - 1.3}" fill="none" stroke="#d9b25a" stroke-width=".5" stroke-dasharray="1 .8"/>`;
+  parts += S.txt(Lb);
+  // cap / foil: ribbed, with its own shading; champagne gets foil folds
+  const [c0, c1, cc] = S.cap;
+  let cap = `<rect x="0" y="${c0}" width="60" height="${c1 - c0}" fill="${cc}"/>`;
+  if (S.foil) cap += `<g stroke="${mix(cc, .45, '#000000')}" stroke-opacity=".45" stroke-width=".55" fill="none">${[0, 1, 2, 3, 4, 5, 6].map(i => `<path d="M${22 + i * 2.6},${c0 + 14} l${i % 2 ? 2.4 : -2.2},${8 + (i % 3) * 3}"/>`).join('')}<path d="M18,${c1 - 6} q12,3 24,0"/></g><g stroke="#fff" stroke-opacity=".35" stroke-width=".5" fill="none">${[0, 1, 2, 3].map(i => `<path d="M${23.4 + i * 4},${c0 + 16} l1.6,7"/>`).join('')}</g>`;
+  else cap += `<g stroke="#000" stroke-opacity=".2" stroke-width=".55">${Array.from({ length: 14 }, (_, i) => `<path d="M${20.4 + i * 1.5},${c0} V${c1 - 1.4}"/>`).join('')}</g>`;
+  cap += `<rect x="0" y="${c1 - 1.2}" width="60" height="1.2" fill="#0003"/>`;
+  // outside the outline: the ring of the neck finish under the cap, the muselet over the champagne cork
+  let over = '';
+  if (!S.foil && !S.noRing) { const w = hw(c1 + 1) + 1; over += `<rect x="${30 - w}" y="${c1}" width="${w * 2}" height="2.4" rx="1.1" fill="${mix(B0, .2, '#ffffff')}" stroke="${mix(B0, .5, '#000000')}" stroke-opacity=".5" stroke-width=".4"/><rect x="${30 - w + .6}" y="${c1 + .4}" width="${w * .5}" height=".7" rx=".35" fill="#fff" opacity=".45"/>`; }
+  if (S.foil) over += `<ellipse cx="30" cy="${c0 + .8}" rx="5.6" ry="1.8" fill="${mix(cc, .25, '#ffffff')}" stroke="${mix(cc, .4, '#000000')}" stroke-width=".4"/><g stroke="#cfd3d8" stroke-width=".7" fill="none" stroke-linecap="round"><path d="M24.4,${c0 + 9} H35.6"/><path d="M25,${c0 + 9} L28.4,${c0 + 1.2} M35,${c0 + 9} L31.6,${c0 + 1.2} M30,${c0 + 9} V${c0 + .6}"/></g><circle cx="30" cy="${c0 + .9}" r="1.5" fill="#d9dde2" stroke="#8b9097" stroke-width=".4"/>`;
+  return `<svg viewBox="0 0 60 116" height="${h}" width="${h * 60 / 116}" aria-hidden="true"><defs>
+      <clipPath id="bc${k}"><path d="${path}"/></clipPath>
+      <linearGradient id="bb${k}" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="${mix(B0, .55, '#000000')}"/><stop offset=".22" stop-color="${mix(B0, .12, '#ffffff')}"/><stop offset=".5" stop-color="${B0}"/><stop offset=".85" stop-color="${mix(B0, .4, '#000000')}"/><stop offset="1" stop-color="${mix(B0, .7, '#000000')}"/></linearGradient>
+      <linearGradient id="bs${k}" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#000" stop-opacity=".45"/><stop offset=".14" stop-color="#000" stop-opacity="0"/><stop offset=".2" stop-color="#fff" stop-opacity=".38"/><stop offset=".27" stop-color="#fff" stop-opacity="0"/><stop offset=".78" stop-color="#000" stop-opacity="0"/><stop offset=".86" stop-color="#fff" stop-opacity=".12"/><stop offset="1" stop-color="#000" stop-opacity=".5"/></linearGradient></defs>
+    <ellipse cx="30" cy="111" rx="${hw(106) + 4}" ry="2.6" fill="#0007"/>
+    <path d="${path}" fill="url(#bb${k})" ${S.clear ? 'fill-opacity=".55"' : ''}/>
+    <g clip-path="url(#bc${k})">${parts}${cap}<rect x="0" y="0" width="60" height="116" fill="url(#bs${k})"/></g>
+    <path d="${path}" fill="none" stroke="${mix(B0, .6, '#000000')}" stroke-opacity=".55" stroke-width=".8"/>${over}</svg>`;
 }
+// 1.0.5: the ice bucket seen from above: polished metal with ring handles, crushed ice, the bottle with foil and label, a napkin
 function bucketSvg(id) {
-  return `<svg viewBox="0 0 70 70" width="62" height="62" aria-hidden="true">
-    <ellipse cx="35" cy="40" rx="30" ry="26" fill="#0005"/>
-    <circle cx="35" cy="35" r="28" fill="#c9ccd0" stroke="#8d9196" stroke-width="2"/>
-    <circle cx="35" cy="35" r="22" fill="#e9f3f7"/>
-    <g fill="#ffffff" opacity=".9"><rect x="18" y="22" width="9" height="8" rx="2" transform="rotate(20 22 26)"/><rect x="44" y="40" width="8" height="8" rx="2" transform="rotate(-15 48 44)"/><rect x="22" y="44" width="8" height="7" rx="2"/><rect x="42" y="18" width="7" height="7" rx="2"/></g>
-    <circle cx="36" cy="34" r="9" fill="${(DRINK_ART[id] || {}).bottle || '#333'}"/><circle cx="36" cy="34" r="5" fill="#d9b25a"/>
+  const a = DRINK_ART[id] || {}, k = ++glassSeq, B0 = a.bottle || '#333', mix = ensureHandDefs.mix || (c => c);
+  const ice = [[20, 22, 8, 14], [46, 44, 7, -12], [24, 46, 7, 30], [44, 20, 6, 8], [30, 54, 6, -20], [52, 32, 5, 40], [16, 36, 6, -8], [38, 14, 5, 22]];
+  return `<svg viewBox="0 0 76 76" width="54" height="54" aria-hidden="true"><defs>
+      <radialGradient id="bm${k}" cx="38%" cy="32%" r="75%"><stop offset="0" stop-color="#ffffff"/><stop offset=".35" stop-color="#d9dde2"/><stop offset=".8" stop-color="#8f959d"/><stop offset="1" stop-color="#6b7178"/></radialGradient>
+      <radialGradient id="bi${k}" cx="50%" cy="50%" r="60%"><stop offset="0" stop-color="#f4fbfe"/><stop offset=".8" stop-color="#cfe3ec"/><stop offset="1" stop-color="#9fb8c4"/></radialGradient>
+      <linearGradient id="bn${k}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${mix(B0, .25, '#ffffff')}"/><stop offset=".5" stop-color="${B0}"/><stop offset="1" stop-color="${mix(B0, .5, '#000000')}"/></linearGradient></defs>
+    <ellipse cx="39" cy="42" rx="33" ry="30" fill="#0006"/>
+    <circle cx="8" cy="38" r="6" fill="none" stroke="#8f959d" stroke-width="2.4"/><circle cx="68" cy="38" r="6" fill="none" stroke="#8f959d" stroke-width="2.4"/>
+    <circle cx="38" cy="38" r="30" fill="url(#bm${k})" stroke="#5f656c" stroke-width="1"/>
+    <circle cx="38" cy="38" r="26.5" fill="#4d535a"/>
+    <circle cx="38" cy="38" r="25" fill="url(#bi${k})"/>
+    <g>${ice.map(([x, y, w, r]) => `<rect x="${x - w / 2}" y="${y - w / 2}" width="${w}" height="${w}" rx="1.8" fill="#ffffff" fill-opacity=".85" stroke="#b9d4e0" stroke-width=".7" transform="rotate(${r} ${x} ${y})"/><path d="M${x - w / 2 + 1.2},${y - w / 2 + 1.6} h${w * .45}" stroke="#fff" stroke-width="1" transform="rotate(${r} ${x} ${y})"/>`).join('')}</g>
+    <g transform="rotate(-38 38 38)">
+      <rect x="28" y="29" width="20" height="20" rx="10" fill="url(#bn${k})"/>
+      <rect x="34" y="6" width="8" height="26" rx="3" fill="url(#bn${k})"/>
+      <rect x="33" y="2" width="10" height="12" rx="3" fill="#d9b25a" stroke="#8a6a24" stroke-width=".7"/>
+      <path d="M34,8 h8 M34,11 h8" stroke="#8a6a24" stroke-width=".6"/>
+      <rect x="31" y="33" width="14" height="10" rx="2" fill="${a.label || '#eee'}" stroke="#0004" stroke-width=".5"/>
+      <path d="M33,36 h10 M34,39 h8" stroke="#0005" stroke-width=".8"/>
+      <path d="M31,31 a10,10 0 0 1 6,-3" stroke="#fff" stroke-opacity=".6" stroke-width="1.4" fill="none"/>
+    </g>
+    <path d="M52,10 q10,6 14,16 q-6,3 -11,2 q-2,-9 -7,-14 z" fill="#f6f4ee" stroke="#d8d3c6" stroke-width=".8"/>
+    <path d="M55,13 q6,5 8,11" stroke="#d8d3c6" stroke-width=".8" fill="none"/>
+    <path d="M16,18 A28,28 0 0 1 34,9" stroke="#fff" stroke-opacity=".9" stroke-width="2.2" stroke-linecap="round" fill="none"/>
   </svg>`;
 }
 
+/* ---------------- the bar: what stands on the table, the waiter, sips ----------------
+   BAR.shown is what this phone shows; it only changes when the waiter or a sip gets there,
+   so a glass never appears before the order is paid. When nothing is pending it is synced with the state. */
+const BAR = { shown: [null, null, null, null, null, null], bucket: null, q: [], running: false };
+function barSync() {
+  if (!S || animating || queue.length || BAR.q.length || BAR.running) return false;
+  let ch = false;
+  for (let i = 0; i < 6; i++) {
+    const p = S.seats[i], g = p ? Engine.glassOf(S, p.uid) : null, cur = BAR.shown[i];
+    if ((g ? g.n + ':' + g.left + ':' + g.id : '') !== (cur ? cur.n + ':' + cur.left + ':' + cur.id : '')) { BAR.shown[i] = g ? Object.assign({}, g) : null; ch = true; }
+  }
+  const tb = S.tableBottle;
+  if ((tb ? tb.id + tb.tg : '') !== (BAR.bucket ? BAR.bucket.id + BAR.bucket.tg : '')) { BAR.bucket = tb ? Object.assign({}, tb) : null; ch = true; }
+  return ch;
+}
+setInterval(() => { if (barSync()) render(); }, 600);
+function barPush(step) { BAR.q.push(step); barRun(); }
+async function barRun() {
+  if (BAR.running) return; BAR.running = true;
+  try { while (BAR.q.length) { const st = BAR.q.shift(); try { await barStep(st); } catch (e) { console.warn(e); } render(); } }
+  finally { BAR.running = false; drawWaiter(null); $('#waiterItems').innerHTML = ''; }
+}
+async function barStep(st) {
+  const fast = document.hidden;
+  if (st.k === 'deliver') {
+    const wait = st.at - Date.now(); if (wait > 0 && !fast) await sleep(wait);
+    await waiterServe(st.seat, st.glass, fast, st.quick);
+  } else if (st.k === 'sip') {
+    const g = BAR.shown[st.seat];
+    if (!g || g.n !== st.n) return;
+    if (fast) { g.left = st.left; return; }
+    await sipAnim(st.seat, gl => { g.left = st.left; if (gl) gl.innerHTML = glassSvg(g.id, GLASS_K, g.left / g.sips); });
+  } else if (st.k === 'remove') {
+    const g = BAR.shown[st.seat]; if (!g || (st.n && g.n !== st.n)) return;
+    await waiterServe(st.seat, null, fast);
+  } else if (st.k === 'unbucket') {
+    const b = L.felt.querySelector('.bucket');
+    if (b && !fast) await b.animate([{ opacity: 1 }, { opacity: 0, transform: 'translateY(-26px) scale(.6)' }], { duration: 420, easing: 'ease-in' }).finished.catch(() => {});
+    BAR.bucket = null;
+  } else if (st.k === 'bucket') {
+    BAR.bucket = st.b; render();
+    const b = L.felt.querySelector('.bucket');
+    if (b && !fast) b.animate([{ transform: 'translate(0,-30px) scale(.4)', opacity: 0 }, { transform: 'translate(0,4px) scale(1.08)', opacity: 1 }, { transform: 'none' }], { duration: 600, easing: 'ease-out' });
+  }
+}
+// waiter geometry: he comes from outside the table, straight behind the seat's cupholder
+function waiterWay(seat) {
+  const c = slot(seat).cup, dx = c[0] - 560, dy = c[1] - 262, l = Math.hypot(dx, dy) || 1, o = [dx / l, dy / l];
+  return { cup: c, o, off: [c[0] + o[0] * 330, c[1] + o[1] * 330], shoulder: [c[0] + o[0] * 560, c[1] + o[1] * 560] };
+}
+// pay spot: on the felt between the player's chips and his cupholder
+function payPoint(seat) { const c = slot(seat).cup, z = CZ[vis(seat)].stack.o; return [z[0] + (c[0] - z[0]) * .55, z[1] + (c[1] - z[1]) * .55]; }
+let waiterHandDone = false;
+function drawWaiter(st) {
+  const g = $('#waiter'); if (!g) return;
+  if (!st) { g.style.display = 'none'; return; }
+  g.style.display = '';
+  if (!waiterHandDone) { $('#wHand').innerHTML = `<g transform="scale(1.08)">${handMarkup({ g: 'm', skin: 1, sl: 'shirt', acc: [] }, false, 'flat')}</g>`; waiterHandDone = true; }
+  const [tx, ty] = st.at; let [sx, sy] = st.from; const dx = tx - sx, dy = ty - sy, l = Math.hypot(dx, dy) || 1, ux = dx / l, uy = dy / l;
+  const ARM = 175; if (l > ARM) { sx = tx - ux * ARM; sy = ty - uy * ARM; }   // a real arm's length: the waiter walks in, his arm doesn't stretch across the room
+  const ang = Math.atan2(uy, ux) * 180 / Math.PI;
+  const hx = tx - ux * 26, hy = ty - uy * 26, wx = hx - ux * 16, wy = hy - uy * 16;    // the hand holds the near rim of the tray
+  $('#wSleeve').querySelectorAll('path').forEach(p => p.setAttribute('d', `M${sx},${sy} L${wx},${wy}`));
+  $('#wCuff').setAttribute('transform', `translate(${wx},${wy}) rotate(${ang})`);
+  $('#wTray').setAttribute('transform', `translate(${tx},${ty})`);
+  $('#wHand').setAttribute('transform', `translate(${hx},${hy}) rotate(${ang})`);
+}
+function trayItem(html, cls) { const el = document.createElement('div'); el.className = cls; el.innerHTML = html; $('#waiterItems').appendChild(el); return el; }
+function glassItem(g) { const a = DRINK_ART[g.id] || {}, bs = GLASS_BASE[a.glass] || [18, 36]; const el = trayItem(glassSvg(g.id, GLASS_K, g.left / g.sips), 'glass'); el.style.setProperty('margin', `${-bs[1] * GLASS_K}px 0 0 ${-bs[0] * GLASS_K}px`, 'important'); return el; }
+// the waiter's arm travels from 'a' to 'b'; items ride on the tray (each with its own offset)
+async function waiterMove(W, a, b, dur, items = []) {
+  await tween(dur, t => {
+    const p = lerp2(a, b, t); drawWaiter({ at: p, from: W.shoulder });
+    items.forEach(([el, ox, oy]) => el.classList.contains('fx') ? setSprite(el, p[0] + ox, p[1] + oy) : place(el, p[0] + ox, p[1] + oy));
+  }, ease.io);
+}
+// one visit: brings 'glass' (or nothing) to the cupholder and takes the old glass away
+async function waiterServe(seat, glass, fast, quick) {
+  const old = BAR.shown[seat];
+  if (fast || !disp || !disp.seats[seat]) { BAR.shown[seat] = glass ? Object.assign({}, glass) : null; return; }
+  const W = waiterWay(seat), stop = [W.cup[0] + W.o[0] * 34, W.cup[1] + W.o[1] * 34], side = [-W.o[1] * 11, W.o[0] * 11];
+  const nw = glass ? glassItem(glass) : null;
+  const items = nw ? [[nw, side[0], side[1]]] : [];
+  await waiterMove(W, W.off, stop, quick ? 360 : 520, items);
+  sfx.chips && noise(.04, 3000, 6, .25);
+  if (old) {   // the old glass goes onto the tray
+    BAR.shown[seat] = null; render();
+    const og = glassItem(old);
+    await tween(220, t => place(og, ...lerp2(W.cup, [stop[0] - side[0], stop[1] - side[1]], t)), ease.io);
+    items.push([og, -side[0], -side[1]]);
+  }
+  if (nw) {    // the new one goes into the cupholder
+    await tween(260, t => place(nw, ...lerp2([stop[0] + side[0], stop[1] + side[1]], W.cup, t)), ease.io);
+    nw.remove(); items.shift();
+    BAR.shown[seat] = Object.assign({}, glass); render();
+  }
+  await sleep(quick ? 80 : 160);
+  await waiterMove(W, stop, W.off, quick ? 340 : 480, items);
+  items.forEach(([el]) => el.remove()); drawWaiter(null);
+}
+// paying the waiter: the player's hand puts the chips on the felt by his cup, the waiter takes them on the tray;
+// overpaid with a big chip -> the waiter leaves the change and the player pulls it back
+async function payWaiter(seat, amt, d) {
+  chipSync(d);
+  const p = d.seats[seat], st = CH.stack[seat], { taken, over } = compTake(st, amt);
+  if (p) p.stack = Math.max(0, compVal(st) + over); render();
+  if (document.hidden || !p) { if (over > 0) CH.stack[seat] = compAdd(CH.stack[seat], compOf(over)); return; }
+  const P = payPoint(seat), from = stackPt(seat, compAdd(st, taken));
+  const w = await carryChips(seat, 'B', taken, from, P, null, 360); restPH(seat, 'B', 300);
+  const W = waiterWay(seat);
+  await waiterMove(W, W.off, P, 520);
+  $('#waiterItems').appendChild(w); const items = [[w, 0, 0]];
+  let change = null;
+  if (over > 0) { change = chipSprite(compOf(over), P[0] - W.o[1] * 26, P[1] + W.o[0] * 26); }
+  await sleep(120);
+  await waiterMove(W, P, W.off, 480, items);
+  w.remove(); drawWaiter(null);
+  if (change) {
+    const to = stackPt(seat, compAdd(CH.stack[seat], compOf(over)));
+    const at = [P[0] - W.o[1] * 26, P[1] + W.o[0] * 26]; change.remove();
+    const w2 = await carryChips(seat, 'B', compOf(over), at, to, null, 340); w2.remove();
+    CH.stack[seat] = compAdd(CH.stack[seat], compOf(over)); if (p) p.stack = compVal(CH.stack[seat]); render(); restPH(seat, 'B', 300);
+  }
+}
+// money back for declined glasses: the waiter brings the chips, the player pulls them into his stack
+async function refundWaiter(seat, amt, d) {
+  const p = d.seats[seat]; if (!p) return;
+  const comp = compOf(amt);
+  if (document.hidden) { CH.stack[seat] = compAdd(CH.stack[seat], comp); p.stack = compVal(CH.stack[seat]); return; }
+  const P = payPoint(seat), W = waiterWay(seat), w = chipSprite(comp, ...W.off); $('#waiterItems').appendChild(w);
+  await waiterMove(W, W.off, P, 520, [[w, 0, 0]]);
+  w.remove(); const w0 = chipSprite(comp, ...P);
+  await waiterMove(W, P, W.off, 460);
+  drawWaiter(null); w0.remove();
+  const w2 = await carryChips(seat, 'B', comp, P, stackPt(seat, compAdd(CH.stack[seat], comp)), null, 340); w2.remove();
+  CH.stack[seat] = compAdd(CH.stack[seat], comp); p.stack = compVal(CH.stack[seat]); render(); restPH(seat, 'B', 300);
+}
 
 /* sprite that moves along a straight path */
 function sprite(el, x, y) { const w = document.createElement('div'); w.className = 'fx'; w.appendChild(el); w.style.transform = `translate(${x}px,${y}px)`; L.fx.appendChild(w); return w; }
@@ -1863,6 +2307,7 @@ function fromState(s) {
     d.seats.push({ uid: p.uid, stack: p.stack, bet: p.bet, inHand: p.inHand, folded: p.folded, allIn: p.allIn, sitOut: p.sitOut, leaving: p.leaving, last: p.last,
       cards: hasCards ? hole : null, show: !!p.show });
   }
+  d.muck = s.seats.reduce((a, p) => a + (p && p.inHand && p.folded ? 2 : 0), 0);
   return d;
 }
 function winnersSet(d) { return new Set(((d.result && d.result.winners) || []).map(w => w.seat)); }
@@ -2392,8 +2837,10 @@ function render() {
   const WC = winCards(d);
   if (WC && !winAt) winAt = Date.now(); if (!WC) winAt = 0;
   const liftWin = (el, dir) => { const t = Date.now() - winAt; if (dir) { el.style.setProperty('--lx', (dir[0] * 12).toFixed(1) + 'px'); el.style.setProperty('--ly', (dir[1] * 12).toFixed(1) + 'px'); } el.style.animation = `winLift .45s ease-out ${-Math.min(t, 450)}ms both`; };
-  d.board.forEach((c, k) => { const el = cardEl(c); place(el, BOARD_X(k) - 28, BOARD_Y - 40); if (WC) { el.classList.add(WC.set.has(c) ? 'win' : 'dim'); if (WC.set.has(c)) liftWin(el); } L.felt.appendChild(el); });
-  if (WC) { const lb = document.createElement('div'); lb.className = 'comboLbl'; lb.textContent = WC.name; place(lb, CX, BOARD_Y + 50); L.felt.appendChild(lb); }
+  const gone = collectedNo === d.no;
+  (gone ? [] : d.board).forEach((c, k) => { const el = cardEl(c); place(el, BOARD_X(k) - 28, BOARD_Y - 40); if (WC) { const kk = WC.kick.has(c); el.classList.add(...(WC.set.has(c) ? (kk ? ['win', 'kick'] : ['win']) : ['dim'])); if (WC.set.has(c) && !kk) liftWin(el); } L.felt.appendChild(el); });
+  if (!gone) for (let k = 0; k < (d.muck || 0); k++) { const [mx, my, mr] = muckPos(k); const el = cardEl(-1, 'sm', true); place(el, mx - 25, my - 36); el.style.transform = `rotate(${mr}deg) rotateY(180deg) scale(.8)`; L.felt.appendChild(el); }
+  if (WC && !gone) { const lb = document.createElement('div'); lb.className = 'comboLbl'; lb.textContent = WC.name; place(lb, CX, BOARD_Y + 50); L.felt.appendChild(lb); }
   // pot
   const potAmt = d.pot || 0;
   $('#pot').hidden = (!potAmt && !(d.phase !== 'idle' && d.phase !== 'showdown')) || !!(CH.piles && CH.piles.length);
@@ -2417,7 +2864,7 @@ function render() {
     }
     const isMe = p.uid === uid;
     // cards
-    if (p.cards) {
+    if (p.cards && !gone) {
       const big = isMe && vis(i) === 0;
       const size = big ? 'lg' : 'sm'; const [cw, ch] = cardSize(size);
       const faceUp = (isMe && !p.peekHide) || p.show;
@@ -2427,7 +2874,7 @@ function render() {
         place(el, hp.cx - cw / 2, hp.cy - ch / 2);
         el.style.transform = `rotate(${hp.rot}deg)` + (faceUp ? '' : ' rotateY(180deg)');
         if (d.phase === 'showdown' && (p.show || isMe) && d.result) {
-          if (WC) { const w = W8.has(i) && WC.set.has(c); el.classList.add(w ? 'win' : 'dim'); }   // players' cards stay inside their outline: glow only
+          if (WC) { const w = W8.has(i) && WC.set.has(c); el.classList.add(...(w ? (WC.kick.has(c) ? ['win', 'kick'] : ['win']) : ['dim'])); }   // players' cards stay inside their outline: glow only
           else if (p.show) el.classList.add(W8.has(i) ? 'win' : 'dim');
         }
         L.felt.appendChild(el);
@@ -2455,13 +2902,13 @@ function render() {
   // drinks on the table
   L.cups.querySelectorAll('.cup,.glass').forEach(x => x.remove());   // cups and glasses lie under every hand
   for (let i = 0; i < 6; i++) { const cp = slot(i).cup; const h = document.createElement('div'); h.className = 'cup'; place(h, cp[0] - CUP_R, cp[1] - CUP_R); L.cups.appendChild(h); }
-  if (S && S.drinks) for (let i = 0; i < 6; i++) {
-    const p = d.seats[i]; if (!p) continue; const id = S.drinks[p.uid]; if (!id) continue;
-    const g = document.createElement('div'); g.className = 'glass'; g.dataset.seat = i; g.innerHTML = glassSvg(id, GLASS_K);
+  for (let i = 0; i < 6; i++) {
+    const p = d.seats[i], gl = BAR.shown[i]; if (!p || !gl) continue; const id = gl.id;
+    const g = document.createElement('div'); g.className = 'glass'; g.dataset.seat = i; g.innerHTML = glassSvg(id, GLASS_K, gl.left / gl.sips);
     const bs = GLASS_BASE[(DRINK_ART[id] || {}).glass] || [18, 36]; g.style.setProperty('margin', `${-bs[1] * GLASS_K}px 0 0 ${-bs[0] * GLASS_K}px`, 'important'); g.style.transformOrigin = `${bs[0] * GLASS_K}px ${bs[1] * GLASS_K}px`;
     place(g, ...slot(i).drink); L.cups.appendChild(g);
   }
-  if (S && S.tableBottle) { const b = document.createElement('div'); b.className = 'bucket'; b.innerHTML = bucketSvg(S.tableBottle.id); place(b, ...BUCKET); L.felt.appendChild(b); }
+  if (BAR.bucket) { const b = document.createElement('div'); b.className = 'bucket'; b.innerHTML = bucketSvg(BAR.bucket.id); place(b, ...bucketSpot(BAR.bucket.by)); L.felt.appendChild(b); }
   drawMarks();
   buildHands();
   renderEquity();
@@ -2469,7 +2916,7 @@ function render() {
 }
 /* outlines on the felt where each seat's two cards lie, plus the hatched pot area; the table lines and lettering
    are masked out under them, so no marking ever crosses another */
-const POT_AREA = { x: 411, y: 120, w: 298, h: 60 };      // centred; holds the label in both places and the pot chips of any all-in
+const POT_AREA = { x: 424, y: 122, w: 272, h: 58 };      // centred; holds the label in both places and the pot chips of any all-in
 let marksKey = '';
 const MARK_GAP = 6;                                    // clear felt between a marking and any outline
 function drawMarks() {
@@ -2483,22 +2930,33 @@ function drawMarks() {
     const g = MARK_GAP; holes.push(`<rect x="${cx - FX - w / 2 - g}" y="${cy - FY - h / 2 - g}" width="${w + 2 * g}" height="${h + 2 * g}" rx="${r + g}" transform="rotate(${rot || 0} ${cx - FX} ${cy - FY})"/>`);
   };
   SLOTS.forEach((sl, v) => {
-    const big = v === 0 && big0, [cw, ch] = cardSize(big ? 'lg' : 'sm'), off = big ? 28 : 21;
+    const big = v === 0 && big0, [cw, ch] = cardSize(big ? 'lg' : 'sm'), off = HOLE_OFF;
     const rot = Math.atan2(-(sl.plate[0] - sl.cards[0]), sl.plate[1] - sl.cards[1]) * 180 / Math.PI + (sl.tilt || 0);
     add('cmark', sl.cards[0], sl.cards[1], 2 * off + cw + 14, ch + 12, rot, 9);
   });
   add('cmark potz', POT_AREA.x + POT_AREA.w / 2, POT_AREA.y + POT_AREA.h / 2, POT_AREA.w, POT_AREA.h, 0, 14);
-  [[282, 262], [838, 262]].forEach(([x, y]) => holes.push(`<circle cx="${x - FX}" cy="${y - FY}" r="16"/>`));   // gaps for the ♠ and ♥
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="868" height="410"><rect width="868" height="410" fill="white"/><g fill="black">${holes.join('')}</g></svg>`;
-  const fm = $('#feltMarks'), url = `url("data:image/svg+xml;utf8,${encodeURIComponent(svg)}")`;
-  fm.style.webkitMaskImage = fm.style.maskImage = url; fm.style.webkitMaskSize = fm.style.maskSize = '868px 410px';
-  fm.style.webkitMaskRepeat = fm.style.maskRepeat = 'no-repeat';
+  [[316, 262], [804, 262]].forEach(([x, y]) => holes.push(`<circle cx="${x - FX}" cy="${y - FY}" r="16"/>`));   // gaps for the ♠ and ♥
+  const g = $('#feltHoles'), tmp = new DOMParser().parseFromString(`<svg xmlns="http://www.w3.org/2000/svg">${holes.join('')}</svg>`, 'image/svg+xml');
+  g.replaceChildren(...[...tmp.documentElement.childNodes].map(n => document.importNode(n, true)));
 }
 function winCards(d) {
   if (d.phase !== 'showdown' || !d.result || !d.result.winners || !d.result.winners.length || d.board.length < 5) return null;
   const w = d.result.winners[0], p = d.seats[w.seat];
   if (!p || !p.cards || (!p.show && p.uid !== uid)) return null;
-  return { set: new Set(Engine.bestFive([...p.cards, ...d.board])), name: w.hand || Engine.handName([...p.cards, ...d.board]) };
+  const five = Engine.bestFive([...p.cards, ...d.board]), cat = Engine.handCategory(Engine.evalHand(five));
+  const name = w.hand || Engine.handName([...p.cards, ...d.board]), k = kickerSplit(five, cat);
+  const RN = r => ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'][r];
+  const kr = k.kick.map(c => RN(c % 13));
+  return { set: new Set(five), kick: new Set(k.kick), name: kr.length ? `${name} · ${kr.length > 1 ? 'кикеры' : 'кикер'} ${kr.join(', ')}` : name };
+}
+// the cards that make the combination itself vs. the kickers that only break ties (pair, two pairs, trips, quads, high card)
+function kickerSplit(five, cat) {
+  if (![0, 1, 2, 3, 7].includes(cat)) return { core: five, kick: [] };
+  const cnt = {}; five.forEach(c => cnt[c % 13] = (cnt[c % 13] || 0) + 1);
+  let core = five.filter(c => cnt[c % 13] >= 2);
+  if (cat === 0) { const top = Math.max(...five.map(c => c % 13)); core = five.filter(c => c % 13 === top); }
+  const kick = five.filter(c => !core.includes(c)).sort((a, b) => b % 13 - a % 13);
+  return { core, kick };
 }
 function esc(s) { return String(s).replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch])); }
 
@@ -2685,7 +3143,7 @@ async function animate(e) {
     case 'deal': {
       // fresh hand: reset display from final state with hidden cards, stacks restored before blinds
       const fs = fromState(S);
-      d.board = []; d.pot = 0; d.result = null; d.phase = 'preflop'; d.turn = -1; d.dealer = e.dealer;
+      d.board = []; d.pot = 0; d.result = null; d.phase = 'preflop'; d.turn = -1; d.dealer = e.dealer; if (e.no != null) d.no = e.no;
       for (let i = 0; i < 6; i++) {
         // stacks as they were when this hand was dealt (the state may already be further on)
         const st0 = e.stacks ? e.stacks[i] : undefined;
@@ -2693,6 +3151,7 @@ async function animate(e) {
         if (!p || st0 === null) { d.seats[i] = null; continue; }
         d.seats[i] = Object.assign({}, p, { cards: null, bet: 0, show: false, folded: false, last: '', inHand: e.order.includes(i), stack: st0 != null ? st0 : (S.hand.no === e.no ? p.stack + p.bet : p.stack) });
       }
+      collectStop(); d.muck = 0;
       CH.piles = []; chipSync(d); render();
       await colourUp(d);
       await moveHand('R', DECK[0] - 6, DECK[1] + 4, 260);
@@ -2714,6 +3173,8 @@ async function animate(e) {
       const me = mySeat();
       if (me >= 0 && e.order.includes(me) && d.seats[me]) d.seats[me].peekHide = true;
       L.fx.innerHTML = ''; render();
+      // everyone else looks at his cards too: people right away, bots at their own moment in the first seconds
+      e.order.forEach(i => { const q = d.seats[i]; if (i === me || !q) return; const hn = d.no; setTimeout(() => { if (disp && disp.no === hn) peekCards(i); }, isBot(q.uid) ? 250 + Math.random() * 1500 : 120 + Math.random() * 300); });
       if (me >= 0 && e.order.includes(me) && d.seats[me]) {
         const sl = slot(me);
         if (PH[me]) { setPose(me, 'A', 'cup'); await movePH(me, 'A', ...reachFor(me, 'A', [sl.cards[0], sl.cards[1] + 18], 30), 260); }
@@ -2766,9 +3227,9 @@ async function animate(e) {
           await movePH(e.seat, 'A', ...reachFor(e.seat, 'A', [sl.cards[0] + sl.d[0] * push, sl.cards[1] + sl.d[1] * push], 30), 300, ease.io, (x, y, t) => ps.forEach((w, k) => setSprite(w, from(k)[0] + sl.d[0] * push * t, from(k)[1] + sl.d[1] * push * t, rot0(k))));
           restPH(e.seat, 'A', 420);
         } else sfx.card();
-        await Promise.all(ps.map((w, k) => moveSprite(w, PH[e.seat] ? mid(k) : from(k), [MUCK[0] + k * 4, MUCK[1]], 460, ease.io, [rot0(k), rot0(k) + (k ? 1 : -1) * 18], [1, isMe ? .7 : 1])));
-        ps.forEach(w => w.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 200, fill: 'forwards' }));
-        await sleep(160);
+        const m0 = d.muck || 0;
+        await Promise.all(ps.map((w, k) => { const [mx, my, mr] = muckPos(m0 + k); return moveSprite(w, PH[e.seat] ? mid(k) : from(k), [mx, my], 460, ease.io, [rot0(k), mr], [1, .8]); }));
+        d.muck = m0 + 2; ps.forEach(w => w.remove()); render();
       }
       L.fx.innerHTML = '';
       break;
@@ -2827,20 +3288,29 @@ async function animate(e) {
     }
     case 'turn': { d.turn = e.seat; const cur = S.hand.turn === e.seat; d.deadline = cur ? localTime(S.hand.deadline) : Date.now() + Engine.turnMs(); d.dlHost = cur ? S.hand.deadline : 'ev' + e.s; render(); break; }
     case 'drink': {
-      const p = d.seats[e.seat];
-      if (p) await animToTray(e.seat, e.price, d);
+      if (d.seats[e.seat]) await payWaiter(e.seat, e.price, d);
       render();
-      const targets = e.all ? d.seats.map((q, i) => q ? i : -1).filter(i => i >= 0) : [e.seat];
-      if (e.all) { const b = L.felt.querySelector('.bucket'); if (b) b.animate([{ transform: 'translate(0,-30px) scale(.4)', opacity: 0 }, { transform: 'translate(0,4px) scale(1.08)', opacity: 1 }, { transform: 'none' }], { duration: 600, easing: 'ease-out' }); }
-      for (const i of targets) {
-        const g = L.cups.querySelector(`.glass[data-seat="${i}"]`);
-        if (g) g.animate([{ transform: 'translateY(-26px) scale(.3)', opacity: 0 }, { transform: 'translateY(3px) scale(1.1)', opacity: 1 }, { transform: 'none' }], { duration: 480, easing: 'cubic-bezier(.3,1.4,.5,1)' });
-        noise(.05, 6000, 8, .3); await sleep(e.all ? 120 : 0);
-      }
-      if (e.all) { const tx = document.createElement('div'); tx.className = 'winTxt'; tx.textContent = '🥂 ' + nameOf(p ? p.uid : '') + ' угощает'; place(tx, CX, 300); L.txt.appendChild(tx); setTimeout(() => tx.remove(), 2500); }
-      await sleep(420);
+      const D = Engine.DRINKS.find(x => x.id === e.id);
+      barPush({ k: 'deliver', seat: e.seat, glass: { id: e.id, sips: D.sips, left: D.sips, n: e.n }, at: Date.now() + 3000 });
       break;
     }
+    case 'treat': {
+      const p = d.seats[e.seat];
+      if (p) await payWaiter(e.seat, e.price, d);
+      const tx = document.createElement('div'); tx.className = 'winTxt'; tx.textContent = '🥂 ' + nameOf(p ? p.uid : '') + ' угощает стол'; place(tx, CX, 300); L.txt.appendChild(tx); setTimeout(() => tx.remove(), 2600);
+      render(); await sleep(300);
+      break;
+    }
+    case 'treatDone': {
+      if (e.refund > 0 && d.seats[e.seat]) await refundWaiter(e.seat, e.refund, d);
+      const D = Engine.DRINKS.find(x => x.id === e.id);
+      if (e.to.length) barPush({ k: 'bucket', b: { id: e.id, tg: (S.tableBottle && S.tableBottle.tg) || 0, by: (S.tableBottle && S.tableBottle.by) || (d.seats[e.seat] && d.seats[e.seat].uid) } });
+      e.to.forEach((k, j) => barPush({ k: 'deliver', seat: k, glass: { id: e.id, sips: D.sips, left: D.sips, n: e.ns[j] }, at: Date.now() + 1500, quick: true }));
+      break;
+    }
+    case 'sip': barPush({ k: 'sip', seat: e.seat, left: e.left, n: e.n }); break;
+    case 'unglass': barPush({ k: 'remove', seat: e.seat, n: e.n }); break;
+    case 'unbucket': barPush({ k: 'unbucket' }); break;
     case 'rebuy': { if (d.seats[e.seat]) await animFromTray(e.seat, e.amt, d); break; }
     case 'sit': {
       const ps = S.seats[e.seat]; if (!ps) break;
@@ -2994,6 +3464,7 @@ const COMMANDS = {
   sitout: (s, pid, d) => Engine.setSitOut(s, pid, !!d.val, Date.now()),
   leave: (s, pid) => Engine.leave(s, pid, Date.now()),
   drink: (s, pid, d) => Engine.drink(s, pid, String(d.id), !!d.all, Date.now()),
+  treat: (s, pid, d) => Engine.treatAnswer(s, pid, !!d.yes, Date.now()),
   look: (s, pid, d) => Engine.setLook(s, pid, d.look),
 };
 function runCommand(pid, name, data) {
@@ -3011,6 +3482,104 @@ function cmd(name, data = {}) {
 }
 function hostMutate(fn) { if (!isHost || !S) return; const s = clone(S); const err = fn(s); if (typeof err === 'string') { if (err !== 'skip') toast(err); return; } hostCommit(s); }
 
+/* away from the phone: a guest's phone reports when its screen goes dark; the host's own phone notices on waking */
+const AWAY_AFTER = 20000, AWAY_RETURN = 300000;
+const hiddenAt = {};
+function hostAway(pid, on) {
+  if (!isHost || !S) return;
+  const now = Date.now();
+  if (on) { hiddenAt[pid] = now; return; }
+  const t = hiddenAt[pid]; delete hiddenAt[pid]; if (t == null) return;
+  const dur = now - t, i = S.seats.findIndex(q => q && q.uid === pid), p = i >= 0 ? S.seats[i] : null;
+  if (!p || dur < AWAY_AFTER) return;
+  // back within 5 minutes: plays again from the next hand; later: stays away until "Вернуться в игру"
+  if (dur < AWAY_RETURN) hostMutate(s => Engine.setAway(s, pid, true, now, true));
+  else if (!p.sitOut) hostMutate(s => Engine.setAway(s, pid, true, now, false));
+}
+let myHiddenAt = 0;
+document.addEventListener('visibilitychange', () => {
+  if (!S || tut || demo) return;
+  const hidden = document.visibilityState === 'hidden', now = Date.now();
+  if (hidden) myHiddenAt = now;
+  const dur = myHiddenAt ? now - myHiddenAt : 0;
+  if (!hidden && dur >= AWAY_AFTER && dur < AWAY_RETURN && mySeat() >= 0) setTimeout(() => toast('Ты вернулся — играешь со следующей раздачи'), 600);
+  if (isHost) { hostAway(uid, hidden); return; }
+  const send = (k = 0) => { if (hostConn && hostConn.open) hostConn.send({ type: 'cmd', name: 'away', data: { on: hidden } }); else if (!hidden && k < 20) setTimeout(() => send(k + 1), 1000); };
+  send();
+});
+
+/* a treat for the table: every guest gets 10 s to accept or decline (silence = yes) */
+function paintTreat() {
+  const el = $('#treatAsk'); if (!el) return;
+  const t = S && S.treat, me = uid;
+  if (!t || !(me in (t.ans || {})) || t.ans[me] !== null) { el.hidden = true; el.dataset.k = ''; return; }
+  const left = Math.max(0, Math.ceil((localTime(t.until) - Date.now()) / 1000));
+  const k = String(t.tg);
+  if (el.dataset.k !== k) {
+    el.dataset.k = k; el.hidden = false;
+    const dk = Engine.DRINKS.find(x => x.id === t.id);
+    el.innerHTML = `<span>🥂 ${esc(nameOf(t.by))} угощает: <span class="t">${esc(dk ? dk.name : t.id)}</span></span><span class="c"></span><button class="btn gold" data-y="1">Принять</button><button class="btn dark" data-y="0">Отказаться</button>`;
+    el.querySelectorAll('button').forEach(b => b.onclick = () => { el.hidden = true; cmd('treat', { yes: b.dataset.y === '1' }); });
+  }
+  el.querySelector('.c').textContent = left + ' с';
+}
+setInterval(paintTreat, 300);
+
+/* the bar on the host: when each player sips, when bots order, bots answering a treat */
+const sipAt = {}, botDrinkAt = {}, botTreatAns = {};
+let treatHandNo = -1;
+function barHost() {
+  const now = Date.now(), h = S.hand, live = ['preflop', 'flop', 'turn', 'river'].includes(h.phase);
+  // about one sip per hand per player, at a quiet moment (never on his own turn)
+  for (let i = 0; i < 6; i++) {
+    const p = S.seats[i]; if (!p) continue; const g = Engine.glassOf(S, p.uid);
+    if (!g || g.left <= 0 || p.away) { delete sipAt[p.uid]; continue; }
+    if (!sipAt[p.uid]) { sipAt[p.uid] = now + 12000 + Math.random() * 30000; continue; }
+    if (now > sipAt[p.uid] && h.turn !== i) { sipAt[p.uid] = now + 30000 + Math.random() * 30000; hostMutate(s => Engine.sip(s, p.uid, now)); return true; }
+  }
+  if (!live) {
+    // empty glasses go between hands
+    if (S.seats.some(p => p && Engine.glassOf(S, p.uid) && Engine.glassOf(S, p.uid).left <= 0) || (S.tableBottle && !Object.values(S.drinks || {}).some(g => g && g.tg === S.tableBottle.tg))) {
+      const s2 = clone(S); if (Engine.clearEmpty(s2, now) !== 'skip') { hostCommit(s2); return true; }
+    }
+  }
+  if (!S.bots || tut || demo) return false;
+  // bots answer a treat after 1-3 s, yes 4 times out of 5
+  if (S.treat) {
+    for (const [u, v] of Object.entries(S.treat.ans)) {
+      if (v !== null || !S.bots[u]) continue;
+      if (!botTreatAns[u + S.treat.tg]) botTreatAns[u + S.treat.tg] = now + 1000 + Math.random() * 2000;
+      else if (now > botTreatAns[u + S.treat.tg]) { hostMutate(s => Engine.treatAnswer(s, u, Math.random() < .8, now)); return true; }
+    }
+    return false;
+  }
+  if (live) return false;
+  // a bot with an empty cupholder orders in 2-4 hands; what he drinks depends on his stack
+  for (const p of S.seats) {
+    if (!p || !S.bots[p.uid] || p.sitOut || Engine.glassOf(S, p.uid)) { if (p) delete botDrinkAt[p.uid]; continue; }
+    if (botDrinkAt[p.uid] == null) { botDrinkAt[p.uid] = h.no + 2 + Math.floor(Math.random() * 3); continue; }
+    if (h.no >= botDrinkAt[p.uid]) {
+      delete botDrinkAt[p.uid];
+      const bbs = p.stack / S.cfg.bb, pick = a => a[Math.floor(Math.random() * a.length)];
+      const id = bbs < 30 ? pick(['beer', 'beer', 'vodka']) : bbs < 80 ? pick(['beer', 'whisky', 'vodka', 'tequila']) : pick(['whisky', 'cognac', 'cognac', 'tequila', 'champagne']);
+      if (Engine.drinkPrice(S, id, false) < p.stack * .1) { hostMutate(s => Engine.drink(s, p.uid, id, false, now)); return true; }
+    }
+  }
+  // now and then (about once in 12-15 hands) a bot with a big stack treats the whole table
+  if (treatHandNo !== h.no) {
+    treatHandNo = h.no;
+    if (Math.random() < 1 / 13.5) {
+      const rich = S.seats.filter(p => p && S.bots[p.uid] && !p.sitOut && p.stack >= S.cfg.buyIn * 1.3);
+      if (rich.length) {
+        const p = rich[Math.floor(Math.random() * rich.length)];
+        const ok = Engine.DRINKS.filter(dk => Engine.drinkPrice(S, dk.id, true) <= p.stack * .12);
+        if (ok.length) { const dk = ok[Math.floor(Math.random() * ok.length)]; hostMutate(s => Engine.drink(s, p.uid, dk.id, true, now)); return true; }
+      }
+    }
+  }
+  return false;
+}
+
 /* host loop: timers and next hand */
 let breakFor = -1, breakMs = 6000;
 setInterval(() => {
@@ -3018,7 +3587,16 @@ setInterval(() => {
   const now = Date.now(), h = S.hand;
   const live = ['preflop', 'flop', 'turn', 'river'].includes(h.phase);
   if (tut) return;
+  // a guest whose screen has been dark for 20 s is marked away
+  for (const [pid, t] of Object.entries(hiddenAt)) { const q = S.seats.find(x => x && x.uid === pid); if (q && !q.sitOut && now - t > AWAY_AFTER) { hostMutate(s => Engine.setAway(s, pid, true, now, false)); return; } }
+  // an away player's turn is played at once: check, or fold to any bet
+  if (live && h.turn >= 0 && S.seats[h.turn] && S.seats[h.turn].away && !animating) { const q = S.seats[h.turn], L = Engine.legal(S, h.turn); hostMutate(s => Engine.act(s, q.uid, L && L.canCheck ? 'check' : 'fold', 0, Date.now())); return; }
   if (live && h.turn >= 0 && h.deadline && now > h.deadline + 400) { hostMutate(s => Engine.timeout(s, Date.now())); return; }
+  // the bar: a treat closes after 10 s (silence = yes); sips; the waiter clears empty glasses between hands
+  if (S.treat && now > S.treat.until) { hostMutate(s => Engine.resolveTreat(s, Date.now())); return; }
+  if (!animating && barHost()) return;
+  // players who came back within 5 minutes play again from the next hand
+  if (!live && S.seats.some(q => q && q.away && q.returnNext && !hiddenAt[q.uid])) { hostMutate(s => { s.seats.forEach(q => { if (q && q.away && q.returnNext && !hiddenAt[q.uid]) Engine.setSitOut(s, q.uid, false, Date.now()); }); return null; }); return; }
   if (!live) {
     if (h.nextAt && now > h.nextAt) {
       if (breakFor !== h.no) { breakFor = h.no; breakMs = 5000 + Math.random() * 2000; }
@@ -3046,6 +3624,7 @@ function onHostConnection(c) {
       return;
     }
     if (!pid) return;
+    if (d.type === 'cmd' && d.name === 'away') { hostAway(pid, !!(d.data && d.data.on)); return; }
     if (d.type === 'cmd') { const err = runCommand(pid, String(d.name), d.data || {}); if (err) c.send({ type: 'err', msg: err }); }
     else if (d.type === 'riffle' && Number.isInteger(d.seat)) { riffle(d.seat); relayRiffle(d.seat, pid); }
   });
@@ -3281,7 +3860,7 @@ function fullHelp() {
   $('#menuPanel').innerHTML = isIOS
     ? `<h2>На весь экран</h2><p>На iPhone браузер не умеет убирать свою панель. Зато игру можно поставить как приложение:</p>
        <p>1. Откройте ссылку в <b>Safari</b> (если она открылась внутри Telegram — нажмите на значок компаса или «Открыть в Safari»).<br>2. Нажмите <b>«Поделиться»</b> — квадрат со стрелкой вверх.<br>3. Выберите <b>«На экран „Домой“»</b>.</p>
-       <p>Иконка «Покер» запустит игру на весь экран.</p><div class="row2"><button class="btn dark" id="fhClose">Понятно</button></div>`
+       <p>Иконка «Royal Flush» запустит игру на весь экран.</p><div class="row2"><button class="btn dark" id="fhClose">Понятно</button></div>`
     : `<h2>На весь экран</h2><p>Если панель браузера не исчезла, откройте ссылку в Chrome: в Telegram нажмите <b>⋮ → «Открыть в браузере»</b>.</p>
        <p>Чтобы игра всегда открывалась как приложение: в Chrome нажмите <b>⋮ → «Добавить на главный экран»</b>.</p><div class="row2"><button class="btn dark" id="fhClose">Понятно</button></div>`;
   $('#fhClose').onclick = () => ov.hidden = true;
@@ -3318,7 +3897,7 @@ function iosHint() { showHintBar('На весь экран: <b>Поделить�
 /* one-tap install on Android/Chrome: the icon always opens fullscreen */
 let installEvt = null;
 window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); installEvt = e; document.querySelectorAll('.installBtn').forEach(b => b.hidden = false); });
-window.addEventListener('appinstalled', () => { installEvt = null; document.querySelectorAll('.installBtn').forEach(b => b.hidden = true); toast('Игра установлена — откройте её с иконки «Покер»'); });
+window.addEventListener('appinstalled', () => { installEvt = null; document.querySelectorAll('.installBtn').forEach(b => b.hidden = true); toast('Игра установлена — откройте её с иконки «Royal Flush»'); });
 function installBtnHtml() { return `<button class="btn installBtn" ${installEvt && !standalone() ? '' : 'hidden'}>Установить игру на экран</button>`; }
 function wireInstall(root = document) { root.querySelectorAll('.installBtn').forEach(b => b.onclick = async () => { if (!installEvt) return; installEvt.prompt(); try { await installEvt.userChoice; } catch (e) { } installEvt = null; document.querySelectorAll('.installBtn').forEach(x => x.hidden = true); }); }
 
@@ -3414,10 +3993,6 @@ setInterval(() => {
     // busted bots buy back in; bots sometimes order a drink between hands
     const bust = S.seats.find(p => p && S.bots[p.uid] && p.stack === 0);
     if (bust) { runCommand(bust.uid, 'rebuy', {}); return; }
-    if (h.nextAt && Math.random() < .004) {
-      const b = S.seats.find(p => p && S.bots[p.uid] && !(S.drinks || {})[p.uid] && p.stack > S.cfg.bb * 10);
-      if (b) runCommand(b.uid, 'drink', { id: Math.random() < .5 ? 'beer' : 'whisky', all: false });
-    }
   }
 }, 250);
 
@@ -3587,8 +4162,8 @@ const myTurnNow = () => calm() && S && S.hand.turn === mySeat() && disp && disp.
 function stageRect(el) { const sr = stage.getBoundingClientRect(), r = el.getBoundingClientRect(), k = sr.width / W; return { x: (r.left - sr.left) / k, y: (r.top - sr.top) / k, w: r.width / k, h: r.height / k }; }
 function anchorRect(a) {
   const me = mySeat(); if (!a || !S) return null;
-  const R0 = (cx, cy, w, h) => { const [x, y] = toStage(cx - w / 2, cy - h / 2); return { x, y, w: w * TK, h: h * TK }; };
-  const RT = r => { const [x, y] = toStage(r.x, r.y); return { x, y, w: r.w * TK, h: r.h * TK }; };
+  const R0 = (cx, cy, w, h) => { const [x, y] = toStage(cx - w / 2, cy - h / 2); return { x, y, w: w * TK * TSX, h: h * TK * TSY }; };
+  const RT = r => { const [x, y] = toStage(r.x, r.y); return { x, y, w: r.w * TK * TSX, h: r.h * TK * TSY }; };
   if (a === 'cards') { const c = slot(me).cards; return R0(c[0], c[1], 140, 100); }
   if (a === 'board') { const n = Math.max(3, disp.board.length); return RT({ x: BOARD_X(0) - 31, y: BOARD_Y - 43, w: (n - 1) * 62 + 62, h: 86 }); }
   if (a === 'board:last') { const k = Math.max(0, disp.board.length - 1); return R0(BOARD_X(k), BOARD_Y, 62, 86); }
@@ -3797,10 +4372,10 @@ function showLobby(kind, msg, keepButtons) {
   const ov = $('#lobby'); ov.hidden = false;
   const pnl = $('#lobbyPanel');
   if (kind === 'wait') {
-    pnl.innerHTML = `<h2>Покерный стол</h2><p>${esc(msg)}</p>${keepButtons ? '<div class="row2"><button class="btn dark" id="bHome">На главный экран</button></div>' : ''}`;
+    pnl.innerHTML = `<h2>Royal Flush</h2><p>${esc(msg)}</p>${keepButtons ? '<div class="row2"><button class="btn dark" id="bHome">На главный экран</button></div>' : ''}`;
     if (keepButtons) $('#bHome').onclick = goHome;
   } else if (kind === 'error') {
-    pnl.innerHTML = `<h2>Покерный стол</h2><p>${esc(msg)}</p><div class="row2"><button class="btn dark" id="bHome">На главный экран</button></div>`;
+    pnl.innerHTML = `<h2>Royal Flush</h2><p>${esc(msg)}</p><div class="row2"><button class="btn dark" id="bHome">На главный экран</button></div>`;
     $('#bHome').onclick = goHome;
   } else if (kind === 'join') {
     pnl.innerHTML = `<h2>Стол ${esc(msg)}</h2><p>Вас пригласили сыграть в холдем. Регистрация не нужна.</p>
@@ -3814,7 +4389,7 @@ function showLobby(kind, msg, keepButtons) {
     $('#bOther').onclick = e => { e.preventDefault(); history.replaceState(null, '', location.pathname); showLobby('home'); };
   } else if (kind === 'home') {
     const hc = store.get('hostCode', ''), hs = store.get('hostState', null), lc = store.get('lastCode', '');
-    pnl.innerHTML = `<h2>Покерный стол</h2><div class="ver">Версия ${VERSION} «${CODENAME}» · <a href="#" id="bNews">Что нового</a></div><p>Техасский холдем без лимита до 6 игроков. Ваш телефон станет столом, друзья подключатся по ссылке — без регистрации.</p>
+    pnl.innerHTML = `<h2>Royal Flush</h2><div class="ver">Версия ${VERSION} · <a href="#" id="bNews">Что нового</a></div><p>Техасский холдем без лимита до 6 игроков. Ваш телефон станет столом, друзья подключатся по ссылке — без регистрации.</p>
       <div class="fields one">${nameField()}</div>
       <p class="fine" style="margin:-6px 0 6px"><a href="#" id="bLook">Настроить свои руки</a></p>
       <div class="row2 modes"><button class="btn gold" id="bSolo">Игра с ботами</button><button class="btn ${tutDone().length ? '' : 'pulse'}" id="bTut">Обучение${tutDone().length ? ' · ' + tutDone().length + '/5' : ''}</button></div>
@@ -3855,7 +4430,7 @@ function openInvite() {
     <div class="row2" style="margin-top:10px"><button class="btn dark" id="iClose">Закрыть</button></div>`;
   $('#iClose').onclick = () => ov.hidden = true;
   $('#iCopy').onclick = async () => { try { await navigator.clipboard.writeText(link); toast('Ссылка скопирована'); } catch (e) { const r = document.createRange(); r.selectNodeContents($('#linkBox')); const sel = getSelection(); sel.removeAllRanges(); sel.addRange(r); toast('Выделено — скопируйте вручную'); } };
-  if (navigator.share) $('#iShare').onclick = () => navigator.share({ title: 'Покер', text: 'Садись за стол! Код ' + tableCode, url: link }).catch(() => {});
+  if (navigator.share) $('#iShare').onclick = () => navigator.share({ title: 'Royal Flush', text: 'Садись за стол! Код ' + tableCode, url: link }).catch(() => {});
 }
 function myLook() {
   let l = store.get('look', null);
@@ -3921,25 +4496,111 @@ function openBar() {
   $('#barClose').onclick = () => ov.hidden = true;
   $('#menuPanel').querySelectorAll('[data-d]').forEach(b => b.onclick = () => { ov.hidden = true; cmd('drink', { id: b.dataset.d, all: b.dataset.a === '1' }); });
 }
+const CHANGELOG = [
+ {
+  "v": "1.0.5",
+  "d": "9 ноября",
+  "items": [
+   "<b>Игра называется Royal Flush</b>: на главном экране, в углу стола, в меню, во вкладке браузера и под иконкой приложения (на iPhone ярлык нужно добавить заново).",
+   "<b>«Что нового» по версиям</b>: нажми на номер версии, чтобы раскрыть или свернуть её изменения; можно раскрыть несколько и сравнить.",
+   "<b>Бар с официантом</b>: игрок кладёт фишки на край стола, рука официанта с серебряным подносом забирает их, а через пару секунд приносит напиток и ставит в подстаканник; недопитый стакан при новом заказе уносит.",
+   "<b>Напитки пьются</b>: примерно глоток за раздачу, уровень в стакане опускается; шот выпивается за 1–2 глотка, пиво за 6, виски и коньяк за 4, шампанское за 3. Пустой стакан официант забирает между раздачами.",
+   "<b>Угощение стола</b>: каждому приходит «Принять / Отказаться» на 10 секунд (молчание — согласие); угощающий платит только за принявших, за отказавшихся фишки возвращаются.",
+   "<b>Боты ходят в бар</b>: заказывают себе через 2–4 раздачи, выбор зависит от стека; примерно раз в 12–15 раздач кто-то с большим стеком угощает весь стол; угощение принимают в 4 случаях из 5.",
+   "<b>Новые модели</b>: стаканы с бликами, пеной, пузырьками, льдом и конденсатом; бутылки со стеклянным отливом; ведёрко со льдом, бутылкой и салфеткой; поднос официанта.",
+   "<b>Исправлено</b>: стакан появлялся раньше, чем игрок расплатился, и раньше надписи «угощает».",
+   "<b>Кикер</b>: при вскрытии кикеры подсвечены слабее карт комбинации, а в надписи написано, какие они: «Две пары · кикер Q».",
+   "<b>Отошёл от телефона</b>: если экран выключен дольше 20 секунд, игрок помечается «отошёл», а его ходы сразу делаются чеком или фолдом; вернулся в течение 5 минут — играет со следующей раздачи сам, позже — по кнопке «Вернуться в игру».",
+   "<b>Руки дилера</b>: рукава как у игроков — складки, блик, белая манжета с запонкой; перчатка всегда по линии руки, рука сгибается в локте.",
+   "<b>Линии стола</b> нарисованы заново одной картинкой со своим вырезом: на любом телефоне они не заходят в поля карт и зону банка; масти ♠ ♥ нарисованы ровными фигурами.",
+   "<b>Меню</b> размывает и затемняет весь экран целиком.",
+   "<b>Карты одного размера у всех</b>: и у тебя, и у соперников карты 50×72 — номинал хорошо читается на телефоне; разметка мест, подсветка и позиции фишек подогнаны под новый размер.",
+   "<b>Игроки смотрят свои карты</b>: после раздачи каждый накрывает карты ладонью и приподнимает уголок — жест видно всем, номинал нет. Боты делают это в свой момент.",
+   "<b>Фолд</b>: игрок сдвигает карты рубашкой вверх к дилеру, они ложатся в стопку сброса перед ним.",
+   "<b>Дилер собирает карты</b>: после кона в перерыве он сгребает общие карты, карты игроков и сброс в одну стопку и убирает её к колоде.",
+   "<b>Стол больше</b>: на 4% шире и на 7% выше — заполняет экран сверху донизу; места, карты и разметка раздвинуты так, что рамки нигде не пересекаются с табличками игроков, банком и мастями.",
+   "<b>Руки дилера</b>: устроены как у игроков — перчатка начинается прямо из манжета, локти сгибаются только наружу, руки не перекрещиваются и не вытягиваются больше нормального; в покое лежат на столе перед лотком.",
+   "<b>Официант</b>: рука нормальной длины — он подходит к столу, а не тянется через весь зал.",
+   "<b>Посуда и бутылки перерисованы</b>: тонкие стенки и дно, жидкость у дна закруглена по стеклу и никогда не выходит за стенки, коньячный бокал уже; каждая бутылка — один ровный контур с объёмным стеклом, кольцом и рифлёной крышкой, уровнем напитка, толстым дном, этикеткой с рамкой, гербом и годом, этикеткой на горлышке; у шампанского фольга со складками и мюзле, у текилы и коньяка тиснение на стекле.",
+   "<b>Ведро с шампанским</b> стоит на сукне у того, кто угостил стол, а не на бортике, и не закрывает карты, фишки и банк."
+  ]
+ },
+ {
+  "v": "1.0.4",
+  "d": "9 ноября",
+  "items": [
+   "<b>Руки игроков сбоку</b> снова выходят из-под таблички; верхняя рука поднята и не касается карт, рука с фишками лежит под картами, а не на фишках.",
+   "<b>Руки верхних игроков</b> короче: внешняя рука лежит рядом со своей стопкой, а не тянется через угол стола.",
+   "<b>Твоя левая рука</b> выходит из-под твоей таблички и лежит у края твоих карт.",
+   "<b>Подстаканники</b> пересчитаны под новые руки; стакан левого игрока стоит в углу борта, слева от твоей таблички.",
+   "<b>Линия ставок</b> — вытянутый овал между зоной банка, картами игроков и общими картами; общие карты стоят в её центре.",
+   "<b>Внешний овал</b> остался, но в местах, где он прошёл бы через контуры карт, в нём вырезан зазор — разметка нигде не пересекается.",
+   "<b>Масти ♠ и ♥</b> перенесены из ромбов в разрывы на концах линии ставок.",
+   "<b>Контуры под карты</b> закрывают собой линии и надписи; контур под твоими картами совпадает с их настоящим размером, а сами карты стоят точно на месте (раньше были сдвинуты на 6–8 px).",
+   "<b>Зона банка</b>: заштрихованный прямоугольник ровно по центру; надпись «Общий банк» и фишки всегда внутри, помещается олл-ин любого размера (фишки в один ряд, длинные суммы мельче шрифтом).",
+   "<b>Побочные банки и дележ</b> раскладываются кучками внутри зоны банка; если частей больше трёх, дилер раздаёт их по одной.",
+   "<b>Выигрышные карты игроков</b> больше не выезжают из контура — только подсвечиваются; общие карты по-прежнему приподнимаются.",
+   "<b>Таймер</b> гаснет сразу после хода и не тикает во время анимации ставки и раздачи следующей карты.",
+   "Верхняя надпись «NO LIMIT · CASH TABLE» убрана — на её месте зона банка; «Texas Hold’em» стоит в нижней полосе и не касается линий."
+  ]
+ },
+ {
+  "v": "1.0.3",
+  "d": "8 ноября",
+  "items": [
+   "<b>Подстаканники</b> в борту справа от правой руки каждого игрока, рука в покое их не закрывает; стаканы в 1,5 раза крупнее.",
+   "<b>Фишки правого игрока</b> у борта, зеркально левому; подсказка тренера переехала в правый верхний угол, чтобы не закрывать их.",
+   "<b>Общие карты</b> вместе с надписью комбинации стоят по центру стола; разметка стола симметрична.",
+   "<b>Контуры под карты</b> каждого игрока.",
+   "<b>«Общий банк»</b> стоит по центру, пока банк пуст, и плавно отъезжает влево, когда появляются фишки.",
+   "<b>Размен фишек</b>: дилер забирает только лишнюю мелочь прямо из стопки и приносит крупные фишки туда же — стопка не пропадает, цифра стека во время размена не падает до 0; сдача со ставки сразу идёт в стопку, а не на линию ставок.",
+   "<b>Таймер</b> одинаковый на всех телефонах, даже если часы на них разные; кольцо идёт плавно от 15 до 0 и кончается ровно тогда, когда у хоста выходит время.",
+   "<b>Боты</b> пользуются предходами: очевидный фолд, чек или колл делают сразу (Новичок часто, Любитель иногда, Акула редко); остальное обдумывают уже после того, как ход показался на столе.",
+   "<b>«Ход игры»</b> сворачивается в маленький ярлык в левом нижнем углу.",
+   "<b>Исправлено</b>: если игрок, уже сбросивший карты, вставал из-за стола посреди раздачи, его фишки пропадали из банка.",
+   "<b>Исправлено</b>: после олл-ина неполным рейзом уже сходившие игроки могли снова повышать — теперь, как по правилам, только колл или фолд."
+  ]
+ },
+ {
+  "v": "1.0.2",
+  "d": "",
+  "items": [
+   "Верхние игроки сидят на бортике рядом с дилером, карты у них под рукой.",
+   "Подстаканники и стаканы под руками.",
+   "Короткая плашка стола."
+  ]
+ },
+ {
+  "v": "1.0.1",
+  "d": "",
+  "items": [
+   "Значок дилера «D» теперь в табличке с именем.",
+   "Верхние игроки сидят у борта.",
+   "Фишки и карты больше не наезжают друг на друга и не вылезают поверх меню."
+  ]
+ },
+ {
+  "v": "1.0.0",
+  "d": "",
+  "items": [
+   "<i>Первый релиз.</i>",
+   "<b>Стол с друзьями</b> по ссылке без регистрации: прямое соединение и запасной канал через сервер.",
+   "<b>Игра с ботами</b> трёх уровней — Новичок, Любитель, Акула. Ботов можно посадить и к друзьям.",
+   "<b>Обучение</b>: 5 уроков на настоящем столе, тренер с подсказками и таблица комбинаций.",
+   "<b>Живые фишки</b>: настоящие стопки по номиналам плотными кучками, фишки только двигаются руками игроков или дилером — никогда не появляются и не исчезают сами.",
+   "<b>Олл-ин со своим характером</b>: аккуратно стопками или толчком всё разом в кучу — выбор в «Мои руки».",
+   "<b>Дилер в перчатках</b> сдаёт, собирает ставки, сгребает кучи, даёт сдачу, меняет мелочь на крупные фишки и раскладывает побочные банки отдельными кучками.",
+   "<b>Живые руки</b>: мужские и женские, одежда, маникюр, аксессуары. Руки сами ставят, стучат, сбрасывают, подглядывают в карты и уступают друг другу дорогу.",
+   "<b>Кнопки как в покерных румах</b>: Fold, Check, Call, Bet, Raise; панель рейза с Min, 3 BB, Pot, All-in; пред-ходы.",
+   "<b>Бар</b> с премиальными напитками себе или всему столу — стаканы стоят в подстаканниках на борту.",
+   "<b>Учёт фишек</b>: кто сколько внёс, вывел и пропил."
+  ]
+ }
+];
 function openNews() {
   const ov = $('#menu'); ov.hidden = false;
-  $('#menuPanel').innerHTML = `<h2>Что нового</h2><div class="ver">Версия ${VERSION} «${CODENAME}» — первый релиз</div>
-    <p class="ver" style="margin-top:6px">1.0.1: значок дилера «D» теперь в табличке с именем; верхние игроки сидят у борта; фишки и карты больше не наезжают друг на друга и не вылезают поверх меню.</p>
-    <p class="ver" style="margin-top:4px">1.0.2: верхние игроки сидят на бортике рядом с дилером, карты у них под рукой; подстаканники и стаканы под руками; короткая плашка стола.</p>
-    <p class="ver" style="margin-top:4px">1.0.3: подстаканники в борту справа от правой руки каждого игрока, стаканы крупнее; фишки правого игрока у борта; общие карты и разметка стола ровно по центру, контуры под карты игроков; «Общий банк» по центру и отъезжает, когда появляются фишки; дилер меняет фишки прямо в стопке, цифра стека не прыгает; таймер ровный на всех телефонах; боты пользуются предходами; лог сворачивается в угол.</p>
-    <p class="ver" style="margin-top:4px">1.0.4: руки боковых игроков снова выходят из-под таблички; твоя левая рука из-под твоей таблички, подстаканник левого игрока в углу борта; контуры под карты и заштрихованная зона банка, разметка нигде не пересекается; твои карты стоят точно на месте.</p>
-    <ul class="news">
-      <li><b>Стол с друзьями</b> по ссылке без регистрации: прямое соединение и запасной канал через сервер.</li>
-      <li><b>Игра с ботами</b> трёх уровней — Новичок, Любитель, Акула. Ботов можно посадить и к друзьям.</li>
-      <li><b>Обучение</b>: 5 уроков на настоящем столе, тренер с подсказками и таблица комбинаций.</li>
-      <li><b>Живые фишки</b>: настоящие стопки по номиналам плотными кучками, фишки только двигаются руками игроков или дилером — никогда не появляются и не исчезают сами.</li>
-      <li><b>Олл-ин со своим характером</b>: аккуратно стопками или толчком всё разом в кучу — выбор в «Мои руки».</li>
-      <li><b>Дилер в перчатках</b> сдаёт, собирает ставки, сгребает кучи, даёт сдачу, меняет мелочь на крупные фишки и раскладывает побочные банки отдельными кучками.</li>
-      <li><b>Живые руки</b>: мужские и женские, одежда, маникюр, аксессуары. Руки сами ставят, стучат, сбрасывают, подглядывают в карты и уступают друг другу дорогу.</li>
-      <li><b>Кнопки как в покерных румах</b>: Fold, Check, Call, Bet, Raise; панель рейза с Min, 3 BB, Pot, All-in; пред-ходы.</li>
-      <li><b>Бар</b> с премиальными напитками себе или всему столу — стаканы стоят в подстаканниках на борту.</li>
-      <li><b>Учёт фишек</b>: кто сколько внёс, вывел и пропил.</li>
-    </ul>
+  $('#menuPanel').innerHTML = `<h2>Что нового</h2><div class="ver">Версия ${VERSION} · нажми на версию, чтобы раскрыть её изменения</div>
+    <div class="vlog">${CHANGELOG.map((r, k) => `<details class="vrow"${k ? '' : ' open'}><summary><span class="vnum">${r.v}</span>${r.d ? `<span class="vdate">${r.d}</span>` : ''}${k ? '' : '<span class="vnew">текущая</span>'}</summary><ul class="news">${r.items.map(t => `<li>${t}</li>`).join('')}</ul></details>`).join('')}</div>
     <div class="row2" style="margin-top:12px"><button class="btn dark" id="nwClose">Закрыть</button></div>`;
   $('#nwClose').onclick = () => { ov.hidden = true; if (!S) showLobby('home'); };
 }
@@ -3971,7 +4632,7 @@ function openMenu() {
     <p>Новые блайнды начнут действовать со следующей раздачи.</p>
     <div class="row2"><button class="btn gold" id="mSave">Сохранить</button>${solo ? '<button class="btn dark" id="mExitSolo">Выйти из игры</button>' : '<button class="btn dark" id="mReset">Закрыть стол</button>'}</div>` : `<div class="row2" style="margin-top:12px"><button class="btn dark" id="mExit">Выйти из игры</button></div>`}
     <div class="row2" style="margin-top:12px"><button class="btn dark" id="mClose">Закрыть меню</button><button class="btn dark" id="mNews">Что нового</button></div>
-    <div class="ver" style="margin-top:8px">Покер ${VERSION} «${CODENAME}»</div>`;
+    <div class="ver" style="margin-top:8px">Royal Flush ${VERSION}</div>`;
   const close = () => ov.hidden = true;
   $('#mClose').onclick = close;
   $('#mNews').onclick = openNews;
@@ -4039,7 +4700,7 @@ async function boot(again) {
   if (code) { if (store.get('name', '') && store.get('lastCode', '') === code) { startClient(code); } else showLobby('join', code); return; }
   showLobby('home');
 }
-if (/[?&]dbg=1/.test(location.search)) window.__dbg = { get S() { return S; }, get disp() { return disp; }, get animating() { return animating || queue.length > 0; }, render, fromState, hostMutate, Engine, CH, AUDIT, CZ, ZONES, vis, slot, PH, addBot, get uid() { return uid; }, arms, SHOULDER };
+if (/[?&]dbg=1/.test(location.search)) window.__dbg = { get S() { return S; }, get disp() { return disp; }, get animating() { return animating || queue.length > 0; }, render, fromState, hostMutate, Engine, CH, AUDIT, CZ, ZONES, vis, slot, PH, addBot, get uid() { return uid; }, arms, SHOULDER, glassSvg, bottleSvg, bucketSvg, BAR };
 AUDIT.log = [];
 window.addEventListener('load', () => boot());
 if ('serviceWorker' in navigator && location.protocol === 'https:') navigator.serviceWorker.register('sw.js').catch(() => {});

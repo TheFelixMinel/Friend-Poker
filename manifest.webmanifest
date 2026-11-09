@@ -1,6 +1,6 @@
 {
-  "name": "Покерный стол",
-  "short_name": "Покер",
+  "name": "Royal Flush",
+  "short_name": "Royal Flush",
   "description": "Техасский холдем с друзьями без регистрации",
   "start_url": "./",
   "scope": "./",
