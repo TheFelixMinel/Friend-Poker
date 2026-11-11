@@ -209,7 +209,8 @@ table.led th{font-weight:600;color:#a9a497;text-align:right;font-size:12px;lette
 table.led td{text-align:right;padding:5px 6px;border-bottom:1px solid #ffffff10}
 table.led td:first-child,table.led th:first-child{text-align:left}
 .pos{color:#7fd08f}.neg{color:#f07a7a}
-#treatAsk{position:absolute;left:50%;top:58px;transform:translateX(-50%);z-index:30;display:flex;align-items:center;gap:10px;background:#141815f2;border:1px solid #e3c27a99;border-radius:12px;padding:8px 10px 8px 14px;font:600 15px var(--hud);color:#fff;box-shadow:0 6px 20px #000a;white-space:nowrap}
+#treatAsk{position:absolute;left:50%;top:58px;transform:translateX(-50%);z-index:30;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:6px 10px;max-width:min(96%,720px);width:max-content;box-sizing:border-box;background:#141815f2;border:1px solid #e3c27a99;border-radius:12px;padding:8px 10px 8px 14px;font:600 15px var(--hud);color:#fff;box-shadow:0 6px 20px #000a;text-align:center}
+#treatAsk .bb{display:flex;gap:8px}
 #treatAsk .t{color:#e9c46a}
 #treatAsk .c{font-variant-numeric:tabular-nums;color:#aab1a6;font-size:13px;min-width:22px}
 #treatAsk button{min-height:34px;padding:0 12px;font-size:14px}
@@ -241,14 +242,31 @@ table.led td:first-child,table.led th:first-child{text-align:left}
 .chip.lbl::after{content:attr(data-v);position:absolute;inset:6px;border-radius:50%;display:grid;place-items:center;font:800 8px/1 var(--hud);color:#fff;text-shadow:0 0 2px #000,0 0 2px #000;letter-spacing:-.02em}
 .glass{position:absolute;transform-origin:50% 90%;margin:-36px 0 0 -18px;pointer-events:none}
 .bucket{position:absolute;margin:-27px 0 0 -27px;pointer-events:none;filter:drop-shadow(0 3px 4px #000a)}
+.wBottle{position:absolute;margin:-64px 0 0 -16.5px;transform-origin:16.5px 1px;pointer-events:none;filter:drop-shadow(0 3px 3px #0009)}
 #pArms{pointer-events:none}
 .pill.barBtn{cursor:pointer;color:#f2e3b4;background:#2a1a10e6;border-color:#e3c27a66}
-.bar{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.bar{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.barMsg{margin:0 0 10px;padding:8px 12px;border-radius:9px;background:#7a1f1f55;border:1px solid #e0606088;color:#ffd9d0;font:600 14px var(--body);text-align:center}
 .drk{display:flex;flex-direction:column;align-items:center;gap:6px;background:#ffffff08;border:1px solid #ffffff14;border-radius:10px;padding:10px 6px}
 .drk .btl{height:96px;display:grid;place-items:end center;filter:drop-shadow(0 4px 6px #000a)}
 .drk .dn{font:600 13px/1.2 var(--body);text-align:center;color:#e8e4da;min-height:32px}
+.drk .dn small{display:block;font:500 11.5px var(--body);color:#b9b29c;margin-top:3px}
+.myBtls{display:flex;flex-direction:column;gap:6px;margin:0 0 10px}
+.myBtl{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:6px 10px;background:#e3c27a14;border:1px solid #e3c27a44;border-radius:10px;padding:7px 10px;font:500 14px var(--body);color:#eee}
+.seg{display:inline-flex;align-items:center;gap:0}
+.seg .sl{margin-right:6px;color:#cfc6a8;font-size:13px}
+.seg button{height:30px;padding:0 12px;border:1px solid #ffffff2a;background:#1f2420;color:#ddd;font:600 13px var(--hud);cursor:pointer}
+.seg button:first-of-type{border-radius:15px 0 0 15px}.seg button:last-of-type{border-radius:0 15px 15px 0;border-left:0}
+.seg button.on{background:var(--gold);color:#241a05;border-color:var(--gold)}
+.seg.big button{height:36px;padding:0 18px;font-size:14px}
+.trHead{display:flex;gap:12px;align-items:center;margin:0 0 6px}.trHead .btl{filter:drop-shadow(0 4px 6px #000a)}.trHead .dn{font:700 16px var(--body);color:#f2e3b4}
+.tList{display:flex;flex-direction:column;gap:4px}
+.tRow{display:flex;align-items:center;gap:10px;padding:7px 10px;border-radius:9px;background:#ffffff08;border:1px solid #ffffff12;cursor:pointer;font:600 15px var(--body);color:#eee}
+.tRow input{width:20px;height:20px;accent-color:#e3c27a}
+.tRow .nt{margin-left:auto;font:500 12.5px var(--body);color:#aab1a6}
 .drk .dbtns{display:flex;flex-direction:column;gap:5px;width:100%}
-.drk .btn{height:34px;font-size:14px;width:100%;text-transform:none}
+.drk .btn{height:34px;font-size:14px;width:100%;text-transform:none;padding:0 4px;white-space:nowrap}
+.drk .btn.gold{font-size:13px;letter-spacing:-.01em}
 .lookWrap{display:flex;gap:14px;align-items:flex-start}
 .lookPrev{flex:none;background:radial-gradient(ellipse at 50% 40%,#2f7a3f,#143c1f);border-radius:12px;padding:6px;box-shadow:inset 0 0 20px #0008}
 .lookOpts{flex:1;min-width:0}
@@ -481,7 +499,7 @@ table.led td:first-child,table.led th:first-child{text-align:left}
 #feltItems .stack{isolation:isolate}
 .ov{z-index:50}
 /* 1.0.5: menus blur and dim the whole screen, also what sticks out of the stage (dealer's head, sleeves) */
-.ov{inset:auto!important;backdrop-filter:blur(7px)!important;-webkit-backdrop-filter:blur(7px)!important;background:#060806c4!important}
+.ov{backdrop-filter:blur(7px)!important;-webkit-backdrop-filter:blur(7px)!important;background:#060806c4!important}
 /* a folded / away plate stays solid (arms pass under it), only its contents dim */
 .plate.folded,.plate.away{opacity:1}
 .plate.folded>*,.plate.away>*{opacity:.5}
@@ -499,6 +517,7 @@ table.led td:first-child,table.led th:first-child{text-align:left}
 .cup{width:28px!important;height:28px!important}
 .cmark{position:absolute;border:1.5px solid #f2e3b440;border-radius:9px;box-sizing:border-box;pointer-events:none}
 .potLbl.mini{font-size:11px;max-width:96px}
+.potLbl.tiny{max-width:80px;padding:1px 5px 2px;box-sizing:border-box}.potLbl.tiny small{font-size:8.5px;letter-spacing:0}
 .cmark.potz{border-radius:14px;background:repeating-linear-gradient(135deg,#f2e3b41c 0 1.5px,transparent 1.5px 9px)}
 #deck{left:665px!important}
 #cupLayer{isolation:isolate}
@@ -671,7 +690,7 @@ body.lite .handLbl.win{animation:none}
   <div class="layer" id="seatLayer"></div>
 
   <div class="layer" id="hud">
-    <div class="hudTop" style="left:10px"><span id="title">Royal Flush</span><span class="verTag">1.0.6</span><span class="pill" id="tableInfo">Холдем</span></div>
+    <div class="hudTop" style="left:10px"><span id="title">Royal Flush</span><span class="verTag">1.0.7</span><span class="pill" id="tableInfo">Холдем</span></div>
     <div class="hudTop" style="right:10px"><span class="pill" id="onlineInfo" hidden></span>
       <button class="pill barBtn" id="bBar">Бар</button>
       <button class="pill invite" id="bInvite">+ Пригласить</button>
@@ -787,7 +806,7 @@ function equity(hole, board, nOpp, iters) {
 function newTable(host, cfg, now) {
   return { v: 1, host, created: now, cfg: { sb: cfg.sb, bb: cfg.bb, buyIn: cfg.buyIn }, seats: new Array(SEATS).fill(null),
     hand: { no: 0, phase: 'idle', dealer: -1, board: '', deck: '', salt: 0, curBet: 0, minRaise: cfg.bb, turn: -1, deadline: 0, nextAt: 0, pot: 0, result: null },
-    ledger: {}, log: [], ev: [], seq: 0, looks: {}, drinks: {}, tableBottle: null };
+    ledger: {}, log: [], ev: [], seq: 0, looks: {}, drinks: {}, bottles: [] };
 }
 function pushEv(s, e) { s.seq++; e.s = s.seq; s.ev.push(e); if (s.ev.length > 60) s.ev.splice(0, s.ev.length - 60); }
 function pushLog(s, now, who, txt) { s.log.push({ t: now, u: who, x: txt }); if (s.log.length > 40) s.log.splice(0, s.log.length - 40); }
@@ -812,9 +831,11 @@ function sit(s, uid, seat, now) {
   maybeSchedule(s, now);
   return null;
 }
+function rebuyMax(s) { return Math.floor(s.cfg.buyIn / 3); }
 function rebuy(s, uid, now) {
   const i = seatOf(s, uid); if (i < 0) return 'Вы не за столом';
   const p = s.seats[i]; if (p.inHand && !p.folded && s.hand.phase !== 'idle' && s.hand.phase !== 'showdown') return 'Докупиться можно после раздачи';
+  if (p.stack > rebuyMax(s)) return 'Докупить можно при ≤ ' + rebuyMax(s).toLocaleString('ru-RU').replace(/,/g, ' ');   // 1.0.7: only a short stack (a third of the buy-in or less)
   s.ledger[uid].in += s.cfg.buyIn; p.stack += s.cfg.buyIn; p.sitOut = false; p.missed = 0;
   pushEv(s, { t: 'rebuy', seat: i, amt: s.cfg.buyIn });
   pushLog(s, now, uid, 'докупил ' + s.cfg.buyIn);
@@ -851,20 +872,28 @@ function leave(s, uid, now) {
   }
   return null;
 }
+// 1.0.7: btl = glasses in a bottle (a treat for the table is always a whole bottle)
 const DRINKS = [
-  { id: 'beer', name: 'Пиво «Бочка №7»', bb: 1, sips: 6 },
-  { id: 'vodka', name: 'Водка «Полярная звезда»', bb: 3, sips: 1 },
-  { id: 'whisky', name: 'Виски «Хайленд 18 лет»', bb: 5, sips: 4 },
-  { id: 'tequila', name: 'Текила «Сеньора» в керамике', bb: 12, sips: 2 },
-  { id: 'cognac', name: 'Коньяк «Шато Руж XO»', bb: 20, sips: 4 },
-  { id: 'champagne', name: 'Шампанское «Гранд Кюве Престиж»', bb: 40, sips: 3 },
+  { id: 'beer', name: 'Пиво «Бочка №7»', bb: 1, sips: 6, btl: 8 },
+  { id: 'vodka', name: 'Водка «Полярная звезда»', bb: 3, sips: 1, btl: 10 },
+  { id: 'whisky', name: 'Виски «Хайленд 18 лет»', bb: 5, sips: 4, btl: 8 },
+  { id: 'tequila', name: 'Текила «Сеньора» в керамике', bb: 12, sips: 2, btl: 8 },
+  { id: 'cognac', name: 'Коньяк «Шато Руж XO»', bb: 20, sips: 4, btl: 8 },
+  { id: 'champagne', name: 'Шампанское «Гранд Кюве Престиж»', bb: 40, sips: 3, btl: 6 },
 ];
+const MAX_BOTTLES = 3, TREAT_MS = 10000;
 function drinkPrice(s, id, all) {
   const d = DRINKS.find(x => x.id === id); if (!d) return 0;
-  const n = all ? s.seats.filter(Boolean).length : 1;
-  return d.bb * s.cfg.bb * n;
+  return d.bb * s.cfg.bb * (all ? d.btl : 1);
 }
-// a glass on the table: { id, sips, left, n } (n = order number, tg = the treat it came from)
+// 1.0.7: bottles on the table: [{ tg, id, by, left, mode: 'all'|'me', mem: {uid: glasses poured to him} }]
+function bars(s) {
+  if (!Array.isArray(s.bottles)) s.bottles = [];
+  if ('tableBottle' in s) delete s.tableBottle;                       // a 1.0.6 table: its bucket simply goes
+  if (s.treat && !s.treat.v7) s.treat = null;                         // a 1.0.6 treat in progress is dropped
+  return s.bottles;
+}
+// a glass on the table: { id, sips, left, n } (n = order number, tg = the bottle it came from)
 function glassOf(s, uid) {
   const g = s.drinks && s.drinks[uid]; if (!g) return null;
   if (typeof g === 'string') { const d = DRINKS.find(x => x.id === g); return d ? { id: g, sips: d.sips, left: d.sips, n: 0 } : null; }
@@ -875,22 +904,31 @@ function pourFor(s, uid, id, tg) {
   s.drinks[uid] = { id, sips: d.sips, left: d.sips, n: s.drinkN, tg: tg || 0 };
   return s.drinks[uid];
 }
-function drink(s, uid, id, all, now) {
+const away = p => !p || p.sitOut || p.away;
+function drink(s, uid, id, all, now, opt = {}) {
   const i = seatOf(s, uid); if (i < 0) return 'Сначала сядьте за стол';
   const d = DRINKS.find(x => x.id === id); if (!d) return 'Нет такого напитка';
-  if (all && s.treat) return 'Стол уже угощают — подождите минутку';
+  bars(s);
+  let guests = [];
+  if (all) {
+    if (s.treat) return 'Стол уже угощают — подождите минутку';
+    if (s.bottles.length >= MAX_BOTTLES) return 'На столе уже три бутылки';
+    const want = Array.isArray(opt.guests) ? opt.guests.map(String) : s.seats.filter(q => q && q.uid !== uid && !away(q)).map(q => q.uid);
+    guests = s.seats.filter(q => q && q.uid !== uid && want.includes(q.uid)).map(q => q.uid);
+    if (!guests.length) return 'Отметьте, кого угощаете';
+  }
   const price = drinkPrice(s, id, all);
   const p = s.seats[i];
-  if (p.stack < price) return 'Не хватает фишек: нужно ' + price;
+  if (p.stack < price) return 'Не хватает фишек: нужно ' + price.toLocaleString('ru-RU').replace(/,/g, ' ');
   p.stack -= price;
   const L = s.ledger[uid]; L.bar = (L.bar || 0) + price;
   if (all) {
-    // everyone else gets 10 s to accept or decline; silence means yes; the host refunds the declined glasses
-    const ans = {}; s.seats.forEach(q => { if (q && q.uid !== uid) ans[q.uid] = null; });
+    // the guests get 10 s: accept, later (only who has a glass) or decline; silence = later for who has a glass, accept for the rest
+    const ans = {}, has = {}; guests.forEach(u => { ans[u] = null; if (glassOf(s, u)) has[u] = 1; });
     s.treatN = (s.treatN || 0) + 1;
-    s.treat = { by: uid, id, unit: d.bb * s.cfg.bb, until: now + 10000, ans, tg: s.treatN };
+    s.treat = { v7: 1, by: uid, id, until: now + TREAT_MS, ans, has, tg: s.treatN, mode: opt.mode === 'me' ? 'me' : 'all' };
     pushEv(s, { t: 'treat', seat: i, id, price });
-    pushLog(s, now, uid, 'угощает стол: ' + d.name);
+    pushLog(s, now, uid, 'угощает стол: ' + d.name + ' (бутылка, ' + price + ')');
     return null;
   }
   const old = glassOf(s, uid), g = pourFor(s, uid, id);
@@ -898,27 +936,81 @@ function drink(s, uid, id, all, now) {
   pushLog(s, now, uid, 'заказал ' + d.name + ' (' + price + ')');
   return null;
 }
-function treatAnswer(s, uid, yes, now) {
+// ans: 'yes' | 'later' | 'no' (true/false from older phones = yes/no)
+function treatAnswer(s, uid, ans, now) {
+  bars(s);
   const t = s.treat; if (!t || !(uid in t.ans) || t.ans[uid] !== null) return 'skip';
-  t.ans[uid] = !!yes;
-  if (!yes) pushLog(s, now, uid, 'отказался от угощения');
+  const a = ans === true ? 'yes' : ans === false ? 'no' : ans;
+  if (!['yes', 'later', 'no'].includes(a)) return 'skip';
+  t.ans[uid] = a === 'later' && !glassOf(s, uid) ? 'yes' : a;
+  if (a === 'no') pushLog(s, now, uid, 'отказался от угощения');
+  if (a === 'later') pushLog(s, now, uid, 'выпьет угощение позже');
   if (Object.values(t.ans).every(v => v !== null)) resolveTreat(s, now);
   return null;
 }
 function resolveTreat(s, now) {
+  bars(s);
   const t = s.treat; if (!t) return 'skip';
   s.treat = null;
-  const bi = seatOf(s, t.by), to = [];
-  let declined = 0;
-  for (const [u, v] of Object.entries(t.ans)) { if (v === false || seatOf(s, u) < 0) declined++; }
-  if (bi >= 0) { pourFor(s, t.by, t.id, t.tg); to.push(bi); }
-  else declined++;
-  for (const [u, v] of Object.entries(t.ans)) { const k = seatOf(s, u); if (v !== false && k >= 0) { pourFor(s, u, t.id, t.tg); to.push(k); } }
-  const refund = declined * t.unit, L = s.ledger[t.by];
-  if (refund && L) { L.bar -= refund; if (bi >= 0) s.seats[bi].stack += refund; else L.out += refund; }
-  if (to.length) s.tableBottle = { id: t.id, by: t.by, tg: t.tg };
-  pushEv(s, { t: 'treatDone', seat: bi, id: t.id, to, refund: bi >= 0 ? refund : 0, ns: to.map(k => s.drinks[s.seats[k].uid].n) });
+  const d = DRINKS.find(x => x.id === t.id);
+  const B = { tg: t.tg, id: t.id, by: t.by, left: d.btl, mode: t.mode || 'all', mem: {} };
+  const join = u => { s.bottles.forEach(o => { delete o.mem[u]; }); B.mem[u] = 0; };   // one bottle per player: who joins a new one leaves the old
+  const fresh = [];                                                                      // who gets a glass from it right now
+  if (seatOf(s, t.by) >= 0) { join(t.by); const g = glassOf(s, t.by); if (!g || g.left <= 0) fresh.push(t.by); }   // the buyer with a glass in hand finishes it first
+  for (const [u, v0] of Object.entries(t.ans)) {
+    if (seatOf(s, u) < 0) continue;
+    const v = v0 !== null ? v0 : (t.has && t.has[u] && glassOf(s, u) ? 'later' : 'yes');
+    if (v === 'no') continue;
+    join(u);
+    if (v === 'yes' || !glassOf(s, u)) fresh.push(u);
+  }
+  s.bottles.push(B);
+  const to = [], ns = [];
+  for (const u of fresh) {
+    const k = seatOf(s, u); if (B.left <= 0 || away(s.seats[k])) continue;
+    const g = pourFor(s, u, t.id, t.tg); B.left--; B.mem[u]++; to.push(k); ns.push(g.n);
+  }
+  pushEv(s, { t: 'treatDone', seat: seatOf(s, t.by), id: t.id, tg: t.tg, by: t.by, to, ns });
+  tidyBottles(s);
   return null;
+}
+function setPourMode(s, uid, tg, mode) {
+  const B = bars(s).find(o => o.tg === tg); if (!B || B.by !== uid) return 'skip';
+  B.mode = mode === 'me' ? 'me' : 'all';
+  return null;
+}
+// who may still get a glass from bottle B
+function canGet(s, B, u) { return seatOf(s, u) >= 0 && (B.mode !== 'me' || u === B.by || !B.mem[u]); }
+// 1.0.7 refills: an empty glass (or none) of a bottle's member is filled from that bottle; the buyer first, then who had less
+function pourNext(s, now) {
+  bars(s);
+  const want = [];
+  for (const B of s.bottles) {
+    if (B.left <= 0) continue;
+    for (const u of Object.keys(B.mem)) {
+      const k = seatOf(s, u); if (k < 0 || away(s.seats[k]) || !canGet(s, B, u)) continue;
+      const g = glassOf(s, u); if (g && g.left > 0) continue;
+      want.push({ B, u, k, g, o: (u === B.by ? -1000 : 0) + B.mem[u] });
+    }
+  }
+  if (!want.length) return 'skip';
+  want.sort((a, b) => a.o - b.o || a.B.tg - b.B.tg);
+  const { B, u, k, g } = want[0];
+  B.left--; B.mem[u]++;
+  if (g && g.id === B.id) { g.left = g.sips; g.tg = B.tg; s.drinks[u] = g; pushEv(s, { t: 'refill', seat: k, n: g.n, tg: B.tg, id: B.id }); }
+  else { const ng = pourFor(s, u, B.id, B.tg); pushEv(s, { t: 'pour', seat: k, n: ng.n, tg: B.tg, id: B.id, old: g ? g.n : 0 }); }
+  tidyBottles(s);
+  return null;
+}
+// a bottle goes when it is empty or nobody can get a glass from it any more
+function tidyBottles(s) {
+  let any = false;
+  s.bottles = bars(s).filter(B => {
+    const alive = B.left > 0 && Object.keys(B.mem).some(u => canGet(s, B, u));
+    if (!alive) { pushEv(s, { t: 'unbucket', tg: B.tg }); any = true; }
+    return alive;
+  });
+  return any;
 }
 function sip(s, uid, now) {
   const i = seatOf(s, uid), g = glassOf(s, uid); if (i < 0 || !g || g.left <= 0) return 'skip';
@@ -926,12 +1018,25 @@ function sip(s, uid, now) {
   pushEv(s, { t: 'sip', seat: i, left: g.left, n: g.n });
   return null;
 }
-// between hands the waiter clears the empty glasses (and the bucket once its glasses are gone)
+// 1.0.7: who lost at the showdown drinks his glass to the bottom in one long gulp
+function gulp(s, uids, now) {
+  let any = false;
+  for (const u of uids) {
+    const i = seatOf(s, u), g = glassOf(s, u); if (i < 0 || !g || g.left <= 0) continue;
+    g.left = 0; s.drinks[u] = g; any = true;
+    pushEv(s, { t: 'gulp', seat: i, n: g.n });
+  }
+  const had = !!s.hand.gulp; s.hand.gulp = null;
+  return any || had ? null : 'skip';           // the pending list is always cleared, so the host never waits on it
+}
+// a glass that will be refilled from its bottle stays on the table
+function waitsRefill(s, u) { return bars(s).some(B => B.left > 0 && u in B.mem && canGet(s, B, u)); }
+// between hands the waiter clears the empty glasses
 function clearEmpty(s, now) {
   let any = false;
-  s.seats.forEach((q, i) => { if (!q) return; const g = glassOf(s, q.uid); if (g && g.left <= 0) { delete s.drinks[q.uid]; pushEv(s, { t: 'unglass', seat: i, n: g.n }); any = true; } });
+  s.seats.forEach((q, i) => { if (!q) return; const g = glassOf(s, q.uid); if (g && g.left <= 0 && !(waitsRefill(s, q.uid) && !away(q))) { delete s.drinks[q.uid]; pushEv(s, { t: 'unglass', seat: i, n: g.n }); any = true; } });
   for (const u of Object.keys(s.drinks || {})) if (seatOf(s, u) < 0) { delete s.drinks[u]; any = true; }
-  if (s.tableBottle && !Object.values(s.drinks || {}).some(g => g && g.tg === s.tableBottle.tg)) { s.tableBottle = null; pushEv(s, { t: 'unbucket' }); any = true; }
+  if (tidyBottles(s)) any = true;
   return any ? null : 'skip';
 }
 function setLook(s, uid, look) {
@@ -972,7 +1077,7 @@ function startHand(s, now, rnd = Math.random) {
     Object.assign(p, { bet: 0, contrib: 0, inHand: false, folded: false, allIn: false, acted: false, c: '', show: false, last: '' });
   }
   const players = s.seats.map((p, i) => ready(p) ? i : -1).filter(i => i >= 0);
-  h.result = null; h.board = ''; h.pot = 0;
+  h.result = null; h.board = ''; h.pot = 0; h.gulp = null;
   if (players.length < 2) { h.phase = 'idle'; h.nextAt = 0; h.turn = -1; return null; }
   h.no++; h.salt = Math.floor(rnd() * 1000);
   const deck = [...Array(52).keys()];
@@ -1166,6 +1271,8 @@ function showdown(s, now) {
   s.seats.forEach(p => { if (p) p.contrib = 0; });
   h.pot = 0; h.phase = 'showdown'; h.turn = -1; h.deadline = 0;
   h.result = { winners: Object.keys(won).map(k => ({ seat: +k, amt: won[k], hand: HAND_NAMES[handCategory(val[k])] })) };
+  const lost = contenders.length > 1 ? contenders.filter(i => !won[i]).map(i => s.seats[i].uid) : [];
+  h.gulp = lost.length ? lost : null;   // 1.0.7: who showed down and won nothing (a split pot has no losers)
   pushEv(s, { t: 'win', pots: potEv });
   h.result.winners.forEach(w => pushLog(s, now, s.seats[w.seat].uid, 'выиграл ' + w.amt + ' (' + w.hand + ')'));
   const runoutCards = s.ev.filter(e => e.t === 'board' && e.runout).length;
@@ -1188,7 +1295,7 @@ function timeout(s, now) {
   return null;
 }
 
-const API = { glassOf, treatAnswer, resolveTreat, sip, clearEmpty, setAway, TURN_MS, setTurnMs, turnMs, rig, bestFive, DRINKS, drinkPrice, drink, setLook, newTable, sit, leave, rebuy, setCfg, setSitOut, startHand, act, timeout, legal, evalHand, handName, equity, holeCards, board, totalPot, deobf, obf, HAND_NAMES, handCategory, cardStr, seatOf };
+const API = { glassOf, treatAnswer, resolveTreat, sip, clearEmpty, bars, pourNext, setPourMode, gulp, waitsRefill, canGet, rebuyMax, MAX_BOTTLES, setAway, TURN_MS, setTurnMs, turnMs, rig, bestFive, DRINKS, drinkPrice, drink, setLook, newTable, sit, leave, rebuy, setCfg, setSitOut, startHand, act, timeout, legal, evalHand, handName, equity, holeCards, board, totalPot, deobf, obf, HAND_NAMES, handCategory, cardStr, seatOf };
 
 if (typeof module !== 'undefined') module.exports = API;
 return API;
@@ -1209,10 +1316,10 @@ const clone = o => JSON.parse(JSON.stringify(o));
 // cards right in front of the plate, chip stack beside them, bet a little further in, never on the board.
 const ZONES = [
   { plate: [372, 468], cards: [372, 386], stack: [508, 416], bet: [470, 336], btn: [296, 414], drink: [252, 440], ha: [296, 406], hb: [504, 470], bodyA: [372, 568] },   // me: the left forearm comes from under the plate, leaving the corner of the rail free (bottom-left)
-  { plate: [104, 262], cards: [204.5, 262], stack: [238, 370], bet: [330, 290], btn: [300, 370], drink: [270, 342], ha: [160, 192], hb: [166, 334], bodyA: [-90, 192], bodyB: [-90, 334] },   // left: both forearms from under the plate, the upper hand clear of the cards
+  { plate: [104, 262], cards: [204.5, 262], stack: [238, 370], bet: [330, 290], btn: [300, 370], drink: [270, 342], ha: [114, 206], hb: [166, 334], bodyA: [-90, 206], bodyB: [-90, 334] },   // left: both forearms from under the plate; 1.0.7: the upper hand lies lower, just above the top card, clear of the top-left player's hand
   { plate: [356, 40], cards: [356, 124], stack: [262, 128], bet: [262, 196], btn: [0, 0], drink: [167, 120], ha: [392, 92], hb: [214, 140], body: [356, -60], tilt: 0, cup: -1 },    // top-left: on the rail beside the dealer
   { plate: [764, 40], cards: [764, 124], stack: [858, 128], bet: [858, 196], btn: [0, 0], drink: [952, 119], ha: [728, 92], hb: [906, 140], body: [764, -60], tilt: 0, cup: 1 },    // top-right
-  { plate: [1016, 262], cards: [915.5, 262], stack: [882, 370], bet: [790, 290], btn: [820, 370], drink: [850, 342], ha: [960, 192], hb: [954, 334], bodyA: [1210, 192], bodyB: [1210, 334] },  // right: mirror of the left seat
+  { plate: [1016, 262], cards: [915.5, 262], stack: [882, 370], bet: [790, 290], btn: [820, 370], drink: [850, 342], ha: [1006, 206], hb: [954, 334], bodyA: [1210, 206], bodyB: [1210, 334] },  // right: mirror of the left seat
   { plate: [722, 468], cards: [722, 386], stack: [610, 416], bet: [632, 336], btn: [812, 400], drink: [868, 440], ha: [794, 406], hb: [618, 470], bodyA: [722, 568] },   // bottom-right: the right forearm comes from the body, clear of the buttons
 ];
 // centre line of the wooden rail: rounded rectangle (rail 96,18 928x470 r 290/235, felt inset 30) -> middle of the band
@@ -1246,9 +1353,14 @@ SLOTS.forEach((sl, i) => { sl.cup = CUPS[i]; sl.drink = CUPS[i]; });
 const BOARD_Y = 255, BOARD_X = k => CX + (k - 2) * 62;
 const POT = [CX, 140], DECK = [682, 86], MUCK = [438, 88], BUCKET = [312, 246], PILE = [560, 100];
 // folded cards lie face down in a small untidy pile in front of the dealer
-// the ice bucket stands on the felt by the player who treated the table: between his cards and the centre, clear of cards, chips and the pot
-const BUCKET_AT = [[388, 306], [373, 250], [312, 246], [808, 246], [747, 250], [732, 306]];
-function bucketSpot(by) { const i = S ? S.seats.findIndex(p => p && p.uid === by) : -1; return i < 0 ? BUCKET : BUCKET_AT[vis(i)]; }
+// 1.0.7: ice buckets stand on the free felt (found by measuring a full table: cards, chips, bets, hands, cups, pot and board all kept clear);
+// a bucket takes the free spot nearest to the player who ordered it, his second one the next spot beside it
+const BUCKET_SPOTS = [[270, 278], [308, 320], [560, 339], [812, 320], [850, 278]];
+function bucketSpotOrder(by) {
+  const i = S ? S.seats.findIndex(p => p && p.uid === by) : -1, P = i < 0 ? [CX, 400] : slot(i).plate;
+  return BUCKET_SPOTS.map((q, k) => k).sort((a, b) => Math.hypot(BUCKET_SPOTS[a][0] - P[0], BUCKET_SPOTS[a][1] - P[1]) - Math.hypot(BUCKET_SPOTS[b][0] - P[0], BUCKET_SPOTS[b][1] - P[1]));
+}
+function bucketAt(b) { return BUCKET_SPOTS[b.spot] || BUCKET; }
 const muckPos = k => [MUCK[0] + ((k * 37) % 9) - 4, MUCK[1] + ((k * 23) % 7) - 3, ((k * 53) % 34) - 17];
 let collectedNo = -1, collecting = false;
 const SHOULDER = { L: [500, 0], R: [620, 0] }, REST = { L: [479, 72], R: [641, 72] };
@@ -1287,7 +1399,7 @@ const toStage = (x, y) => [TOX + (TOC[0] + (x - TOC[0]) * TSX) * TK, TOY + (TOC[
 
 /* ---------------- scaling ---------------- */
 let force = false;
-const VERSION = '1.0.6', CODENAME = 'Royal Flush';
+const VERSION = '1.0.7', CODENAME = 'Royal Flush';
 /* 1.0.6: the whole table (wooden rail included) is fitted into the screen and centred, with the same small gap above and
    below on every screen; the HUD and the side plates keep to the screen edges. Plain transform, no CSS zoom (zoom flickered on some Android phones) */
 const RAIL_Y0 = TOC[1] + (18 - TOC[1]) * TSY, RAIL_Y1 = TOC[1] + (488 - TOC[1]) * TSY;   // the rail's top and bottom in stage units
@@ -2044,8 +2156,8 @@ function sipGrip(seat, side) {
   const q = [P(50, -22), P(72, -22), P(72, 22), P(50, 22)];   // only the fingertips wrap over the front of the glass, so even a shot glass stays visible
   return { grip: P(SIP_GRIP, 0), finger: 'M' + q.map(p => p[0].toFixed(1) + ',' + p[1].toFixed(1)).join('L') + 'Z' };
 }
-async function sipAnim(seat, onDrink) {
-  const sl = slot(seat), pos = drinkPos(seat), gl = L.cups.querySelector(`.glass[data-seat="${seat}"]`);
+async function sipAnim(seat, onDrink, gulp) {   // 1.0.7 gulp: one long sip to the bottom, the glass tipped steeper
+  const sl = slot(seat), pos = drinkPos(seat); let gl = L.cups.querySelector(`.glass[data-seat="${seat}"]`);
   if (!gl || !PH[seat] || SIPPING.has(seat)) { if (onDrink) onDrink(); return; }   // one glass, one sip at a time
   const G = PH[seat].geo, H = Math.hypot(G.A.rest[0] - pos[0], G.A.rest[1] - pos[1]) <= Math.hypot(G.B.rest[0] - pos[0], G.B.rest[1] - pos[1]) ? 'A' : 'B';
   for (let k = 0; k < 20 && !handFree(seat, H); k++) await sleep(200);
@@ -2058,7 +2170,9 @@ async function sipAnim(seat, onDrink) {
   const tgt = reachFor(seat, H, grip0, SIP_GRIP);
   setPose(seat, H, 'cup');
   await movePH(seat, H, ...tgt, 280);
-  if (!PH[seat] || PH[seat] !== st || !gl.isConnected) return;
+  // 1.0.7: the table may have been redrawn while the hand reached out: take the glass that stands there now
+  if (!gl.isConnected) gl = L.cups.querySelector(`.glass[data-seat="${seat}"]`);
+  if (!PH[seat] || PH[seat] !== st || !gl) { if (onDrink) onDrink(); restPH(seat, H, 280); return; }
   // take it: the glass goes over the palm, the fingers are drawn again over the glass
   const fx = sipLayers(); hEl.id = 'sipHnd'; fx.use.setAttribute('href', '#sipHnd');
   SIPPING.add(seat); fx.glass.appendChild(gl);
@@ -2076,10 +2190,11 @@ async function sipAnim(seat, onDrink) {
   try {
     await movePH(seat, H, ...reachFor(seat, H, [mouth[0], mouth[1] - mid], SIP_GRIP), 420, ease.io, (x, y, t) => { lift = t; follow(); });
     await liftPH(seat, H, 1, 200);
-    await tween(160, t => { tilt = dir * SIP_TILT * t; redraw(); follow(); });
-    if (onDrink) onDrink(gl); redraw();
-    await sleep(420);
-    await tween(150, t => { tilt = dir * SIP_TILT * (1 - t); redraw(); follow(); });
+    const T = gulp ? SIP_TILT * 2.4 : SIP_TILT;
+    await tween(gulp ? 320 : 160, t => { tilt = dir * T * t; redraw(); follow(); });
+    if (gulp) { const g = BAR.shown[seat], l0 = g ? g.left : 0; await tween(1500, t => { if (g) g.left = l0 * (1 - t); redraw(); follow(); }); if (onDrink) onDrink(gl); redraw(); await sleep(200); }
+    else { if (onDrink) onDrink(gl); redraw(); await sleep(420); }
+    await tween(gulp ? 260 : 150, t => { tilt = dir * T * (1 - t); redraw(); follow(); });
     await liftPH(seat, H, 0, 160);
     await movePH(seat, H, ...tgt, 380, ease.io, (x, y, t) => { lift = 1 - t; follow(); });
   } finally {
@@ -2240,7 +2355,13 @@ function bucketSvg(id) {
 /* ---------------- the bar: what stands on the table, the waiter, sips ----------------
    BAR.shown is what this phone shows; it only changes when the waiter or a sip gets there,
    so a glass never appears before the order is paid. When nothing is pending it is synced with the state. */
-const BAR = { shown: [null, null, null, null, null, null], bucket: null, q: [], running: false };
+const BAR = { shown: [null, null, null, null, null, null], buckets: [], q: [], running: false };
+// 1.0.7: every bucket keeps the spot it got when the waiter brought it
+function bucketPlace(b) {
+  const used = new Set(BAR.buckets.filter(x => x !== b && x.spot != null).map(x => x.spot));
+  b.spot = bucketSpotOrder(b.by).find(k => !used.has(k)); if (b.spot == null) b.spot = 0;
+  return b;
+}
 function barSync() {
   if (!S || animating || queue.length || BAR.q.length || BAR.running) return false;
   let ch = false;
@@ -2248,8 +2369,9 @@ function barSync() {
     const p = S.seats[i], g = p ? Engine.glassOf(S, p.uid) : null, cur = BAR.shown[i];
     if ((g ? g.n + ':' + g.left + ':' + g.id : '') !== (cur ? cur.n + ':' + cur.left + ':' + cur.id : '')) { BAR.shown[i] = g ? Object.assign({}, g) : null; ch = true; }
   }
-  const tb = S.tableBottle;
-  if ((tb ? tb.id + tb.tg : '') !== (BAR.bucket ? BAR.bucket.id + BAR.bucket.tg : '')) { BAR.bucket = tb ? Object.assign({}, tb) : null; ch = true; }
+  const bs = S.bottles || [], want = new Set(bs.map(b => b.tg));
+  if (BAR.buckets.some(b => !want.has(b.tg))) { BAR.buckets = BAR.buckets.filter(b => want.has(b.tg)); ch = true; }
+  for (const b of bs) if (!BAR.buckets.some(x => x.tg === b.tg)) { BAR.buckets.push(bucketPlace({ tg: b.tg, id: b.id, by: b.by })); ch = true; }
   return ch;
 }
 setInterval(() => { if (barSync()) render(); }, 600);
@@ -2264,22 +2386,27 @@ async function barStep(st) {
   if (st.k === 'deliver') {
     const wait = st.at - Date.now(); if (wait > 0 && !fast) await sleep(wait);
     await waiterServe(st.seat, st.glass, fast, st.quick);
-  } else if (st.k === 'sip') {
+  } else if (st.k === 'sip' || st.k === 'gulp') {
     const g = BAR.shown[st.seat];
     if (!g || g.n !== st.n) return;
-    if (fast) { g.left = st.left; return; }
-    await sipAnim(st.seat, gl => { g.left = st.left; if (gl) gl.innerHTML = glassSvg(g.id, GLASS_K, g.left / g.sips); });
+    const left = st.k === 'gulp' ? 0 : st.left;
+    if (fast) { g.left = left; return; }
+    await sipAnim(st.seat, gl => { g.left = left; if (gl) gl.innerHTML = glassSvg(g.id, GLASS_K, g.left / g.sips); }, st.k === 'gulp');
+    g.left = left;
+  } else if (st.k === 'refill') {
+    await waiterRefill(st.seat, st.n, st.id, fast);
   } else if (st.k === 'remove') {
     const g = BAR.shown[st.seat]; if (!g || (st.n && g.n !== st.n)) return;
     await waiterServe(st.seat, null, fast);
   } else if (st.k === 'unbucket') {
-    const b = L.felt.querySelector('.bucket');
-    if (b && !fast) await b.animate([{ opacity: 1 }, { opacity: 0, transform: 'translateY(-26px) scale(.6)' }], { duration: 420, easing: 'ease-in' }).finished.catch(() => {});
-    BAR.bucket = null;
+    const b = BAR.buckets.find(x => x.tg === st.tg); if (!b) return;
+    BAR.buckets = BAR.buckets.filter(x => x !== b); render();
+    if (!fast) await waiterBucket(b, false);
   } else if (st.k === 'bucket') {
-    BAR.bucket = st.b; render();
-    const b = L.felt.querySelector('.bucket');
-    if (b && !fast) b.animate([{ transform: 'translate(0,-30px) scale(.4)', opacity: 0 }, { transform: 'translate(0,4px) scale(1.08)', opacity: 1 }, { transform: 'none' }], { duration: 600, easing: 'ease-out' });
+    if (BAR.buckets.some(x => x.tg === st.b.tg)) return;
+    const b = bucketPlace(Object.assign({}, st.b));
+    if (!fast) await waiterBucket(b, true);
+    if (!BAR.buckets.includes(b)) BAR.buckets.push(b); render();
   }
 }
 // waiter geometry: he comes from outside the table, straight behind the seat's cupholder
@@ -2337,6 +2464,36 @@ async function waiterServe(seat, glass, fast, quick) {
   await waiterMove(W, stop, W.off, quick ? 340 : 480, items);
   items.forEach(([el]) => el.remove()); drawWaiter(null);
 }
+// 1.0.7: the waiter brings an ice bucket to its spot on the felt (in = true) or takes it away
+function waiterWayAt(pt) { const dx = pt[0] - 560, dy = pt[1] - 262, l = Math.hypot(dx, dy) || 1, o = [dx / l, dy / l]; return { o, off: [pt[0] + o[0] * 330, pt[1] + o[1] * 330], shoulder: [pt[0] + o[0] * 560, pt[1] + o[1] * 560] }; }
+async function waiterBucket(b, bring) {
+  const at = bucketAt(b), W = waiterWayAt(at), el = trayItem(bucketSvg(b.id), 'bucket');
+  if (bring) { await waiterMove(W, W.off, at, 620, [[el, 0, 0]]); noise(.05, 2600, 3, .3); el.remove(); if (!BAR.buckets.includes(b)) BAR.buckets.push(b); render(); await sleep(140); await waiterMove(W, at, W.off, 480); }
+  else { place(el, ...at); await waiterMove(W, W.off, at, 520, []); noise(.05, 2600, 3, .3); await sleep(120); await waiterMove(W, at, W.off, 560, [[el, 0, 0]]); }
+  el.remove(); drawWaiter(null);
+}
+// 1.0.7: a refill: the waiter comes with the bottle and tops the glass up to full, right in its holder
+async function waiterRefill(seat, n, id, fast) {
+  const g = BAR.shown[seat];
+  if (!g || g.n !== n) return;
+  const full = () => { g.left = g.sips; };
+  if (fast || !disp || !disp.seats[seat]) { full(); return; }
+  const W = waiterWay(seat), stop = [W.cup[0] + W.o[0] * 62, W.cup[1] + W.o[1] * 62];   // the tray stays clear of the glass
+  const BH = 64, bt = trayItem(bottleSvg(id, BH), 'wBottle'), side = Math.sign(W.cup[0] - 560) || 1;
+  await waiterMove(W, W.off, stop, 520, [[bt, 0, 0]]);
+  // the bottle tips over the glass, its neck at the rim, and pours; the level rises to the brim
+  const gl = L.cups.querySelector(`.glass[data-seat="${seat}"]`), a = DRINK_ART[id] || {}, bs = GLASS_BASE[a.glass] || [18, 36];
+  const rim = [W.cup[0], W.cup[1] + GLASS_SINK - (bs[1] - 6) * GLASS_K];        // the mouth of the glass
+  const tipAt = [rim[0], rim[1] + BH];                                             // where the bottle's base point goes so that its neck tip is at the rim
+  const lvl0 = g.left / g.sips, ang = -side * 118;
+  await tween(300, t => { place(bt, stop[0] + (tipAt[0] - stop[0]) * t, stop[1] + (tipAt[1] - stop[1]) * t); bt.style.transform = `rotate(${ang * t}deg)`; }, ease.io);
+  noise(.5, 900, .7, .18);
+  await tween(700, t => { g.left = g.sips * (lvl0 + (1 - lvl0) * t); if (gl && gl.isConnected) gl.innerHTML = glassSvg(g.id, GLASS_K, g.left / g.sips); });
+  full(); render();
+  await tween(240, t => { place(bt, tipAt[0] + (stop[0] - tipAt[0]) * t, tipAt[1] + (stop[1] - tipAt[1]) * t); bt.style.transform = `rotate(${ang * (1 - t)}deg)`; }, ease.io);
+  await waiterMove(W, stop, W.off, 460, [[bt, 0, 0]]);
+  bt.remove(); drawWaiter(null);
+}
 // paying the waiter: the player's hand puts the chips on the felt by his cup, the waiter takes them on the tray;
 // overpaid with a big chip -> the waiter leaves the change and the player pulls it back
 async function payWaiter(seat, amt, d) {
@@ -2361,20 +2518,6 @@ async function payWaiter(seat, amt, d) {
     CH.stack[seat] = compAdd(CH.stack[seat], compOf(over)); if (p) p.stack = compVal(CH.stack[seat]); render(); restPH(seat, 'B', 300);
   }
 }
-// money back for declined glasses: the waiter brings the chips, the player pulls them into his stack
-async function refundWaiter(seat, amt, d) {
-  const p = d.seats[seat]; if (!p) return;
-  const comp = compOf(amt);
-  if (document.hidden) { CH.stack[seat] = compAdd(CH.stack[seat], comp); p.stack = compVal(CH.stack[seat]); return; }
-  const P = payPoint(seat), W = waiterWay(seat), w = chipSprite(comp, ...W.off); $('#waiterItems').appendChild(w);
-  await waiterMove(W, W.off, P, 520, [[w, 0, 0]]);
-  w.remove(); const w0 = chipSprite(comp, ...P);
-  await waiterMove(W, P, W.off, 460);
-  drawWaiter(null); w0.remove();
-  const w2 = await carryChips(seat, 'B', comp, P, stackPt(seat, compAdd(CH.stack[seat], comp)), null, 340); w2.remove();
-  CH.stack[seat] = compAdd(CH.stack[seat], comp); p.stack = compVal(CH.stack[seat]); render(); restPH(seat, 'B', 300);
-}
-
 /* sprite that moves along a straight path */
 function sprite(el, x, y) { const w = document.createElement('div'); w.className = 'fx'; w.appendChild(el); w.style.transform = `translate(${x}px,${y}px)`; L.fx.appendChild(w); return w; }
 function moveSprite(w, from, to, dur, e = ease.out, rot = [0, 0], scale = [1, 1]) {
@@ -2431,7 +2574,7 @@ const CZ = [
   { stack: { o: [882, 370], far: [-.7, -.7], per: 3, rows: 2, h: 8 }, bet: { o: [748, 258], far: [0, -1], per: 3, rows: 2, h: 10 }, lbl: [748, 276] },
   { stack: { o: [610, 416], far: [0, -1], per: 3, rows: 2, h: 8 }, bet: { o: [648, 320], far: [0, -1], heap: [640, 308], per: 3, rows: 2, h: 8 }, lbl: [716, 306] },
 ];
-const POTZONE = { o: [625, 152], far: [0, -1], per: 5, rows: 1, h: 7, seed: 11 };   // one row of at most 5 columns: fits the pot area
+const POTZONE = { o: [627, 148], far: [0, -1], per: 5, rows: 1, h: 7, seed: 11 };   // 1.0.7: one row of at most 5 columns, every chip inside the hatched pot area (right of the label)
 const DEN_INFO = Object.fromEntries(DENOMS.map(d => [d[0], d]));
 const DVALS = DENOMS.map(d => d[0]);                     // descending
 
@@ -2520,7 +2663,7 @@ function pileCols(comp, cx, cy, seed, rx = 34, ry = 16) {
 }
 function stackLayout(seat, comp) { return zoneCols(Object.assign({ seed: vis(seat) * 31 + 1 }, CZ[vis(seat)].stack), comp); }
 function betLayout(seat, comp, pile) { const z = Object.assign({ seed: vis(seat) * 31 + 7 }, CZ[vis(seat)].bet); const hp = z.heap || z.o; return pile ? pileCols(comp, hp[0], hp[1], seat + 7, 22, 10) : zoneCols(z, comp); }
-function potLayout(comp, pile) { return pile ? pileCols(comp, POTZ[0], POTZ[1] - 12, 3, 40, 6) : zoneCols(POTZONE, comp); }   // the heap stays inside the pot area
+function potLayout(comp, pile) { return pile ? pileCols(comp, 627, 146, 3, 40, 4) : zoneCols(POTZONE, comp); }   // 1.0.7: the heap stays inside the pot area too
 
 /* drawing: one container, columns of chips; every chip carries its value for checks */
 function chipColsEl(cols, ox = 0, oy = 0) {
@@ -2758,15 +2901,15 @@ async function animCollect(e, d) {
 }
 // side pots and split pots are laid out as separate labelled piles before they go to the winners
 CH.piles = [];
-const PILE_Y = 166;                                   // inside the pot area
-function pilePos(n, k) { const gap = n > 2 ? 100 : 130; return [CX + (k - (n - 1) / 2) * gap, PILE_Y]; }
+const PILE_Y = 152;                                   // 1.0.7: chips and labels of every pile inside the pot area
+function pilePos(n, k) { const gap = n > 2 ? 92 : 130; return [CX + (k - (n - 1) / 2) * gap, PILE_Y]; }
 function drawPiles() {
   CH.piles.forEach((pl, k) => {
     if (compEmpty(pl.comp)) return;
-    const el = chipColsEl(zoneCols({ o: pl.at, far: [0, -1], per: CH.piles.length > 2 ? 3 : 4, rows: 1, h: 6, seed: k + 3 }, pl.comp));
+    const el = chipColsEl(zoneCols({ o: pl.at, far: [0, -1], per: CH.piles.length > 2 ? 3 : 4, rows: 1, h: 4, seed: k + 3 }, pl.comp));
     el.dataset.kind = 'pile'; el.dataset.k = k; L.felt.appendChild(el);
-    const lb = document.createElement('div'); lb.className = 'betLbl potLbl mini'; lb.innerHTML = `<small>${esc(pl.name)}</small><span class="coin"></span>${fmt(compVal(pl.comp))}`;
-    place(lb, pl.at[0], 104); L.felt.appendChild(lb);
+    const lb = document.createElement('div'); lb.className = 'betLbl potLbl mini' + (CH.piles.length > 2 ? ' tiny' : ''); lb.innerHTML = `<small>${esc(pl.name)}</small><span class="coin"></span>${fmt(compVal(pl.comp))}`;
+    place(lb, pl.at[0], 106); L.felt.appendChild(lb);
   });
 }
 async function splitPiles(e, d) {
@@ -3016,7 +3159,7 @@ function render() {
     place(g, slot(i).drink[0], slot(i).drink[1] + GLASS_SINK); L.cups.appendChild(g);
     const lip = document.createElement('div'); lip.className = 'cupLip'; lip.dataset.seat = i; lip.innerHTML = CUP_LIP; place(lip, slot(i).drink[0] - CUP_R, slot(i).drink[1] - CUP_R); L.cups.appendChild(lip);
   }
-  if (BAR.bucket) { const b = document.createElement('div'); b.className = 'bucket'; b.innerHTML = bucketSvg(BAR.bucket.id); place(b, ...bucketSpot(BAR.bucket.by)); L.felt.appendChild(b); }
+  BAR.buckets.forEach(bk => { const b = document.createElement('div'); b.className = 'bucket'; b.dataset.tg = bk.tg; b.innerHTML = bucketSvg(bk.id); place(b, ...bucketAt(bk)); L.felt.appendChild(b); });
   drawMarks();
   buildHands();
   renderEquity();
@@ -3411,15 +3554,18 @@ async function animate(e) {
       break;
     }
     case 'treatDone': {
-      if (e.refund > 0 && d.seats[e.seat]) await refundWaiter(e.seat, e.refund, d);
+      // 1.0.7: the waiter brings the bucket with the bottle, then a glass to everyone who drinks now
       const D = Engine.DRINKS.find(x => x.id === e.id);
-      if (e.to.length) barPush({ k: 'bucket', b: { id: e.id, tg: (S.tableBottle && S.tableBottle.tg) || 0, by: (S.tableBottle && S.tableBottle.by) || (d.seats[e.seat] && d.seats[e.seat].uid) } });
-      e.to.forEach((k, j) => barPush({ k: 'deliver', seat: k, glass: { id: e.id, sips: D.sips, left: D.sips, n: e.ns[j] }, at: Date.now() + 1500, quick: true }));
+      barPush({ k: 'bucket', b: { id: e.id, tg: e.tg, by: e.by } });
+      e.to.forEach((k, j) => barPush({ k: 'deliver', seat: k, glass: { id: e.id, sips: D.sips, left: D.sips, n: e.ns[j], tg: e.tg }, at: 0, quick: true }));
       break;
     }
+    case 'pour': { const D = Engine.DRINKS.find(x => x.id === e.id); barPush({ k: 'deliver', seat: e.seat, glass: { id: e.id, sips: D.sips, left: D.sips, n: e.n, tg: e.tg }, at: 0, quick: true }); break; }
+    case 'refill': barPush({ k: 'refill', seat: e.seat, n: e.n, id: e.id }); break;
     case 'sip': barPush({ k: 'sip', seat: e.seat, left: e.left, n: e.n }); break;
+    case 'gulp': barPush({ k: 'gulp', seat: e.seat, n: e.n }); break;
     case 'unglass': barPush({ k: 'remove', seat: e.seat, n: e.n }); break;
-    case 'unbucket': barPush({ k: 'unbucket' }); break;
+    case 'unbucket': barPush({ k: 'unbucket', tg: e.tg }); break;
     case 'rebuy': { if (d.seats[e.seat]) await animFromTray(e.seat, e.amt, d); break; }
     case 'sit': {
       const ps = S.seats[e.seat]; if (!ps) break;
@@ -3588,8 +3734,9 @@ const COMMANDS = {
   rebuy: (s, pid) => Engine.rebuy(s, pid, Date.now()),
   sitout: (s, pid, d) => Engine.setSitOut(s, pid, !!d.val, Date.now()),
   leave: (s, pid) => Engine.leave(s, pid, Date.now()),
-  drink: (s, pid, d) => Engine.drink(s, pid, String(d.id), !!d.all, Date.now()),
-  treat: (s, pid, d) => Engine.treatAnswer(s, pid, !!d.yes, Date.now()),
+  drink: (s, pid, d) => Engine.drink(s, pid, String(d.id), !!d.all, Date.now(), { guests: Array.isArray(d.guests) ? d.guests.slice(0, 6) : undefined, mode: d.mode }),
+  treat: (s, pid, d) => Engine.treatAnswer(s, pid, typeof d.ans === 'string' ? d.ans : !!d.yes, Date.now()),
+  pourMode: (s, pid, d) => Engine.setPourMode(s, pid, +d.tg, d.mode),
   look: (s, pid, d) => Engine.setLook(s, pid, d.look),
 };
 function runCommand(pid, name, data) {
@@ -3633,28 +3780,37 @@ document.addEventListener('visibilitychange', () => {
   send();
 });
 
-/* a treat for the table: every guest gets 10 s to accept or decline (silence = yes) */
+/* a treat for the table: every guest gets 10 s: accept, later (who has a glass) or decline;
+   silence = later for who has a glass, accept for the rest */
 function paintTreat() {
   const el = $('#treatAsk'); if (!el) return;
   const t = S && S.treat, me = uid;
   if (!t || !(me in (t.ans || {})) || t.ans[me] !== null) { el.hidden = true; el.dataset.k = ''; return; }
   const left = Math.max(0, Math.ceil((localTime(t.until) - Date.now()) / 1000));
-  const k = String(t.tg);
+  const has = !!Engine.glassOf(S, me), k = t.tg + ':' + has;
   if (el.dataset.k !== k) {
     el.dataset.k = k; el.hidden = false;
     const dk = Engine.DRINKS.find(x => x.id === t.id);
-    el.innerHTML = `<span>🥂 ${esc(nameOf(t.by))} угощает: <span class="t">${esc(dk ? dk.name : t.id)}</span></span><span class="c"></span><button class="btn gold" data-y="1">Принять</button><button class="btn dark" data-y="0">Отказаться</button>`;
-    el.querySelectorAll('button').forEach(b => b.onclick = () => { el.hidden = true; cmd('treat', { yes: b.dataset.y === '1' }); });
+    el.innerHTML = `<span class="q">🥂 ${esc(nameOf(t.by))} угощает: <span class="t">${esc(dk ? dk.name : t.id)}</span> <span class="c"></span></span>
+      <span class="bb"><button class="btn gold" data-y="yes">Принять</button>${has ? '<button class="btn" data-y="later">Позже</button>' : ''}<button class="btn dark" data-y="no">Отказаться</button></span>`;
+    el.querySelectorAll('button').forEach(b => b.onclick = () => { el.hidden = true; cmd('treat', { ans: b.dataset.y }); });
   }
   el.querySelector('.c').textContent = left + ' с';
 }
 setInterval(paintTreat, 300);
 
-/* the bar on the host: when each player sips, when bots order, bots answering a treat */
+/* the bar on the host: when each player sips, refills from the bottles, the gulp after a lost showdown, bots at the bar */
 const sipAt = {}, botDrinkAt = {}, botTreatAns = {};
-let treatHandNo = -1;
+let treatHandNo = -1, botRebuyNo = -1;
 function barHost() {
   const now = Date.now(), h = S.hand, live = ['preflop', 'flop', 'turn', 'river'].includes(h.phase);
+  Engine.bars(S);
+  // 1.0.7: who lost the showdown empties his glass once the dealer has collected the cards
+  if (h.gulp && h.gulp.length && h.phase === 'showdown' && !tut && !demo && ((collectedNo === h.no && !collecting) || (h.nextAt && now > h.nextAt - 1500))) {
+    const who = h.gulp.slice(); hostMutate(s => Engine.gulp(s, who, now)); return true;
+  }
+  // refills: an empty glass of someone at a bottle is filled at once
+  { const s2 = clone(S); if (Engine.pourNext(s2, now) !== 'skip') { hostCommit(s2); return true; } }
   // about one sip per hand per player, at a quiet moment (never on his own turn)
   for (let i = 0; i < 6; i++) {
     const p = S.seats[i]; if (!p) continue; const g = Engine.glassOf(S, p.uid);
@@ -3663,25 +3819,33 @@ function barHost() {
     if (now > sipAt[p.uid] && h.turn !== i) { sipAt[p.uid] = now + 30000 + Math.random() * 30000; hostMutate(s => Engine.sip(s, p.uid, now)); return true; }
   }
   if (!live) {
-    // empty glasses go between hands
-    if (S.seats.some(p => p && Engine.glassOf(S, p.uid) && Engine.glassOf(S, p.uid).left <= 0) || (S.tableBottle && !Object.values(S.drinks || {}).some(g => g && g.tg === S.tableBottle.tg))) {
-      const s2 = clone(S); if (Engine.clearEmpty(s2, now) !== 'skip') { hostCommit(s2); return true; }
-    }
+    // empty glasses (that nobody will refill) and finished bottles go between hands
+    const s2 = clone(S); if (Engine.clearEmpty(s2, now) !== 'skip') { hostCommit(s2); return true; }
   }
   if (!S.bots || tut || demo) return false;
-  // bots answer a treat after 1-3 s, yes 4 times out of 5
+  // bots answer a treat after 1-3 s: who has a glass mostly says "later", the rest accept 4 times out of 5
   if (S.treat) {
     for (const [u, v] of Object.entries(S.treat.ans)) {
       if (v !== null || !S.bots[u]) continue;
       if (!botTreatAns[u + S.treat.tg]) botTreatAns[u + S.treat.tg] = now + 1000 + Math.random() * 2000;
-      else if (now > botTreatAns[u + S.treat.tg]) { hostMutate(s => Engine.treatAnswer(s, u, Math.random() < .8, now)); return true; }
+      else if (now > botTreatAns[u + S.treat.tg]) {
+        const has = !!Engine.glassOf(S, u), r = Math.random();
+        const a = has ? (r < .7 ? 'later' : r < .85 ? 'yes' : 'no') : (r < .8 ? 'yes' : 'no');
+        hostMutate(s => Engine.treatAnswer(s, u, a, now)); return true;
+      }
     }
     return false;
   }
   if (live) return false;
+  // 1.0.7: a bot with a short stack (a third of the buy-in or less) sometimes buys more between hands
+  if (botRebuyNo !== h.no) {
+    botRebuyNo = h.no;
+    const short = S.seats.find(p => p && S.bots[p.uid] && p.stack > 0 && p.stack <= Engine.rebuyMax(S) && Math.random() < .35);
+    if (short) { runCommand(short.uid, 'rebuy', {}); return true; }
+  }
   // a bot with an empty cupholder orders in 2-4 hands; what he drinks depends on his stack
   for (const p of S.seats) {
-    if (!p || !S.bots[p.uid] || p.sitOut || Engine.glassOf(S, p.uid)) { if (p) delete botDrinkAt[p.uid]; continue; }
+    if (!p || !S.bots[p.uid] || p.sitOut || Engine.glassOf(S, p.uid) || Engine.waitsRefill(S, p.uid)) { if (p) delete botDrinkAt[p.uid]; continue; }
     if (botDrinkAt[p.uid] == null) { botDrinkAt[p.uid] = h.no + 2 + Math.floor(Math.random() * 3); continue; }
     if (h.no >= botDrinkAt[p.uid]) {
       delete botDrinkAt[p.uid];
@@ -3690,15 +3854,17 @@ function barHost() {
       if (Engine.drinkPrice(S, id, false) < p.stack * .1) { hostMutate(s => Engine.drink(s, p.uid, id, false, now)); return true; }
     }
   }
-  // now and then (about once in 12-15 hands) a bot with a big stack treats the whole table
+  // now and then (about once in 12-15 hands) a bot with a big stack treats the table to a bottle
   if (treatHandNo !== h.no) {
     treatHandNo = h.no;
-    if (Math.random() < 1 / 13.5) {
+    if (Math.random() < 1 / 13.5 && S.bottles.length < Engine.MAX_BOTTLES) {
       const rich = S.seats.filter(p => p && S.bots[p.uid] && !p.sitOut && p.stack >= S.cfg.buyIn * 1.3);
       if (rich.length) {
         const p = rich[Math.floor(Math.random() * rich.length)];
         const ok = Engine.DRINKS.filter(dk => Engine.drinkPrice(S, dk.id, true) <= p.stack * .12);
-        if (ok.length) { const dk = ok[Math.floor(Math.random() * ok.length)]; hostMutate(s => Engine.drink(s, p.uid, dk.id, true, now)); return true; }
+        const dk = ok[Math.floor(Math.random() * ok.length)];
+        const guests = dk ? S.seats.filter(q => q && q.uid !== p.uid && !q.sitOut && !q.away && (Engine.glassOf(S, q.uid) || {}).id !== dk.id).map(q => q.uid) : [];
+        if (dk && guests.length) { hostMutate(s => Engine.drink(s, p.uid, dk.id, true, now, { guests, mode: 'all' })); return true; }
       }
     }
   }
@@ -4610,18 +4776,79 @@ function openBar() {
   const ov = $('#menu'); ov.hidden = false;
   const n = S.seats.filter(Boolean).length;
   const stack = i >= 0 ? S.seats[i].stack : 0;
-  $('#menuPanel').innerHTML = `<h2>Бар</h2><p>${i < 0 ? 'Сядьте за стол, чтобы заказать.' : `Цены от большого блайнда. «Всем» — бокал каждому из ${n} за столом.`}</p>
+  // 1.0.7: my bottles on the table: how much is left and who gets the refills
+  const mine = (S.bottles || []).filter(b => b.by === uid);
+  const mineHtml = mine.map(b => { const dk = Engine.DRINKS.find(x => x.id === b.id); return `<div class="myBtl"><span>🍾 ${esc(dk ? dk.name : b.id)} — осталось <b>${b.left}</b> из ${dk ? dk.btl : '?'}</span>
+      <span class="seg"><span class="sl">Доливать:</span><button class="${b.mode !== 'me' ? 'on' : ''}" data-tg="${b.tg}" data-m="all">всем</button><button class="${b.mode === 'me' ? 'on' : ''}" data-tg="${b.tg}" data-m="me">только мне</button></span></div>`; }).join('');
+  $('#menuPanel').innerHTML = `<h2>Бар</h2><p>${i < 0 ? 'Сядьте за стол, чтобы заказать.' : 'Цены от большого блайнда. «Себе» — один стакан. «Угостить» — бутылка на стол: вы платите за всю бутылку, наливают тем, кого вы отметите.'}</p>
+    ${mineHtml ? `<div class="myBtls">${mineHtml}</div>` : ''}
+    <div class="barMsg" id="barMsg" hidden></div>
     <div class="bar">${Engine.DRINKS.map(dk => {
       const one = Engine.drinkPrice(S, dk.id, false), all = Engine.drinkPrice(S, dk.id, true);
-      return `<div class="drk"><div class="btl">${bottleSvg(dk.id, 92)}</div><div class="dn">${esc(dk.name)}</div>
+      return `<div class="drk"><div class="btl">${bottleSvg(dk.id, 92)}</div><div class="dn">${esc(dk.name)}<small>бутылка · ${dk.btl} ${dk.btl < 5 ? 'стакана' : 'стаканов'}</small></div>
         <div class="dbtns"><button class="btn" data-d="${dk.id}" data-a="0" ${i < 0 || stack < one ? 'disabled' : ''}>Себе · ${fmt(one)}</button>
-        <button class="btn gold" data-d="${dk.id}" data-a="1" ${i < 0 || stack < all || n < 2 ? 'disabled' : ''}>Всем · ${fmt(all)}</button></div></div>`;
+        <button class="btn gold" data-d="${dk.id}" data-a="1" ${i < 0 || stack < all || n < 2 ? 'disabled' : ''}>Угостить · ${fmt(all)}</button></div></div>`;
     }).join('')}</div>
     <div class="row2" style="margin-top:12px"><button class="btn dark" id="barClose">Закрыть</button></div>`;
   $('#barClose').onclick = () => ov.hidden = true;
-  $('#menuPanel').querySelectorAll('[data-d]').forEach(b => b.onclick = () => { ov.hidden = true; cmd('drink', { id: b.dataset.d, all: b.dataset.a === '1' }); });
+  $('#menuPanel').querySelectorAll('[data-m]').forEach(b => b.onclick = () => { cmd('pourMode', { tg: +b.dataset.tg, mode: b.dataset.m }); b.parentNode.querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b)); });
+  $('#menuPanel').querySelectorAll('[data-d]').forEach(b => b.onclick = () => {
+    if (b.dataset.a !== '1') { ov.hidden = true; cmd('drink', { id: b.dataset.d, all: false }); return; }
+    // the menu covers the toasts, so the bar says it right here
+    const say = t => { const m = $('#barMsg'); if (!m) return; m.textContent = t; m.hidden = false; m.scrollIntoView({ block: 'nearest' }); m.animate([{ transform: 'scale(1.04)' }, { transform: 'none' }], { duration: 260 }); };
+    if ((S.bottles || []).length + (S.treat ? 1 : 0) >= Engine.MAX_BOTTLES) { say('На столе уже три бутылки'); return; }
+    if (S.treat) { say('Стол уже угощают — подождите минутку'); return; }
+    openTreat(b.dataset.d);
+  });
+}
+// 1.0.7: whom to treat: everyone is ticked except who is away and who already has this drink; refills for everyone or only me
+function openTreat(id) {
+  const ov = $('#menu'), i = mySeat(); if (!S || i < 0) return;
+  const dk = Engine.DRINKS.find(x => x.id === id), price = Engine.drinkPrice(S, id, true), stack = S.seats[i].stack;
+  const others = S.seats.map((p, k) => p && p.uid !== uid ? { p, k } : null).filter(Boolean);
+  const st = { on: {}, mode: 'all' };
+  others.forEach(({ p }) => { const g = Engine.glassOf(S, p.uid); st.on[p.uid] = !(p.sitOut || p.away) && !(g && g.id === id); });
+  const note = p => { const g = Engine.glassOf(S, p.uid); if (p.sitOut || p.away) return 'отошёл'; if (g && g.id === id) return 'уже пьёт это'; if (g) { const d2 = Engine.DRINKS.find(x => x.id === g.id); return 'пьёт ' + (d2 ? d2.name.split(' ')[0].toLowerCase() : ''); } return ''; };
+  const draw = () => {
+    const cnt = Object.values(st.on).filter(Boolean).length;
+    $('#menuPanel').innerHTML = `<h2>Угостить стол</h2>
+      <div class="trHead"><div class="btl">${bottleSvg(id, 70)}</div><div><div class="dn">${esc(dk.name)}</div><div class="fine">Бутылка — ${dk.btl} стаканов · <b>${fmt(price)}</b>. Вы платите за всю бутылку; отказавшиеся не возвращают деньги — их порции остаются в бутылке.</div></div></div>
+      <h3>Кого угощаем</h3>
+      <div class="tList">${others.map(({ p }) => `<label class="tRow"><input type="checkbox" data-u="${esc(p.uid)}" ${st.on[p.uid] ? 'checked' : ''}><span class="nm">${isBot(p.uid) ? '🤖 ' : ''}${esc(nameOf(p.uid))}</span><span class="nt">${esc(note(p))}</span></label>`).join('')}</div>
+      <h3>Доливать</h3>
+      <div class="seg big"><button class="${st.mode === 'all' ? 'on' : ''}" data-m="all">всем</button><button class="${st.mode === 'me' ? 'on' : ''}" data-m="me">только мне</button></div>
+      <p class="fine">Когда стакан пустеет, официант доливает из бутылки${st.mode === 'me' ? ' — только вам' : ' — вам и всем, кто принял угощение'}. Это можно поменять в баре, пока бутылка не кончится.</p>
+      <div class="row2" style="margin-top:12px"><button class="btn gold" id="trGo" ${!cnt || stack < price ? 'disabled' : ''}>${!cnt ? 'Отметьте, кого угощаете' : stack < price ? 'Не хватает фишек' : 'Угостить · ' + fmt(price)}</button><button class="btn dark" id="trBack">Назад</button></div>`;
+    const P = $('#menuPanel');
+    P.querySelectorAll('[data-u]').forEach(c => c.onchange = () => { st.on[c.dataset.u] = c.checked; draw(); });
+    P.querySelectorAll('[data-m]').forEach(b => b.onclick = () => { st.mode = b.dataset.m; draw(); });
+    $('#trBack').onclick = openBar;
+    $('#trGo').onclick = () => { ov.hidden = true; cmd('drink', { id, all: true, guests: Object.keys(st.on).filter(u => st.on[u]), mode: st.mode }); };
+  };
+  ov.hidden = false; draw();
 }
 const CHANGELOG = [
+ {
+  "v": "1.0.7",
+  "d": "11 ноября",
+  "items": [
+   "<b>Бутылка на стол</b>: угощение стола — это теперь целая бутылка с настоящим числом стаканов: шампанское 6, виски 8, водка 10, текила 8, коньяк 8, пиво 8 (ведро бутылок). Заказчик платит за всю бутылку (цена стакана × число стаканов), цена видна в баре до покупки. Свой напиток, как и раньше, — один стакан.",
+   "<b>Кого угощать</b>: после выбора напитка открывается список игроков с галочками; по умолчанию отмечены все, кроме отошедших и тех, у кого уже стоит этот же напиток.",
+   "<b>Доливать: всем / только мне</b> — выбирается при угощении и меняется в баре, пока бутылка не кончилась; там же видно, сколько стаканов в бутылке осталось.",
+   "<b>Ответ на угощение</b>: «Принять», «Позже» (только у кого уже есть напиток) и «Отказаться». Молчание 10 секунд: у кого есть напиток — «Позже», у остальных — «Принять». «Позже» — игрок допивает своё, и официант наливает ему из бутылки; «Отказаться» — из этой бутылки ему не наливают совсем. Денег за отказавшихся больше не возвращают — их порции остаются в бутылке.",
+   "<b>Долив</b>: когда у угощённого пустеет стакан, официант приходит с бутылкой и доливает до полного — только тем, кто принял угощение: сначала заказчику, потом тем, кто выпил меньше; при «только мне» — одному заказчику. Отошедшим — когда вернутся.",
+   "<b>Вёдра</b>: ведро официант приносит и уносит сам. Оно встаёт на свободное сукно ближе всего к заказчику и ничего не закрывает; второе ведро — рядом, на соседнем месте. Старое ведро стоит, пока из него есть кому наливать; кто принял новое угощение, переходит на новую бутылку. Ведро уносят, когда бутылка кончилась или за ней никого не осталось. На столе не больше трёх бутылок — на четвёртое угощение бар отвечает «На столе уже три бутылки».",
+   "<b>Проигрыш</b>: кто дошёл до вскрытия и не выиграл банк (доля в разделённом банке — не проигрыш), после сбора карт допивает стакан до дна одним долгим глотком. При фолде — нет. Если напиток из бутылки, дальше обычный долив.",
+   "<b>Докупка</b> — только когда фишек не больше трети бай-ина (при 15 000 — 5 000). Иначе кнопка «Докупить» в меню неактивна и подписана «Докупить можно при ≤ 5 000»; хост проверяет правило и у гостей.",
+   "<b>Боты</b> играют по тем же правилам: угощают стол бутылкой, отвечают «Принять / Позже / Отказаться», допивают при проигрыше, докупаются, только когда фишек мало.",
+   "<b>Исправлено</b>: фишки общего банка вылезали за заштрихованную зону банка — теперь и стопки, и куча, и раздел побочных банков целиком внутри неё.",
+   "<b>Исправлено</b>: верхняя рука боковых игроков упиралась в руку верхних игроков — теперь она лежит ниже, у края стола над верхней картой, и не касается ни карт, ни чужой руки.",
+   "<b>Исправлено</b>: на ПК меню размывало не весь экран — верхняя полоса с названием и кнопками оставалась чёткой.",
+   "<b>Исправлено</b>: если игрока раньше угостили, у него стоял этот напиток и новое угощение он не принял, старое ведро не убиралось.",
+   "<b>Исправлено</b>: глоток иногда пропускался — рука тянулась к стакану, но не брала его, если в этот момент стол перерисовывался.",
+   "<b>Сообщения</b>: «Не хватает фишек» пишет сумму с пробелами (120 000); «На столе уже три бутылки» и «Стол уже угощают» видны прямо в окне бара, а не под ним."
+  ]
+ },
  {
   "v": "1.0.6",
   "d": "10 ноября",
@@ -4765,7 +4992,7 @@ function openMenu() {
     ${installEvt && !standalone() ? `<div class="row2" style="margin-bottom:8px">${installBtnHtml()}</div>` : ''}
     <div class="row2">${solo ? '' : '<button class="btn gold" id="mInvite">Пригласить друзей</button>'}<button class="btn" id="mBar">Бар</button><button class="btn" id="mLook">Мои руки</button></div>
     <div class="row2" style="margin-top:8px"><button class="btn" id="mCombos">Комбинации</button><button class="btn" id="mLessons">Обучение</button><button class="btn ${coachOn ? 'gold' : 'dark'}" id="mCoach">Тренер: ${coachOn ? 'вкл' : 'выкл'}</button></div>
-    ${p ? `<div class="row2" style="margin-top:8px"><button class="btn" id="mRebuy" ${p.inHand && !p.folded && live ? 'disabled' : ''}>Докупить ${fmt(S.cfg.buyIn)}</button>
+    ${p ? `<div class="row2" style="margin-top:8px"><button class="btn" id="mRebuy" ${(p.inHand && !p.folded && live) || p.stack > Engine.rebuyMax(S) ? 'disabled' : ''}>${p.stack > Engine.rebuyMax(S) ? 'Докупить можно при ≤ ' + fmt(Engine.rebuyMax(S)) : 'Докупить ' + fmt(S.cfg.buyIn)}</button>
       <button class="btn dark" id="mAway">${p.sitOut ? 'Вернуться' : 'Отойти'}</button>
       <button class="btn red" id="mLeave">Встать</button></div>` : '<p style="margin-top:10px">Вы наблюдаете. Нажмите на свободное место, чтобы сесть.</p>'}
     <div class="row2" style="margin-top:8px"><button class="btn ${LITE ? 'gold' : 'dark'}" id="mLite">Упрощённая графика: ${LITE ? 'вкл' : 'выкл'}</button></div>
