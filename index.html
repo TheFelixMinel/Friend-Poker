@@ -239,7 +239,7 @@ table.led td:first-child,table.led th:first-child{text-align:left}
 .pill.invite{cursor:pointer;color:#241a05;background:linear-gradient(#f2d68e,#d7b064);border-color:#0000;font-weight:700}
 
 .chip.lbl::after{content:attr(data-v);position:absolute;inset:6px;border-radius:50%;display:grid;place-items:center;font:800 8px/1 var(--hud);color:#fff;text-shadow:0 0 2px #000,0 0 2px #000;letter-spacing:-.02em}
-.glass{position:absolute;transform-origin:50% 90%;margin:-36px 0 0 -18px;pointer-events:none;filter:drop-shadow(0 2px 2px #0008)}
+.glass{position:absolute;transform-origin:50% 90%;margin:-36px 0 0 -18px;pointer-events:none}
 .bucket{position:absolute;margin:-27px 0 0 -27px;pointer-events:none;filter:drop-shadow(0 3px 4px #000a)}
 #pArms{pointer-events:none}
 .pill.barBtn{cursor:pointer;color:#f2e3b4;background:#2a1a10e6;border-color:#e3c27a66}
@@ -481,7 +481,7 @@ table.led td:first-child,table.led th:first-child{text-align:left}
 #feltItems .stack{isolation:isolate}
 .ov{z-index:50}
 /* 1.0.5: menus blur and dim the whole screen, also what sticks out of the stage (dealer's head, sleeves) */
-.ov{inset:-700px!important;backdrop-filter:blur(7px)!important;-webkit-backdrop-filter:blur(7px)!important;background:#060806c4!important}
+.ov{inset:auto!important;backdrop-filter:blur(7px)!important;-webkit-backdrop-filter:blur(7px)!important;background:#060806c4!important}
 /* a folded / away plate stays solid (arms pass under it), only its contents dim */
 .plate.folded,.plate.away{opacity:1}
 .plate.folded>*,.plate.away>*{opacity:.5}
@@ -495,14 +495,47 @@ table.led td:first-child,table.led th:first-child{text-align:left}
 
 /* 1.0.2: the pot label stands to the left of the pot chips; cupholders 24px so they sit wholly in the wood */
 #pot{left:560px!important;top:126px!important;transition:left .35s ease;width:124px;min-width:0!important;box-sizing:border-box;padding-left:6px!important;padding-right:6px!important}
-#pot.side{left:483px!important}
+#pot.side{left:490px!important}
 .cup{width:28px!important;height:28px!important}
 .cmark{position:absolute;border:1.5px solid #f2e3b440;border-radius:9px;box-sizing:border-box;pointer-events:none}
 .potLbl.mini{font-size:11px;max-width:96px}
 .cmark.potz{border-radius:14px;background:repeating-linear-gradient(135deg,#f2e3b41c 0 1.5px,transparent 1.5px 9px)}
-#deck{left:655px!important}
+#deck{left:665px!important}
 #cupLayer{isolation:isolate}
 
+
+/* 1.0.6: the pot label stands in the middle of the (raised) pot area */
+#pot{top:125px!important;padding-top:1px!important;padding-bottom:2px!important}
+#pot .k{line-height:1.1}#pot .v{line-height:1.05}
+/* 1.0.6: the dealing deck is a real stack of cards: the same back as every card, the size of the mucked cards, its thickness shows */
+#deck{left:662px!important;top:57px!important;width:40px!important;height:58px!important;border-radius:4px!important;background-image:url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 140' preserveAspectRatio='none'%3E%3Cdefs%3E%3Cpattern id='l' width='10' height='10' patternUnits='userSpaceOnUse' patternTransform='rotate(45)'%3E%3Cpath d='M0,5 H10 M5,0 V10' stroke='%23e9dcff' stroke-opacity='.35' stroke-width='1'/%3E%3Ccircle cx='5' cy='5' r='1.3' fill='%23f3d98a' fill-opacity='.55'/%3E%3C/pattern%3E%3CradialGradient id='g' cx='50%25' cy='45%25' r='70%25'%3E%3Cstop offset='0' stop-color='%236e36a3'/%3E%3Cstop offset='1' stop-color='%233c1960'/%3E%3C/radialGradient%3E%3C/defs%3E%3Crect width='100' height='140' rx='9' fill='%23f7f3ff'/%3E%3Crect x='5' y='5' width='90' height='130' rx='6' fill='url(%23g)'/%3E%3Crect x='5' y='5' width='90' height='130' rx='6' fill='url(%23l)'/%3E%3Crect x='10' y='10' width='80' height='120' rx='4' fill='none' stroke='%23f3d98a' stroke-opacity='.7' stroke-width='1.2'/%3E%3Crect x='13' y='13' width='74' height='114' rx='3' fill='none' stroke='%23f3d98a' stroke-opacity='.35' stroke-width='.6'/%3E%3Ccircle cx='50' cy='70' r='19' fill='%233c1960' stroke='%23f3d98a' stroke-width='1.6'/%3E%3Ccircle cx='50' cy='70' r='15.5' fill='none' stroke='%23f3d98a' stroke-opacity='.6' stroke-width='.6' stroke-dasharray='2 1.6'/%3E%3Cpath d='M50,57 C45,63 39,67 39,72 C39,76 42,78 45,78 C47,78 48.5,77 49.2,75.6 C49,78.6 48,80.6 45.5,82 L54.5,82 C52,80.6 51,78.6 50.8,75.6 C51.5,77 53,78 55,78 C58,78 61,76 61,72 C61,67 55,63 50,57Z' fill='%23f3d98a'/%3E%3Cpath d='M50,22 l3,5 -3,5 -3,-5z M50,108 l3,5 -3,5 -3,-5z' fill='%23f3d98a' fill-opacity='.8'/%3E%3C/svg%3E")!important;background-size:100% 100%!important;background-color:#3c1960!important;
+  box-shadow:1px 1px 0 #d9d2e6,2px 2px 0 #f4f1fa,3px 3px 0 #cfc7de,4px 4px 0 #efebf6,5px 5px 0 #c4bcd4,6px 7px 6px #0008!important}
+/* 1.0.6: «Упрощённая графика»: no blur, no shadows, no idle fidgeting — for phones whose screen flickers */
+body.lite .ov{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;background:#060806ea!important}
+body.lite .slvSh{display:none}
+body.lite .card,body.lite .chip,body.lite .plate,body.lite .cmark,body.lite #tray,body.lite #deck,body.lite .betLbl,body.lite #pot{box-shadow:none!important}
+body.lite .bucket,body.lite .drk .btl{filter:none!important}
+body.lite *{text-shadow:none!important}
+#gfxHint{position:absolute;left:50%;top:64px;transform:translateX(-50%);z-index:60;max-width:440px;display:flex;gap:10px;align-items:center;background:#141815f5;border:1px solid #e3c27a99;border-radius:12px;padding:9px 10px 9px 14px;font:600 14px/1.3 var(--hud);color:#fff;box-shadow:0 6px 20px #000a}
+#gfxHint button{flex:none;min-height:32px;padding:0 12px;font-size:13px}
+/* 1.0.6: the combination on each shown hand */
+.handLbl{position:absolute;transform:translate(-50%,-50%);z-index:3;white-space:nowrap;pointer-events:none;background:#141815ee;color:#e9e6dd;border:1px solid #ffffff2a;border-radius:5px;padding:3px 7px 2px;font:700 11.5px/1 var(--hud);letter-spacing:.05em;text-transform:uppercase;box-shadow:0 2px 6px #0009}
+.handLbl.win{background:linear-gradient(#f4d58a,#d9a93e);color:#2a1d04;border-color:#fff3c4;box-shadow:0 0 0 1px #8a6a1f,0 0 14px #ffd34dcc,0 0 28px #ffd34d66;animation:hlGlow 1.6s ease-in-out infinite alternate}
+@keyframes hlGlow{from{box-shadow:0 0 0 1px #8a6a1f,0 0 10px #ffd34d99,0 0 20px #ffd34d44}to{box-shadow:0 0 0 1px #8a6a1f,0 0 16px #ffd34dee,0 0 32px #ffd34d88}}
+body.lite .handLbl.win{animation:none}
+/* 1.0.6: the holder's front lip lies over the glass's foot */
+.cupLip{position:absolute;width:28px;height:28px;pointer-events:none;z-index:2}.cupLip svg{display:block}
+/* 1.0.6: the side plates are narrow, so the cards beside them can lie by the rail */
+.plate.side{width:116px;gap:6px;padding:0 6px 0 5px}
+.plate.side.sL{margin-left:-84px;translate:var(--exL,0px) 0}.plate.side.sR{margin-left:-32px;translate:var(--exR,0px) 0}
+.plate.side .av{width:30px;height:30px;font-size:13px}
+.plate.side .nm{font-size:14px;max-width:72px}.plate.side .st{font-size:14px;gap:3px}
+.plate.side.hasD{padding-right:6px}
+.empty.side{width:116px;height:50px;margin-top:-25px;font-size:13px;line-height:1.15;text-align:center;padding:0 6px;box-sizing:border-box}
+.empty.side.sL{margin-left:-84px}
+/* 1.0.6: the dealer's tray: every slot is one chip (24px) deep */
+#tray{height:32px!important}.empty.side.sR{margin-left:-32px}
+.plate.side .dbadge{top:auto;bottom:-9px;margin-top:0;right:-7px;width:18px;height:18px;font-size:11px;line-height:18px}
 </style>
 </head>
 <body>
@@ -517,14 +550,14 @@ table.led td:first-child,table.led th:first-child{text-align:left}
           <mask id="feltCut" maskUnits="userSpaceOnUse" x="0" y="0" width="868" height="410"><rect width="868" height="410" fill="#fff"/><g id="feltHoles" fill="#000"></g></mask>
           <path id="arcB" d="M134,320 A300,60 0 0 0 734,320"/>
         </defs>
-        <g mask="url(#feltCut)">
-          <rect x="46.5" y="62.5" width="775" height="333" rx="183.7" ry="167" fill="none" stroke="#f2e3b4" stroke-opacity=".18" stroke-width="1"/>
-          <rect x="157" y="141" width="554" height="146" rx="73" ry="73" fill="none" stroke="#f2e3b4" stroke-opacity=".4" stroke-width="2"/>
+        <g>   <!-- 1.0.6: no marking crosses a line any more, so the lines need no mask (masks are slow on some phones) -->
+          <path d="M608.5,15.0L616.6,15.1L624.7,15.4L632.8,15.9L640.8,16.7L648.9,17.6L656.8,18.8L664.7,20.1L672.6,21.7L680.4,23.4L688.0,25.4L695.7,27.5L703.2,29.9L710.6,32.4L717.8,35.1L725.0,38.0L732.0,41.1L738.9,44.4L745.7,47.8L752.3,51.4L758.7,55.2L765.0,59.1L771.1,63.2L777.0,67.4L782.7,71.8L788.2,76.3L793.6,81.0L798.7,85.8L803.6,90.7L808.3,95.7L812.8,100.8L817.1,106.0L821.1,111.4L824.9,116.8L828.5,122.3L831.9,127.9L835.0,133.5L837.8,139.2L840.4,145.0L842.8,150.9L845.0,156.8L846.8,162.7L848.5,168.7L849.9,174.7L851.0,180.7L851.9,186.8L852.5,192.8L852.9,198.9L853.0,205.0L852.9,211.1L852.5,217.2L851.9,223.2L851.0,229.3L849.9,235.3L848.5,241.3L846.8,247.3L845.0,253.2L842.8,259.1L840.4,265.0L837.8,270.8L835.0,276.5L831.9,282.1L828.5,287.7L824.9,293.2L821.1,298.6L817.1,304.0L812.8,309.2L808.3,314.3L803.6,319.3L798.7,324.2L793.6,329.0L788.2,333.7L782.7,338.2L777.0,342.6L771.1,346.8L765.0,350.9L758.7,354.8L752.3,358.6L745.7,362.2L738.9,365.6L732.0,368.9L725.0,372.0L717.8,374.9L710.6,377.6L703.2,380.1L695.7,382.5L688.0,384.6L680.4,386.6L672.6,388.3L664.7,389.9L656.8,391.2L648.9,392.4L640.8,393.3L632.8,394.1L624.7,394.6L616.6,394.9L608.5,395.0L259.5,395.0L251.4,394.9L243.3,394.6L235.2,394.1L227.2,393.3L219.1,392.4L211.2,391.2L203.3,389.9L195.4,388.3L187.6,386.6L180.0,384.6L172.3,382.5L164.8,380.1L157.4,377.6L150.2,374.9L143.0,372.0L136.0,368.9L129.1,365.6L122.3,362.2L115.7,358.6L109.3,354.8L103.0,350.9L96.9,346.8L91.0,342.6L85.3,338.2L79.8,333.7L74.4,329.0L69.3,324.2L64.4,319.3L59.7,314.3L55.2,309.2L50.9,304.0L46.9,298.6L43.1,293.2L39.5,287.7L36.1,282.1L33.0,276.5L30.2,270.8L27.6,265.0L25.2,259.1L23.0,253.2L21.2,247.3L19.5,241.3L18.1,235.3L17.0,229.3L16.1,223.2L15.5,217.2L15.1,211.1L15.0,205.0L15.1,198.9L15.5,192.8L16.1,186.8L17.0,180.7L18.1,174.7L19.5,168.7L21.2,162.7L23.0,156.8L25.2,150.9L27.6,145.0L30.2,139.2L33.0,133.5L36.1,127.9L39.5,122.3L43.1,116.8L46.9,111.4L50.9,106.0L55.2,100.8L59.7,95.7L64.4,90.7L69.3,85.8L74.4,81.0L79.8,76.3L85.3,71.8L91.0,67.4L96.9,63.2L103.0,59.1L109.3,55.2L115.7,51.4L122.3,47.8L129.1,44.4L136.0,41.1L143.0,38.0L150.2,35.1L157.4,32.4L164.8,29.9L172.3,27.5L180.0,25.4L187.6,23.4L195.4,21.7L203.3,20.1L211.2,18.8L219.1,17.6L227.2,16.7L235.2,15.9L243.3,15.4L251.4,15.1L259.5,15.0Z" fill="none" stroke="#f2e3b4" stroke-opacity=".18" stroke-width="1"/>
+          <rect x="128.5" y="125.8" width="611" height="162.4" rx="81.2" ry="81.2" fill="none" stroke="#f2e3b4" stroke-opacity=".4" stroke-width="2"/>
           <text font-family="Bodoni Moda, Georgia, serif" font-style="italic" font-weight="700" font-size="22" fill="#f2e3b4" fill-opacity=".22" letter-spacing="3"><textPath href="#arcB" startOffset="50%" text-anchor="middle">Texas Hold’em</textPath></text>
         </g>
         <g fill="#f2e3b4" fill-opacity=".38">
-          <path transform="translate(190 214) scale(11)" d="M0,-.9 C-.32,-.48 -1.1,-.12 -.76,.34 C-.52,.64 -.16,.56 -.06,.32 L-.26,.86 L.26,.86 L.06,.32 C.16,.56 .52,.64 .76,.34 C1.1,-.12 .32,-.48 0,-.9Z"/>
-          <path transform="translate(678 214) scale(11)" d="M0,-.42 C-.46,-1.02 -1.16,-.42 -.78,.12 C-.56,.42 -.22,.6 0,.86 C.22,.6 .56,.42 .78,.12 C1.16,-.42 .46,-1.02 0,-.42Z"/>
+          <path transform="translate(209.5 207) scale(11)" d="M0,-.9 C-.32,-.48 -1.1,-.12 -.76,.34 C-.52,.64 -.16,.56 -.06,.32 L-.26,.86 L.26,.86 L.06,.32 C.16,.56 .52,.64 .76,.34 C1.1,-.12 .32,-.48 0,-.9Z"/>
+          <path transform="translate(658.5 207) scale(11)" d="M0,-.42 C-.46,-1.02 -1.16,-.42 -.78,.12 C-.56,.42 -.22,.6 0,.86 C.22,.6 .56,.42 .78,.12 C1.16,-.42 .46,-1.02 0,-.42Z"/>
         </g>
       </svg>
     </div>
@@ -548,11 +581,12 @@ table.led td:first-child,table.led th:first-child{text-align:left}
   <div id="tray" aria-hidden="true">
     <i style="--c:#e9e6de"></i><i style="--c:#d42a36"></i><i style="--c:#1f9a4b"></i><i style="--c:#1f1f1f"></i><i style="--c:#7b3fb5"></i><i style="--c:#e7c64a"></i><i style="--c:#f08a24"></i><i style="--c:#2f6fd6"></i>
   </div>
-  <div id="deck" class="back" aria-hidden="true"></div>
 
   <div id="pot"><div class="k">Общий банк</div><div class="v"><span class="coin"></span><span id="potV">0</span></div></div>
 
   <div class="layer" id="markLayer"></div>
+  <!-- 1.0.6: the deck lies on top of the printed markings -->
+  <div id="deck" class="back" aria-hidden="true"></div>
   <div class="layer" id="feltItems"></div>
   <div class="layer" id="collectLayer"></div>
   <div class="dbtn" id="dbtn" hidden>D</div>
@@ -637,7 +671,7 @@ table.led td:first-child,table.led th:first-child{text-align:left}
   <div class="layer" id="seatLayer"></div>
 
   <div class="layer" id="hud">
-    <div class="hudTop" style="left:10px"><span id="title">Royal Flush</span><span class="verTag">1.0.5</span><span class="pill" id="tableInfo">Холдем</span></div>
+    <div class="hudTop" style="left:10px"><span id="title">Royal Flush</span><span class="verTag">1.0.6</span><span class="pill" id="tableInfo">Холдем</span></div>
     <div class="hudTop" style="right:10px"><span class="pill" id="onlineInfo" hidden></span>
       <button class="pill barBtn" id="bBar">Бар</button>
       <button class="pill invite" id="bInvite">+ Пригласить</button>
@@ -1174,12 +1208,12 @@ const clone = o => JSON.parse(JSON.stringify(o));
 // Hand-placed seat zones (table coordinates). Each player owns the strip of felt at their edge:
 // cards right in front of the plate, chip stack beside them, bet a little further in, never on the board.
 const ZONES = [
-  { plate: [372, 468], cards: [372, 382], stack: [508, 416], bet: [470, 336], btn: [296, 414], drink: [252, 440], ha: [296, 406], hb: [504, 470], bodyA: [372, 568] },   // me: the left forearm comes from under the plate, leaving the corner of the rail free (bottom-left)
-  { plate: [104, 262], cards: [250, 262], stack: [238, 370], bet: [330, 290], btn: [300, 370], drink: [270, 342], ha: [170, 206], hb: [196, 328] },   // left: both forearms from under the plate, the upper hand clear of the cards
-  { plate: [356, 40], cards: [356, 128], stack: [262, 128], bet: [262, 196], btn: [0, 0], drink: [167, 120], ha: [392, 92], hb: [214, 140], body: [356, -60], tilt: 0, cup: -1 },    // top-left: on the rail beside the dealer
-  { plate: [764, 40], cards: [764, 128], stack: [858, 128], bet: [858, 196], btn: [0, 0], drink: [952, 119], ha: [728, 92], hb: [906, 140], body: [764, -60], tilt: 0, cup: 1 },    // top-right
-  { plate: [1016, 262], cards: [870, 262], stack: [882, 370], bet: [790, 290], btn: [820, 370], drink: [850, 342], ha: [950, 206], hb: [924, 328] },  // right: mirror of the left seat
-  { plate: [722, 468], cards: [722, 382], stack: [610, 416], bet: [632, 336], btn: [812, 400], drink: [868, 440], ha: [794, 406], hb: [618, 470], bodyA: [722, 568] },   // bottom-right: the right forearm comes from the body, clear of the buttons
+  { plate: [372, 468], cards: [372, 386], stack: [508, 416], bet: [470, 336], btn: [296, 414], drink: [252, 440], ha: [296, 406], hb: [504, 470], bodyA: [372, 568] },   // me: the left forearm comes from under the plate, leaving the corner of the rail free (bottom-left)
+  { plate: [104, 262], cards: [204.5, 262], stack: [238, 370], bet: [330, 290], btn: [300, 370], drink: [270, 342], ha: [160, 192], hb: [166, 334], bodyA: [-90, 192], bodyB: [-90, 334] },   // left: both forearms from under the plate, the upper hand clear of the cards
+  { plate: [356, 40], cards: [356, 124], stack: [262, 128], bet: [262, 196], btn: [0, 0], drink: [167, 120], ha: [392, 92], hb: [214, 140], body: [356, -60], tilt: 0, cup: -1 },    // top-left: on the rail beside the dealer
+  { plate: [764, 40], cards: [764, 124], stack: [858, 128], bet: [858, 196], btn: [0, 0], drink: [952, 119], ha: [728, 92], hb: [906, 140], body: [764, -60], tilt: 0, cup: 1 },    // top-right
+  { plate: [1016, 262], cards: [915.5, 262], stack: [882, 370], bet: [790, 290], btn: [820, 370], drink: [850, 342], ha: [960, 192], hb: [954, 334], bodyA: [1210, 192], bodyB: [1210, 334] },  // right: mirror of the left seat
+  { plate: [722, 468], cards: [722, 386], stack: [610, 416], bet: [632, 336], btn: [812, 400], drink: [868, 440], ha: [794, 406], hb: [618, 470], bodyA: [722, 568] },   // bottom-right: the right forearm comes from the body, clear of the buttons
 ];
 // centre line of the wooden rail: rounded rectangle (rail 96,18 928x470 r 290/235, felt inset 30) -> middle of the band
 const RAIL_PATH = (() => {
@@ -1195,6 +1229,8 @@ const RAIL_PATH = (() => {
   return pts;
 })();
 const CUP_R = 14;
+// the front half of the holder's metal ring, drawn over the glass's foot
+const CUP_LIP = `<svg viewBox="0 0 28 28" width="28" height="28" aria-hidden="true"><defs><linearGradient id="lipG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6d7076"/><stop offset=".45" stop-color="#e1e4e7"/><stop offset="1" stop-color="#5a5d62"/></linearGradient></defs><path d="M2.6,14 A11.4,11.4 0 0 0 25.4,14 L22,14 A8,8 0 0 1 6,14 Z" fill="url(#lipG)"/><path d="M2.6,14 A11.4,11.4 0 0 0 25.4,14" fill="none" stroke="#2a1a0e" stroke-width=".8"/></svg>`;
 const SLOTS = ZONES.map((z, i) => {
   const P = z.plate, C = [560, i === 0 || i === 5 ? 236 : 262];
   let dx = C[0] - P[0], dy = C[1] - P[1]; const l = Math.hypot(dx, dy); dx /= l; dy /= l;
@@ -1204,17 +1240,18 @@ const SLOTS = ZONES.map((z, i) => {
 });
 /* cupholders cut into the rail: on the centre line of the wooden band, to the player's right of the right hand,
    computed from the resting arms so that no resting hand, name plate or button covers the holder or the glass */
-const CUPS = [[563, 473], [240, 440], [197, 94], [655, 33], [984, 161], [834, 458]];
+const CUPS = [[563, 473], [240, 440], [197, 94], [923, 94], [984, 161], [834, 458]];   // 1.0.6: the top-right holder mirrors the top-left one, so no glass is cut by the screen
+const GLASS_SINK = 5;   // 1.0.6: the glass stands down in the holder; the holder's front lip covers its foot
 SLOTS.forEach((sl, i) => { sl.cup = CUPS[i]; sl.drink = CUPS[i]; });
-const BOARD_Y = 243, BOARD_X = k => CX + (k - 2) * 62;
-const POT = [CX, 140], DECK = [672, 86], MUCK = [470, 88], BUCKET = [312, 246], PILE = [560, 100];
+const BOARD_Y = 255, BOARD_X = k => CX + (k - 2) * 62;
+const POT = [CX, 140], DECK = [682, 86], MUCK = [438, 88], BUCKET = [312, 246], PILE = [560, 100];
 // folded cards lie face down in a small untidy pile in front of the dealer
 // the ice bucket stands on the felt by the player who treated the table: between his cards and the centre, clear of cards, chips and the pot
 const BUCKET_AT = [[388, 306], [373, 250], [312, 246], [808, 246], [747, 250], [732, 306]];
 function bucketSpot(by) { const i = S ? S.seats.findIndex(p => p && p.uid === by) : -1; return i < 0 ? BUCKET : BUCKET_AT[vis(i)]; }
 const muckPos = k => [MUCK[0] + ((k * 37) % 9) - 4, MUCK[1] + ((k * 23) % 7) - 3, ((k * 53) % 34) - 17];
 let collectedNo = -1, collecting = false;
-const SHOULDER = { L: [516, 0], R: [604, 0] }, REST = { L: [520, 74], R: [600, 74] };
+const SHOULDER = { L: [500, 0], R: [620, 0] }, REST = { L: [479, 72], R: [641, 72] };
 
 const DENOMS = [
   [100000, '#e05ca8', '#8e2f68'], [25000, '#2f6fd6', '#1b4185'], [5000, '#f08a24', '#a1560f'], [1000, '#e7c64a', '#94791d'],
@@ -1250,20 +1287,22 @@ const toStage = (x, y) => [TOX + (TOC[0] + (x - TOC[0]) * TSX) * TK, TOY + (TOC[
 
 /* ---------------- scaling ---------------- */
 let force = false;
-const VERSION = '1.0.5', CODENAME = 'Royal Flush';
-const ZOOM_OK = !!(window.CSS && CSS.supports && CSS.supports('zoom', '2'));
+const VERSION = '1.0.6', CODENAME = 'Royal Flush';
+/* 1.0.6: the whole table (wooden rail included) is fitted into the screen and centred, with the same small gap above and
+   below on every screen; the HUD and the side plates keep to the screen edges. Plain transform, no CSS zoom (zoom flickered on some Android phones) */
+const RAIL_Y0 = TOC[1] + (18 - TOC[1]) * TSY, RAIL_Y1 = TOC[1] + (488 - TOC[1]) * TSY;   // the rail's top and bottom in stage units
+const FIT = { sc: 1, vx0: 0, vx1: W, vy0: 0, vy1: H };
 function fit() {
-  const vw = innerWidth, vh = innerHeight;
-  const sc = Math.min(vw / W, vh / H);
-  if (ZOOM_OK) {
-    // zoom makes the browser lay out and paint at the real screen size, so it stays sharp on big monitors
-    stage.style.transform = 'none'; stage.style.zoom = sc;
-    stage.style.left = ((vw - W * sc) / 2 / sc) + 'px'; stage.style.top = ((vh - H * sc) / 2 / sc) + 'px';
-  } else {
-    stage.style.left = '50%'; stage.style.top = '50%';
-    stage.style.transform = `translate(-50%,-50%) scale(${sc})`;
-    stage.style.transformOrigin = '50% 50%';
-  }
+  const vw = innerWidth, vh = innerHeight, gap = Math.max(3, Math.round(vh * .008));
+  const sc = Math.min(vw / W, (vh - 2 * gap) / (RAIL_Y1 - RAIL_Y0));
+  const left = (vw - W * sc) / 2, top = vh / 2 - (RAIL_Y0 + RAIL_Y1) / 2 * sc;
+  stage.style.zoom = ''; stage.style.left = '0px'; stage.style.top = '0px'; stage.style.transformOrigin = '0 0';
+  stage.style.transform = `translate(${left}px,${top}px) scale(${sc})`;
+  Object.assign(FIT, { sc, vx0: -left / sc, vx1: (vw - left) / sc, vy0: -top / sc, vy1: (vh - top) / sc });
+  const hud = $('#hud');
+  if (hud) Object.assign(hud.style, { left: FIT.vx0 + 'px', top: FIT.vy0 + 'px', width: (FIT.vx1 - FIT.vx0) + 'px', height: (FIT.vy1 - FIT.vy0) + 'px', right: 'auto', bottom: 'auto' });
+  document.querySelectorAll('.ov').forEach(o => Object.assign(o.style, { left: FIT.vx0 + 'px', top: FIT.vy0 + 'px', width: (FIT.vx1 - FIT.vx0) + 'px', height: (FIT.vy1 - FIT.vy0) + 'px', right: 'auto', bottom: 'auto' }));
+  stage.style.setProperty('--exL', FIT.vx0 + 'px'); stage.style.setProperty('--exR', (FIT.vx1 - W) + 'px');
 }
 addEventListener('resize', fit); fit();
 $('#rotateSkip').onclick = () => { $('#rotate').style.display = 'none'; };
@@ -1646,6 +1685,19 @@ function handMarkup(look, mirror, pose = 'relax', glove = false) {
   if (!glove) { const [tx, ty] = g.tt, a = g.ta * 180 / Math.PI; det += `<g transform="translate(${tx.toFixed(1)},${ty.toFixed(1)}) rotate(${a.toFixed(1)})"><rect x="${L0.g === 'f' ? .4 : -.6}" y="-2" width="${L0.g === 'f' ? 5.4 : 4.4}" height="4" rx="1.9" fill="${nailFill}" stroke="${nailC ? mix(nailC, .35, '#000000') : skd}" stroke-width=".35"/></g>`; }
   return `<g${m}><path d="${d}" fill="${fill}" stroke="${skd}" stroke-width=".6" stroke-linejoin="round"/>${det}${glove ? '' : accMarkup(L0, g, mirror)}</g>`;
 }
+/* 1.0.6: a hand is drawn once into a picture (with its shadow) and then only moved: no vector work and no CSS filter per frame */
+const HAND_IMG = new Map();
+function handImage(look, mirror, pose = 'relax', glove = false) {
+  const key = JSON.stringify([look, mirror, pose, glove]);
+  let url = HAND_IMG.get(key);
+  if (!url) {
+    const body = handMarkup(look, mirror, pose, glove), defs = $('#handDefs').innerHTML;
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="-24 -30 100 64" width="200" height="128">${defs}<defs><filter id="hs" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="1.4"/></filter></defs><g transform="translate(0,3)" filter="url(#hs)" opacity=".42" style="fill:#000">${body.replace(/fill="[^"]*"/g, 'fill="#000"').replace(/stroke="[^"]*"/g, 'stroke="none"')}</g>${body}</svg>`;
+    url = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+    HAND_IMG.set(key, url);
+  }
+  return `<image href="${url}" x="-24" y="-30" width="100" height="64"/>`;
+}
 /* accessories by slot; wristL = left hand (mirrored), wristR = right hand */
 function accMarkup(L0, g, mirror) {
   let out = '';
@@ -1681,7 +1733,7 @@ function setPose(seat, side, pose) {
   const st = PH[seat]; if (!st) return;
   const h = st[side]; if (h.pose === pose) return;
   h.pose = pose;
-  h.hnd.innerHTML = `<g transform="scale(${st.geo.scale})">${handMarkup(st.look, isLeftHand(st.geo, side), pose)}</g>`;
+  h.hnd.innerHTML = `<g transform="scale(${st.geo.scale})">${handImage(st.look, isLeftHand(st.geo, side), pose)}</g>`;
 }
 
 /* per-seat hand geometry in stage coordinates */
@@ -1716,13 +1768,13 @@ function buildHands() {
     let html = '';
     for (const side of ['A', 'B']) {
       html += `<g data-h="${side}">
+        <path class="slv slvSh" fill="none" stroke="#000" stroke-opacity=".3" stroke-width="${w + 2}" stroke-linecap="round" transform="translate(0,3)"/>
         ${sleeveMarkup(look, w)}
         <g class="cuf">${cuffMarkup(look, w)}</g>
-        <g class="hnd"><g transform="scale(${geo.scale})">${handMarkup(look, isLeftHand(geo, side))}</g></g>
+        <g class="hnd"><g transform="scale(${geo.scale})">${handImage(look, isLeftHand(geo, side))}</g></g>
       </g>`;
     }
     g.innerHTML = html;
-    g.style.filter = 'drop-shadow(0 3px 3px rgba(0,0,0,.45))';
     pLayer.appendChild(g);
     const st = { key, g, look, geo };
     for (const side of ['A', 'B']) {
@@ -1971,22 +2023,70 @@ async function trick(seat) {
     }
   } catch (err) { console.warn(err); }
 }
-// one sip: the hand nearer to the cup lifts the glass to the mouth; onDrink runs while the glass is at the mouth
+// 1.0.6 one sip: the hand nearer to the cup takes the glass by its middle (palm behind it, fingers in front of it),
+// the glass rides in the hand standing upright, at the mouth it leans 18° toward the player and the drink stays level
+const SIP_GRIP = 36, SIP_TILT = 18, SIPPING = new Set();   // seats whose glass is in the hand right now
+let sipFx = null;
+function sipLayers() {
+  if (sipFx && sipFx.glass.isConnected) return sipFx;
+  const glass = document.createElement('div'); glass.className = 'layer'; glass.id = 'sipGlass';
+  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg'); svg.setAttribute('class', 'layer'); svg.id = 'sipFingers';
+  svg.setAttribute('viewBox', '0 0 1120 500'); svg.style.overflow = 'visible';
+  svg.innerHTML = '<defs><clipPath id="sipClip" clipPathUnits="userSpaceOnUse"><path id="sipClipP" d=""/></clipPath></defs><use id="sipUse" clip-path="url(#sipClip)"/>';
+  pLayer.after(glass); glass.after(svg);
+  return (sipFx = { glass, svg, clip: svg.querySelector('#sipClipP'), use: svg.querySelector('#sipUse') });
+}
+// where the hand holds the glass, and the finger area (drawn again over the glass), from the hand's live transform
+function sipGrip(seat, side) {
+  const st = PH[seat], h = st[side], e = st.geo[side].elbow, sc = st.geo.scale * (1 + (h.lift || 0) * .12);
+  const a = Math.atan2(h.y - e[1], h.x - e[0]) + ((h.rot || 0) + (h.wb || 0)) * Math.PI / 180, c = Math.cos(a), s = Math.sin(a);
+  const P = (lx, ly) => [h.x + (lx * c - ly * s) * sc, h.y + (lx * s + ly * c) * sc];
+  const q = [P(50, -22), P(72, -22), P(72, 22), P(50, 22)];   // only the fingertips wrap over the front of the glass, so even a shot glass stays visible
+  return { grip: P(SIP_GRIP, 0), finger: 'M' + q.map(p => p[0].toFixed(1) + ',' + p[1].toFixed(1)).join('L') + 'Z' };
+}
 async function sipAnim(seat, onDrink) {
   const sl = slot(seat), pos = drinkPos(seat), gl = L.cups.querySelector(`.glass[data-seat="${seat}"]`);
-  if (!gl || !PH[seat]) { if (onDrink) onDrink(); return; }
+  if (!gl || !PH[seat] || SIPPING.has(seat)) { if (onDrink) onDrink(); return; }   // one glass, one sip at a time
   const G = PH[seat].geo, H = Math.hypot(G.A.rest[0] - pos[0], G.A.rest[1] - pos[1]) <= Math.hypot(G.B.rest[0] - pos[0], G.B.rest[1] - pos[1]) ? 'A' : 'B';
   for (let k = 0; k < 20 && !handFree(seat, H); k++) await sleep(200);
   if (!handFree(seat, H)) { if (onDrink) onDrink(); return; }
-  const tgt = reachFor(seat, H, pos, 22);
+  const shown = BAR.shown[seat], id = shown && shown.id, bs = GLASS_BASE[(DRINK_ART[id] || {}).glass] || [18, 36];
+  const base0 = [pos[0], pos[1] + GLASS_SINK], mid = (bs[1] - 22) * GLASS_K;     // from the foot up to the middle of the glass
+  const grip0 = [base0[0], base0[1] - mid];
+  const level = () => { const b = BAR.shown[seat]; return b ? b.left / b.sips : 0; };
+  const st = PH[seat], hEl = st[H].hnd;
+  const tgt = reachFor(seat, H, grip0, SIP_GRIP);
   setPose(seat, H, 'cup');
   await movePH(seat, H, ...tgt, 280);
+  if (!PH[seat] || PH[seat] !== st || !gl.isConnected) return;
+  // take it: the glass goes over the palm, the fingers are drawn again over the glass
+  const fx = sipLayers(); hEl.id = 'sipHnd'; fx.use.setAttribute('href', '#sipHnd');
+  SIPPING.add(seat); fx.glass.appendChild(gl);
+  gl.style.transformOrigin = `${bs[0] * GLASS_K}px ${bs[1] * GLASS_K - mid}px`;   // turn and grow around the grip
+  let tilt = 0, lift = 0;
+  const follow = () => {
+    if (!PH[seat] || PH[seat] !== st) return;
+    const q = sipGrip(seat, H); fx.clip.setAttribute('d', q.finger);
+    gl.style.transform = `translate(${q.grip[0] - grip0[0]}px,${q.grip[1] - grip0[1]}px) scale(${1 + lift * .25}) rotate(${tilt}deg)`;
+  };
+  const redraw = () => { if (id) gl.innerHTML = glassSvg(id, GLASS_K, level(), -tilt); };
+  gl.style.transition = 'none'; follow();
   const mouth = [sl.plate[0] + (pos[0] - sl.plate[0]) * .55, sl.plate[1] + (pos[1] - sl.plate[1]) * .55];
-  gl.style.transition = 'none';
-  await movePH(seat, H, ...reachFor(seat, H, mouth, 22), 420, ease.io, (x, y, t) => { gl.style.transform = `translate(${(mouth[0] - pos[0]) * t}px,${(mouth[1] - pos[1]) * t}px) scale(${1 + t * .25}) rotate(${t * -18}deg)`; });
-  await liftPH(seat, H, 1, 200); if (onDrink) onDrink(gl); await sleep(500); await liftPH(seat, H, 0, 160);
-  await movePH(seat, H, ...tgt, 380, ease.io, (x, y, t) => { const k = 1 - t; gl.style.transform = `translate(${(mouth[0] - pos[0]) * k}px,${(mouth[1] - pos[1]) * k}px) scale(${1 + k * .25}) rotate(${k * -18}deg)`; });
-  gl.style.transform = '';
+  const dir = Math.sign(sl.plate[0] - pos[0]) || -1;
+  try {
+    await movePH(seat, H, ...reachFor(seat, H, [mouth[0], mouth[1] - mid], SIP_GRIP), 420, ease.io, (x, y, t) => { lift = t; follow(); });
+    await liftPH(seat, H, 1, 200);
+    await tween(160, t => { tilt = dir * SIP_TILT * t; redraw(); follow(); });
+    if (onDrink) onDrink(gl); redraw();
+    await sleep(420);
+    await tween(150, t => { tilt = dir * SIP_TILT * (1 - t); redraw(); follow(); });
+    await liftPH(seat, H, 0, 160);
+    await movePH(seat, H, ...tgt, 380, ease.io, (x, y, t) => { lift = 1 - t; follow(); });
+  } finally {
+    tilt = 0; lift = 0; redraw();
+    gl.style.transform = ''; fx.use.removeAttribute('href'); fx.clip.setAttribute('d', ''); if (hEl.id === 'sipHnd') hEl.removeAttribute('id');
+    gl.remove(); SIPPING.delete(seat); render();   // the glass is drawn back in its holder, with the level it has now
+  }
   await restPH(seat, H, 280);
 }
 function cardsAt(seat) {
@@ -1995,7 +2095,7 @@ function cardsAt(seat) {
   return [...L.felt.querySelectorAll('.card')].filter(c => { const x = parseFloat(c.style.left) + c.offsetWidth / 2, y = parseFloat(c.style.top) + c.offsetHeight / 2; return pts.some(q => Math.abs(x - q.cx) < 6 && Math.abs(y - q.cy) < 6); });
 }
 setInterval(() => {
-  if (!disp || document.hidden || animating) return;
+  if (!disp || document.hidden || animating || LITE) return;
   const seats = disp.seats.map((p, i) => p && p.stack > 0 && PH[i] ? i : -1).filter(i => i >= 0);
   if (!seats.length) return;
   const now = Date.now();
@@ -2013,7 +2113,7 @@ const GLASS_K = 1.2;        // glasses on the table: 1.5x the old .8
 const GLASS_BASE = { mug: [16, 36], shot: [18, 36], rocks: [18, 36], snifter: [18, 37.5], flute: [18, 37.5] };
 // 1.0.5: detailed glasses; level 0..1 is how much is left (each sip lowers it)
 let glassSeq = 0;
-function glassSvg(id, size = 1, level = 1) {
+function glassSvg(id, size = 1, level = 1, lean = 0) {   // lean: turn the drink's surface by this angle (the glass itself is turned the other way)
   const a = DRINK_ART[id]; if (!a) return '';
   const k = ++glassSeq, L = a.liquid, lv = Math.max(0, Math.min(1, level));
   const G = {   // body outline, liquid area (x0..x1 at the top, y0 = full top, y1 = bottom), the liquid's own shape
@@ -2028,9 +2128,9 @@ function glassSvg(id, size = 1, level = 1) {
   let inside = '';
   if (lv > 0) {
     // everything liquid (surface, foam, bubbles) is cut to the inside of the glass, so a low level never spills past the walls
-    inside += `<clipPath id="gl${k}"><rect x="0" y="${top}" width="36" height="40"/></clipPath><clipPath id="gk${k}"><path d="${G.liq}"/></clipPath>
+    inside += `<clipPath id="gl${k}"><rect x="-30" y="${top}" width="96" height="60" transform="rotate(${lean} ${(G.x0 + G.x1) / 2} ${top})"/></clipPath><clipPath id="gk${k}"><path d="${G.liq}"/></clipPath>
       <g clip-path="url(#gl${k})"><path d="${G.liq}" fill="url(#gq${k})"/></g><g clip-path="url(#gk${k})">
-      <ellipse cx="${(G.x0 + G.x1) / 2}" cy="${top}" rx="${(G.x1 - G.x0) / 2 - .4}" ry="1.1" fill="${light}" opacity=".9"/>`;
+      <ellipse cx="${(G.x0 + G.x1) / 2}" cy="${top}" rx="${(G.x1 - G.x0) / 2 - .4}" ry="1.1" fill="${light}" opacity=".9" transform="rotate(${lean} ${(G.x0 + G.x1) / 2} ${top})"/>`;
     if (id === 'beer') inside += `<rect x="${G.x0}" y="${top - 3.2}" width="${G.x1 - G.x0}" height="3.6" rx="1.6" fill="#fff8e4"/><g fill="#fff" opacity=".9"><circle cx="10" cy="${top - 3}" r="1.6"/><circle cx="14" cy="${top - 3.4}" r="1.9"/><circle cx="19" cy="${top - 3.1}" r="1.7"/><circle cx="22.6" cy="${top - 3}" r="1.3"/></g>`;
     if (id === 'champagne' || id === 'beer') inside += `<g fill="#fff" opacity=".75">${[[.3, .2], [.55, .5], [.42, .75], [.68, .3], [.36, .9]].map(([fx, fy]) => { const y = top + (G.y1 - top) * fy; return y < G.y1 - 1 ? `<circle cx="${G.x0 + (G.x1 - G.x0) * fx}" cy="${y}" r="${.4 + fy * .35}"/>` : ''; }).join('')}</g>`;
     inside += '</g>';
@@ -2225,11 +2325,11 @@ async function waiterServe(seat, glass, fast, quick) {
   if (old) {   // the old glass goes onto the tray
     BAR.shown[seat] = null; render();
     const og = glassItem(old);
-    await tween(220, t => place(og, ...lerp2(W.cup, [stop[0] - side[0], stop[1] - side[1]], t)), ease.io);
+    await tween(220, t => place(og, ...lerp2([W.cup[0], W.cup[1] + GLASS_SINK], [stop[0] - side[0], stop[1] - side[1]], t)), ease.io);
     items.push([og, -side[0], -side[1]]);
   }
   if (nw) {    // the new one goes into the cupholder
-    await tween(260, t => place(nw, ...lerp2([stop[0] + side[0], stop[1] + side[1]], W.cup, t)), ease.io);
+    await tween(260, t => place(nw, ...lerp2([stop[0] + side[0], stop[1] + side[1]], [W.cup[0], W.cup[1] + GLASS_SINK], t)), ease.io);
     nw.remove(); items.shift();
     BAR.shown[seat] = Object.assign({}, glass); render();
   }
@@ -2319,19 +2419,19 @@ function initials(u) { if (u === uid) return 'Я'; const n = names[u]; if (!n) r
 /* ===================== physical chips: real composition per stack / bet / pot ===================== */
 // Every pile of chips on the table has a real set of chips {value: count}. Amounts only change by
 // moving chips: a hand carries them, a push slides them, the dealer brings change from his tray.
-const TRAY = [560, 63], POTZ = [625, 163];
+const TRAY = [560, 60], POTZ = [625, 163];
 const CHIP_DY = 3.2, CHIP_R = 12;
 // zones per visual slot (table coords). o = base of the first column, u = next column, v = next row,
 // per = columns per row, rows, h = max chips per column, lbl = where the bet amount is written
 const CZ = [
-  { stack: { o: [508, 416], far: [0, -1], per: 3, rows: 2, h: 8 }, bet: { o: [470, 336], far: [0, -1], heap: [480, 322], per: 3, rows: 2, h: 8 }, lbl: [480, 344] },
-  { stack: { o: [238, 370], far: [.7, -.7], per: 3, rows: 2, h: 8 }, bet: { o: [330, 290], far: [0, -1], per: 3, rows: 2, h: 10 }, lbl: [330, 318] },
-  { stack: { o: [262, 128], far: [0, 1], per: 3, rows: 2, h: 8 }, bet: { o: [262, 196], far: [0, 1], per: 3, rows: 2, h: 8 }, lbl: [348, 198] },
-  { stack: { o: [858, 128], far: [0, 1], per: 3, rows: 2, h: 8 }, bet: { o: [858, 196], far: [0, 1], per: 3, rows: 2, h: 8 }, lbl: [772, 198] },
-  { stack: { o: [882, 370], far: [-.7, -.7], per: 3, rows: 2, h: 8 }, bet: { o: [790, 290], far: [0, -1], per: 3, rows: 2, h: 10 }, lbl: [790, 318] },
-  { stack: { o: [610, 416], far: [0, -1], per: 3, rows: 2, h: 8 }, bet: { o: [632, 336], far: [0, -1], heap: [626, 322], per: 3, rows: 2, h: 8 }, lbl: [632, 346] },
+  { stack: { o: [508, 416], far: [0, -1], per: 3, rows: 2, h: 8 }, bet: { o: [472, 320], far: [0, -1], heap: [480, 308], per: 3, rows: 2, h: 8 }, lbl: [404, 306] },
+  { stack: { o: [238, 370], far: [.7, -.7], per: 3, rows: 2, h: 8 }, bet: { o: [372, 258], far: [0, -1], per: 3, rows: 2, h: 10 }, lbl: [372, 276] },
+  { stack: { o: [262, 128], far: [0, 1], per: 3, rows: 2, h: 8 }, bet: { o: [322, 214], far: [0, 1], per: 3, rows: 2, h: 8 }, lbl: [348, 198] },
+  { stack: { o: [858, 128], far: [0, 1], per: 3, rows: 2, h: 8 }, bet: { o: [798, 214], far: [0, 1], per: 3, rows: 2, h: 8 }, lbl: [772, 198] },
+  { stack: { o: [882, 370], far: [-.7, -.7], per: 3, rows: 2, h: 8 }, bet: { o: [748, 258], far: [0, -1], per: 3, rows: 2, h: 10 }, lbl: [748, 276] },
+  { stack: { o: [610, 416], far: [0, -1], per: 3, rows: 2, h: 8 }, bet: { o: [648, 320], far: [0, -1], heap: [640, 308], per: 3, rows: 2, h: 8 }, lbl: [716, 306] },
 ];
-const POTZONE = { o: [625, 163], far: [0, -1], per: 5, rows: 1, h: 7, seed: 11 };   // one row of at most 5 columns: fits the pot area
+const POTZONE = { o: [625, 152], far: [0, -1], per: 5, rows: 1, h: 7, seed: 11 };   // one row of at most 5 columns: fits the pot area
 const DEN_INFO = Object.fromEntries(DENOMS.map(d => [d[0], d]));
 const DVALS = DENOMS.map(d => d[0]);                     // descending
 
@@ -2840,7 +2940,7 @@ function render() {
   const gone = collectedNo === d.no;
   (gone ? [] : d.board).forEach((c, k) => { const el = cardEl(c); place(el, BOARD_X(k) - 28, BOARD_Y - 40); if (WC) { const kk = WC.kick.has(c); el.classList.add(...(WC.set.has(c) ? (kk ? ['win', 'kick'] : ['win']) : ['dim'])); if (WC.set.has(c) && !kk) liftWin(el); } L.felt.appendChild(el); });
   if (!gone) for (let k = 0; k < (d.muck || 0); k++) { const [mx, my, mr] = muckPos(k); const el = cardEl(-1, 'sm', true); place(el, mx - 25, my - 36); el.style.transform = `rotate(${mr}deg) rotateY(180deg) scale(.8)`; L.felt.appendChild(el); }
-  if (WC && !gone) { const lb = document.createElement('div'); lb.className = 'comboLbl'; lb.textContent = WC.name; place(lb, CX, BOARD_Y + 50); L.felt.appendChild(lb); }
+  // 1.0.6: no combination label in the centre: every shown hand gets its own label on its cards (below)
   // pot
   const potAmt = d.pot || 0;
   $('#pot').hidden = (!potAmt && !(d.phase !== 'idle' && d.phase !== 'showdown')) || !!(CH.piles && CH.piles.length);
@@ -2857,7 +2957,7 @@ function render() {
     const sl = slot(i), p = d.seats[i];
     if (!p) {
       const canSit = me < 0 && !demo && uid, canBot = !canSit && isHost && !demo && !tut;
-      const e = document.createElement('div'); e.className = 'empty' + (canSit || canBot ? ' can' : '');
+      const e = document.createElement('div'); e.className = 'empty' + (canSit || canBot ? ' can' : '') + (vis(i) === 1 ? ' side sL' : vis(i) === 4 ? ' side sR' : '');
       e.textContent = canSit ? 'Сесть сюда' : canBot ? '+ Посадить бота' : 'Свободно';
       if (canSit || canBot) { const go = () => canSit ? takeSeat(i) : openBotAdd(i); e.tabIndex = 0; e.setAttribute('role', 'button'); e.onclick = go; e.onkeydown = ev => { if (ev.key === 'Enter') go(); }; }
       place(e, ...sl.plate); L.seats.appendChild(e); continue;
@@ -2879,13 +2979,20 @@ function render() {
         }
         L.felt.appendChild(el);
       });
+      // 1.0.6: at the showdown every hand that is shown gets its combination on its cards; the winner's label is gold and glows
+      if (d.phase === 'showdown' && d.result && (p.show || (isMe && !p.folded)) && d.board.length >= 3 && !p.folded) {
+        const sl = slot(i), lb = document.createElement('div');
+        lb.className = 'handLbl' + (W8.has(i) ? ' win' : ''); lb.textContent = Engine.handName([...p.cards, ...d.board]);
+        const sd = vis(i) === 1 || vis(i) === 4 ? 0 : 24; place(lb, sl.cards[0] - sl.d[0] * sd, sl.cards[1] - sl.d[1] * sd); L.felt.appendChild(lb);   // side seats: in the middle of the cards, clear of the plate   // on the cards' near edge (toward the player)
+      }
     }
     // plate
     const pl = document.createElement('div');
-    pl.className = 'plate' + (isMe ? ' me' : '') + (d.turn === i ? ' turn' : '') + (p.folded && p.inHand ? ' folded' : '') + (p.sitOut ? ' away' : '') + (W8.has(i) && d.phase === 'showdown' ? ' winner' : '');
+    pl.className = 'plate' + (isMe ? ' me' : '') + (vis(i) === 1 ? ' side sL' : vis(i) === 4 ? ' side sR' : '') + (d.turn === i ? ' turn' : '') + (p.folded && p.inHand ? ' folded' : '') + (p.sitOut ? ' away' : '') + (W8.has(i) && d.phase === 'showdown' ? ' winner' : '');
     pl.id = 'plate' + i;
     let act = p.last;
     if (p.sitOut && !p.inHand) act = 'Отошёл';
+    if (d.phase === 'showdown' && d.result && act && p.cards && d.board.length >= 3 && act === Engine.handName([...p.cards, ...d.board])) act = '';   // 1.0.6: the combination is shown on the cards, not on the plate
     const actCls = act === 'Фолд' ? ' fold' : act === 'Олл-ин' ? ' allin' : '';
     const bot = isBot(p.uid);
     const online1 = online.has(p.uid) || isMe || bot;
@@ -2900,13 +3007,14 @@ function render() {
     if (bot && isHost && !tut && !demo) { pl.style.cursor = 'pointer'; pl.onclick = () => openBotMenu(i); }
   }
   // drinks on the table
-  L.cups.querySelectorAll('.cup,.glass').forEach(x => x.remove());   // cups and glasses lie under every hand
+  L.cups.querySelectorAll('.cup,.glass,.cupLip').forEach(x => x.remove());   // cups and glasses lie under every hand
   for (let i = 0; i < 6; i++) { const cp = slot(i).cup; const h = document.createElement('div'); h.className = 'cup'; place(h, cp[0] - CUP_R, cp[1] - CUP_R); L.cups.appendChild(h); }
   for (let i = 0; i < 6; i++) {
-    const p = d.seats[i], gl = BAR.shown[i]; if (!p || !gl) continue; const id = gl.id;
+    const p = d.seats[i], gl = BAR.shown[i]; if (!p || !gl || SIPPING.has(i)) continue; const id = gl.id;
     const g = document.createElement('div'); g.className = 'glass'; g.dataset.seat = i; g.innerHTML = glassSvg(id, GLASS_K, gl.left / gl.sips);
     const bs = GLASS_BASE[(DRINK_ART[id] || {}).glass] || [18, 36]; g.style.setProperty('margin', `${-bs[1] * GLASS_K}px 0 0 ${-bs[0] * GLASS_K}px`, 'important'); g.style.transformOrigin = `${bs[0] * GLASS_K}px ${bs[1] * GLASS_K}px`;
-    place(g, ...slot(i).drink); L.cups.appendChild(g);
+    place(g, slot(i).drink[0], slot(i).drink[1] + GLASS_SINK); L.cups.appendChild(g);
+    const lip = document.createElement('div'); lip.className = 'cupLip'; lip.dataset.seat = i; lip.innerHTML = CUP_LIP; place(lip, slot(i).drink[0] - CUP_R, slot(i).drink[1] - CUP_R); L.cups.appendChild(lip);
   }
   if (BAR.bucket) { const b = document.createElement('div'); b.className = 'bucket'; b.innerHTML = bucketSvg(BAR.bucket.id); place(b, ...bucketSpot(BAR.bucket.by)); L.felt.appendChild(b); }
   drawMarks();
@@ -2916,7 +3024,7 @@ function render() {
 }
 /* outlines on the felt where each seat's two cards lie, plus the hatched pot area; the table lines and lettering
    are masked out under them, so no marking ever crosses another */
-const POT_AREA = { x: 424, y: 122, w: 272, h: 58 };      // centred; holds the label in both places and the pot chips of any all-in
+const POT_AREA = { x: 424, y: 104, w: 272, h: 62 };      // centred; holds the label in both places and the pot chips of any all-in
 let marksKey = '';
 const MARK_GAP = 6;                                    // clear felt between a marking and any outline
 function drawMarks() {
@@ -2935,7 +3043,7 @@ function drawMarks() {
     add('cmark', sl.cards[0], sl.cards[1], 2 * off + cw + 14, ch + 12, rot, 9);
   });
   add('cmark potz', POT_AREA.x + POT_AREA.w / 2, POT_AREA.y + POT_AREA.h / 2, POT_AREA.w, POT_AREA.h, 0, 14);
-  [[316, 262], [804, 262]].forEach(([x, y]) => holes.push(`<circle cx="${x - FX}" cy="${y - FY}" r="16"/>`));   // gaps for the ♠ and ♥
+  [[335.5, 255], [784.5, 255]].forEach(([x, y]) => holes.push(`<circle cx="${x - FX}" cy="${y - FY}" r="16"/>`));   // gaps for the ♠ and ♥
   const g = $('#feltHoles'), tmp = new DOMParser().parseFromString(`<svg xmlns="http://www.w3.org/2000/svg">${holes.join('')}</svg>`, 'image/svg+xml');
   g.replaceChildren(...[...tmp.documentElement.childNodes].map(n => document.importNode(n, true)));
 }
@@ -2964,6 +3072,7 @@ function esc(s) { return String(s).replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<
 function renderEquity() {
   const i = mySeat(); if (i < 0 || !disp || !disp.seats[i] || !disp.seats[i].cards) return;
   const hole = disp.seats[i].cards, bd = disp.board;
+  if (hole.length < 2 || hole.some(c => !(c >= 0 && c < 52)) || bd.some(c => !(c >= 0 && c < 52))) return;   // 1.0.6: a card still face down (being dealt) has no value yet
   const opp = disp.seats.filter((p, j) => p && j !== i && p.inHand && !p.folded).length;
   const key = hole.join(',') + '|' + bd.join(',') + '|' + opp;
   const nm = bd.length >= 3 ? Engine.handName([...hole, ...bd]) : (hole[0] % 13 === hole[1] % 13 ? 'Пара' : 'Старшая карта');
@@ -3413,6 +3522,22 @@ let isHost = false, peer = null, hostConn = null, tableCode = '';
 const conns = new Map();            // host: pid -> DataConnection
 const PFX = 'pkrtbl-';
 const ICE = { config: { iceServers: [{ urls: 'stun:stun.l.google.com:19302' }, { urls: 'stun:stun1.l.google.com:19302' }, { urls: 'stun:global.stun.twilio.com:3478' }] } };
+let LITE = false;
+function setLite(on) { LITE = !!on; document.body.classList.toggle('lite', LITE); }
+// 1.0.6: two one-line hints: open the game in Chrome when it runs inside an app (Telegram, VK…); on Android, where the graphics switch is
+function gfxHint(text) {
+  return new Promise(res => {
+    const old = $('#gfxHint'); if (old) old.remove();
+    const el = document.createElement('div'); el.id = 'gfxHint'; el.innerHTML = `<span>${text}</span><button class="btn dark">Понятно</button>`;
+    $('#hud').appendChild(el); const done = () => { el.remove(); res(); };
+    el.querySelector('button').onclick = done; setTimeout(() => { if (el.isConnected) done(); }, 12000);
+  });
+}
+async function gfxHints() {
+  const ua = navigator.userAgent || '';
+  if (/; wv\)|Telegram|Instagram|FBAN|FBAV|VKClient|vkontakte|OKApp|Line\//i.test(ua)) await gfxHint('Для плавной игры откройте в Chrome: ⋮ → Открыть в браузере');
+  if (/Android/i.test(ua) && !store.get('gfxHint', false)) { store.set('gfxHint', true); await gfxHint('Если возникают проблемы с графикой и игрой — включите в меню «Упрощённая графика»'); }
+}
 const store = { get(k, d) { try { const v = localStorage.getItem('poker.' + k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } }, set(k, v) { try { localStorage.setItem('poker.' + k, JSON.stringify(v)); } catch (e) { } } };
 
 function applyState(s) {
@@ -4187,12 +4312,12 @@ function bubble(text, anchor, withNext, nextLabel = 'Дальше') {
       if (!tut || tut.gen !== g || !b.isConnected) return;
       const rc = anchorRect(anchor), p = rc ? [rc.x + rc.w / 2, rc.y + rc.h / 2] : null;
       ring.hidden = !rc;
-      if (rc) { const pad = 6; Object.assign(ring.style, { left: (rc.x - pad) + 'px', top: (rc.y - pad) + 'px', width: (rc.w + pad * 2) + 'px', height: (rc.h + pad * 2) + 'px', borderRadius: Math.min(18, (rc.h + pad * 2) / 2) + 'px' }); }
+      if (rc) { const pad = 6; Object.assign(ring.style, { left: (rc.x - pad - FIT.vx0) + 'px', top: (rc.y - pad - FIT.vy0) + 'px', width: (rc.w + pad * 2) + 'px', height: (rc.h + pad * 2) + 'px', borderRadius: Math.min(18, (rc.h + pad * 2) / 2) + 'px' }); }
       const bw = 330; let x, y, below = false;
       if (!p) { x = toStage(CX, 0)[0] - bw / 2; y = 150; }
       else if (p[0] > 860) { x = Math.max(10, Math.min(p[0] - bw - 40, 860 - bw)); y = Math.min(500 - 10 - b.offsetHeight, Math.max(60, p[1] - b.offsetHeight / 2)); }
       else { x = Math.min(860 - bw, Math.max(10, p[0] - bw / 2)); below = p[1] < 240; y = below ? p[1] + 48 : Math.max(56, p[1] - 48 - b.offsetHeight); }
-      b.style.left = x + 'px'; b.style.top = y + 'px';
+      b.style.left = (x - FIT.vx0) + 'px'; b.style.top = (y - FIT.vy0) + 'px';   // the HUD layer starts at the screen's top-left corner
     };
     place2(); requestAnimationFrame(place2); setTimeout(place2, 400);
     tut.reposition = place2;
@@ -4498,6 +4623,26 @@ function openBar() {
 }
 const CHANGELOG = [
  {
+  "v": "1.0.6",
+  "d": "10 ноября",
+  "items": [
+     "<b>Стол на любом экране</b>: стол целиком, вместе с деревянным бортиком, стоит ровно по центру с одинаковым зазором сверху и снизу — на телефоне, ПК и планшете. Кнопки, лог и таблички прижаты к краям экрана.",
+     "<b>Новая разметка</b>: внешняя линия повторяет форму стола на одинаковом расстоянии от бортика; карты всех игроков, включая верхних, лежат у бортика между линиями и не задевают их; внутренний овал стал больше и ни с чем не пересекается.",
+     "<b>Общий банк</b> поднят к дилеру, надпись «Общий банк» целиком внутри своей рамки; руки дилера в покое лежат по бокам надписи и не закрывают её.",
+     "<b>Общие карты</b> стоят ровно в центре внутреннего овала, масти ♠ и ♥ — в центрах его закруглений; ставки игроков лежат внутри овала.",
+     "<b>Колода дилера</b> — настоящая стопка карт с той же рубашкой и видимой толщиной, размером как сброс; колода и сброс лежат зеркально по бокам от дилера и поверх разметки.",
+     "<b>Лоток дилера</b>: ячейки высотой с фишку на столе.",
+     "<b>Боковые таблички</b> стали уже, чтобы карты боковых игроков легли у бортика; руки боковых игроков лежат над и под картами.",
+     "<b>Стаканы</b> стоят в подстаканниках: край кольца закрывает низ стакана. Верхний правый подстаканник перенесён, стакан больше не обрезается экраном.",
+     "<b>Глоток</b>: рука берёт стакан за середину (пальцы спереди), стакан едет в руке ровно и только у рта наклоняется на 18°; напиток в стакане остаётся горизонтальным.",
+     "<b>Комбинации при вскрытии</b>: на картах каждого вскрывшегося игрока — плашка с названием комбинации, у победителя она золотая и светится; держится, пока дилер не соберёт карты. Красная надпись в центре стола и значок комбинации на табличке убраны.",
+     "<b>Упрощённая графика</b> (Меню): без размытия, теней и движений рук в покое — включи, если экран мигает или игра тормозит.",
+     "<b>Подсказки</b>: если игра открыта внутри Telegram или другого приложения — как открыть её в Chrome; на Android один раз — где включить упрощённую графику.",
+     "<b>Исправлено</b>: редкая ошибка в подсчёте шансов («Пара 29%»), пока твои карты ещё раздаются рубашкой вверх.",
+   "<b>Исправлено мигание экрана на Android</b>: руки рисуются готовыми картинками с тенью, убраны масштаб через zoom, маска разметки и тени-фильтры на стаканах; размытие под меню считается только в пределах экрана."
+  ]
+ },
+ {
   "v": "1.0.5",
   "d": "9 ноября",
   "items": [
@@ -4623,6 +4768,7 @@ function openMenu() {
     ${p ? `<div class="row2" style="margin-top:8px"><button class="btn" id="mRebuy" ${p.inHand && !p.folded && live ? 'disabled' : ''}>Докупить ${fmt(S.cfg.buyIn)}</button>
       <button class="btn dark" id="mAway">${p.sitOut ? 'Вернуться' : 'Отойти'}</button>
       <button class="btn red" id="mLeave">Встать</button></div>` : '<p style="margin-top:10px">Вы наблюдаете. Нажмите на свободное место, чтобы сесть.</p>'}
+    <div class="row2" style="margin-top:8px"><button class="btn ${LITE ? 'gold' : 'dark'}" id="mLite">Упрощённая графика: ${LITE ? 'вкл' : 'выкл'}</button></div>
     <h3>Учёт фишек</h3>
     <table class="led"><thead><tr><th>Игрок</th><th>Внёс</th><th>Вывел</th><th>Бар</th><th>Стек</th><th>Итог</th></tr></thead><tbody>${rows || '<tr><td colspan="6">Пока никто не садился</td></tr>'}</tbody></table>
     ${host ? `<h3>Настройки стола</h3>
@@ -4639,6 +4785,7 @@ function openMenu() {
   if ($('#mInvite')) $('#mInvite').onclick = openInvite; wireInstall($('#menuPanel'));
   $('#mCombos').onclick = () => openCombos(false);
   $('#mLessons').onclick = () => { if (tut) endLesson(true); openLessons(); };
+  $('#mLite').onclick = () => { setLite(!LITE); store.set('lite', LITE); close(); toast(LITE ? 'Упрощённая графика включена' : 'Упрощённая графика выключена'); };
   $('#mCoach').onclick = () => { coachOn = !coachOn; store.set('coach', coachOn); close(); renderHud(); toast(coachOn ? 'Тренер включён' : 'Тренер выключен'); };
   if ($('#mExitSolo')) $('#mExitSolo').onclick = () => { close(); goHome(); };
   $('#mBar').onclick = openBar;
@@ -4685,7 +4832,7 @@ async function loadLibs() {
 }
 function setupGlove() { const g = $('#glove'); if (g && !g.dataset.done) { g.innerHTML = handMarkup({ skin: 0, acc: 0 }, false, 'relax', true); g.dataset.done = 1; } }
 async function boot(again) {
-  setupGlove();
+  setupGlove(); setLite(store.get('lite', false)); if (!again) setTimeout(gfxHints, 1500);
   uid = store.get('pid', null);
   if (!uid) { uid = 'p' + Math.random().toString(36).slice(2, 10) + Date.now().toString(36).slice(-4); store.set('pid', uid); }
   demo = true; S = null;
