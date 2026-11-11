@@ -77,7 +77,7 @@ body{margin:0;background:var(--floor);color:var(--ui);font-family:var(--body);ov
   font-family:var(--hud);transition:transform .25s}
 #pot .k{font-size:12px;letter-spacing:.06em;color:#cfd3cc;text-transform:uppercase}
 #pot .v{font-size:19px;line-height:1.1;font-weight:700;font-variant-numeric:tabular-nums;display:flex;align-items:center;justify-content:center;gap:5px}
-#pot.bump{transform:translateX(-50%) scale(1.12)}
+#pot.bump{box-shadow:0 0 0 2px var(--gold),0 0 18px var(--glow)}
 .coin{display:inline-block;width:12px;height:12px;border-radius:50%;background:radial-gradient(circle,#ffd770 0 35%,#b8860b 36% 48%,#ffd770 50% 62%,#a6750a 64%);box-shadow:0 0 0 1px #0006;flex:none}
 
 /* cards */
@@ -419,7 +419,7 @@ table.led td:first-child,table.led th:first-child{text-align:left}
 #raisePanel .q button{font-size:12px!important;letter-spacing:0!important;white-space:nowrap;padding:0 2px}
 
 /* ===== 1.0 Beta: bold buttons like before ===== */
-#sidePanel{width:250px!important}
+#sidePanel{width:234px!important}   /* 1.0.8: a little narrower, clear of the bottom-right cupholder */
 #sidePanel .btn{font-size:17px!important;text-transform:uppercase!important;letter-spacing:.04em!important;font-weight:700}
 #sidePanel .btn small{font-size:14px!important;font-weight:600;opacity:.9;letter-spacing:.02em}
 #controls.turnMode{gap:7px!important}
@@ -444,6 +444,7 @@ table.led td:first-child,table.led th:first-child{text-align:left}
 #feltSuits span{position:absolute;width:24px;height:24px;margin:-12px 0 0 -12px;text-align:center;line-height:24px;font:18px serif;color:#f2e3b440}
 #feltText{top:-12px}
 #feltLines{position:absolute;left:0;top:0;width:868px;height:410px;pointer-events:none}
+#feltTitle{position:absolute;left:284px;width:300px;top:310px;text-align:center;font:italic 700 22px/1 var(--display);letter-spacing:3px;color:var(--line,#f2e3b4);opacity:.22;pointer-events:none;white-space:nowrap}
 
 /* ===== 1.0 Beta palette: saturated bordeaux / graphite / dark gold / red, leather with stitching, white labels ===== */
 #sidePanel .btn,#raisePanel .q button{
@@ -508,6 +509,12 @@ table.led td:first-child,table.led th:first-child{text-align:left}
 .hudTop.two{display:grid;grid-template-columns:repeat(3,auto);justify-content:end;justify-items:end;gap:6px 8px}
 .hudTop.two #onlineInfo{order:1}.hudTop.two #bBar{order:2}.hudTop.two #bMenu{order:3}
 .hudTop.two #bInvite{order:4}.hudTop.two #bFull{order:5}.hudTop.two #bSound{order:6}
+/* 1.0.8: on a phone the table's name goes under the title, so it no longer covers the top-left name plate */
+@media (max-height:500px){#tableInfo{position:absolute;left:0;top:34px;font-size:13px;padding:4px 8px;letter-spacing:0}}
+/* 1.0.8: the short buttons share the top row; «+ Пригласить» alone in the second row by the screen edge, right of the top-right cupholder */
+.hudTop.two{grid-template-columns:repeat(5,auto)!important}
+.hudTop.two #onlineInfo{order:1}.hudTop.two #bBar{order:2}.hudTop.two #bFull{order:3}.hudTop.two #bSound{order:4}.hudTop.two #bMenu{order:5}
+.hudTop.two #bInvite{order:6;grid-column:1/-1;justify-self:end}
 
 #pot{top:86px!important}
 
@@ -536,6 +543,13 @@ body.lite .card,body.lite .chip,body.lite .plate,body.lite .cmark,body.lite #tra
 body.lite .bucket,body.lite .drk .btl{filter:none!important}
 body.lite *{text-shadow:none!important}
 #gfxHint{position:absolute;left:50%;top:64px;transform:translateX(-50%);z-index:60;max-width:440px;display:flex;gap:10px;align-items:center;background:#141815f5;border:1px solid #e3c27a99;border-radius:12px;padding:9px 10px 9px 14px;font:600 14px/1.3 var(--hud);color:#fff;box-shadow:0 6px 20px #000a}
+/* 1.0.8: the graphics switch in the table menu */
+.gfxRow{display:flex;align-items:center;gap:10px;margin-top:10px;flex-wrap:wrap}
+.gfxRow .sl{font:600 14px var(--hud);letter-spacing:.06em;text-transform:uppercase;color:#a9a497}
+.gfxRow .seg button{min-width:96px}
+/* eco: no lamp, no cloth grain, no stitching glow */
+body.lite #felt{background:radial-gradient(ellipse 52% 60% at 50% 46%,var(--feltHi) 0%,var(--felt) 45%,var(--feltLo) 78%,var(--feltDeep) 100%)!important}
+body.lite #rail::before,body.lite #rail::after{display:none}
 #gfxHint button{flex:none;min-height:32px;padding:0 12px;font-size:13px}
 /* 1.0.6: the combination on each shown hand */
 .handLbl{position:absolute;transform:translate(-50%,-50%);z-index:3;white-space:nowrap;pointer-events:none;background:#141815ee;color:#e9e6dd;border:1px solid #ffffff2a;border-radius:5px;padding:3px 7px 2px;font:700 11.5px/1 var(--hud);letter-spacing:.05em;text-transform:uppercase;box-shadow:0 2px 6px #0009}
@@ -555,6 +569,98 @@ body.lite .handLbl.win{animation:none}
 /* 1.0.6: the dealer's tray: every slot is one chip (24px) deep */
 #tray{height:32px!important}.empty.side.sR{margin-left:-32px}
 .plate.side .dbadge{top:auto;bottom:-9px;margin-top:0;right:-7px;width:18px;height:18px;font-size:11px;line-height:18px}
+body{--gold:#d8b46a;--glow:#d8b46a66;--floorA:#120c08;--floorB:#2a1a10;--floorPat:repeating-linear-gradient(90deg,#ffffff05 0 2px,#0000 2px 120px),repeating-linear-gradient(0deg,#0000 0 58px,#00000040 58px 60px);--railSkin:radial-gradient(ellipse 60% 26% at 50% 4%,#ffffff2a,#0000 70%),radial-gradient(ellipse 70% 30% at 50% 100%,#00000066,#0000 70%),linear-gradient(180deg,#6a4026,#4a2a17 45%,#2e190d);--edge:#24140a;--stitch:#d8b46a88;--trim:#b8913f;--feltHi:#3f9a58;--felt:#2a7a40;--feltLo:#1d5c30;--feltDeep:#0f3a1d;--line:#e9d6a0;--lineSoft:#e9d6a055;--lineFaint:#e9d6a01e;--lamp:#ffe4b024;--coaster:#3a2416;--coasterLine:#d8b46a99;--coasterRim:#b8913f;--plateBg:linear-gradient(180deg,#2b1d13f2,#140d08f2);--plateLine:#d8b46a55;--plateTop:#d8b46a;--avBg:radial-gradient(circle at 50% 35%,#5a4330,#2a1c12);--avRing:#d8b46a99;--avInk:#f3e6c8;--logBg:#f3ead7f2;--logInk:#2a2118;--logHd:#2b1d13;--logHdInk:#e9d6a0;--logName:#8a1f1f;--btnTex:repeating-linear-gradient(45deg,#ffffff07 0 2px,#0000 2px 5px);--callA:#2f5a3e;--callB:#173322;--callSt:#d8b46a77;--foldA:#8e2a22;--foldB:#4e120d;--foldSt:#e9c09a66;--raiseA:#e2c178;--raiseB:#a37a2c;--raiseSt:#5a3a0a88;--raiseInk:#fff;--panelBg:linear-gradient(#21160e,#120c07);--panelLine:#d8b46a66;--dSuitA:#2a2a2d;--dSuitB:#0b0b0c;--dSleeve:#0d0d0f;--dSleeve2:#26262b;--trayA:#2a1a0f;--trayB:#4a3220;--back:url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 140'%3E%3Cdefs%3E%3Cpattern id='l' width='8' height='8' patternUnits='userSpaceOnUse' patternTransform='rotate(45)'%3E%3Crect width='8' height='8' fill='%231f4d33'/%3E%3Cpath d='M0 0H8M0 0V8' stroke='%23e9d6a0' stroke-opacity='.28' stroke-width='.8'/%3E%3Ccircle cx='4' cy='4' r='.8' fill='%23e9d6a0' fill-opacity='.35'/%3E%3C/pattern%3E%3CradialGradient id='v'%3E%3Cstop offset='.5' stop-color='%23000' stop-opacity='0'/%3E%3Cstop offset='1' stop-color='%23123322' stop-opacity='.8'/%3E%3C/radialGradient%3E%3C/defs%3E%3Crect width='100' height='140' rx='9' fill='%23f6f0e0'/%3E%3Crect x='6' y='6' width='88' height='128' rx='6' fill='url(%23l)'/%3E%3Crect x='6' y='6' width='88' height='128' rx='6' fill='url(%23v)'/%3E%3Crect x='10' y='10' width='80' height='120' rx='4' fill='none' stroke='%23e9d6a0' stroke-opacity='.7' stroke-width='1.2'/%3E%3Crect x='13' y='13' width='74' height='114' rx='3' fill='none' stroke='%23e9d6a0' stroke-opacity='.35' stroke-width='.6'/%3E%3Cg transform='translate(50 70)'%3E%3Cellipse rx='19' ry='25' fill='%23123322' stroke='%23e9d6a0' stroke-width='1.6'/%3E%3Cellipse rx='15' ry='21' fill='none' stroke='%23e9d6a0' stroke-opacity='.5' stroke-width='.7'/%3E%3Cpath d='M-8,-8 L-8,-14 L-4,-10 L0,-16 L4,-10 L8,-14 L8,-8Z' fill='%23e9d6a0'/%3E%3Ctext y='9' text-anchor='middle' font-family='Georgia,serif' font-style='italic' font-weight='700' font-size='17' fill='%23e9d6a0'%3ER%3C/text%3E%3C/g%3E%3Cpath d='M18,18 l6,0 M18,18 l0,6 M82,18 l-6,0 M82,18 l0,6 M18,122 l6,0 M18,122 l0,-6 M82,122 l-6,0 M82,122 l0,-6' stroke='%23e9d6a0' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E")}
+/* ===== 1.0.8 «Клуб»: leather and brass, the club's colours live in these variables ===== */
+body{--accent:var(--gold)}
+#bg{background:var(--floorPat),radial-gradient(ellipse 70% 80% at 50% 45%,var(--floorB),var(--floorA) 75%)!important}
+
+/* rail: a padded armrest with stitching, an outer edge and an inner trim */
+#rail{background:var(--railSkin)!important;
+  box-shadow:0 0 0 var(--edgeW,5px) var(--edge),0 0 0 calc(var(--edgeW,5px) + 1px) #0008,0 26px 50px #000c,inset 0 3px 2px #ffffff26,inset 0 -8px 16px #0009!important}
+#rail::before{content:"";position:absolute;inset:7px;border-radius:283px/228px;border:1.4px dashed var(--stitch);pointer-events:none;opacity:.9}
+#rail::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;box-shadow:var(--railGlow,none)}
+#felt{background:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .55 0'/></filter><rect width='180' height='180' filter='url(%23n)' opacity='.55'/></svg>"),
+    radial-gradient(ellipse 52% 60% at 50% 46%,var(--feltHi) 0%,var(--felt) 45%,var(--feltLo) 78%,var(--feltDeep) 100%)!important;
+  box-shadow:0 0 0 2.5px var(--trim),0 0 0 4px #0009,inset 0 0 0 2px #0006,inset 0 12px 30px #000a,inset 0 0 90px #0008!important}
+#feltLines [stroke]{stroke:var(--line)!important}
+#feltLines text{fill:var(--line)!important}
+#feltLines g[fill]{fill:var(--line)}
+#feltSuits span{color:var(--lineSoft)!important}
+.cmark{border-color:var(--lineSoft)!important}
+.cmark.potz{background:repeating-linear-gradient(135deg,var(--lineFaint) 0 1.5px,transparent 1.5px 9px)!important}
+
+/* lamp over the table: warm pool in the middle, dusk at the edges */
+#lampFx{position:absolute;z-index:auto!important;left:-300px;right:-300px;top:-200px;bottom:-200px;pointer-events:none;z-index:1;
+  background:radial-gradient(ellipse 470px 300px at 860px 450px,var(--lamp) 0,#0000 62%),radial-gradient(ellipse 760px 420px at 860px 460px,#0000 60%,#00000055 82%,#000000a0 100%)}
+body.lite #lampFx{display:none}
+/* cupholder: a round coaster lying on the armrest, a raised rim, the glass stands on it */
+.cup{width:32px!important;height:32px!important;margin:-2px 0 0 -2px;border-radius:50%!important;
+  background:radial-gradient(circle at 50% 50%,var(--coaster) 0 54%,var(--coasterLine) 56% 58%,var(--coaster) 60% 76%,var(--coasterRim) 78% 92%,#0000 94%),var(--coaster)!important;
+  box-shadow:0 2px 3px #000a,inset 0 1px 1px #ffffff30,inset 0 -1px 2px #0008!important}
+.cupLip{display:none!important}
+
+/* chips: ridged edge, inlaid label ring, a soft highlight */
+.chip{background:
+    radial-gradient(circle at 36% 30%,#ffffff55,#0000 42%),
+    radial-gradient(circle,var(--c) 0 33%,#ffffffd8 34% 36.5%,var(--c) 37.5% 55%,#0000 56%),
+    radial-gradient(circle,#0000 0 56%,#0000 57%),
+    repeating-conic-gradient(#00000038 0 1.6deg,#0000 1.6deg 7.5deg),
+    repeating-conic-gradient(var(--c) 0 20deg,#f4efe2 20deg 30deg,var(--c) 30deg 45deg)!important;
+  box-shadow:0 1.4px 0 var(--e),0 2.6px 0 #0008,inset 0 0 0 1px #0004,inset 0 0 0 2.4px #ffffff1a!important}
+.coin{background:radial-gradient(circle at 38% 32%,#fff6c8 0 12%,#ffd770 22%,#b8860b 48%,#ffd770 52% 62%,#a6750a 66%)!important}
+
+/* cards: fine paper, theme back */
+.card .f{background:linear-gradient(160deg,#fffdf7,#f3efe3)!important}
+.card .b,#deck{background-image:var(--back)!important;background-size:100% 100%!important;background-color:transparent!important;border:none!important}
+#deck{box-shadow:1px 1px 0 #e9e4d6,2px 2px 0 #cfc8b6,3px 3px 0 #e9e4d6,4px 4px 0 #c2baa6,5px 5px 0 #ddd6c4,6px 7px 6px #0009!important}
+
+/* plates */
+.plate{background:var(--plateBg)!important;box-shadow:0 6px 16px #000a,inset 0 0 0 1px var(--plateLine),inset 0 1px 0 #ffffff1c!important;border-radius:10px!important}
+.plate::before{content:"";position:absolute;left:10px;right:10px;top:0;height:1.5px;background:var(--plateTop);border-radius:1px;opacity:.9}
+.plate .av{background:var(--avBg)!important;box-shadow:inset 0 0 0 2px var(--avRing),0 1px 2px #0008!important;color:var(--avInk)!important}
+.plate .st{color:var(--stackInk,#fff)}
+.plate.turn{box-shadow:0 0 0 2px var(--gold),0 0 24px var(--glow),0 6px 16px #000a!important}
+#pot,.betLbl,.potLbl{background:var(--plateBg)!important;border-color:var(--plateLine)!important}
+.pill,.ibtn{background:var(--plateBg)!important;border-color:var(--plateLine)!important}
+.pill.barBtn{color:var(--gold)!important}
+#title{color:var(--gold)!important}
+.verTag{background:var(--gold)!important}
+
+/* log: a paper slip in the theme's colours */
+#log{background:var(--logBg)!important;color:var(--logInk)!important}
+#log .hd{background:var(--logHd)!important;color:var(--logHdInk)!important}
+#log .row b{color:var(--logName)!important}
+
+/* action buttons */
+#sidePanel .btn,#raisePanel .q button{--a:var(--callA);--b:var(--callB);--st:var(--callSt);
+  background-image:var(--btnTex),linear-gradient(var(--a),var(--b))!important;
+  box-shadow:0 3px 0 #000b,0 7px 14px #0009,inset 0 1px 0 #ffffff2e,inset 0 -2px 4px #0005!important}
+#sidePanel .btn.dark,#sidePanel .btn.pre.dark{--a:var(--foldA);--b:var(--foldB);--st:var(--foldSt)}
+#sidePanel .btn.gold,#raisePanel .q button{--a:var(--raiseA);--b:var(--raiseB);--st:var(--raiseSt);color:var(--raiseInk,#fff)!important}
+.panel{background:var(--panelBg)!important;border-color:var(--panelLine)!important}
+.panel h2{color:var(--gold)!important}
+
+/* dealer */
+#dealerSvg #suit stop:first-child{stop-color:var(--dSuitA)}
+#dealerSvg #suit stop:last-child{stop-color:var(--dSuitB)}
+#sleeveL path:nth-child(1),#sleeveR path:nth-child(1){stroke:var(--dSleeve)!important}
+#sleeveL path:nth-child(3),#sleeveR path:nth-child(3){stroke:var(--dSleeve2)!important}
+/* 1.0.8: buttons press in softly and light up under the finger */
+.btn,.pill,.ibtn,#raisePanel .q button{transition:transform .09s ease-out,box-shadow .09s ease-out,filter .15s}
+.btn:hover:not([disabled]),.pill:hover,.ibtn:hover{filter:brightness(1.08)}
+#sidePanel .btn:active,#raisePanel .q button:active,.btn:active{transform:translateY(2px) scale(.985)}
+/* 1.0.8: the winning five: a gold halo that breathes and a gleam that runs across the face once */
+.card.win:not(.kick) .f{box-shadow:0 0 0 2px #fff4cf,0 0 0 3.5px var(--gold),0 0 18px 4px #f2d27aaa,0 0 34px #ffd34d66!important;animation:winGlow 1.6s ease-in-out .5s infinite alternate}
+@keyframes winGlow{to{box-shadow:0 0 0 2px #fff4cf,0 0 0 3.5px var(--gold),0 0 24px 6px #f2d27add,0 0 44px #ffd34d88}}
+.card.win .f::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:linear-gradient(115deg,#0000 30%,#ffffffb0 46%,#fff7d8 50%,#0000 64%) no-repeat;background-size:260% 100%;background-position:130% 0;animation:winGleam 1.1s ease-out .25s 1 both}
+@keyframes winGleam{to{background-position:-130% 0}}
+.card.dim{filter:brightness(.42) saturate(.7)!important}
+body.lite .card.win .f,body.lite .card.win .f::after{animation:none}
+/* the sleeve folds are straight creases across the cloth, not round dots */
+#sleeveL path:nth-child(2),#sleeveR path:nth-child(2),#sleeveL path:nth-child(3),#sleeveR path:nth-child(3),#sleeveL path:nth-child(4),#sleeveR path:nth-child(4){stroke-linecap:butt}
+#sleeveL path:nth-child(3),#sleeveR path:nth-child(3){stroke-dasharray:1.2 7 .8 11;stroke-opacity:.8}
+#tray{background:linear-gradient(var(--trayA),var(--trayB))!important;box-shadow:inset 0 3px 6px #000c,0 0 0 1.5px var(--trim),0 2px 6px #0009!important}
 </style>
 </head>
 <body>
@@ -567,18 +673,18 @@ body.lite .handLbl.win{animation:none}
       <svg id="feltLines" viewBox="0 0 868 410" aria-hidden="true">
         <defs>
           <mask id="feltCut" maskUnits="userSpaceOnUse" x="0" y="0" width="868" height="410"><rect width="868" height="410" fill="#fff"/><g id="feltHoles" fill="#000"></g></mask>
-          <path id="arcB" d="M134,320 A300,60 0 0 0 734,320"/>
         </defs>
         <g>   <!-- 1.0.6: no marking crosses a line any more, so the lines need no mask (masks are slow on some phones) -->
           <path d="M608.5,15.0L616.6,15.1L624.7,15.4L632.8,15.9L640.8,16.7L648.9,17.6L656.8,18.8L664.7,20.1L672.6,21.7L680.4,23.4L688.0,25.4L695.7,27.5L703.2,29.9L710.6,32.4L717.8,35.1L725.0,38.0L732.0,41.1L738.9,44.4L745.7,47.8L752.3,51.4L758.7,55.2L765.0,59.1L771.1,63.2L777.0,67.4L782.7,71.8L788.2,76.3L793.6,81.0L798.7,85.8L803.6,90.7L808.3,95.7L812.8,100.8L817.1,106.0L821.1,111.4L824.9,116.8L828.5,122.3L831.9,127.9L835.0,133.5L837.8,139.2L840.4,145.0L842.8,150.9L845.0,156.8L846.8,162.7L848.5,168.7L849.9,174.7L851.0,180.7L851.9,186.8L852.5,192.8L852.9,198.9L853.0,205.0L852.9,211.1L852.5,217.2L851.9,223.2L851.0,229.3L849.9,235.3L848.5,241.3L846.8,247.3L845.0,253.2L842.8,259.1L840.4,265.0L837.8,270.8L835.0,276.5L831.9,282.1L828.5,287.7L824.9,293.2L821.1,298.6L817.1,304.0L812.8,309.2L808.3,314.3L803.6,319.3L798.7,324.2L793.6,329.0L788.2,333.7L782.7,338.2L777.0,342.6L771.1,346.8L765.0,350.9L758.7,354.8L752.3,358.6L745.7,362.2L738.9,365.6L732.0,368.9L725.0,372.0L717.8,374.9L710.6,377.6L703.2,380.1L695.7,382.5L688.0,384.6L680.4,386.6L672.6,388.3L664.7,389.9L656.8,391.2L648.9,392.4L640.8,393.3L632.8,394.1L624.7,394.6L616.6,394.9L608.5,395.0L259.5,395.0L251.4,394.9L243.3,394.6L235.2,394.1L227.2,393.3L219.1,392.4L211.2,391.2L203.3,389.9L195.4,388.3L187.6,386.6L180.0,384.6L172.3,382.5L164.8,380.1L157.4,377.6L150.2,374.9L143.0,372.0L136.0,368.9L129.1,365.6L122.3,362.2L115.7,358.6L109.3,354.8L103.0,350.9L96.9,346.8L91.0,342.6L85.3,338.2L79.8,333.7L74.4,329.0L69.3,324.2L64.4,319.3L59.7,314.3L55.2,309.2L50.9,304.0L46.9,298.6L43.1,293.2L39.5,287.7L36.1,282.1L33.0,276.5L30.2,270.8L27.6,265.0L25.2,259.1L23.0,253.2L21.2,247.3L19.5,241.3L18.1,235.3L17.0,229.3L16.1,223.2L15.5,217.2L15.1,211.1L15.0,205.0L15.1,198.9L15.5,192.8L16.1,186.8L17.0,180.7L18.1,174.7L19.5,168.7L21.2,162.7L23.0,156.8L25.2,150.9L27.6,145.0L30.2,139.2L33.0,133.5L36.1,127.9L39.5,122.3L43.1,116.8L46.9,111.4L50.9,106.0L55.2,100.8L59.7,95.7L64.4,90.7L69.3,85.8L74.4,81.0L79.8,76.3L85.3,71.8L91.0,67.4L96.9,63.2L103.0,59.1L109.3,55.2L115.7,51.4L122.3,47.8L129.1,44.4L136.0,41.1L143.0,38.0L150.2,35.1L157.4,32.4L164.8,29.9L172.3,27.5L180.0,25.4L187.6,23.4L195.4,21.7L203.3,20.1L211.2,18.8L219.1,17.6L227.2,16.7L235.2,15.9L243.3,15.4L251.4,15.1L259.5,15.0Z" fill="none" stroke="#f2e3b4" stroke-opacity=".18" stroke-width="1"/>
           <rect x="128.5" y="125.8" width="611" height="162.4" rx="81.2" ry="81.2" fill="none" stroke="#f2e3b4" stroke-opacity=".4" stroke-width="2"/>
-          <text font-family="Bodoni Moda, Georgia, serif" font-style="italic" font-weight="700" font-size="22" fill="#f2e3b4" fill-opacity=".22" letter-spacing="3"><textPath href="#arcB" startOffset="50%" text-anchor="middle">Texas Hold’em</textPath></text>
         </g>
         <g fill="#f2e3b4" fill-opacity=".38">
           <path transform="translate(209.5 207) scale(11)" d="M0,-.9 C-.32,-.48 -1.1,-.12 -.76,.34 C-.52,.64 -.16,.56 -.06,.32 L-.26,.86 L.26,.86 L.06,.32 C.16,.56 .52,.64 .76,.34 C1.1,-.12 .32,-.48 0,-.9Z"/>
           <path transform="translate(658.5 207) scale(11)" d="M0,-.42 C-.46,-1.02 -1.16,-.42 -.78,.12 C-.56,.42 -.22,.6 0,.86 C.22,.6 .56,.42 .78,.12 C1.16,-.42 .46,-1.02 0,-.42Z"/>
         </g>
       </svg>
+      <!-- 1.0.8: «Texas Hold’em» is html text: on high-density screens Chrome drew the svg text shifted on the stretched table -->
+      <div id="feltTitle" aria-hidden="true">Texas Hold’em</div>
     </div>
   </div>
 
@@ -593,6 +699,12 @@ body.lite .handLbl.win{animation:none}
     <path d="M100,34 L120,94 L112,36Z M140,34 L120,94 L128,36Z" fill="#000" opacity=".55"/>
     <path d="M110,58 L120,62 L130,58 L130,68 L120,64 L110,68Z" fill="#111"/>
     <circle cx="120" cy="63" r="2.6" fill="#222"/>
+    <g class="dDet"><path d="M102,34 L84,40 L104,80 Z M138,34 L156,40 L136,80 Z" fill="#000" opacity=".5"/>
+    <path d="M102,34 L86,40 L104,78" fill="none" stroke="#3a3a3f" stroke-width="1.2"/><path d="M138,34 L154,40 L136,78" fill="none" stroke="#3a3a3f" stroke-width="1.2"/>
+    <path d="M60,52 l10,-3 l2,7 l-10,3z" fill="#f4f2ec"/><path d="M61,52 l4,-6 l3,5" fill="#d8b46a"/>
+    <path d="M110,58 L120,62 L130,58 L130,68 L120,64 L110,68Z" fill="#7a1a1a"/><circle cx="120" cy="63" r="2.4" fill="#4a0d0d"/>
+    <rect x="160" y="50" width="22" height="8" rx="1.5" fill="#d8b46a"/><rect x="161.5" y="51.5" width="19" height="5" rx="1" fill="none" stroke="#5a3a0a" stroke-width=".5"/>
+    <circle cx="120" cy="80" r="1.6" fill="#d8b46a"/><circle cx="120" cy="88" r="1.6" fill="#d8b46a"/></g>
     <circle cx="120" cy="24" r="25" fill="url(#hair)"/>
     <path d="M97,30 Q120,44 143,30 Q140,46 120,49 Q100,46 97,30Z" fill="#c99a78"/>
   </svg>
@@ -659,6 +771,7 @@ body.lite .handLbl.win{animation:none}
     </g>
   </svg>
 
+  <div id="lampFx" aria-hidden="true"></div>
   <!-- 1.0.5: the waiter reaches in from behind a player's seat with a silver tray -->
   <svg class="layer" id="waiterSvg" viewBox="0 0 1120 500" aria-hidden="true" style="overflow:visible;pointer-events:none">
     <defs>
@@ -671,6 +784,9 @@ body.lite .handLbl.win{animation:none}
         <path stroke="#000" stroke-opacity=".08" stroke-width="27" stroke-dasharray="1.6 10 2.4 14"/>
         <path stroke="#fff" stroke-opacity=".55" stroke-width="8"/>
       </g>
+      <!-- 1.0.8: the hand holds the tray from below: hand and cuff are drawn under the tray -->
+      <g id="wCuff"><rect x="-9" y="-13.5" width="11" height="27" rx="3.5" fill="#f7f5ef" stroke="#cfcac0" stroke-width=".8"/><rect x="-6.5" y="-10" width="4.6" height="4.6" rx="2.3" fill="#c9ccd0" stroke="#6d7178" stroke-width=".6"/></g>
+      <g id="wHand"></g>
       <g id="wTray">
         <ellipse cx="0" cy="3" rx="31" ry="30" fill="#0006"/>
         <circle r="29" fill="url(#trayRim)"/>
@@ -679,8 +795,6 @@ body.lite .handLbl.win{animation:none}
         <circle r="20" fill="none" stroke="#ffffff" stroke-opacity=".35" stroke-width=".7"/>
         <path d="M-17,-14 A22,22 0 0 1 4,-22" fill="none" stroke="#fff" stroke-opacity=".8" stroke-width="2.4" stroke-linecap="round"/>
       </g>
-      <g id="wCuff"><rect x="-9" y="-13.5" width="11" height="27" rx="3.5" fill="#f7f5ef" stroke="#cfcac0" stroke-width=".8"/><rect x="-6.5" y="-10" width="4.6" height="4.6" rx="2.3" fill="#c9ccd0" stroke="#6d7178" stroke-width=".6"/></g>
-      <g id="wHand"></g>
     </g>
   </svg>
   <div class="layer" id="waiterItems"></div>
@@ -690,7 +804,7 @@ body.lite .handLbl.win{animation:none}
   <div class="layer" id="seatLayer"></div>
 
   <div class="layer" id="hud">
-    <div class="hudTop" style="left:10px"><span id="title">Royal Flush</span><span class="verTag">1.0.7</span><span class="pill" id="tableInfo">Холдем</span></div>
+    <div class="hudTop" style="left:10px"><span id="title">Royal Flush</span><span class="verTag">1.0.8</span><span class="pill" id="tableInfo">Холдем</span></div>
     <div class="hudTop" style="right:10px"><span class="pill" id="onlineInfo" hidden></span>
       <button class="pill barBtn" id="bBar">Бар</button>
       <button class="pill invite" id="bInvite">+ Пригласить</button>
@@ -910,6 +1024,20 @@ function drink(s, uid, id, all, now, opt = {}) {
   const d = DRINKS.find(x => x.id === id); if (!d) return 'Нет такого напитка';
   bars(s);
   let guests = [];
+  // 1.0.8: a bottle for myself: the bottle's price, no treat window, it goes straight into a bucket by my seat and is poured only to me
+  if (opt.self) {
+    if (s.bottles.length >= MAX_BOTTLES) return 'На столе уже три бутылки';
+    const price = drinkPrice(s, id, true), p = s.seats[i];
+    if (p.stack < price) return 'Не хватает фишек: нужно ' + price.toLocaleString('ru-RU').replace(/,/g, ' ');
+    p.stack -= price;
+    const L = s.ledger[uid]; L.bar = (L.bar || 0) + price;
+    s.treatN = (s.treatN || 0) + 1;
+    pushEv(s, { t: 'treat', seat: i, id, price, self: 1 });
+    pushLog(s, now, uid, 'взял бутылку себе: ' + d.name + ' (' + price + ')');
+    const keep = s.treat; s.treat = { v7: 1, by: uid, id, until: now, ans: {}, has: {}, tg: s.treatN, mode: 'me' };
+    resolveTreat(s, now); s.treat = keep;
+    return null;
+  }
   if (all) {
     if (s.treat) return 'Стол уже угощают — подождите минутку';
     if (s.bottles.length >= MAX_BOTTLES) return 'На столе уже три бутылки';
@@ -1044,7 +1172,7 @@ function setLook(s, uid, look) {
   const n = (v, max) => typeof v === 'number' && v >= 0 && v < max ? Math.floor(v) : 0;
   const str = v => typeof v === 'string' && /^[a-z0-9]{1,16}$/.test(v) ? v : '';
   const L = look || {};
-  s.looks[uid] = { g: L.g === 'f' ? 'f' : 'm', skin: n(L.skin, 5), sl: str(L.sl), col: n(L.col, 12), tat: n(L.tat, 8), nail: n(L.nail, 12),
+  s.looks[uid] = { g: L.g === 'f' ? 'f' : 'm', skin: n(L.skin, 5), sl: str(L.sl), col: n(L.col, 12), tat: n(L.tat, 8), tv: L.tv === 8 ? 8 : 0, nail: n(L.nail, 12),
     acc: Array.isArray(L.acc) ? L.acc.map(str).filter(Boolean).slice(0, 4) : [], ai: L.ai === 'push' || L.ai === 'neat' ? L.ai : '' };
   return null;
 }
@@ -1347,7 +1475,7 @@ const SLOTS = ZONES.map((z, i) => {
 });
 /* cupholders cut into the rail: on the centre line of the wooden band, to the player's right of the right hand,
    computed from the resting arms so that no resting hand, name plate or button covers the holder or the glass */
-const CUPS = [[563, 473], [240, 440], [197, 94], [923, 94], [984, 161], [834, 458]];   // 1.0.6: the top-right holder mirrors the top-left one, so no glass is cut by the screen
+const CUPS = [[563, 473], [256, 447], [197, 94], [923, 94], [984, 161], [834, 458]];   // 1.0.8: the bottom-left holder moved along the rail, clear of the game log   // 1.0.6: the top-right holder mirrors the top-left one, so no glass is cut by the screen
 const GLASS_SINK = 5;   // 1.0.6: the glass stands down in the holder; the holder's front lip covers its foot
 SLOTS.forEach((sl, i) => { sl.cup = CUPS[i]; sl.drink = CUPS[i]; });
 const BOARD_Y = 255, BOARD_X = k => CX + (k - 2) * 62;
@@ -1363,7 +1491,7 @@ function bucketSpotOrder(by) {
 function bucketAt(b) { return BUCKET_SPOTS[b.spot] || BUCKET; }
 const muckPos = k => [MUCK[0] + ((k * 37) % 9) - 4, MUCK[1] + ((k * 23) % 7) - 3, ((k * 53) % 34) - 17];
 let collectedNo = -1, collecting = false;
-const SHOULDER = { L: [500, 0], R: [620, 0] }, REST = { L: [479, 72], R: [641, 72] };
+const SHOULDER = { L: [500, 0], R: [620, 0] }, REST = { L: [479, 60], R: [641, 60] };   // 1.0.8: the gloves rest higher, clear of the pot chips
 
 const DENOMS = [
   [100000, '#e05ca8', '#8e2f68'], [25000, '#2f6fd6', '#1b4185'], [5000, '#f08a24', '#a1560f'], [1000, '#e7c64a', '#94791d'],
@@ -1399,7 +1527,7 @@ const toStage = (x, y) => [TOX + (TOC[0] + (x - TOC[0]) * TSX) * TK, TOY + (TOC[
 
 /* ---------------- scaling ---------------- */
 let force = false;
-const VERSION = '1.0.7', CODENAME = 'Royal Flush';
+const VERSION = '1.0.8', CODENAME = 'Royal Flush';
 /* 1.0.6: the whole table (wooden rail included) is fitted into the screen and centred, with the same small gap above and
    below on every screen; the HUD and the side plates keep to the screen edges. Plain transform, no CSS zoom (zoom flickered on some Android phones) */
 const RAIL_Y0 = TOC[1] + (18 - TOC[1]) * TSY, RAIL_Y1 = TOC[1] + (488 - TOC[1]) * TSY;   // the rail's top and bottom in stage units
@@ -1544,10 +1672,10 @@ function drawArms() {
     const ex = x - tx * 8, ey = y - ty * 8, d = `M${sx},${sy} Q${mx},${my} ${ex},${ey}`;
     $('#sleeve' + side, armSvg).querySelectorAll('path').forEach(p => p.setAttribute('d', d));
     $('#cuff' + side, armSvg).setAttribute('transform', `translate(${wx},${wy}) rotate(${ang})`);
-    $('#hand' + side, armSvg).setAttribute('transform', `translate(${x},${y}) rotate(${ang})${side === 'L' ? ' scale(1,-1)' : ''}`);
+    $('#hand' + side, armSvg).setAttribute('transform', `translate(${x},${y}) rotate(${ang})${side === 'R' ? ' scale(1,-1)' : ''}`);
   }
 }
-const ease = { io: t => t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2, out: t => 1 - Math.pow(1 - t, 3), back: t => { const c1 = 1.5, c3 = c1 + 1; return 1 + c3 * Math.pow(t - 1, 3) + c1 * Math.pow(t - 1, 2); } };
+const ease = { io: t => t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2, out: t => 1 - Math.pow(1 - t, 3), slide: t => 1 - Math.pow(1 - t, 4), back: t => { const c1 = 1.5, c3 = c1 + 1; return 1 + c3 * Math.pow(t - 1, 3) + c1 * Math.pow(t - 1, 2); } };
 const ANIM_K = 1.33;
 function tween(dur, fn, e = ease.io) {
   dur *= ANIM_K;
@@ -1582,11 +1710,11 @@ setInterval(() => {
 function restHands(dur = 380) { return Promise.all([moveHand('L', ...REST.L, dur), moveHand('R', ...REST.R, dur)]); }
 drawArms();
 /* ===================== player hands, chip tricks, bar art ===================== */
-const DRINK_ART = {
-  beer: { glass: 'mug', liquid: '#e2a42b', bottle: '#5a3410', label: '#e9d9b0', shape: 'beer' },
-  vodka: { glass: 'shot', liquid: '#eef4f7', bottle: '#dfe9ee', label: '#1f4c7a', shape: 'tall' },
+const DRINK_ART = {   // 1.0.8: beer, vodka and tequila in clear glass: the drink shows through
+  beer: { glass: 'mug', liquid: '#f0bf2e', bottle: '#eef2e6', label: '#e9d9b0', shape: 'beer' },
+  vodka: { glass: 'shot', liquid: '#eef4f7', bottle: '#e4edf2', label: '#1f4c7a', shape: 'tall' },
   whisky: { glass: 'rocks', liquid: '#c9771e', bottle: '#b8661a', label: '#1c1c1c', shape: 'square' },
-  tequila: { glass: 'shot', liquid: '#e9c766', bottle: '#f3efe6', label: '#2b5aa6', shape: 'ceramic' },
+  tequila: { glass: 'shot', liquid: '#e2a93c', bottle: '#eef2ee', label: '#7a5a1a', shape: 'ceramic' },
   cognac: { glass: 'snifter', liquid: '#8f3d12', bottle: '#7a2f0c', label: '#d8b25a', shape: 'round' },
   champagne: { glass: 'flute', liquid: '#f2dd8a', bottle: '#14301f', label: '#e7c87a', shape: 'champ' },
 };
@@ -1594,8 +1722,10 @@ const DRINK_ART = {
 /* ===================== wardrobe: gender, sleeves, colours, nails, accessories ===================== */
 const SKINS = [['#f3d2b6', '#d9ad8b'], ['#e8b48c', '#c98e63'], ['#c98b5e', '#a66b40'], ['#93603d', '#6e4427'], ['#5e3b25', '#422814']];
 const NAILS = [['Без лака', null], ['Нюд', '#e3b3a0'], ['Красный', '#c4122a'], ['Бордо', '#6b0f22'], ['Чёрный', '#141414'], ['Розовый', '#f08bb5'], ['Золото', '#d9b25a']];
-const TATTOOS = ['Орнамент', 'Розы', 'Карты', 'Надписи'];
+const TATTOOS = ['Роял-флеш', 'Фишки и кости', 'Роза и кинжал'];
+const TAT_OLD = [1, 2, 0, 0];   // 1.0.8: the 1.0.7 drawings (ornament, roses, cards, lettering) become the nearest new one
 // kind: how the sleeve is drawn. colors: choices for that garment.
+const TEE_COLORS = ['#f4f2ec', '#1b1b1d', '#3a3f45', '#1f2c4a', '#6e1f2b', '#4b5a35'];   // 1.0.8: the tattoo sleeve's cotton tee: white, black, graphite, navy, bordeaux, olive
 const WARDROBE = {
   m: [
     { id: 'jacket', name: 'Пиджак', kind: 'tailored', cuff: '#f4f2ec', colors: ['#1d2433', '#2b2b2e', '#3c4a3a', '#5a4632', '#7a1f2b', '#2f4f7a', '#8a8f96'] },
@@ -1606,7 +1736,7 @@ const WARDROBE = {
     { id: 'leather', name: 'Кожаная куртка', kind: 'leather', colors: ['#1b1b1d', '#4a2e1c', '#3a1a1a'] },
     { id: 'knit', name: 'Свитер', kind: 'knit', colors: ['#7a2232', '#e8e0cf', '#2b3a55', '#4b5d3a', '#5a4632', '#6d7178'] },
     { id: 'track', name: 'Олимпийка', kind: 'track', colors: ['#1f3f8a', '#b3122a', '#1f1f22', '#2f6b3a'] },
-    { id: 'tattoo', name: 'Тату-рукав', kind: 'tattoo', colors: [] },
+    { id: 'tattoo', name: 'Тату-рукав', kind: 'tattoo', colors: TEE_COLORS },
   ],
   f: [
     { id: 'bare', name: 'Платье, открытые руки', kind: 'bare', colors: [] },
@@ -1617,7 +1747,7 @@ const WARDROBE = {
     { id: 'turtle', name: 'Водолазка', kind: 'turtle', colors: ['#1f1f22', '#e8e0cf', '#7a2232', '#6d7178', '#2b3a55'] },
     { id: 'leather', name: 'Кожаная куртка', kind: 'leather', colors: ['#1b1b1d', '#4a2e1c', '#7a1f2b'] },
     { id: 'hoodie', name: 'Худи', kind: 'hoodie', colors: ['#d8d3c6', '#f0b7c9', '#6d7178', '#1f1f22', '#b89ad4'] },
-    { id: 'tattoo', name: 'Тату-рукав', kind: 'tattoo', colors: [] },
+    { id: 'tattoo', name: 'Тату-рукав', kind: 'tattoo', colors: TEE_COLORS },
   ],
 };
 const ACCESSORIES = {
@@ -1646,13 +1776,13 @@ function normLook(l) {
   if (!list.some(w => w.id === sl)) sl = list[0].id;
   const w = list.find(x => x.id === sl);
   const col = Math.max(0, Math.min((w.colors.length || 1) - 1, l.col | 0));
-  const tat = Math.max(0, Math.min(TATTOOS.length - 1, l.tat | 0));
+  const tat = Math.max(0, Math.min(TATTOOS.length - 1, l.tv === 8 ? l.tat | 0 : TAT_OLD[l.tat | 0] ?? 0));
   const nail = g === 'f' ? Math.max(0, Math.min(NAILS.length - 1, l.nail | 0)) : 0;
   let acc = Array.isArray(l.acc) ? l.acc : (typeof l.acc === 'number' ? OLD_ACC[l.acc] || [] : []);
   const ok = new Set(ACCESSORIES[g].map(a => a.id));
   acc = [...new Set(acc.filter(a => ok.has(a)))].slice(0, 4);
   const ai = l.ai === 'push' ? 'push' : l.ai === 'neat' ? 'neat' : '';
-  return { g, skin: Math.max(0, Math.min(4, l.skin | 0)), sl, col, tat, nail, acc, ai };
+  return { g, skin: Math.max(0, Math.min(4, l.skin | 0)), sl, col, tat, tv: 8, nail, acc, ai };
 }
 function randomLook(g) {
   g = g || (Math.random() < .5 ? 'm' : 'f');
@@ -1660,7 +1790,7 @@ function randomLook(g) {
   const pool = ACCESSORIES[g].slice().sort(() => Math.random() - .5);
   const acc = []; const used = new Set();
   for (const a of pool) { if (acc.length >= (Math.random() < .5 ? 1 : 2)) break; if (used.has(a.slot)) continue; used.add(a.slot); acc.push(a.id); }
-  return normLook({ g, skin: Math.floor(Math.random() * 5), sl: w.id, col: Math.floor(Math.random() * Math.max(1, w.colors.length)), tat: Math.floor(Math.random() * 4), nail: g === 'f' ? Math.floor(Math.random() * NAILS.length) : 0, acc });
+  return normLook({ g, skin: Math.floor(Math.random() * 5), sl: w.id, col: Math.floor(Math.random() * Math.max(1, w.colors.length)), tat: Math.floor(Math.random() * TATTOOS.length), tv: 8, nail: g === 'f' ? Math.floor(Math.random() * NAILS.length) : 0, acc });
 }
 function lookOf(u) {
   const l = (S && S.looks && S.looks[u]) || null;
@@ -1680,10 +1810,7 @@ function sleeveMarkup(l, w) {
   const folds = `<path class="slv2" fill="none" stroke="#000" stroke-opacity=".16" stroke-width="${w * .92}" stroke-dasharray="1.4 11 2 15"/>`;
   switch (G.kind) {
     case 'bare': return `<path class="slv" fill="none" stroke="${sk}" stroke-width="${w * .82}" stroke-linecap="round"/><path class="slv2 hi" fill="none" stroke="#fff" stroke-opacity=".12" stroke-width="${w * .25}" stroke-linecap="round"/>`;
-    case 'tattoo': {
-      const ink = ['#24324a', '#5b1a24', '#1d1d1d', '#24324a'][l.tat], dash = ['7 3 2 3', '5 2 9 2', '3 3', '11 2 1 2 1 2'][l.tat];
-      return `<path class="slv" fill="none" stroke="${sk}" stroke-width="${w * .9}" stroke-linecap="round"/><path class="slv2" fill="none" stroke="${ink}" stroke-opacity=".6" stroke-width="${w * .5}" stroke-dasharray="${dash}"/>${l.tat === 1 ? `<path class="slv2" fill="none" stroke="#b3122a" stroke-opacity=".5" stroke-width="${w * .22}" stroke-dasharray="2 14"/>` : ''}${hi}`;
-    }
+    case 'tattoo': return `<path class="slv" fill="none" stroke="${sk}" stroke-width="${w * .9}" stroke-linecap="round"/>${hi}`;
     case 'tux': return base + folds + `<path class="slv2" fill="none" stroke="${mix(c, .2, '#ffffff')}" stroke-opacity=".5" stroke-width="${w * .1}"/>` + hi;
     case 'plaid': return base + `<path class="slv2" fill="none" stroke="${dark}" stroke-opacity=".55" stroke-width="${w}" stroke-dasharray="3 5"/><path class="slv2" fill="none" stroke="${light}" stroke-opacity=".35" stroke-width="${w * .5}" stroke-dasharray="1.5 6.5"/>` + hi;
     case 'knit': return base + `<path class="slv2" fill="none" stroke="#000" stroke-opacity=".18" stroke-width="${w * .8}" stroke-dasharray="2 3"/>` + hi;
@@ -1694,9 +1821,77 @@ function sleeveMarkup(l, w) {
     default: return base + folds + hi;
   }
 }
+/* 1.0.8: tattoo sleeves, drawn in the wrist's frame (+x toward the fingers, the forearm along -x), so they move with the forearm.
+   Designed for an arm 24 wide and cut to the skin, a little inside the forearm's edge. */
+function tattooMarkup(l, w) {
+  const INK = '#1b2230', RED = '#b3182c', GRN = '#2f6b3f', YEL = '#d9a93a', BLU = '#2c5f8f', OR = '#e2742a';
+  const o = 'stroke-linecap="round" stroke-linejoin="round"';
+  const ln = (d, c = INK, sw = .8, op = .9) => `<path d="${d}" fill="none" stroke="${c}" stroke-width="${sw}" stroke-opacity="${op}" ${o}/>`;
+  const fl = (d, c = INK, op = .85, extra = '') => `<path d="${d}" fill="${c}" fill-opacity="${op}" ${extra}/>`;
+  const tx = (x, y, s, t, c = INK, extra = '') => `<text x="${x}" y="${y}" font-size="${s}" fill="${c}" fill-opacity=".9" ${extra}>${t}</text>`;
+  const spade = (x, y, s, c = INK) => `<path transform="translate(${x} ${y}) scale(${s})" d="M0,-1 C-.4,-.5 -1.1,-.15 -.8,.35 C-.55,.65 -.15,.55 -.06,.3 L-.28,.9 L.28,.9 L.06,.3 C.15,.55 .55,.65 .8,.35 C1.1,-.15 .4,-.5 0,-1Z" fill="${c}" fill-opacity=".9"/>`;
+  const dots = (pts, r = .35, c = INK, op = .7) => pts.map(([x, y]) => `<circle cx="${x}" cy="${y}" r="${r}" fill="${c}" fill-opacity="${op}"/>`).join('');
+  const rnd = (seed => () => (seed = (seed * 9301 + 49297) % 233280) / 233280)(7);
+  const stip = (x0, x1, y0, y1, n) => { const p = []; for (let k = 0; k < n; k++) p.push([x0 + (x1 - x0) * rnd(), y0 + (y1 - y0) * rnd()]); return dots(p, .3, INK, .45); };
+  let g = '';
+  switch (l.tat | 0) {
+    case 0: {   // royal flush: five spades fanned from a pivot, a crown on the ace, spade filigree up the arm
+      const P = [-42, 7.2], ranks = ['10', 'J', 'Q', 'K', 'A'];
+      ranks.forEach((r, k) => {
+        const a = -38 + k * 19;
+        g += `<g transform="translate(${P[0]} ${P[1]}) rotate(${a})"><rect x="-4.6" y="-13" width="9.2" height="12.4" rx="1.2" fill="#fbf6ea" fill-opacity=".62" stroke="${INK}" stroke-width=".6"/>
+          ${tx(-3.8, -9.8, 3.2, r, k === 4 ? RED : INK, 'font-family="Georgia,serif" font-weight="700"')}${spade(.8, -5.2, 2.4)}</g>`;
+      });
+      g += `<g transform="translate(${P[0]} ${P[1]}) rotate(38)"><path d="M-2.2,-14.8 l.7,-2 1.5,1.3 1.5,-1.3 .7,2z" fill="${YEL}" fill-opacity=".95" stroke="${INK}" stroke-width=".35"/></g>`;
+      g += ln('M-62,0 C-68,-7 -76,7 -84,0 S-100,-7 -108,0 S-124,7 -132,0 S-144,-6 -150,-1', INK, .6, .75);
+      g += ln('M-62,3 C-70,9 -80,-6 -90,2 M-104,-3 C-112,-9 -122,6 -130,-2', INK, .4, .55);
+      g += spade(-84, 0, 3.2) + spade(-108, 0, 2.6) + spade(-132, 0, 2.2);
+      g += dots([[-72, -6], [-96, 6], [-120, -6], [-142, 5]], .55, RED, .8);
+      break;
+    }
+    case 1: {   // chips and dice: three chips with edge inserts, snake eyes, dotted shading
+      const chip = (x, y, r, c, v) => `<circle cx="${x}" cy="${y}" r="${r}" fill="${c}" fill-opacity=".72" stroke="${INK}" stroke-width=".55"/>
+        <circle cx="${x}" cy="${y}" r="${r - .9}" fill="none" stroke="#fff" stroke-opacity=".85" stroke-width="1.1" stroke-dasharray="1.6 1.9"/>
+        <circle cx="${x}" cy="${y}" r="${r * .55}" fill="#fbf6ea" fill-opacity=".55" stroke="${INK}" stroke-width=".4"/>${tx(x, y + 1.1, r * .5, v, INK, 'text-anchor="middle" font-family="Arial,sans-serif" font-weight="700"')}`;
+      g += chip(-58, -2.5, 5.6, INK, '1K') + chip(-44, 3.6, 5.8, BLU, '500') + chip(-28, -3, 6, RED, '100');
+      const die = (x, y, a) => `<g transform="translate(${x} ${y}) rotate(${a})"><rect x="-4.6" y="-4.6" width="9.2" height="9.2" rx="1.6" fill="#fbf6ea" fill-opacity=".55" stroke="${INK}" stroke-width=".6"/><path d="M4.6,-3 l1.6,-1.2 v7.6 l-1.6,1.4" fill="${INK}" fill-opacity=".45"/><circle r="1.5" fill="${RED}" fill-opacity=".95"/></g>`;
+      g += die(-84, -1.5, 14) + die(-101, 3, -22);
+      g += ln('M-110,-6 q-10,-3 -20,0 M-112,6 q-12,3 -24,-1 M-70,8 q-4,2 -8,1', INK, .45, .55);
+      g += stip(-150, -112, -8, 8, 46) + stip(-66, -18, -9, 9, 16);
+      break;
+    }
+    default: {  // rose and dagger, old school: thick outlines, a ribbon with «Lucky»
+      g += fl('M-16,0 L-96,-3.4 L-96,3.4 Z', '#cdd3da', .8, `stroke="${INK}" stroke-width=".7"`);
+      g += ln('M-22,0 H-92', INK, .4, .6);
+      g += `<rect x="-100" y="-8.6" width="4" height="17.2" rx="1.4" fill="${YEL}" fill-opacity=".9" stroke="${INK}" stroke-width=".6"/>`;
+      g += `<rect x="-118" y="-2.6" width="18" height="5.2" rx="1.2" fill="#5a3a22" fill-opacity=".85" stroke="${INK}" stroke-width=".55"/>` + ln('M-104,-2.6 l-2,5.2 M-109,-2.6 l-2,5.2 M-114,-2.6 l-2,5.2', '#f3e2c0', .45, .7);
+      g += `<circle cx="-121" cy="0" r="3" fill="${YEL}" fill-opacity=".9" stroke="${INK}" stroke-width=".6"/>`;
+      // the rose over the blade
+      g += fl('M-63,-5 c-7,-1 -9,7 -4,10', GRN, .85) + fl('M-46,4 c6,5 12,0 10,-6 c-5,1 -8,3 -10,6z', GRN, .85, `stroke="${INK}" stroke-width=".45"`) + fl('M-68,-6 c-6,-4 -12,0 -11,5 c5,0 8,-2 11,-5z', GRN, .85, `stroke="${INK}" stroke-width=".45"`);
+      g += `<circle cx="-56" cy="0" r="8" fill="${RED}" fill-opacity=".85" stroke="${INK}" stroke-width=".7"/>`;
+      g += ln('M-56,0 m-1.6,0 a1.6,1.6 0 1 1 2.4,1.4 a3.2,3.2 0 1 1 -4.6,-2.6 a5,5 0 1 1 7.6,3.4 M-61.5,-4.8 q3,-2 6,-1.6 M-50,5 q-3,2 -7,1', '#5a0a14', .65, .9);
+      // ribbon
+      g += fl('M-142,-6 h20 l-2,4 2,4 h-20 l2,-4z', '#f6efdc', .7, `stroke="${INK}" stroke-width=".5"`) + tx(-132, .9, 4.2, 'Lucky', RED, 'text-anchor="middle" font-family="Georgia,serif" font-style="italic" font-weight="700"');
+      g += ln('M-142,-6 l-5,-1.4 2,3.4 -2,3.6 5,.4', INK, .45, .8);
+      break;
+    }
+  }
+  const id = 'tc' + (++tattooMarkup.n);
+  return `<g class="tat" transform="scale(${(w / 24).toFixed(3)})"><clipPath id="${id}"><rect x="-400" y="-9.6" width="404" height="19.2" rx="9.6"/></clipPath><g clip-path="url(#${id})">${g}</g></g>`;
+}
+
+tattooMarkup.n = 0;
+// 1.0.8: the tattoo sleeve's cotton tee: it covers the upper arm and ends at the elbow, by the rail, with a double-stitched hem
+function teeMarkup(l, w) {
+  const c = garmentColor(l), mix = ensureHandDefs.mix, W = w * 1.24, dk = mix(c, .3, '#000000');
+  return `<path class="tee" fill="none" stroke="${dk}" stroke-width="${W + 1.4}"/><path class="tee" fill="none" stroke="${c}" stroke-width="${W}"/>
+    <path class="tee" fill="none" stroke="#fff" stroke-opacity=".08" stroke-width="${W * .38}"/><path class="tee" fill="none" stroke="#000" stroke-opacity=".13" stroke-width="${W * .92}" stroke-dasharray="1.2 9 2 15"/>
+    <g class="hem"><rect x="-6.5" y="${-W / 2}" width="6.5" height="${W}" fill="#000" fill-opacity=".12"/><path d="M-2.6,${-W / 2 + .7} V${W / 2 - .7} M-5,${-W / 2 + .7} V${W / 2 - .7}" stroke="${mix(c, .5, c === '#1b1b1d' ? '#ffffff' : '#000000')}" stroke-opacity=".45" stroke-width=".45" stroke-dasharray="1 .9"/><path d="M0,${-W / 2} V${W / 2}" stroke="#000" stroke-opacity=".35" stroke-width=".8"/></g>`;
+}
 function cuffMarkup(l, w) {
   const G = garment(l), c = garmentColor(l), mix = ensureHandDefs.mix;
-  if (G.kind === 'bare' || G.kind === 'tattoo') return '';
+  if (G.kind === 'tattoo') return tattooMarkup(l, w);
+  if (G.kind === 'bare') return '';
   if (G.kind === 'hoodie' || G.kind === 'knit' || G.kind === 'turtle' || G.kind === 'track') { const cc = mix(c, .15, '#000000'); return `<rect x="-9" y="${-w / 2 - .5}" width="10" height="${w + 1}" rx="3" fill="${cc}"/><path d="M-7,${-w / 2} v${w} M-4,${-w / 2} v${w} M-1,${-w / 2} v${w}" stroke="#0003" stroke-width="1"/>`; }
   if (G.kind === 'shirt' || G.kind === 'plaid' || G.kind === 'satin') return `<rect x="-7" y="${-w / 2 - .5}" width="8" height="${w + 1}" rx="2.5" fill="${mix(c, .1, '#ffffff')}" stroke="#0002" stroke-width=".6"/>${G.links ? `<rect x="-5" y="${-w / 2 + 2}" width="4" height="4" rx="1" fill="#d9b25a" stroke="#8a6a24" stroke-width=".5"/>` : ''}`;
   if (G.kind === 'tux' || G.kind === 'tailored') return (G.cuff ? `<rect x="-8" y="${-w / 2 - 1}" width="8" height="${w + 2}" rx="3" fill="${G.cuff}"/><rect x="-6" y="${-w / 2 + 2}" width="3.6" height="3.6" rx="1" fill="#c9ccd0"/>` : '') + `<rect x="-14" y="${-w / 2 - .5}" width="5" height="${w + 1}" rx="2" fill="${mix(c, .2, '#000000')}"/>`;
@@ -1856,7 +2051,13 @@ function handGeo(seat) {
   // every forearm comes from beyond the outer edge of the wooden rail (from the player's body)
   const outside = (x, y) => { const cx = Math.min(Math.max(x, 386), 734), dx = (x - cx) / 290, dy = (y - 253) / 235; return dx * dx + dy * dy > 1; };
   const arm = (r, bd = sl.body) => { const o = bd ? [2 * r[0] - bd[0], 2 * r[1] - bd[1]] : C; const dx = r[0] - o[0], dy = r[1] - o[1], l = Math.hypot(dx, dy) || 1; let k = 84 * sc; while (k < 260 && !outside(r[0] + dx / l * (k - 14), r[1] + dy / l * (k - 14))) k += 4; return { elbow: [r[0] + dx / l * k, r[1] + dy / l * k], rest: r, len: k }; };
-  const A = arm(sl.ha, sl.bodyA || sl.body), B = arm(sl.hb, sl.bodyB || sl.body), longest = Math.max(A.len, B.len);
+  // 1.0.8: with one body for both arms (the top seats) each arm gets its own origin halfway between its hand and the body,
+  // so both run straight in from beyond the screen edge, pass by the drink and never meet in one point
+  const single = !!sl.body && !sl.bodyA && !sl.bodyB, own = r => [r[0] - (r[0] - sl.body[0]) * .5, sl.body[1]];   // leaning in toward the dealer, clear of the cupholder at the outer side
+  const A = arm(sl.ha, sl.bodyA || (single ? own(sl.ha) : sl.body)), B = arm(sl.hb, sl.bodyB || (single ? own(sl.hb) : sl.body)), longest = Math.max(A.len, B.len);
+  // the arm runs on straight past the elbow (no bend: a bend seen from above looked twisted)
+  const shoulder = G => { const ux = G.elbow[0] - G.rest[0], uy = G.elbow[1] - G.rest[1], ul = Math.hypot(ux, uy) || 1; return [G.elbow[0] + ux / ul * 120, G.elbow[1] + uy / ul * 120]; };
+  A.sh = shoulder(A); B.sh = shoulder(B);
   return { scale: sc, flipB: sl.s < 0, reach: Math.max(128 * sc, longest + 44 * sc), minReach: 40 * sc, A, B };
 }
 const isLeftHand = (geo, side) => side === 'A' ? !geo.flipB : geo.flipB;
@@ -1882,7 +2083,7 @@ function buildHands() {
       html += `<g data-h="${side}">
         <path class="slv slvSh" fill="none" stroke="#000" stroke-opacity=".3" stroke-width="${w + 2}" stroke-linecap="round" transform="translate(0,3)"/>
         ${sleeveMarkup(look, w)}
-        <g class="cuf">${cuffMarkup(look, w)}</g>
+        <g class="cuf">${cuffMarkup(look, w)}</g>${garment(look).kind === 'tattoo' ? `<g class="teeG">${teeMarkup(look, w)}</g>` : ''}
         <g class="hnd"><g transform="scale(${geo.scale})">${handImage(look, isLeftHand(geo, side))}</g></g>
       </g>`;
     }
@@ -1891,7 +2092,7 @@ function buildHands() {
     const st = { key, g, look, geo };
     for (const side of ['A', 'B']) {
       const el = g.querySelector(`[data-h="${side}"]`);
-      st[side] = { x: geo[side].rest[0], y: geo[side].rest[1], tok: 0, busy: 0, slv: el.querySelectorAll('.slv,.slv2'), hi: el.querySelector('.hi'), cuf: el.querySelector('.cuf'), hnd: el.querySelector('.hnd'), lift: 0, pose: 'relax' };
+      st[side] = { x: geo[side].rest[0], y: geo[side].rest[1], tok: 0, busy: 0, slv: el.querySelectorAll('.slv,.slv2'), tee: el.querySelectorAll('.tee'), hem: el.querySelector('.hem'), hi: el.querySelector('.hi'), cuf: el.querySelector('.cuf'), hnd: el.querySelector('.hnd'), lift: 0, pose: 'relax' };
     }
     PH[i] = st;
     drawPH(i, 'A'); drawPH(i, 'B');
@@ -1902,8 +2103,15 @@ function drawPH(seat, side) {
   const st = PH[seat]; if (!st) return;
   const h = st[side], e = st.geo[side].elbow;
   const dx = h.x - e[0], dy = h.y - e[1], ang = Math.atan2(dy, dx) * 180 / Math.PI;
-  const d = `M${e[0]},${e[1]} L${h.x},${h.y}`;
+  // 1.0.8: elbow -> shoulder -> on past the shoulder, so the sleeve's end never shows at the screen's edge
+  const sh = st.geo[side].sh || e, ux = sh[0] - e[0], uy = sh[1] - e[1], ul = Math.hypot(ux, uy) || 1, far = [sh[0] + ux / ul * 700, sh[1] + uy / ul * 700];
+  const d = `M${far[0]},${far[1]} L${sh[0]},${sh[1]} L${e[0]},${e[1]} L${h.x},${h.y}`;
   h.slv.forEach(p => { if (p !== h.hi) p.setAttribute('d', d); });
+  if (h.tee.length) {   // the tee ends just past the elbow, its hem across the forearm
+    const L0 = Math.hypot(dx, dy) || 1, te = [e[0] + dx / L0 * 3, e[1] + dy / L0 * 3], td = `M${far[0]},${far[1]} L${sh[0]},${sh[1]} L${te[0]},${te[1]}`;
+    h.tee.forEach(p => p.setAttribute('d', td));
+    h.hem.setAttribute('transform', `translate(${te[0]},${te[1]}) rotate(${Math.atan2(-uy, -ux) * 180 / Math.PI})`);
+  }
   if (h.hi) { const L2 = Math.hypot(dx, dy) || 1; let nx = -dy / L2, ny = dx / L2; if (ny > 0 || (ny === 0 && nx > 0)) { nx = -nx; ny = -ny; } const k = st.geo.scale * 4.5; h.hi.setAttribute('d', `M${e[0] + nx * k},${e[1] + ny * k} L${h.x + nx * k},${h.y + ny * k}`); }
   const lift = 1 + (h.lift || 0) * .12;
   h.cuf.setAttribute('transform', `translate(${h.x},${h.y}) rotate(${ang})`);
@@ -2137,7 +2345,7 @@ async function trick(seat) {
 }
 // 1.0.6 one sip: the hand nearer to the cup takes the glass by its middle (palm behind it, fingers in front of it),
 // the glass rides in the hand standing upright, at the mouth it leans 18° toward the player and the drink stays level
-const SIP_GRIP = 36, SIP_TILT = 18, SIPPING = new Set();   // seats whose glass is in the hand right now
+const SIP_GRIP = 24, SIP_TILT = 18, SIPPING = new Set();   // seats whose glass is in the hand right now
 let sipFx = null;
 function sipLayers() {
   if (sipFx && sipFx.glass.isConnected) return sipFx;
@@ -2153,7 +2361,7 @@ function sipGrip(seat, side) {
   const st = PH[seat], h = st[side], e = st.geo[side].elbow, sc = st.geo.scale * (1 + (h.lift || 0) * .12);
   const a = Math.atan2(h.y - e[1], h.x - e[0]) + ((h.rot || 0) + (h.wb || 0)) * Math.PI / 180, c = Math.cos(a), s = Math.sin(a);
   const P = (lx, ly) => [h.x + (lx * c - ly * s) * sc, h.y + (lx * s + ly * c) * sc];
-  const q = [P(50, -22), P(72, -22), P(72, 22), P(50, 22)];   // only the fingertips wrap over the front of the glass, so even a shot glass stays visible
+  const q = [P(14, -26), P(70, -26), P(70, 26), P(14, 26)];   // 1.0.8: the fingers wrap over the front of the glass, from the knuckles to the tips, like a real grip
   return { grip: P(SIP_GRIP, 0), finger: 'M' + q.map(p => p[0].toFixed(1) + ',' + p[1].toFixed(1)).join('L') + 'Z' };
 }
 async function sipAnim(seat, onDrink, gulp) {   // 1.0.7 gulp: one long sip to the bottom, the glass tipped steeper
@@ -2176,16 +2384,22 @@ async function sipAnim(seat, onDrink, gulp) {   // 1.0.7 gulp: one long sip to t
   // take it: the glass goes over the palm, the fingers are drawn again over the glass
   const fx = sipLayers(); hEl.id = 'sipHnd'; fx.use.setAttribute('href', '#sipHnd');
   SIPPING.add(seat); fx.glass.appendChild(gl);
-  gl.style.transformOrigin = `${bs[0] * GLASS_K}px ${bs[1] * GLASS_K - mid}px`;   // turn and grow around the grip
   let tilt = 0, lift = 0;
+  // 1.0.8: the lifted glass is drawn bigger as a vector, never stretched as a picture (stretching blurred it until the sip ended)
+  const P = [bs[0] * GLASS_K, bs[1] * GLASS_K - mid];
+  let drawnF = 0;
+  const redraw = () => { if (!id) return; drawnF = 1 + lift * .25; gl.innerHTML = glassSvg(id, GLASS_K * drawnF, level(), -tilt); };
   const follow = () => {
     if (!PH[seat] || PH[seat] !== st) return;
+    if (Math.abs(1 + lift * .25 - drawnF) > .015) redraw();
     const q = sipGrip(seat, H); fx.clip.setAttribute('d', q.finger);
-    gl.style.transform = `translate(${q.grip[0] - grip0[0]}px,${q.grip[1] - grip0[1]}px) scale(${1 + lift * .25}) rotate(${tilt}deg)`;
+    gl.style.transformOrigin = `${P[0] * drawnF}px ${P[1] * drawnF}px`;
+    gl.style.transform = `translate(${q.grip[0] - grip0[0] + P[0] * (1 - drawnF)}px,${q.grip[1] - grip0[1] + P[1] * (1 - drawnF)}px) rotate(${tilt}deg)`;
   };
-  const redraw = () => { if (id) gl.innerHTML = glassSvg(id, GLASS_K, level(), -tilt); };
-  gl.style.transition = 'none'; follow();
-  const mouth = [sl.plate[0] + (pos[0] - sl.plate[0]) * .55, sl.plate[1] + (pos[1] - sl.plate[1]) * .55];
+  gl.style.transition = 'none'; redraw(); follow();
+  // 1.0.8: the glass is lifted off the rail outward, toward the player, beside the name plate and never under it (the plate hid the gripping fingers)
+  const ox = pos[0] - 560, oy = pos[1] - 262, ol = Math.hypot(ox, oy) || 1, side0 = Math.sign(pos[0] - sl.plate[0]) || 1;
+  const mouth = [pos[0] + ox / ol * 22 + side0 * 14, pos[1] + oy / ol * 22];
   const dir = Math.sign(sl.plate[0] - pos[0]) || -1;
   try {
     await movePH(seat, H, ...reachFor(seat, H, [mouth[0], mouth[1] - mid], SIP_GRIP), 420, ease.io, (x, y, t) => { lift = t; follow(); });
@@ -2246,7 +2460,7 @@ function glassSvg(id, size = 1, level = 1, lean = 0) {   // lean: turn the drink
     inside += `<clipPath id="gl${k}"><rect x="-30" y="${top}" width="96" height="60" transform="rotate(${lean} ${(G.x0 + G.x1) / 2} ${top})"/></clipPath><clipPath id="gk${k}"><path d="${G.liq}"/></clipPath>
       <g clip-path="url(#gl${k})"><path d="${G.liq}" fill="url(#gq${k})"/></g><g clip-path="url(#gk${k})">
       <ellipse cx="${(G.x0 + G.x1) / 2}" cy="${top}" rx="${(G.x1 - G.x0) / 2 - .4}" ry="1.1" fill="${light}" opacity=".9" transform="rotate(${lean} ${(G.x0 + G.x1) / 2} ${top})"/>`;
-    if (id === 'beer') inside += `<rect x="${G.x0}" y="${top - 3.2}" width="${G.x1 - G.x0}" height="3.6" rx="1.6" fill="#fff8e4"/><g fill="#fff" opacity=".9"><circle cx="10" cy="${top - 3}" r="1.6"/><circle cx="14" cy="${top - 3.4}" r="1.9"/><circle cx="19" cy="${top - 3.1}" r="1.7"/><circle cx="22.6" cy="${top - 3}" r="1.3"/></g>`;
+    if (id === 'beer') inside += `<g transform="rotate(${lean} ${(G.x0 + G.x1) / 2} ${top})"><rect x="${G.x0}" y="${top - 3.2}" width="${G.x1 - G.x0}" height="3.6" rx="1.6" fill="#fff8e4"/><g fill="#fff" opacity=".9"><circle cx="10" cy="${top - 3}" r="1.6"/><circle cx="14" cy="${top - 3.4}" r="1.9"/><circle cx="19" cy="${top - 3.1}" r="1.7"/><circle cx="22.6" cy="${top - 3}" r="1.3"/></g></g>`;
     if (id === 'champagne' || id === 'beer') inside += `<g fill="#fff" opacity=".75">${[[.3, .2], [.55, .5], [.42, .75], [.68, .3], [.36, .9]].map(([fx, fy]) => { const y = top + (G.y1 - top) * fy; return y < G.y1 - 1 ? `<circle cx="${G.x0 + (G.x1 - G.x0) * fx}" cy="${y}" r="${.4 + fy * .35}"/>` : ''; }).join('')}</g>`;
     inside += '</g>';
     if (id === 'whisky') inside += `<g transform="translate(0,${Math.max(0, top - G.y0) * .7})"><rect x="10" y="${G.y0 - 3}" width="7.5" height="7.5" rx="1.6" fill="#eaf6fb" fill-opacity=".8" stroke="#fff" stroke-width=".6" transform="rotate(14 13.7 ${G.y0})"/><rect x="18" y="${G.y0 - 1.5}" width="6.5" height="6.5" rx="1.4" fill="#dff0f7" fill-opacity=".75" stroke="#fff" stroke-width=".6" transform="rotate(-10 21 ${G.y0 + 1.5})"/></g>`;
@@ -2264,13 +2478,19 @@ function glassSvg(id, size = 1, level = 1, lean = 0) {   // lean: turn the drink
 // 1.0.5: every bottle is one smooth, symmetric silhouette (a profile mirrored around the axis), glass shading over all of it,
 // a label that wraps around the cylinder, cap or foil cut from the same outline — nothing glued together from pieces
 const BOTTLES = {
-  beer: { p: [[3, 6.4], [11, 6], [14, 5.4], [26, 5.8], [36, 9.5], [46, 15], [54, 16.4], [106, 16.4], [110, 14.6]], cap: [2, 9, '#c9a23a'], lab: [58, 92], neck: [27, 37], neckTxt: '№7', neckInk: '#a3121e', level: 30, crest: true, year: 'С 1874', frame: '#a3121e', ink: '#5a3410', txt: (L) => `<text x="30" y="74" font-size="6.5" text-anchor="middle" fill="#5a3410" font-family="Georgia,serif" font-style="italic">Бочка</text><text x="30" y="84.4" font-size="9" text-anchor="middle" fill="#a3121e" font-family="Georgia,serif" font-weight="700">№7</text>` },
-  tall: { p: [[3, 5.2], [30, 5.2], [37, 8], [45, 14.5], [53, 16.6], [106, 16.6], [110, 14.8]], cap: [1, 13, '#1f4c7a'], lab: [60, 96], clear: true, level: 44, labFill: '#ffffffe8', frame: '#1f4c7a', ink: '#1f4c7a', year: '40%  ·  0,7 л', neck: [18, 25], neckFill: '#1f4c7a', neckTxt: '★', txt: (L) => `<path d="M30,65 l2,5 5.4,0 -4.4,3.2 1.8,5.2 -4.8,-3.2 -4.8,3.2 1.8,-5.2 -4.4,-3.2 5.4,0z" fill="${L}"/><text x="30" y="86" font-size="5" text-anchor="middle" fill="${L}" font-family="Georgia,serif" letter-spacing=".3" textLength="27" lengthAdjust="spacingAndGlyphs">ПОЛЯРНАЯ</text>` },
-  square: { p: [[5, 6.2], [30, 6.2], [34, 10.5], [37.5, 16.6], [41, 19.1], [45, 19.4], [106, 19.4], [110, 18]], cap: [3, 15, '#3a2214'], lab: [56, 94], labFill: '#f2e6c8', level: 34, crest: true, year: 'ВЫДЕРЖКА 1999', frame: '#8a1f1f', ink: '#2a1a10', neck: [19, 28], neckFill: '#f2e6c8', neckTxt: '18', neckInk: '#8a1f1f', txt: (L) => `<text x="30" y="72" font-size="5.6" text-anchor="middle" fill="#2a1a10" font-family="Georgia,serif" letter-spacing=".3" textLength="28" lengthAdjust="spacingAndGlyphs">ХАЙЛЕНД</text><text x="30" y="86" font-size="13" text-anchor="middle" fill="#8a1f1f" font-family="Georgia,serif" font-weight="700">18</text>` },
-  ceramic: { p: [[3, 8], [15, 8], [19, 12], [30, 18.6], [42, 20.6], [104, 20.6], [110, 17]], cap: [1, 12, '#d9b25a'], emboss: 'dots', txt: (L) => `<g fill="none" stroke="${L}" stroke-width="2"><path d="M11,52 q19,-9 38,0"/><path d="M10,62 q20,-9 40,0"/><path d="M10,72 q20,-9 40,0"/></g><path d="M22,88 q8,-8 16,0 q-8,10 -16,0" fill="${L}"/><circle cx="30" cy="98" r="2.6" fill="#d9b25a"/>` },
-  round: { p: [[4, 5.2], [26, 5.2], [33, 7.4], [42, 13], [52, 20.4], [64, 24.4], [78, 24.6], [92, 21.6], [102, 15], [108, 9], [110, 6]], cap: [1, 14, '#d9b25a'], medal: [30, 80, 12.5], level: 46, emboss: 'facets', neck: [20, 27], neckFill: '#d9b25a', neckTxt: 'XO', neckInk: '#3b1606', txt: (L) => `<text x="30" y="80" font-size="7" text-anchor="middle" fill="#3b1606" font-family="Georgia,serif" font-weight="700">XO</text><text x="30" y="87.5" font-size="3.8" text-anchor="middle" fill="#3b1606" font-family="Georgia,serif" textLength="18" lengthAdjust="spacingAndGlyphs">ШАТО РУЖ</text>` },
+  beer: { crown: true, glassy: true, clear: true, p: [[2, 5.4], [26, 5.6], [36, 7.4], [46, 13.4], [54, 16], [106, 16], [110, 14.6]], cap: [1, 8, '#c9a23a'], oval: [80, 13.6, 16.4], neck: [30, 38], neckTxt: '№7', neckInk: '#a3121e', neckFill: '#efe2bf', level: 33, frame: '#a3121e', ink: '#5a3410',
+    txt: (L) => `<text x="30" y="73.6" font-size="4.2" text-anchor="middle" fill="#a3121e" font-family="Georgia,serif" font-weight="700" textLength="17" lengthAdjust="spacingAndGlyphs">БОЧКА</text><text x="30" y="84.4" font-size="8.4" text-anchor="middle" fill="#5a3410" font-family="Georgia,serif" font-weight="700" textLength="13" lengthAdjust="spacingAndGlyphs">№7</text><text x="30" y="89.6" font-size="2.2" text-anchor="middle" fill="#5a3410" font-family="Georgia,serif" textLength="18" lengthAdjust="spacingAndGlyphs">СВЕТЛОЕ · С 1874</text><path d="M22,76 h16" stroke="#a3121e" stroke-width=".5"/>` },
+  tall: { glassy: true, p: [[2, 5.6], [24, 5.6], [31, 7.2], [39, 13], [47, 16.4], [106, 16.4], [110, 15.2]], cap: [1, 15, '#b8c2cc'], lab: [58, 94], clear: true, level: 30, labFill: '#fbfbf8', frame: '#1f4c7a', ink: '#1f4c7a', year: '40%  ·  0,7 л', neck: [19, 26], neckFill: '#1f4c7a', neckTxt: '★', txt: (L) => `<path d="M30,65 l2,5 5.4,0 -4.4,3.2 1.8,5.2 -4.8,-3.2 -4.8,3.2 1.8,-5.2 -4.4,-3.2 5.4,0z" fill="${L}"/><text x="30" y="86" font-size="5" text-anchor="middle" fill="${L}" font-family="Georgia,serif" letter-spacing=".3" textLength="27" lengthAdjust="spacingAndGlyphs">ПОЛЯРНАЯ</text>` },
+  square: { wax: '#7c1414', p: [[5, 6.2], [30, 6.2], [34, 10.5], [37.5, 16.6], [41, 19.1], [45, 19.4], [106, 19.4], [110, 18]], cap: [3, 15, '#3a2214'], lab: [56, 94], labFill: '#f2e6c8', level: 34, crest: true, year: 'ВЫДЕРЖКА 1999', frame: '#8a1f1f', ink: '#2a1a10', neck: [19, 28], neckFill: '#f2e6c8', neckTxt: '18', neckInk: '#8a1f1f', txt: (L) => `<text x="30" y="72" font-size="5.6" text-anchor="middle" fill="#2a1a10" font-family="Georgia,serif" letter-spacing=".3" textLength="28" lengthAdjust="spacingAndGlyphs">ХАЙЛЕНД</text><text x="30" y="86" font-size="13" text-anchor="middle" fill="#8a1f1f" font-family="Georgia,serif" font-weight="700">18</text>` },
+  ceramic: { glassy: true, cork: true, woodHead: true, p: [[4, 6], [17, 6], [23, 8.4], [31, 15], [38, 18.4], [98, 18.4], [103, 19.2], [110, 18.6]], cap: [2, 13, '#9a6a3c'], lab: [56, 92], clear: true, level: 36, labFill: '#f3ead2', frame: '#7a5a1a', ink: '#3a2a10', year: 'AÑEJO · 38%', thickBase: true, txt: (L) => agaveLabel() },
+  round: { crystal: true, p: [[4, 5.2], [26, 5.2], [33, 7.4], [42, 13], [52, 20.4], [64, 24.4], [78, 24.6], [92, 21.6], [102, 15], [108, 9], [110, 6]], cap: [1, 14, '#d9b25a'], medal: [30, 80, 12.5], level: 46, emboss: 'facets', neck: [20, 27], neckFill: '#d9b25a', neckTxt: 'XO', neckInk: '#3b1606', txt: (L) => `<text x="30" y="80" font-size="7" text-anchor="middle" fill="#3b1606" font-family="Georgia,serif" font-weight="700">XO</text><text x="30" y="87.5" font-size="3.8" text-anchor="middle" fill="#3b1606" font-family="Georgia,serif" textLength="18" lengthAdjust="spacingAndGlyphs">ШАТО РУЖ</text>` },
   champ: { p: [[3, 6.6], [28, 7], [40, 11], [51, 16.6], [60, 18.6], [106, 18.6], [110, 16.8]], cap: [3, 40, '#d9b25a'], foil: true, lab: [66, 98], band: [44, 49], level: 56, crest: true, year: 'MMXVIII', frame: '#a8823a', ink: '#14301f', txt: (L) => `<text x="30" y="80.5" font-size="5" text-anchor="middle" fill="#14301f" font-family="Georgia,serif" letter-spacing=".3" textLength="28" lengthAdjust="spacingAndGlyphs">ГРАНД КЮВЕ</text><text x="30" y="89" font-size="6" text-anchor="middle" fill="#a8823a" font-family="Georgia,serif" font-style="italic">Престиж</text>` },
 };
+// 1.0.8: the tequila's label: an agave plant, the brand in an arc, fine print
+function agaveLabel() {
+  const G = '#3f6b3a', leaves = [[-14, 12], [-9, 15], [-4, 17], [0, 18], [4, 17], [9, 15], [14, 12]].map(([dx, h]) => `<path d="M30,84 q${dx * .3},-${h * .5} ${dx},-${h} q${-dx * .45},${h * .55} ${-dx + (dx > 0 ? -1.2 : dx < 0 ? 1.2 : 0)},${h}z" fill="${G}" stroke="#24411f" stroke-width=".3"/>`).join('');
+  return `<text x="30" y="63.4" font-size="4.4" text-anchor="middle" fill="#3a2a10" font-family="Georgia,serif" font-weight="700" letter-spacing=".5">СЕНЬОРА</text>${leaves}<path d="M20,84.4 h20" stroke="#7a5a1a" stroke-width=".6"/><text x="30" y="68" font-size="2.2" text-anchor="middle" fill="#7a5a1a" font-family="Georgia,serif" letter-spacing=".3">100% АГАВА</text>`;
+}
 // a smooth closed outline through the profile points (Catmull-Rom), mirrored around x = 30
 function bottlePath(p) {
   const R = p.map(([y, w]) => [30 + w, y]), Lp = p.slice().reverse().map(([y, w]) => [30 - w, y]);
@@ -2286,8 +2506,12 @@ function bottleSvg(id, h = 120) {
   const crest = (cx, cy, s, c) => `<g transform="translate(${cx},${cy}) scale(${s})"><path d="M-3,-3.4 h6 v2.6 q0,3 -3,4.4 q-3,-1.4 -3,-4.4z" fill="none" stroke="${c}" stroke-width=".7"/><path d="M-1.6,-1.6 l1.6,1.6 1.6,-1.6 M0,0 v2.4" stroke="${c}" stroke-width=".55" fill="none"/><path d="M-4.6,-3 q-1.2,2.4 .4,5 M4.6,-3 q1.2,2.4 -.4,5" stroke="${c}" stroke-width=".45" fill="none"/></g>`;
   let parts = '';
   // the drink inside: glass above the level is lighter (empty), with a bright meniscus line at the level
-  if (S.clear) parts += `<rect x="0" y="${S.level}" width="60" height="${110 - S.level}" fill="${a.liquid}" opacity=".55"/><rect x="0" y="${S.level}" width="60" height="1.2" fill="#fff" opacity=".75"/>`;
+  const lop = id === 'vodka' ? .16 : id === 'tequila' ? .82 : id === 'beer' ? .88 : .55;   // 1.0.8: vodka is nearly invisible in clear glass, tequila glows gold
+  if (S.clear) parts += `<rect x="0" y="${S.level}" width="60" height="${110 - S.level}" fill="${a.liquid}" opacity="${lop}"/><rect x="0" y="${S.level}" width="60" height="1.2" fill="#fff" opacity=".75"/>`;
   else if (S.level) parts += `<rect x="0" y="${S.cap[1]}" width="60" height="${S.level - S.cap[1]}" fill="#fff" opacity=".13"/><path d="M${30 - hw(S.level)},${S.level} Q30,${S.level + 1.6} ${30 + hw(S.level)},${S.level}" stroke="#fff" stroke-opacity=".45" stroke-width=".8" fill="none"/>`;
+  // 1.0.8: frosted glass (vodka): fine grain on the glass, under the label
+  if (S.frost) parts += `<rect x="0" y="0" width="60" height="116" fill="url(#fr${k})"/>`;
+  if (S.thickBase) parts += `<rect x="0" y="97" width="60" height="14" fill="#fff" opacity=".2"/><path d="M${30 - hw(100) + 2},99 H${30 + hw(100) - 2}" stroke="#fff" stroke-opacity=".6" stroke-width=".7"/>`;
   // a thick glass bottom with the punt's highlight
   parts += `<rect x="0" y="105" width="60" height="6" fill="#fff" opacity=".1"/><path d="M${30 - hw(106) + 3},107.6 Q30,103.6 ${30 + hw(106) - 3},107.6" stroke="#fff" stroke-opacity=".3" stroke-width=".8" fill="none"/>`;
   // embossing in the glass
@@ -2295,36 +2519,59 @@ function bottleSvg(id, h = 120) {
   if (S.emboss === 'facets') parts += [-17, -9, 9, 17].map(dx => `<path d="M${30 + dx},${56 + Math.abs(dx) * .4} Q${30 + dx * 1.18},80 ${30 + dx * .8},${102 - Math.abs(dx) * .3}" stroke="#fff" stroke-opacity=".2" stroke-width="1.1" fill="none"/><path d="M${30 + dx + .8},${56 + Math.abs(dx) * .4} Q${30 + dx * 1.18 + .8},80 ${30 + dx * .8 + .8},${102 - Math.abs(dx) * .3}" stroke="#000" stroke-opacity=".22" stroke-width=".8" fill="none"/>`).join('');
   if (S.band) parts += band(...S.band, '#d9b25a');
   if (S.neck) parts += band(...S.neck, S.neckFill || Lb, 'opacity=".95"') + band(S.neck[0] + 1.2, S.neck[1] - 1.2, 'none', 'stroke="#d9b25a" stroke-width=".5"', .9) + `<text x="30" y="${(S.neck[0] + S.neck[1]) / 2 + 1.3}" font-size="3.4" text-anchor="middle" fill="${S.neckInk || '#d9b25a'}" font-family="Georgia,serif" font-weight="700">${S.neckTxt || ''}</text>`;
+  if (S.oval) {   // 1.0.8: an oval paper label (beer)
+    const [cy, rx, ry] = S.oval;
+    parts += `<ellipse cx="30" cy="${cy}" rx="${rx}" ry="${ry}" fill="#f2e6c6" stroke="#0004" stroke-width=".5"/><ellipse cx="30" cy="${cy}" rx="${rx - 1.4}" ry="${ry - 1.4}" fill="none" stroke="${S.frame}" stroke-width=".7"/><ellipse cx="30" cy="${cy}" rx="${rx - 2.4}" ry="${ry - 2.4}" fill="none" stroke="#c9a23a" stroke-width=".35" stroke-dasharray=".2 1.1"/>`;
+  }
   if (S.lab) {
     parts += band(...S.lab, S.labFill || Lb, 'stroke="#0003" stroke-width=".5"');
     parts += band(S.lab[0] + 1.6, S.lab[1] - 1.6, 'none', `stroke="${S.frame || '#d9b25a'}" stroke-width=".6"`, 1.6);   // the label's printed frame
     if (S.crest) parts += crest(30, S.lab[0] + 5.6, .8, S.frame || '#a8823a');
+    parts += band(S.lab[0] + .8, S.lab[1] - .8, 'none', 'stroke="#e9c766" stroke-width=".35" stroke-dasharray=".2 1.1"', .8);   // 1.0.8: a gold-foil dotted border
     if (S.year) parts += `<text x="30" y="${S.lab[1] - 3.2}" font-size="3.2" text-anchor="middle" fill="${S.ink || '#5a4a30'}" font-family="Georgia,serif" letter-spacing=".4">${S.year}</text>`;
     if (S.fine) parts += `<g fill="${S.ink || '#5a4a30'}" opacity=".45">${S.fine.map(y => `<rect x="21" y="${y}" width="18" height=".7" rx=".35"/>`).join('')}</g>`;
   }
   if (S.medal) parts += `<ellipse cx="${S.medal[0]}" cy="${S.medal[1]}" rx="${S.medal[2] + 1.6}" ry="${S.medal[2] * .9 + 1.4}" fill="#d9b25a"/><ellipse cx="${S.medal[0]}" cy="${S.medal[1]}" rx="${S.medal[2]}" ry="${S.medal[2] * .9}" fill="${Lb}"/><ellipse cx="${S.medal[0]}" cy="${S.medal[1]}" rx="${S.medal[2] - 1.4}" ry="${S.medal[2] * .9 - 1.3}" fill="none" stroke="#d9b25a" stroke-width=".5" stroke-dasharray="1 .8"/>`;
   parts += S.txt(Lb);
+  // 1.0.8: the label curves round the bottle: darker at its edges, a soft light on the left
+  if (S.lab) parts += band(...S.lab, `url(#lc${k})`);
+  if (S.oval) parts += `<ellipse cx="30" cy="${S.oval[0]}" rx="${S.oval[1]}" ry="${S.oval[2]}" fill="url(#lc${k})"/>`;
+  // 1.0.8: clear glass shows its walls: a thin bright rim just inside the outline
+  if (S.glassy) parts += `<path d="${path}" fill="none" stroke="#fff" stroke-opacity=".42" stroke-width="2.4"/>`;
+
   // cap / foil: ribbed, with its own shading; champagne gets foil folds
-  const [c0, c1, cc] = S.cap;
+  const [c0, c1, cc0] = S.cap, cc = S.wax || (S.cork ? '#9a6a3c' : S.crystal ? '#cfd8de' : cc0);
   let cap = `<rect x="0" y="${c0}" width="60" height="${c1 - c0}" fill="${cc}"/>`;
+  if (S.cork) cap += `<g stroke="#5a3a1c" stroke-opacity=".5" stroke-width=".5">${Array.from({ length: 6 }, (_, i) => `<path d="M${22 + i * 3},${c0} q1.4,${(c1 - c0) / 2} 0,${c1 - c0}"/>`).join('')}</g><g fill="#5a3a1c" opacity=".5">${[[24, c0 + 3], [31, c0 + 6], [36, c0 + 2.6], [27, c0 + 8]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r=".6"/>`).join('')}</g>`;
+  if (S.crystal) cap += `<g stroke="#fff" stroke-opacity=".75" stroke-width=".6" fill="none"><path d="M24,${c0} L30,${c1} L36,${c0} M27,${c0} L30,${c1 - 4} L33,${c0}"/></g><rect x="0" y="${c0}" width="60" height="${c1 - c0}" fill="url(#bs${k})"/>`;
   if (S.foil) cap += `<g stroke="${mix(cc, .45, '#000000')}" stroke-opacity=".45" stroke-width=".55" fill="none">${[0, 1, 2, 3, 4, 5, 6].map(i => `<path d="M${22 + i * 2.6},${c0 + 14} l${i % 2 ? 2.4 : -2.2},${8 + (i % 3) * 3}"/>`).join('')}<path d="M18,${c1 - 6} q12,3 24,0"/></g><g stroke="#fff" stroke-opacity=".35" stroke-width=".5" fill="none">${[0, 1, 2, 3].map(i => `<path d="M${23.4 + i * 4},${c0 + 16} l1.6,7"/>`).join('')}</g>`;
-  else cap += `<g stroke="#000" stroke-opacity=".2" stroke-width=".55">${Array.from({ length: 14 }, (_, i) => `<path d="M${20.4 + i * 1.5},${c0} V${c1 - 1.4}"/>`).join('')}</g>`;
+  else if (!S.wax && !S.cork && !S.crystal) cap += `<g stroke="#000" stroke-opacity=".2" stroke-width=".55">${Array.from({ length: 14 }, (_, i) => `<path d="M${20.4 + i * 1.5},${c0} V${c1 - 1.4}"/>`).join('')}</g>`;
   cap += `<rect x="0" y="${c1 - 1.2}" width="60" height="1.2" fill="#0003"/>`;
   // outside the outline: the ring of the neck finish under the cap, the muselet over the champagne cork
   let over = '';
-  if (!S.foil && !S.noRing) { const w = hw(c1 + 1) + 1; over += `<rect x="${30 - w}" y="${c1}" width="${w * 2}" height="2.4" rx="1.1" fill="${mix(B0, .2, '#ffffff')}" stroke="${mix(B0, .5, '#000000')}" stroke-opacity=".5" stroke-width=".4"/><rect x="${30 - w + .6}" y="${c1 + .4}" width="${w * .5}" height=".7" rx=".35" fill="#fff" opacity=".45"/>`; }
+  if (!S.foil && !S.noRing && !S.crown && !S.wax && !S.woodHead) { const w = hw(c1 + 1) + 1; over += `<rect x="${30 - w}" y="${c1}" width="${w * 2}" height="2.4" rx="1.1" fill="${mix(B0, .2, '#ffffff')}" stroke="${mix(B0, .5, '#000000')}" stroke-opacity=".5" stroke-width=".4"/><rect x="${30 - w + .6}" y="${c1 + .4}" width="${w * .5}" height=".7" rx=".35" fill="#fff" opacity=".45"/>`; }
+  if (S.woodHead) { const w = hw(c1) + 3.6; over += `<rect x="${30 - w}" y="${c0 - 1}" width="${w * 2}" height="${c1 - c0 - 2}" rx="2.2" fill="#7a4a22" stroke="#3a220e" stroke-width=".6"/><g stroke="#4a2a12" stroke-opacity=".55" stroke-width=".45" fill="none">${[0, 1, 2, 3].map(i => `<path d="M${30 - w + 1.6},${c0 + 1 + i * 2.2} q${w},${i % 2 ? 1.2 : -1.2} ${w * 2 - 3.2},0"/>`).join('')}</g><rect x="${30 - w + 1}" y="${c0}" width="2.2" height="${c1 - c0 - 4}" rx="1" fill="#fff" opacity=".22"/><rect x="${30 - w - .4}" y="${c1 - 3.6}" width="${w * 2 + .8}" height="1.8" rx=".9" fill="#c9a23a"/>`; }
+  // 1.0.8: the beer's crown cap with its crimped skirt; the whisky's sealing wax running down the neck
+  if (S.crown) { const w = hw(c1) + 1.6; over += `<path d="M${30 - w},${c0 + 1} h${w * 2} v${c1 - c0 - 2} ${Array.from({ length: 8 }, (_, i) => `l-${w / 8},1.6 l-${w / 8},-1.6`).join(' ')} z" fill="#d9b25a" stroke="#8a6a24" stroke-width=".5"/><rect x="${30 - w + 1}" y="${c0 + 1.6}" width="${w * 2 - 2}" height="1.4" rx=".7" fill="#fff6d0" opacity=".7"/><text x="30" y="${c0 + 5.6}" font-size="2.6" text-anchor="middle" fill="#8a1f1f" font-family="Georgia,serif" font-weight="700">7</text>`; }
+  if (S.wax) { const w = hw(c1) + 1.2; over += `<path d="M${30 - w},${c0} h${w * 2} v${c1 - c0} q-1,4 -2,4.6 q-1.2,-.4 -1.4,-2.6 q-.8,5.6 -2.4,6 q-1.4,-.6 -1.4,-4 q-1,2.4 -2.4,2.2 q-1.2,-.6 -1.2,-3.6 q-1.2,3.4 -2.6,3.2 q-1,-.8 -1,-2.4 q-.8,1.8 -1.6,1 z" fill="${S.wax}" stroke="#3a0606" stroke-width=".5"/><path d="M${30 - w + 1.4},${c0 + 1.2} v${c1 - c0 - 2}" stroke="#fff" stroke-opacity=".35" stroke-width="1.1" stroke-linecap="round"/><circle cx="30" cy="${(c0 + c1) / 2}" r="3.6" fill="#a32020" stroke="#3a0606" stroke-width=".5"/><text x="30" y="${(c0 + c1) / 2 + 1.2}" font-size="3.4" text-anchor="middle" fill="#f2d68e" font-family="Georgia,serif" font-weight="700">H</text>`; }
   if (S.foil) over += `<ellipse cx="30" cy="${c0 + .8}" rx="5.6" ry="1.8" fill="${mix(cc, .25, '#ffffff')}" stroke="${mix(cc, .4, '#000000')}" stroke-width=".4"/><g stroke="#cfd3d8" stroke-width=".7" fill="none" stroke-linecap="round"><path d="M24.4,${c0 + 9} H35.6"/><path d="M25,${c0 + 9} L28.4,${c0 + 1.2} M35,${c0 + 9} L31.6,${c0 + 1.2} M30,${c0 + 9} V${c0 + .6}"/></g><circle cx="30" cy="${c0 + .9}" r="1.5" fill="#d9dde2" stroke="#8b9097" stroke-width=".4"/>`;
   return `<svg viewBox="0 0 60 116" height="${h}" width="${h * 60 / 116}" aria-hidden="true"><defs>
       <clipPath id="bc${k}"><path d="${path}"/></clipPath>
       <linearGradient id="bb${k}" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="${mix(B0, .55, '#000000')}"/><stop offset=".22" stop-color="${mix(B0, .12, '#ffffff')}"/><stop offset=".5" stop-color="${B0}"/><stop offset=".85" stop-color="${mix(B0, .4, '#000000')}"/><stop offset="1" stop-color="${mix(B0, .7, '#000000')}"/></linearGradient>
       <linearGradient id="bs${k}" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#000" stop-opacity=".45"/><stop offset=".14" stop-color="#000" stop-opacity="0"/><stop offset=".2" stop-color="#fff" stop-opacity=".38"/><stop offset=".27" stop-color="#fff" stop-opacity="0"/><stop offset=".78" stop-color="#000" stop-opacity="0"/><stop offset=".86" stop-color="#fff" stop-opacity=".12"/><stop offset="1" stop-color="#000" stop-opacity=".5"/></linearGradient></defs>
+      <linearGradient id="lc${k}" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#000" stop-opacity=".38"/><stop offset=".18" stop-color="#000" stop-opacity="0"/><stop offset=".3" stop-color="#fff" stop-opacity=".22"/><stop offset=".42" stop-color="#fff" stop-opacity="0"/><stop offset=".8" stop-color="#000" stop-opacity=".05"/><stop offset="1" stop-color="#000" stop-opacity=".42"/></linearGradient>
+      ${S.frost ? `<pattern id="fr${k}" width="3" height="3" patternUnits="userSpaceOnUse"><rect width="3" height="3" fill="#fff" fill-opacity=".1"/><circle cx=".8" cy=".9" r=".35" fill="#fff" fill-opacity=".45"/><circle cx="2.2" cy="2.1" r=".3" fill="#fff" fill-opacity=".3"/></pattern>` : ''}
     <ellipse cx="30" cy="111" rx="${hw(106) + 4}" ry="2.6" fill="#0007"/>
-    <path d="${path}" fill="url(#bb${k})" ${S.clear ? 'fill-opacity=".55"' : ''}/>
-    <g clip-path="url(#bc${k})">${parts}${cap}<rect x="0" y="0" width="60" height="116" fill="url(#bs${k})"/></g>
+    <path d="${path}" fill="url(#bb${k})" ${S.clear ? `fill-opacity="${S.glassy ? .26 : .55}"` : ''}/>
+    <g clip-path="url(#bc${k})">${parts}${cap}<rect x="0" y="0" width="60" height="116" fill="url(#bs${k})"/>
+      <path d="M${30 - hw(70) * .62},${S.cap[1] + 18} V102" stroke="#fff" stroke-opacity=".55" stroke-width="1.1" stroke-linecap="round"/>
+      <path d="M${30 - hw(70) * .45},${S.cap[1] + 24} V96" stroke="#fff" stroke-opacity=".14" stroke-width="3.4" stroke-linecap="round"/>
+      <path d="M${30 + hw(70) * .82},${S.cap[1] + 22} V100" stroke="#fff" stroke-opacity=".28" stroke-width=".8" stroke-linecap="round"/>
+      <rect x="${30 - hw(60) * .55}" y="${S.lab ? S.lab[0] - 9 : 48}" width="3" height="5.4" rx="1.2" fill="#fff" fill-opacity=".5"/><rect x="${30 - hw(60) * .55 + 3.8}" y="${S.lab ? S.lab[0] - 9 : 48}" width="1.6" height="5.4" rx=".8" fill="#fff" fill-opacity=".32"/></g>
     <path d="${path}" fill="none" stroke="${mix(B0, .6, '#000000')}" stroke-opacity=".55" stroke-width=".8"/>${over}</svg>`;
 }
 // 1.0.5: the ice bucket seen from above: polished metal with ring handles, crushed ice, the bottle with foil and label, a napkin
-function bucketSvg(id) {
+function bucketSvg(id, out = false) {   // out: the bottle is in the waiter's hand
   const a = DRINK_ART[id] || {}, k = ++glassSeq, B0 = a.bottle || '#333', mix = ensureHandDefs.mix || (c => c);
   const ice = [[20, 22, 8, 14], [46, 44, 7, -12], [24, 46, 7, 30], [44, 20, 6, 8], [30, 54, 6, -20], [52, 32, 5, 40], [16, 36, 6, -8], [38, 14, 5, 22]];
   return `<svg viewBox="0 0 76 76" width="54" height="54" aria-hidden="true"><defs>
@@ -2337,15 +2584,15 @@ function bucketSvg(id) {
     <circle cx="38" cy="38" r="26.5" fill="#4d535a"/>
     <circle cx="38" cy="38" r="25" fill="url(#bi${k})"/>
     <g>${ice.map(([x, y, w, r]) => `<rect x="${x - w / 2}" y="${y - w / 2}" width="${w}" height="${w}" rx="1.8" fill="#ffffff" fill-opacity=".85" stroke="#b9d4e0" stroke-width=".7" transform="rotate(${r} ${x} ${y})"/><path d="M${x - w / 2 + 1.2},${y - w / 2 + 1.6} h${w * .45}" stroke="#fff" stroke-width="1" transform="rotate(${r} ${x} ${y})"/>`).join('')}</g>
-    <g transform="rotate(-38 38 38)">
+    ${out ? '' : `    <g transform="rotate(-38 38 38)">
       <rect x="28" y="29" width="20" height="20" rx="10" fill="url(#bn${k})"/>
       <rect x="34" y="6" width="8" height="26" rx="3" fill="url(#bn${k})"/>
-      <rect x="33" y="2" width="10" height="12" rx="3" fill="#d9b25a" stroke="#8a6a24" stroke-width=".7"/>
+      <rect x="33" y="2" width="10" height="12" rx="3" fill="${{ vodka: '#b8c2cc', whisky: '#7c1414', tequila: '#9a6a3c', cognac: '#cfd8de' }[id] || '#d9b25a'}" stroke="${{ whisky: '#3a0606', tequila: '#5a3a1c', cognac: '#8f989e' }[id] || '#8a6a24'}" stroke-width=".7"/>
       <path d="M34,8 h8 M34,11 h8" stroke="#8a6a24" stroke-width=".6"/>
       <rect x="31" y="33" width="14" height="10" rx="2" fill="${a.label || '#eee'}" stroke="#0004" stroke-width=".5"/>
       <path d="M33,36 h10 M34,39 h8" stroke="#0005" stroke-width=".8"/>
       <path d="M31,31 a10,10 0 0 1 6,-3" stroke="#fff" stroke-opacity=".6" stroke-width="1.4" fill="none"/>
-    </g>
+    </g>`}
     <path d="M52,10 q10,6 14,16 q-6,3 -11,2 q-2,-9 -7,-14 z" fill="#f6f4ee" stroke="#d8d3c6" stroke-width=".8"/>
     <path d="M55,13 q6,5 8,11" stroke="#d8d3c6" stroke-width=".8" fill="none"/>
     <path d="M16,18 A28,28 0 0 1 34,9" stroke="#fff" stroke-opacity=".9" stroke-width="2.2" stroke-linecap="round" fill="none"/>
@@ -2394,7 +2641,7 @@ async function barStep(st) {
     await sipAnim(st.seat, gl => { g.left = left; if (gl) gl.innerHTML = glassSvg(g.id, GLASS_K, g.left / g.sips); }, st.k === 'gulp');
     g.left = left;
   } else if (st.k === 'refill') {
-    await waiterRefill(st.seat, st.n, st.id, fast);
+    await waiterRefill(st.seat, st.n, st.id, fast, st.tg);
   } else if (st.k === 'remove') {
     const g = BAR.shown[st.seat]; if (!g || (st.n && g.n !== st.n)) return;
     await waiterServe(st.seat, null, fast);
@@ -2425,7 +2672,7 @@ function drawWaiter(st) {
   const [tx, ty] = st.at; let [sx, sy] = st.from; const dx = tx - sx, dy = ty - sy, l = Math.hypot(dx, dy) || 1, ux = dx / l, uy = dy / l;
   const ARM = 175; if (l > ARM) { sx = tx - ux * ARM; sy = ty - uy * ARM; }   // a real arm's length: the waiter walks in, his arm doesn't stretch across the room
   const ang = Math.atan2(uy, ux) * 180 / Math.PI;
-  const hx = tx - ux * 26, hy = ty - uy * 26, wx = hx - ux * 16, wy = hy - uy * 16;    // the hand holds the near rim of the tray
+  const hx = tx - ux * 20, hy = ty - uy * 20, wx = hx - ux * 16, wy = hy - uy * 16;    // 1.0.8: the palm is under the tray, only the wrist shows at its near rim
   $('#wSleeve').querySelectorAll('path').forEach(p => p.setAttribute('d', `M${sx},${sy} L${wx},${wy}`));
   $('#wCuff').setAttribute('transform', `translate(${wx},${wy}) rotate(${ang})`);
   $('#wTray').setAttribute('transform', `translate(${tx},${ty})`);
@@ -2472,15 +2719,31 @@ async function waiterBucket(b, bring) {
   else { place(el, ...at); await waiterMove(W, W.off, at, 520, []); noise(.05, 2600, 3, .3); await sleep(120); await waiterMove(W, at, W.off, 560, [[el, 0, 0]]); }
   el.remove(); drawWaiter(null);
 }
-// 1.0.7: a refill: the waiter comes with the bottle and tops the glass up to full, right in its holder
-async function waiterRefill(seat, n, id, fast) {
+// 1.0.8: a refill: the waiter takes the bottle out of its ice bucket, tops the glass up right in its holder and puts the bottle back
+async function waiterRefill(seat, n, id, fast, tg) {
   const g = BAR.shown[seat];
   if (!g || g.n !== n) return;
   const full = () => { g.left = g.sips; };
   if (fast || !disp || !disp.seats[seat]) { full(); return; }
   const W = waiterWay(seat), stop = [W.cup[0] + W.o[0] * 62, W.cup[1] + W.o[1] * 62];   // the tray stays clear of the glass
-  const BH = 64, bt = trayItem(bottleSvg(id, BH), 'wBottle'), side = Math.sign(W.cup[0] - 560) || 1;
-  await waiterMove(W, W.off, stop, 520, [[bt, 0, 0]]);
+  const bk = tg != null && BAR.buckets.find(x => x.tg === tg), BH = 64, side = Math.sign(W.cup[0] - 560) || 1;
+  const bt = trayItem(bottleSvg(id, BH), 'wBottle');
+  // the waiter's arm swings from one way to the other: the shoulder slides along with the tray
+  const swing = (W1, W2, a, b, dur, items) => tween(dur, t => {
+    const p = lerp2(a, b, t); drawWaiter({ at: p, from: lerp2(W1.shoulder, W2.shoulder, t) });
+    items.forEach(([el, ox, oy]) => place(el, p[0] + ox, p[1] + oy));
+  }, ease.io);
+  let WB = null, at = null;
+  if (bk) {
+    at = bucketAt(bk); WB = waiterWayAt(at);
+    bt.style.visibility = 'hidden';
+    await waiterMove(WB, WB.off, [at[0] + WB.o[0] * 30, at[1] + WB.o[1] * 30], 480);
+    // the bottle comes up out of the ice
+    bk.out = true; render(); noise(.05, 2600, 3, .25);
+    bt.style.visibility = ''; place(bt, at[0], at[1] + 18);
+    await tween(220, t => place(bt, at[0] + WB.o[0] * 30 * t, at[1] + 18 + (WB.o[1] * 30 - 18) * t), ease.io);
+    await swing(WB, W, [at[0] + WB.o[0] * 30, at[1] + WB.o[1] * 30], stop, 520, [[bt, 0, 0]]);
+  } else await waiterMove(W, W.off, stop, 520, [[bt, 0, 0]]);
   // the bottle tips over the glass, its neck at the rim, and pours; the level rises to the brim
   const gl = L.cups.querySelector(`.glass[data-seat="${seat}"]`), a = DRINK_ART[id] || {}, bs = GLASS_BASE[a.glass] || [18, 36];
   const rim = [W.cup[0], W.cup[1] + GLASS_SINK - (bs[1] - 6) * GLASS_K];        // the mouth of the glass
@@ -2491,8 +2754,19 @@ async function waiterRefill(seat, n, id, fast) {
   await tween(700, t => { g.left = g.sips * (lvl0 + (1 - lvl0) * t); if (gl && gl.isConnected) gl.innerHTML = glassSvg(g.id, GLASS_K, g.left / g.sips); });
   full(); render();
   await tween(240, t => { place(bt, tipAt[0] + (stop[0] - tipAt[0]) * t, tipAt[1] + (stop[1] - tipAt[1]) * t); bt.style.transform = `rotate(${ang * (1 - t)}deg)`; }, ease.io);
-  await waiterMove(W, stop, W.off, 460, [[bt, 0, 0]]);
-  bt.remove(); drawWaiter(null);
+  if (bk && BAR.buckets.includes(bk)) {
+    // back into the ice
+    const near = [at[0] + WB.o[0] * 30, at[1] + WB.o[1] * 30];
+    await swing(W, WB, stop, near, 520, [[bt, 0, 0]]);
+    await tween(200, t => place(bt, near[0] - WB.o[0] * 30 * t, near[1] + (18 - WB.o[1] * 30) * t), ease.io);
+    bt.remove(); bk.out = false; render(); noise(.05, 2600, 3, .25);
+    await waiterMove(WB, near, WB.off, 460);
+  } else {
+    if (bk) bk.out = false;
+    await waiterMove(W, stop, W.off, 460, [[bt, 0, 0]]);
+    bt.remove();
+  }
+  drawWaiter(null);
 }
 // paying the waiter: the player's hand puts the chips on the felt by his cup, the waiter takes them on the tray;
 // overpaid with a big chip -> the waiter leaves the change and the player pulls it back
@@ -2741,10 +3015,12 @@ async function carryChips(seat, side, comp, a, b, layout, dur = 420) {
       const tm = Math.min(.85, Math.hypot(hx - a[0], hy - a[1]) / (Math.hypot(b[0] - a[0], b[1] - a[1]) || 1));
       await movePH(seat, side, hx, hy, dur * .8, ease.io, (x, y, t) => setSprite(w, ...lerp2(a, b, t * tm)));
       restPH(seat, side, 320);
-      await tween(320, t => setSprite(w, ...lerp2(a, b, tm + (1 - tm) * t)), ease.out);
+      const spin = (b[0] > a[0] ? 1 : -1) * 28;
+      await tween(320, t => setSprite(w, ...lerp2(a, b, tm + (1 - tm) * t), spin * t), ease.out);
     }
   } else await moveSprite(w, a, b, dur, ease.io);
   sfx.chips(4);
+  if (!LITE && w.isConnected) { const r0 = parseFloat((w.style.transform.match(/rotate\(([-\d.]+)deg/) || [0, 0])[1]) || 0; await tween(170, t => setSprite(w, ...b, r0 + Math.sin(t * Math.PI * 2) * 5 * (1 - t))); }
   return w;
 }
 // the dealer moves chips between the tray / pot and a spot (his reach is limited too)
@@ -2890,7 +3166,8 @@ async function animCollect(e, d) {
       const dst = rake ? [POTZ[0] + (side === 'L' ? -20 : 20), POTZ[1] - 12] : colsCenter(lay);
       const v0 = compVal(comp), p0 = compVal(CH.pot);
       const w = await dealerCarry(comp, c0, dst, relCols(cols, c0), 420, rake);
-      if (compVal(comp) !== v0 || compVal(CH.pot) !== p0) (AUDIT.log = AUDIT.log || []).push(`collect seat${i} comp ${v0}->${compVal(comp)} pot ${p0}->${compVal(CH.pot)} side ${side}`);
+      // 1.0.8: both hands collect at once, so the pot may grow meanwhile from the other side; only a changed stack or a pot that shrank is a fault
+      if (compVal(comp) !== v0 || compVal(CH.pot) < p0) (AUDIT.log = AUDIT.log || []).push(`collect seat${i} comp ${v0}->${compVal(comp)} pot ${p0}->${compVal(CH.pot)} side ${side}`);
       w.remove(); CH.pot = compAdd(CH.pot, comp); d.pot = compVal(CH.pot); render();
       if (rake) scatterEl(chipsEl('pot')); else dropEl(chipsEl('pot'));
     }
@@ -3159,7 +3436,7 @@ function render() {
     place(g, slot(i).drink[0], slot(i).drink[1] + GLASS_SINK); L.cups.appendChild(g);
     const lip = document.createElement('div'); lip.className = 'cupLip'; lip.dataset.seat = i; lip.innerHTML = CUP_LIP; place(lip, slot(i).drink[0] - CUP_R, slot(i).drink[1] - CUP_R); L.cups.appendChild(lip);
   }
-  BAR.buckets.forEach(bk => { const b = document.createElement('div'); b.className = 'bucket'; b.dataset.tg = bk.tg; b.innerHTML = bucketSvg(bk.id); place(b, ...bucketAt(bk)); L.felt.appendChild(b); });
+  BAR.buckets.forEach(bk => { const b = document.createElement('div'); b.className = 'bucket'; b.dataset.tg = bk.tg; b.innerHTML = bucketSvg(bk.id, !!bk.out); place(b, ...bucketAt(bk)); L.felt.appendChild(b); });
   drawMarks();
   buildHands();
   renderEquity();
@@ -3416,7 +3693,7 @@ async function animate(e) {
         const hp = holePos(i, r, isMe);
         const to = [hp.cx, hp.cy];
         moveHand('R', DECK[0] - 10 + (to[0] > CX ? 8 : -8), DECK[1] + 8, 90, ease.out).then(() => moveHand('R', DECK[0] - 6, DECK[1] + 4, 90));
-        moveSprite(w, [DECK[0], DECK[1]], to, 340, ease.out, [0, 360 + hp.rot]);
+        moveSprite(w, [DECK[0], DECK[1]], to, 380, ease.slide, [0, 360 + hp.rot]);
         sfx.card();
         n++; await sleep(115);
       }
@@ -3549,7 +3826,7 @@ async function animate(e) {
     case 'treat': {
       const p = d.seats[e.seat];
       if (p) await payWaiter(e.seat, e.price, d);
-      const tx = document.createElement('div'); tx.className = 'winTxt'; tx.textContent = '🥂 ' + nameOf(p ? p.uid : '') + ' угощает стол'; place(tx, CX, 300); L.txt.appendChild(tx); setTimeout(() => tx.remove(), 2600);
+      const tx = document.createElement('div'); tx.className = 'winTxt'; tx.textContent = e.self ? '🍾 ' + nameOf(p ? p.uid : '') + ' берёт бутылку' : '🥂 ' + nameOf(p ? p.uid : '') + ' угощает стол'; place(tx, CX, 300); L.txt.appendChild(tx); setTimeout(() => tx.remove(), 2600);
       render(); await sleep(300);
       break;
     }
@@ -3561,7 +3838,7 @@ async function animate(e) {
       break;
     }
     case 'pour': { const D = Engine.DRINKS.find(x => x.id === e.id); barPush({ k: 'deliver', seat: e.seat, glass: { id: e.id, sips: D.sips, left: D.sips, n: e.n, tg: e.tg }, at: 0, quick: true }); break; }
-    case 'refill': barPush({ k: 'refill', seat: e.seat, n: e.n, id: e.id }); break;
+    case 'refill': barPush({ k: 'refill', seat: e.seat, n: e.n, id: e.id, tg: e.tg }); break;
     case 'sip': barPush({ k: 'sip', seat: e.seat, left: e.left, n: e.n }); break;
     case 'gulp': barPush({ k: 'gulp', seat: e.seat, n: e.n }); break;
     case 'unglass': barPush({ k: 'remove', seat: e.seat, n: e.n }); break;
@@ -3670,6 +3947,27 @@ const PFX = 'pkrtbl-';
 const ICE = { config: { iceServers: [{ urls: 'stun:stun.l.google.com:19302' }, { urls: 'stun:stun1.l.google.com:19302' }, { urls: 'stun:global.stun.twilio.com:3478' }] } };
 let LITE = false;
 function setLite(on) { LITE = !!on; document.body.classList.toggle('lite', LITE); }
+// 1.0.8: graphics: 'auto' (full detail, simplified by itself when the phone can't keep up), 'high' (always full), 'eco' (always simple)
+let GFX = 'auto', gfxSlow = false;
+const GFX_NAMES = { auto: 'авто', high: 'высокая', eco: 'экономная' };
+function setGfx(m) { GFX = GFX_NAMES[m] ? m : 'auto'; setLite(GFX === 'eco' || (GFX === 'auto' && gfxSlow)); gfxWatch(); }
+// auto: while the table animates, count frames that take far too long; if a third of them are slow twice in a row, go simple for this session
+let gfxRaf = 0;
+function gfxWatch() {
+  if (gfxRaf) { cancelAnimationFrame(gfxRaf); gfxRaf = 0; }
+  if (GFX !== 'auto' || gfxSlow) return;
+  let last = 0, n = 0, slow = 0, bad = 0;
+  const step = t => {
+    gfxRaf = requestAnimationFrame(step);
+    const dt = last ? t - last : 0; last = t;
+    if (!dt || document.hidden || !animating || dt > 400) return;
+    n++; if (dt > 34) slow++;
+    if (n < 90) return;
+    bad = slow / n > .33 ? bad + 1 : 0; n = slow = 0;
+    if (bad >= 2) { gfxSlow = true; cancelAnimationFrame(gfxRaf); gfxRaf = 0; setLite(true); toast('Графика упрощена: устройство не успевает. Сменить можно в меню'); }
+  };
+  gfxRaf = requestAnimationFrame(step);
+}
 // 1.0.6: two one-line hints: open the game in Chrome when it runs inside an app (Telegram, VK…); on Android, where the graphics switch is
 function gfxHint(text) {
   return new Promise(res => {
@@ -3682,7 +3980,7 @@ function gfxHint(text) {
 async function gfxHints() {
   const ua = navigator.userAgent || '';
   if (/; wv\)|Telegram|Instagram|FBAN|FBAV|VKClient|vkontakte|OKApp|Line\//i.test(ua)) await gfxHint('Для плавной игры откройте в Chrome: ⋮ → Открыть в браузере');
-  if (/Android/i.test(ua) && !store.get('gfxHint', false)) { store.set('gfxHint', true); await gfxHint('Если возникают проблемы с графикой и игрой — включите в меню «Упрощённая графика»'); }
+  if (/Android/i.test(ua) && !store.get('gfxHint', false)) { store.set('gfxHint', true); await gfxHint('Если возникают проблемы с графикой и игрой — выберите в меню «Графика: экономная»'); }
 }
 const store = { get(k, d) { try { const v = localStorage.getItem('poker.' + k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } }, set(k, v) { try { localStorage.setItem('poker.' + k, JSON.stringify(v)); } catch (e) { } } };
 
@@ -3734,7 +4032,7 @@ const COMMANDS = {
   rebuy: (s, pid) => Engine.rebuy(s, pid, Date.now()),
   sitout: (s, pid, d) => Engine.setSitOut(s, pid, !!d.val, Date.now()),
   leave: (s, pid) => Engine.leave(s, pid, Date.now()),
-  drink: (s, pid, d) => Engine.drink(s, pid, String(d.id), !!d.all, Date.now(), { guests: Array.isArray(d.guests) ? d.guests.slice(0, 6) : undefined, mode: d.mode }),
+  drink: (s, pid, d) => Engine.drink(s, pid, String(d.id), !!d.all, Date.now(), { guests: Array.isArray(d.guests) ? d.guests.slice(0, 6) : undefined, mode: d.mode, self: !!d.self }),
   treat: (s, pid, d) => Engine.treatAnswer(s, pid, typeof d.ans === 'string' ? d.ans : !!d.yes, Date.now()),
   pourMode: (s, pid, d) => Engine.setPourMode(s, pid, +d.tg, d.mode),
   look: (s, pid, d) => Engine.setLook(s, pid, d.look),
@@ -4735,7 +5033,8 @@ function previewHands(l) {
   const arm = (side) => {
     const [e, h] = pts[side];
     const d = `M${e[0]},${e[1]} L${h[0]},${h[1]}`;
-    return `<g>${sleeveMarkup(l, w).replace(/<path class="(slv[^"]*)"/g, `<path d="${d}" class="$1"`)}<g transform="translate(${h[0]},${h[1]})">${cuffMarkup(l, w)}</g><g transform="translate(${h[0]},${h[1]}) scale(1.4)">${handMarkup(l, side === 'A')}</g></g>`;
+    const tee = garment(l).kind === 'tattoo' ? teeMarkup(l, w).replace(/<path class="tee"/g, `<path d="M-200,${e[1]} L${e[0] + 3},${e[1]}" class="tee"`).replace('<g class="hem">', `<g class="hem" transform="translate(${e[0] + 3},${e[1]})">`) : '';
+    return `<g>${sleeveMarkup(l, w).replace(/<path class="(slv[^"]*)"/g, `<path d="${d}" class="$1"`)}<g transform="translate(${h[0]},${h[1]})">${cuffMarkup(l, w)}</g>${tee}<g transform="translate(${h[0]},${h[1]}) scale(1.4)">${handMarkup(l, side === 'A')}</g></g>`;
   };
   return `<svg viewBox="-80 -75 160 150" width="190" height="178" aria-hidden="true"><g transform="rotate(-90)">${arm('A')}${arm('B')}</g></svg>`;
 }
@@ -4748,7 +5047,7 @@ function openLook(inGame, after) {
       <h3>Руки</h3><div class="chipsel">${[['m', 'Мужские'], ['f', 'Женские']].map(([k, t]) => `<button class="${l.g === k ? 'on' : ''}" data-g="${k}">${t}</button>`).join('')}</div>
       <h3>Кожа</h3><div class="sw">${SKINS.map((s, k) => `<button class="swc ${l.skin === k ? 'on' : ''}" data-k="skin" data-v="${k}" style="background:${s[0]}" aria-label="Тон ${k + 1}"></button>`).join('')}</div>
       <h3>Одежда</h3><div class="chipsel">${WARDROBE[l.g].map(w => `<button class="${l.sl === w.id ? 'on' : ''}" data-sl="${w.id}">${w.name}</button>`).join('')}</div>
-      ${G.colors.length ? `<h3>Цвет</h3><div class="sw">${G.colors.map((c, k) => `<button class="swc ${l.col === k ? 'on' : ''}" data-k="col" data-v="${k}" style="background:${c}" aria-label="Цвет ${k + 1}"></button>`).join('')}</div>` : ''}
+      ${G.colors.length ? `<h3>${G.kind === 'tattoo' ? 'Цвет футболки' : 'Цвет'}</h3><div class="sw">${G.colors.map((c, k) => `<button class="swc ${l.col === k ? 'on' : ''}" data-k="col" data-v="${k}" style="background:${c}" aria-label="Цвет ${k + 1}"></button>`).join('')}</div>` : ''}
       ${G.kind === 'tattoo' ? `<h3>Рисунок</h3><div class="chipsel">${TATTOOS.map((t, k) => `<button class="${l.tat === k ? 'on' : ''}" data-k="tat" data-v="${k}">${t}</button>`).join('')}</div>` : ''}
       ${l.g === 'f' ? `<h3>Маникюр</h3><div class="sw">${NAILS.map(([t, c], k) => `<button class="swc ${l.nail === k ? 'on' : ''} ${c ? '' : 'none'}" data-k="nail" data-v="${k}" style="background:${c || '#f1e1d6'}" aria-label="${t}" title="${t}"></button>`).join('')}</div>` : ''}
       <h3>Олл-ин</h3><div class="chipsel">${[['', 'Как получится'], ['neat', 'Аккуратно стопками'], ['push', 'Толкнуть всё разом']].map(([k, t]) => `<button class="${(l.ai || '') === k ? 'on' : ''}" data-ai="${k}">${t}</button>`).join('')}</div>
@@ -4780,23 +5079,25 @@ function openBar() {
   const mine = (S.bottles || []).filter(b => b.by === uid);
   const mineHtml = mine.map(b => { const dk = Engine.DRINKS.find(x => x.id === b.id); return `<div class="myBtl"><span>🍾 ${esc(dk ? dk.name : b.id)} — осталось <b>${b.left}</b> из ${dk ? dk.btl : '?'}</span>
       <span class="seg"><span class="sl">Доливать:</span><button class="${b.mode !== 'me' ? 'on' : ''}" data-tg="${b.tg}" data-m="all">всем</button><button class="${b.mode === 'me' ? 'on' : ''}" data-tg="${b.tg}" data-m="me">только мне</button></span></div>`; }).join('');
-  $('#menuPanel').innerHTML = `<h2>Бар</h2><p>${i < 0 ? 'Сядьте за стол, чтобы заказать.' : 'Цены от большого блайнда. «Себе» — один стакан. «Угостить» — бутылка на стол: вы платите за всю бутылку, наливают тем, кого вы отметите.'}</p>
+  $('#menuPanel').innerHTML = `<h2>Бар</h2><p>${i < 0 ? 'Сядьте за стол, чтобы заказать.' : 'Цены от большого блайнда. «Стакан» — один стакан себе. «Бутылка» — бутылка себе: ведро у вашего места, официант доливает только вам. «Угостить» — бутылка на стол: вы платите за всю бутылку, наливают тем, кого вы отметите.'}</p>
     ${mineHtml ? `<div class="myBtls">${mineHtml}</div>` : ''}
     <div class="barMsg" id="barMsg" hidden></div>
     <div class="bar">${Engine.DRINKS.map(dk => {
       const one = Engine.drinkPrice(S, dk.id, false), all = Engine.drinkPrice(S, dk.id, true);
       return `<div class="drk"><div class="btl">${bottleSvg(dk.id, 92)}</div><div class="dn">${esc(dk.name)}<small>бутылка · ${dk.btl} ${dk.btl < 5 ? 'стакана' : 'стаканов'}</small></div>
-        <div class="dbtns"><button class="btn" data-d="${dk.id}" data-a="0" ${i < 0 || stack < one ? 'disabled' : ''}>Себе · ${fmt(one)}</button>
+        <div class="dbtns"><button class="btn" data-d="${dk.id}" data-a="0" ${i < 0 || stack < one ? 'disabled' : ''}>Стакан · ${fmt(one)}</button>
+        <button class="btn" data-d="${dk.id}" data-a="2" ${i < 0 || stack < all ? 'disabled' : ''}>Бутылка · ${fmt(all)}</button>
         <button class="btn gold" data-d="${dk.id}" data-a="1" ${i < 0 || stack < all || n < 2 ? 'disabled' : ''}>Угостить · ${fmt(all)}</button></div></div>`;
     }).join('')}</div>
     <div class="row2" style="margin-top:12px"><button class="btn dark" id="barClose">Закрыть</button></div>`;
   $('#barClose').onclick = () => ov.hidden = true;
   $('#menuPanel').querySelectorAll('[data-m]').forEach(b => b.onclick = () => { cmd('pourMode', { tg: +b.dataset.tg, mode: b.dataset.m }); b.parentNode.querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b)); });
   $('#menuPanel').querySelectorAll('[data-d]').forEach(b => b.onclick = () => {
-    if (b.dataset.a !== '1') { ov.hidden = true; cmd('drink', { id: b.dataset.d, all: false }); return; }
+    if (b.dataset.a === '0') { ov.hidden = true; cmd('drink', { id: b.dataset.d, all: false }); return; }
     // the menu covers the toasts, so the bar says it right here
     const say = t => { const m = $('#barMsg'); if (!m) return; m.textContent = t; m.hidden = false; m.scrollIntoView({ block: 'nearest' }); m.animate([{ transform: 'scale(1.04)' }, { transform: 'none' }], { duration: 260 }); };
     if ((S.bottles || []).length + (S.treat ? 1 : 0) >= Engine.MAX_BOTTLES) { say('На столе уже три бутылки'); return; }
+    if (b.dataset.a === '2') { ov.hidden = true; cmd('drink', { id: b.dataset.d, all: true, self: true }); return; }
     if (S.treat) { say('Стол уже угощают — подождите минутку'); return; }
     openTreat(b.dataset.d);
   });
@@ -4828,6 +5129,34 @@ function openTreat(id) {
   ov.hidden = false; draw();
 }
 const CHANGELOG = [
+ {
+  "v": "1.0.8",
+  "d": "11 ноября",
+  "items": [
+   "<b>Оформление «Клуб»</b>: сукно с тканевой фактурой и латунной окантовкой, борт из мягкой коричневой кожи со строчкой, мягкий свет лампы над серединой стола и полумрак по краям. Плашки игроков — тёмная кожа с латунной полоской сверху, кнопки хода в цветах клуба (FOLD — бордо, CALL — зелёное сукно, RAISE — латунь), «Ход игры» — на кремовой бумаге.",
+   "<b>Карты</b>: новая рубашка — зелёная сетка, двойная рамка и герб с короной и буквой R; лицо карты — на бумаге с лёгкой фактурой. Колода дилера с той же рубашкой.",
+   "<b>Фишки</b>: рифлёный край, светлое кольцо вокруг номинала и блик — и в стопках, и в банке, и в руке.",
+   "<b>Подстаканник</b>: вместо металлического кольца, которое под бокалом выглядело как подкова, — круглая кожаная подставка с латунным ободком; бокал стоит на ней целиком.",
+   "<b>Дилер</b>: фрак с лацканами, бордовая бабочка, платок в нагрудном кармане, латунный бейдж и пуговицы; на рукавах — поперечные складки ткани вместо кружков. Большие пальцы перчаток теперь смотрят внутрь, друг к другу, как у ладоней, лежащих на столе.",
+   "<b>Тату-рукав</b>: под рукавом — дорогая хлопковая футболка: у борта виден край рукава с двойной строчкой, складки ткани; цвет выбирается в «Мои руки» (белая, чёрная, графит, тёмно-синяя, бордо, оливковая). На предплечье — три новых рисунка, которые двигаются вместе с рукой: «Роял-флеш» (пять пик веером, туз с короной, завиток с пиками), «Фишки и кости» (фишки 100, 500 и 1K, кубики на единицах) и «Роза и кинжал» (олд-скул: роза на клинке, лента «Lucky»). Рисунок никогда не выходит за руку. Прежние рисунки заменены ближайшими: «Карты» и «Надписи» → роял-флеш, «Орнамент» → фишки и кости, «Розы» → роза и кинжал.",
+   "<b>Руки игроков</b> тянутся из-за края экрана: конец рукава больше не виден ни на ПК, ни на телефоне. Руки верхних игроков идут прямо, без излома, каждая из своей точки, слегка наклонены к дилеру и не закрывают напитки.",
+   "<b>Бутылка себе</b>: в баре у каждого напитка три кнопки — «Стакан» (себе), «Бутылка» (себе) и «Угостить». Бутылка себе стоит как угощение (цена стакана × число стаканов), окна угощения нет: официант сразу ставит ведро у вашего места, наливает первый стакан и потом доливает только вам. Такая бутылка занимает одно из трёх мест для бутылок на столе.",
+   "<b>Долив из ведра</b>: официант подходит к ведру, вынимает бутылку изо льда (ведро в это время пустое), доливает стакан и ставит бутылку обратно в ведро.",
+   "<b>Бутылки</b> прорисованы заново, как настоящие: блики и отсвет стекла, отражение окна, этикетки с объёмом и золотой точечной рамкой. Пиво — прозрачная бутылка с длинным горлышком, жёлтым пивом внутри, овальной этикеткой и кронен-пробкой; водка — прозрачное стекло с округлыми плечами, белая бумажная этикетка, серебристая винтовая крышка; текила — прозрачная бутылка на тяжёлом дне, золотистая текила, этикетка с агавой, пробка с деревянной шляпкой; виски — сургуч с подтёками и печатью; коньяк — хрустальная пробка; шампанское — фольга и мюзле. В ведре у бутылки та же пробка.",
+   "<b>Стакан в руке</b>: пальцы обхватывают стакан спереди, когда игрок его берёт, и держат его весь глоток; стакан поднимается к краю стола рядом с плашкой игрока, а не уходит под неё.",
+   "<b>Графика: авто / высокая / экономная</b> (Меню) вместо «Упрощённой графики». «Авто» — полная детальность; если устройство не успевает рисовать анимации, графика сама становится экономной до конца игры, и игра об этом сообщает. «Высокая» — всегда полная. «Экономная» — без света лампы, фактуры сукна, строчки борта, размытия, теней и движений рук в покое. Кто раньше включил упрощённую графику, получит «экономную».",
+   "<b>Чёткость</b>: бокал, поднятый для глотка, теперь перерисовывается в увеличенном размере, а не растягивается — пропали размытие во время глотка и скачок чёткости в конце.",
+   "<b>Пена</b> при наклоне кружки наклоняется вместе с пивом, а не остаётся ровной полосой.",
+   "<b>Победная комбинация</b>: пять карт выигравшей руки обведены латунью и мягко светятся, по ним один раз пробегает блик; остальные карты заметнее притушены.",
+   "<b>Анимации</b>: фишки, которые игрок толкает дальше своей руки, проворачиваются и тормозят на сукне, а положенные фишки чуть покачиваются, ложась на место; карты при раздаче скользят и плавно останавливаются; кнопки мягко проседают при нажатии и светлеют под курсором; общий банк при пополнении подсвечивается, а не увеличивается.",
+   "<b>Исправлено</b>: правая перчатка дилера в покое закрывала край фишек общего банка — обе перчатки теперь лежат выше.",
+   "<b>Исправлено</b>: на ПК «Ход игры» перекрывал стакан левого нижнего игрока — его подстаканник сдвинут по борту вправо; кнопки хода стали чуть уже и не задевают стакан правого нижнего игрока.",
+   "<b>Исправлено</b>: на телефоне «+ Пригласить» перекрывала подстаканник верхнего правого игрока — короткие кнопки (Бар, экран, звук, меню) стоят в верхнем ряду, «+ Пригласить» — отдельно под ними у края экрана.",
+   "<b>Исправлено</b>: на телефоне название стола («Боты» / «Друзья» и блайнды) заходило на плашку верхнего левого игрока — теперь оно под названием игры.",
+   "<b>Исправлено</b>: надпись «Texas Hold’em» на телефонах и на ПК с увеличенным масштабом экрана рисовалась сдвинутой влево и заходила под карты нижнего игрока — теперь она ровно по центру, между картами нижних игроков, над их фишками.",
+   "<b>Исправлено</b>: рука официанта лежала поверх подноса и напитка на нём — теперь он держит поднос снизу."
+  ]
+ },
  {
   "v": "1.0.7",
   "d": "11 ноября",
@@ -4995,7 +5324,8 @@ function openMenu() {
     ${p ? `<div class="row2" style="margin-top:8px"><button class="btn" id="mRebuy" ${(p.inHand && !p.folded && live) || p.stack > Engine.rebuyMax(S) ? 'disabled' : ''}>${p.stack > Engine.rebuyMax(S) ? 'Докупить можно при ≤ ' + fmt(Engine.rebuyMax(S)) : 'Докупить ' + fmt(S.cfg.buyIn)}</button>
       <button class="btn dark" id="mAway">${p.sitOut ? 'Вернуться' : 'Отойти'}</button>
       <button class="btn red" id="mLeave">Встать</button></div>` : '<p style="margin-top:10px">Вы наблюдаете. Нажмите на свободное место, чтобы сесть.</p>'}
-    <div class="row2" style="margin-top:8px"><button class="btn ${LITE ? 'gold' : 'dark'}" id="mLite">Упрощённая графика: ${LITE ? 'вкл' : 'выкл'}</button></div>
+    <div class="gfxRow"><span class="sl">Графика</span><span class="seg big" id="mGfx">${['auto', 'high', 'eco'].map(m => `<button class="${GFX === m ? 'on' : ''}" data-g="${m}">${GFX_NAMES[m]}</button>`).join('')}</span></div>
+    ${GFX === 'auto' && gfxSlow ? '<p class="fine" style="margin:4px 0 0">Сейчас упрощена автоматически: устройство не успевало.</p>' : ''}
     <h3>Учёт фишек</h3>
     <table class="led"><thead><tr><th>Игрок</th><th>Внёс</th><th>Вывел</th><th>Бар</th><th>Стек</th><th>Итог</th></tr></thead><tbody>${rows || '<tr><td colspan="6">Пока никто не садился</td></tr>'}</tbody></table>
     ${host ? `<h3>Настройки стола</h3>
@@ -5012,7 +5342,7 @@ function openMenu() {
   if ($('#mInvite')) $('#mInvite').onclick = openInvite; wireInstall($('#menuPanel'));
   $('#mCombos').onclick = () => openCombos(false);
   $('#mLessons').onclick = () => { if (tut) endLesson(true); openLessons(); };
-  $('#mLite').onclick = () => { setLite(!LITE); store.set('lite', LITE); close(); toast(LITE ? 'Упрощённая графика включена' : 'Упрощённая графика выключена'); };
+  $('#mGfx').querySelectorAll('[data-g]').forEach(b => b.onclick = () => { const m = b.dataset.g; if (m !== 'auto') gfxSlow = false; setGfx(m); store.set('gfx', m); close(); toast('Графика: ' + GFX_NAMES[m]); });
   $('#mCoach').onclick = () => { coachOn = !coachOn; store.set('coach', coachOn); close(); renderHud(); toast(coachOn ? 'Тренер включён' : 'Тренер выключен'); };
   if ($('#mExitSolo')) $('#mExitSolo').onclick = () => { close(); goHome(); };
   $('#mBar').onclick = openBar;
@@ -5059,7 +5389,7 @@ async function loadLibs() {
 }
 function setupGlove() { const g = $('#glove'); if (g && !g.dataset.done) { g.innerHTML = handMarkup({ skin: 0, acc: 0 }, false, 'relax', true); g.dataset.done = 1; } }
 async function boot(again) {
-  setupGlove(); setLite(store.get('lite', false)); if (!again) setTimeout(gfxHints, 1500);
+  setupGlove(); setGfx(store.get('gfx', store.get('lite', false) ? 'eco' : 'auto')); if (!again) setTimeout(gfxHints, 1500);
   uid = store.get('pid', null);
   if (!uid) { uid = 'p' + Math.random().toString(36).slice(2, 10) + Date.now().toString(36).slice(-4); store.set('pid', uid); }
   demo = true; S = null;
