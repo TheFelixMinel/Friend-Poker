@@ -632,12 +632,6 @@ body.lite #lampFx{display:none}
 #log .hd{background:var(--logHd)!important;color:var(--logHdInk)!important}
 #log .row b{color:var(--logName)!important}
 
-/* action buttons */
-#sidePanel .btn,#raisePanel .q button{--a:var(--callA);--b:var(--callB);--st:var(--callSt);
-  background-image:var(--btnTex),linear-gradient(var(--a),var(--b))!important;
-  box-shadow:0 3px 0 #000b,0 7px 14px #0009,inset 0 1px 0 #ffffff2e,inset 0 -2px 4px #0005!important}
-#sidePanel .btn.dark,#sidePanel .btn.pre.dark{--a:var(--foldA);--b:var(--foldB);--st:var(--foldSt)}
-#sidePanel .btn.gold,#raisePanel .q button{--a:var(--raiseA);--b:var(--raiseB);--st:var(--raiseSt);color:var(--raiseInk,#fff)!important}
 .panel{background:var(--panelBg)!important;border-color:var(--panelLine)!important}
 .panel h2{color:var(--gold)!important}
 
@@ -661,6 +655,74 @@ body.lite .card.win .f,body.lite .card.win .f::after{animation:none}
 #sleeveL path:nth-child(2),#sleeveR path:nth-child(2),#sleeveL path:nth-child(3),#sleeveR path:nth-child(3),#sleeveL path:nth-child(4),#sleeveR path:nth-child(4){stroke-linecap:butt}
 #sleeveL path:nth-child(3),#sleeveR path:nth-child(3){stroke-dasharray:1.2 7 .8 11;stroke-opacity:.8}
 #tray{background:linear-gradient(var(--trayA),var(--trayB))!important;box-shadow:inset 0 3px 6px #000c,0 0 0 1.5px var(--trim),0 2px 6px #0009!important}
+/* ===== 1.0.8 interface: translucent plates in play; every window a cream page in brown leather, like the club bar ===== */
+/* in play: dark glass plates without an outline, a soft highlight on top */
+.plate,#pot,.betLbl,.potLbl,.pill,.ibtn{background:repeating-linear-gradient(45deg,#ffffff06 0 2px,#0000 2px 4px),#0b0b0cb0!important;border:none!important;
+  box-shadow:inset 0 1px 0 #ffffff1f,inset 0 -1px 0 #0008,0 4px 12px #0007!important;backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px)}
+.plate::before{display:none!important}
+.plate.turn{box-shadow:inset 0 0 0 1.4px #f2d68e,0 0 16px #e6c06e77,0 4px 12px #0007!important}
+.plate .av{background:#00000070!important;box-shadow:inset 0 1px 0 #ffffff22,inset 0 0 0 1px #0009!important;color:#ece6d6!important;font:700 17px var(--hud)!important}
+.pill.barBtn,#title{color:#f2deaa!important}
+.verTag{background:linear-gradient(#f2d68e,#b48a3a)!important;color:#1a1306!important}
+#log{background:#0b0b0ca6!important;color:#e2ddd0!important;border-radius:8px;box-shadow:inset 0 1px 0 #ffffff1c,0 4px 12px #0006!important;backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px)}
+#log .hd{background:#00000066!important;color:#f2deaa!important;font-family:var(--display),Georgia,serif!important;font-style:italic;letter-spacing:.08em}
+#log .row b{color:#e9b46a!important}
+
+/* windows: a cream page with a faint lattice, a double rule, a stitched brown leather cover */
+.panel{--ink:#2a1d12;--ink2:#5a4632;--brass:#8a6a3a;--wine:#7a1c26;
+  border:15px solid #0000!important;border-radius:6px!important;padding:12px 16px 16px!important;color:var(--ink)!important;
+  border-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='60' height='60'><rect width='60' height='60' fill='%23f1e8d4'/><rect x='10.5' y='10.5' width='39' height='39' fill='none' stroke='%238a6a3a' stroke-width='1'/><rect x='13.3' y='13.3' width='33.4' height='33.4' fill='none' stroke='%238a6a3a' stroke-opacity='.55' stroke-width='.6'/></svg>") 15 stretch!important;
+  background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='34' height='34'><g fill='none' stroke='%238a6a3a' stroke-opacity='.12' stroke-width='1'><path d='M0 17L17 0L34 17L17 34Z'/><circle cx='17' cy='17' r='1.6' fill='%238a6a3a' fill-opacity='.12'/></g></svg>"),linear-gradient(90deg,#8a6a3a2e,#0000 4%,#0000 96%,#8a6a3a2e),radial-gradient(ellipse 80% 60% at 50% 30%,#fffaf0aa,#0000 70%),linear-gradient(#f3ebd9,#e9dfc8)!important;
+  outline:1.4px dashed #e2bf8e!important;outline-offset:6px!important;
+  box-shadow:inset 0 0 40px #8a6a3a33,0 1px 0 #d9ccae,0 2px 0 #f3ebd9,0 3px 0 #cbbd9c,0 4px 0 #efe6d2,0 0 0 12px #3a2416,0 0 0 12.8px #5a3a24,0 0 0 14px #000,0 30px 80px #000!important}
+.panel h2{color:var(--ink)!important;font:italic 700 30px var(--display),Georgia,serif!important;text-align:center;letter-spacing:.04em}
+.panel h2::before{content:"Royal Flush · клуб";display:block;font:600 11px var(--hud);font-style:normal;letter-spacing:.3em;text-transform:uppercase;color:var(--brass);margin-bottom:2px}
+#menuPanel:has(.drk) h2::before{content:"Royal Flush · клубный бар"}
+.panel h2::after{content:"";display:block;margin:7px auto 4px;width:160px;height:9px;background:radial-gradient(circle,#8a6a3a 0 2px,#0000 2.5px) center/9px 9px no-repeat,linear-gradient(90deg,#0000,#8a6a3a 30%,#0000 46%,#0000 54%,#8a6a3a 70%,#0000) center/100% 1px no-repeat}
+.panel p,.panel .fine,.panel .ver,.lessonTop,.lesson .lt small,.vrow .vdate,.tRow .nt{color:var(--ink2)!important}
+.panel b,.news b,.trHead .dn{color:var(--ink)!important}
+.panel a,.ver a{color:var(--wine)!important}
+.panel h3,.panel label,.gfxRow .sl,.seg .sl,.fields label,.fields span{color:var(--brass)!important}
+.news,.lesson,.vrow .vnum,.vrow summary,.vrow summary::before{color:var(--ink)!important}
+table.led th{color:var(--brass)!important;border-bottom-color:#8a6a3a55!important}
+table.led td{color:var(--ink);border-bottom-color:#8a6a3a2a!important}
+/* every button on the page: a cream card with the same frame; the important ones only differ by their bordeaux lettering */
+.panel .btn,.panel .btn.gold,.panel .btn.dark,.panel .btn.red{background:linear-gradient(#fbf6ea,#eadfc5)!important;border:1px solid var(--brass)!important;border-radius:5px!important;outline:none!important;color:var(--ink)!important;
+  box-shadow:inset 0 1px 0 #fff,inset 0 -1px 0 #8a6a3a33,0 1px 0 #8a6a3a55,0 2px 3px #3a2a1822!important;text-shadow:none!important}
+.panel .btn.gold,.panel .btn.red{color:var(--wine)!important}
+.panel .btn.dark{color:#6a5640!important}
+.panel .btn:hover:not([disabled]){background:linear-gradient(#fffaf0,#efe5cc)!important}
+.panel .btn:active{transform:translateY(1px);box-shadow:inset 0 1px 3px #8a6a3a55!important}
+.panel .btn[disabled]{opacity:.4}
+/* the bar's «Угостить»: the one filled card */
+.panel .drk .btn.gold{background:linear-gradient(#7a2230,#5a1420)!important;border-color:#3a0a12!important;color:#f6e7bf!important;box-shadow:inset 0 0 0 1px #d8b46a66,inset 0 1px 0 #ffffff33,0 1px 0 #3a0a12,0 2px 3px #3a2a1833!important}
+/* fields, switches, chips, rows */
+.panel input:not([type=checkbox]):not([type=radio]):not([type=range]),.fields input{background:#fffaf0!important;color:var(--ink)!important;border:1px solid var(--brass)!important;box-shadow:inset 0 1px 3px #8a6a3a33!important}
+.panel input::placeholder{color:#a8957a}
+.panel input[type=checkbox],.tRow input,.tgl input{accent-color:#3a2a18}
+.seg button,.chipsel button{background:linear-gradient(#fbf6ea,#eadfc5)!important;border-color:#8a6a3a88!important;color:#3a2a18!important}
+.seg button.on,.chipsel button.on{background:#3a2a18!important;color:#f6efe0!important;border-color:#3a2a18!important}
+.myBtl,.tRow,.vrow,.lesson{background:#e9dec4aa!important;border:1px solid #8a6a3a55!important;color:var(--ink)!important}
+.lesson .ln{background:#3a2a18!important;color:#f6efe0!important}
+.lesson.done .ln{background:var(--brass)!important;color:#fff!important}
+.vrow .vnew{background:#3a2a18!important;color:#f6efe0!important}
+.swc{box-shadow:inset 0 -3px 6px #0003,0 0 0 1px #8a6a3a66!important;border-color:#0000!important}
+.swc.on{border-color:#0000!important;box-shadow:inset 0 -3px 6px #0003,0 0 0 2.5px #f1e8d4,0 0 0 4.5px #3a2a18!important}
+.panel .sw{padding:6px!important;margin:0!important;flex-wrap:wrap}
+.panel .lookOpts{overflow:visible!important}
+.panel .lookPrev{background:radial-gradient(ellipse at 50% 40%,#3f9a58,#1d5c30 70%,#0f3a1d)!important;box-shadow:inset 0 0 20px #0008,0 0 0 1px #8a6a3a,0 0 0 4px #f1e8d4,0 0 0 5px #8a6a3a77!important}
+/* the bar: framed pictures, italic names, order buttons on one line */
+.drk{background:none!important;border:none!important;box-shadow:none!important;padding:4px 6px 10px!important;gap:4px!important;height:100%;box-sizing:border-box}
+.drk .btl{width:100%;height:118px!important;background:radial-gradient(ellipse at 50% 40%,#fbf6ea,#e6d9bb)!important;border:1px solid #8a6a3a;outline:3px double #8a6a3a77;outline-offset:3px;border-radius:2px;margin:6px 0 8px;padding-bottom:6px;box-sizing:border-box;filter:none!important;box-shadow:inset 0 0 14px #8a6a3a33}
+.drk .btl svg{filter:drop-shadow(0 3px 3px #3a2a1855)}
+.drk .dn{color:var(--ink)!important;font:italic 700 15px/1.2 var(--display),Georgia,serif!important}
+.drk .dn small{color:#7a6448!important;font:500 11.5px var(--body)!important;font-style:normal!important}
+.drk .dbtns{margin-top:auto!important;gap:6px!important}
+.drk .btn{height:30px!important;justify-content:center!important;font:700 13px var(--body)!important;text-transform:none!important;letter-spacing:.01em}
+#barMsg{color:var(--wine)!important}
+.cname{color:var(--ink)!important}
+.cname span{color:#fff}
+.panel .cdesc,.panel .cex{color:var(--ink2)!important}
 </style>
 </head>
 <body>
@@ -4955,7 +5017,7 @@ const LESSON_FLOW = {
 /* ---------------- overlays ---------------- */
 function toast(t) { const el = $('#toast'); el.textContent = t; el.style.opacity = 1; clearTimeout(toast.h); toast.h = setTimeout(() => el.style.opacity = 0, 2400); }
 function closeLobby() { $('#lobby').hidden = true; demo = false; render(); }
-function nameField() { return `<label for="fName">Ваше имя за столом<input id="fName" maxlength="18" autocomplete="nickname" value="${esc(store.get('name', ''))}" placeholder="Например, Денис"></label>`; }
+function nameField() { return `<label for="fName">Ваше имя за столом<input id="fName" maxlength="18" autocomplete="nickname" value="${esc(store.get('name', ''))}" placeholder="Например, Боб"></label>`; }
 function readName() { const n = ($('#fName').value || '').trim().slice(0, 18); if (!n) { $('#fName').focus(); toast('Введите имя'); return null; } store.set('name', n); return n; }
 function showLobby(kind, msg, keepButtons) {
   const ov = $('#lobby'); ov.hidden = false;
@@ -5079,7 +5141,7 @@ function openBar() {
   const mine = (S.bottles || []).filter(b => b.by === uid);
   const mineHtml = mine.map(b => { const dk = Engine.DRINKS.find(x => x.id === b.id); return `<div class="myBtl"><span>🍾 ${esc(dk ? dk.name : b.id)} — осталось <b>${b.left}</b> из ${dk ? dk.btl : '?'}</span>
       <span class="seg"><span class="sl">Доливать:</span><button class="${b.mode !== 'me' ? 'on' : ''}" data-tg="${b.tg}" data-m="all">всем</button><button class="${b.mode === 'me' ? 'on' : ''}" data-tg="${b.tg}" data-m="me">только мне</button></span></div>`; }).join('');
-  $('#menuPanel').innerHTML = `<h2>Бар</h2><p>${i < 0 ? 'Сядьте за стол, чтобы заказать.' : 'Цены от большого блайнда. «Стакан» — один стакан себе. «Бутылка» — бутылка себе: ведро у вашего места, официант доливает только вам. «Угостить» — бутылка на стол: вы платите за всю бутылку, наливают тем, кого вы отметите.'}</p>
+  $('#menuPanel').innerHTML = `<h2>Бар</h2>${i < 0 ? '<p>Сядьте за стол, чтобы заказать.</p>' : ''}
     ${mineHtml ? `<div class="myBtls">${mineHtml}</div>` : ''}
     <div class="barMsg" id="barMsg" hidden></div>
     <div class="bar">${Engine.DRINKS.map(dk => {
@@ -5133,7 +5195,9 @@ const CHANGELOG = [
   "v": "1.0.8",
   "d": "11 ноября",
   "items": [
-   "<b>Оформление «Клуб»</b>: сукно с тканевой фактурой и латунной окантовкой, борт из мягкой коричневой кожи со строчкой, мягкий свет лампы над серединой стола и полумрак по краям. Плашки игроков — тёмная кожа с латунной полоской сверху, кнопки хода в цветах клуба (FOLD — бордо, CALL — зелёное сукно, RAISE — латунь), «Ход игры» — на кремовой бумаге.",
+   "<b>Оформление «Клуб»</b>: сукно с тканевой фактурой и латунной окантовкой, борт из мягкой коричневой кожи со строчкой, мягкий свет лампы над серединой стола и полумрак по краям.",
+   "<b>Интерфейс</b>: во время игры плашки игроков, банк, ставки и «Ход игры» — полупрозрачное тёмное стекло без обводки, буква в кружке — обычным жирным шрифтом; кнопки хода — прежние. Все окна (вход в игру и выбор стола, «Что нового», игра с ботами, меню стола, бар, угощение, «Мои руки», комбинации, обучение) — как клубное меню: кремовая страница с бледной сеткой ромбов и двойной рамкой в коричневой коже со строчкой, заголовок с надписью «Royal Flush · клуб» и орнаментом. Кнопки — кремовые карточки с одной рамкой, важные («Встать», «Тренер», «Игра с ботами») выделены бордовыми буквами; поля ввода — светлые, подсказка в поле имени — «Например, Боб»; выбранный пункт — тёмно-коричневый.",
+   "<b>Бар как меню</b>: без описания сверху; у каждого напитка картинка в рамке и название курсивом; кнопки «Стакан», «Бутылка» и «Угостить» стоят в ряд на одном уровне, «Угостить» — бордовая. Превью в «Моих руках» — на сукне в рамке-паспарту.",
    "<b>Карты</b>: новая рубашка — зелёная сетка, двойная рамка и герб с короной и буквой R; лицо карты — на бумаге с лёгкой фактурой. Колода дилера с той же рубашкой.",
    "<b>Фишки</b>: рифлёный край, светлое кольцо вокруг номинала и блик — и в стопках, и в банке, и в руке.",
    "<b>Подстаканник</b>: вместо металлического кольца, которое под бокалом выглядело как подкова, — круглая кожаная подставка с латунным ободком; бокал стоит на ней целиком.",
