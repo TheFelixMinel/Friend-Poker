@@ -723,6 +723,74 @@ table.led td{color:var(--ink);border-bottom-color:#8a6a3a2a!important}
 .cname{color:var(--ink)!important}
 .cname span{color:#fff}
 .panel .cdesc,.panel .cex{color:var(--ink2)!important}
+/* ===== 1.0.9: photo medallions, reactions ===== */
+.plate{padding-left:50px!important}
+.plate .av{position:absolute!important;left:-16px;top:50%;width:60px!important;height:60px!important;margin-top:-30px;font-size:22px!important;background-position:center!important;background-size:cover!important;box-shadow:0 0 0 2px #2b1d13,0 0 0 4px #d8b46a,0 0 0 5px #6a4a1c,0 4px 10px #000c!important;z-index:2}
+.plate .av.ph>span{display:none}
+.plate .av .ring{inset:-4px;-webkit-mask:radial-gradient(circle closest-side,#0000 88%,#000 90%);mask:radial-gradient(circle closest-side,#0000 88%,#000 90%);z-index:1}
+.plate .av .t{background:#0007;font-size:20px;font-weight:800;text-shadow:0 1px 3px #000}
+.plate.me{width:168px!important;height:50px!important;margin:-25px 0 0 -84px!important;padding-right:8px!important}
+.plate.me .info{display:grid!important;grid-template-columns:auto auto;column-gap:8px;row-gap:3px;justify-content:start;align-items:baseline}
+.plate.me .hn{grid-column:1/3;font-size:10px!important;letter-spacing:.01em!important;gap:4px!important}
+.plate.me .nm,.plate.me .st{font-size:16px!important}
+.plate.me .eq{left:50px!important}
+.plate.me.hasEq{padding-bottom:0!important}
+.plate.me .dbadge{top:auto!important;bottom:-9px;margin-top:0!important;right:-7px!important}
+.plate.me.hasD{padding-right:8px!important}
+.plate.side{padding-left:40px!important}
+.plate.side .av{width:48px!important;height:48px!important;margin-top:-24px;left:-12px;font-size:17px!important}
+.plate.side.sR{padding-left:6px!important;padding-right:40px!important}
+.plate.side.sR .av{left:auto;right:-12px}
+.plate.side.sR .dbadge{right:auto;left:-7px}
+.plate.side.sR .act{right:auto;left:6px}
+#rxLayer{position:fixed;inset:0;pointer-events:none;z-index:40}
+.rx{position:absolute;--tx:18px;background:linear-gradient(#fbf6ea,#eadfc5);border:2px solid #b8913f;border-radius:16px;padding:3px 9px;font-size:28px;line-height:34px;box-shadow:0 0 0 1px #2b1d13,0 6px 14px #000b,inset 0 0 0 2px #fbf6ea,inset 0 0 0 3px #b8913f55;transform-origin:calc(var(--tx) + 7px) calc(100% + 9px);animation:rxPop .32s ease-out both,rxOut .4s ease-in 2.2s forwards}
+.rx::after{content:"";position:absolute;left:var(--tx);bottom:-9px;width:14px;height:14px;background:#eadfc5;border:2px solid #b8913f;border-top:none;border-left:none;transform:rotate(45deg)}
+.rx.dn{transform-origin:calc(var(--tx) + 7px) -9px}.rx.dn::after{bottom:auto;top:-9px;transform:rotate(-135deg);background:#fbf6ea}
+.rx .e{display:inline-block}
+@keyframes rxPop{0%{opacity:0;transform:scale(.2)}55%{opacity:1;transform:scale(1.15)}75%{transform:scale(.95)}100%{transform:scale(1)}}
+@keyframes rxOut{to{opacity:0;transform:translateY(-10px) scale(.9)}}
+.rx.dn{animation:rxPop .32s ease-out both,rxOutD .4s ease-in 2.2s forwards}
+@keyframes rxOutD{to{opacity:0;transform:translateY(10px) scale(.9)}}
+.rx.r0 .e{animation:eShake .7s ease-in-out .3s 2}
+.rx.r1 .e{animation:eHop .45s ease-out .3s 3}
+.rx.r2 .e{animation:eTremble .09s linear .3s 14}
+.rx.r3 .e{animation:ePulse .5s ease-in-out .3s 3}
+.rx.r4 .e{animation:eClap .3s ease-in-out .3s 5}
+.rx.r5 .e{animation:eSway 1s ease-in-out .3s 2}
+@keyframes eShake{0%,100%{transform:none}20%{transform:rotate(-22deg) scale(1.15)}45%{transform:rotate(20deg) scale(1.15)}70%{transform:rotate(-10deg) scale(1.05)}}
+@keyframes eHop{0%,100%{transform:none}40%{transform:translateY(-9px)}70%{transform:translateY(1px)}}
+@keyframes eTremble{0%,100%{transform:none}25%{transform:translate(-2px,1px)}75%{transform:translate(2px,-1px)}}
+@keyframes ePulse{0%,100%{transform:none}50%{transform:scale(1.3)}}
+@keyframes eClap{0%,100%{transform:none}50%{transform:scale(.82) rotate(-8deg)}}
+@keyframes eSway{0%,100%{transform:none}30%{transform:rotate(-14deg) translateX(-2px)}70%{transform:rotate(14deg) translateX(2px)}}
+body.lite .rx,body.lite .rx.dn{animation:rxFade 2.6s linear both}body.lite .rx .e{animation:none!important}
+@keyframes rxFade{0%{opacity:0}8%,85%{opacity:1}100%{opacity:0}}
+#rxBtn{position:fixed;z-index:41;width:40px;height:40px;border-radius:50%;border:none;padding:0;font-size:21px;line-height:1;display:grid;place-items:center;cursor:pointer;background:radial-gradient(circle at 40% 30%,#3a2a1c,#140d08);box-shadow:0 0 0 2px #d8b46a,0 4px 10px #000c;transition:opacity .2s}
+#rxBtn.cd{opacity:.45}#rxBtn[hidden]{display:none}
+#rxRow{position:fixed;z-index:42;display:flex;justify-content:space-between}
+#rxRow[hidden]{display:none}
+#rxRow button{border:none;padding:0;border-radius:50%;display:grid;place-items:center;cursor:pointer;background:radial-gradient(circle at 40% 30%,#fffaf0,#eadfc5);box-shadow:0 0 0 2px #b8913f,0 4px 10px #000b;animation:fanIn .24s cubic-bezier(.3,1.5,.6,1) both}
+#rxRow.out button{animation:fanOut .14s ease-in both}
+@keyframes fanIn{from{opacity:0;transform:translate(var(--dx),var(--dy)) scale(.3)}to{opacity:1;transform:none}}
+@keyframes fanOut{to{opacity:0;transform:translate(var(--dx),var(--dy)) scale(.3)}}
+body.lite #rxRow button{animation:rxFade0 .2s both}body.lite #rxRow.out button{animation:none;opacity:0}
+@keyframes rxFade0{from{opacity:0}}
+.nameRow{display:flex;gap:14px;align-items:flex-end}.nameRow>label{flex:1;min-width:0}
+.myAv{display:flex;flex-direction:column;align-items:center;gap:3px;font:700 11px var(--hud);letter-spacing:.08em;text-transform:uppercase;color:var(--wine);cursor:pointer;background:none;border:none;padding:0}
+.myAv .c{width:52px;height:52px;border-radius:50%;background:#e9dcc0 center/cover;box-shadow:0 0 0 2px #fbf6ea,0 0 0 4px #b8913f,0 3px 8px #0004}
+.gal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:12px 8px;justify-items:center;margin:6px 0 4px}
+.gal button{width:100%;max-width:62px;height:auto;aspect-ratio:1/1;border-radius:50%;border:none;padding:0;background:#e9dcc0 center/cover;box-shadow:0 0 0 1px #8a6a3a88,0 2px 5px #8a6a3a55;position:relative;cursor:pointer}
+.gal button.on{box-shadow:0 0 0 3px #fbf6ea,0 0 0 5px var(--wine),0 3px 8px #0005}
+.gal button.on::after{content:"✓";position:absolute;right:-4px;bottom:-4px;width:20px;height:20px;border-radius:50%;background:var(--wine);color:#fff;font:700 12px/20px sans-serif;text-align:center}
+.gal button.add{background:#fffaf0;font:300 30px/1 var(--hud);color:var(--brass);box-shadow:inset 0 0 0 1.5px #8a6a3a;outline:1px dashed #8a6a3a;outline-offset:3px}
+.gal button.add.on{background-size:cover;outline:none}
+@media (max-height:520px),(max-width:600px){.gal{gap:10px 6px}.gal button{max-width:54px}}
+.crop{display:flex;flex-direction:column;align-items:center;gap:10px}
+.crop .win{width:220px;height:220px;position:relative;overflow:hidden;border-radius:8px;background:#1a120c;touch-action:none;cursor:grab}
+.crop .win img{position:absolute;left:0;top:0;transform-origin:0 0;user-select:none;-webkit-user-drag:none;pointer-events:none;max-width:none}
+.crop .win::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at 50% 50%,#0000 0 96px,#b8913f 97px 99px,#000a 100px)}
+.crop input[type=range]{width:220px;accent-color:#8a6a3a}
 </style>
 </head>
 <body>
@@ -866,7 +934,7 @@ table.led td{color:var(--ink);border-bottom-color:#8a6a3a2a!important}
   <div class="layer" id="seatLayer"></div>
 
   <div class="layer" id="hud">
-    <div class="hudTop" style="left:10px"><span id="title">Royal Flush</span><span class="verTag">1.0.8</span><span class="pill" id="tableInfo">Холдем</span></div>
+    <div class="hudTop" style="left:10px"><span id="title">Royal Flush</span><span class="verTag">1.0.9</span><span class="pill" id="tableInfo">Холдем</span></div>
     <div class="hudTop" style="right:10px"><span class="pill" id="onlineInfo" hidden></span>
       <button class="pill barBtn" id="bBar">Бар</button>
       <button class="pill invite" id="bInvite">+ Пригласить</button>
@@ -1589,7 +1657,7 @@ const toStage = (x, y) => [TOX + (TOC[0] + (x - TOC[0]) * TSX) * TK, TOY + (TOC[
 
 /* ---------------- scaling ---------------- */
 let force = false;
-const VERSION = '1.0.8', CODENAME = 'Royal Flush';
+const VERSION = '1.0.9', CODENAME = 'Royal Flush';
 /* 1.0.6: the whole table (wooden rail included) is fitted into the screen and centred, with the same small gap above and
    below on every screen; the HUD and the side plates keep to the screen edges. Plain transform, no CSS zoom (zoom flickered on some Android phones) */
 const RAIL_Y0 = TOC[1] + (18 - TOC[1]) * TSY, RAIL_Y1 = TOC[1] + (488 - TOC[1]) * TSY;   // the rail's top and bottom in stage units
@@ -3478,7 +3546,8 @@ function render() {
     const actCls = act === 'Фолд' ? ' fold' : act === 'Олл-ин' ? ' allin' : '';
     const bot = isBot(p.uid);
     const online1 = online.has(p.uid) || isMe || bot;
-    pl.innerHTML = `<div class="av"><div class="ring"></div><span>${esc(initials(p.uid))}</span>${d.turn === i ? '<div class="t" id="tm' + i + '"></div>' : ''}</div>
+    const avu = avCss(p.uid);
+    pl.innerHTML = `<div class="av${avu ? ' ph' : ''}" style="${avu}"><div class="ring"></div><span>${esc(initials(p.uid))}</span>${d.turn === i ? '<div class="t" id="tm' + i + '"></div>' : ''}</div>
       <div class="info"><div class="nm">${bot ? '<span class="botTag">🤖</span>' : ''}${esc(nameOf(p.uid))}${online1 || demo ? '' : ' <span class="dbg">· офлайн</span>'}</div><div class="st"><span class="coin"></span>${fmt(p.stack)}</div>
       ${isMe && p.cards ? `<div class="hn" id="eqName"></div>` : ''}</div>
       ${act ? `<div class="act${actCls}">${esc(act)}</div>` : ''}
@@ -4098,6 +4167,7 @@ const COMMANDS = {
   treat: (s, pid, d) => Engine.treatAnswer(s, pid, typeof d.ans === 'string' ? d.ans : !!d.yes, Date.now()),
   pourMode: (s, pid, d) => Engine.setPourMode(s, pid, +d.tg, d.mode),
   look: (s, pid, d) => Engine.setLook(s, pid, d.look),
+  av: (s, pid, d) => { const v = cleanAv(d.av); if (!v) return 'Неверная аватарка'; s.avs = s.avs || {}; s.avs[pid] = v; if (!handLive(s)) fixBotAvs(s); return null; },
 };
 function runCommand(pid, name, data) {
   const f = COMMANDS[name]; if (!f || !S) return 'Неизвестная команда';
@@ -4252,7 +4322,7 @@ setInterval(() => {
     if (h.nextAt && now > h.nextAt) {
       if (breakFor !== h.no) { breakFor = h.no; breakMs = 5000 + Math.random() * 2000; }
       const ready = h.phase !== 'showdown' || (!animating && !queue.length && now - calmAt >= breakMs) || now > h.nextAt + 20000;
-      if (ready) { hostMutate(s => Engine.startHand(s, Date.now())); return; }
+      if (ready) { hostMutate(s => { fixBotAvs(s); return Engine.startHand(s, Date.now()); }); return; }
     }
     if (!h.nextAt && S.seats.filter(p => p && !p.sitOut && !p.leaving && p.stack > 0).length >= 2) hostMutate(s => { s.hand.nextAt = Date.now() + 1500; return null; });
   }
@@ -4270,14 +4340,21 @@ function onHostConnection(c) {
       const old = conns.get(pid); if (old && old !== c) { try { old.close(); } catch (e) { } }
       conns.set(pid, c);
       const nm = String(d.name || '').trim().slice(0, 18) || 'Игрок';
-      const s = clone(S); s.names = s.names || {}; s.names[pid] = nm; if (d.look) Engine.setLook(s, pid, d.look); hostCommit(s);
+      const s = clone(S); s.names = s.names || {}; s.names[pid] = nm; if (d.look) Engine.setLook(s, pid, d.look);
+      const av = cleanAv(d.av); if (av) { s.avs = s.avs || {}; s.avs[pid] = av; if (!handLive(s)) fixBotAvs(s); }
+      if (okImg(d.img)) { AVIMG[pid] = d.img; relayAvImg(pid, d.img, pid); }
+      hostCommit(s);
       c.send({ type: 'state', s: viewFor(pid) });
+      const mi = myAvImg(); if (mi) AVIMG[uid] = mi;
+      for (const [u, im] of Object.entries(AVIMG)) if (u !== pid) { try { c.send({ type: 'avimg', pid: u, img: im }); } catch (e) { } }
       return;
     }
     if (!pid) return;
     if (d.type === 'cmd' && d.name === 'away') { hostAway(pid, !!(d.data && d.data.on)); return; }
     if (d.type === 'cmd') { const err = runCommand(pid, String(d.name), d.data || {}); if (err) c.send({ type: 'err', msg: err }); }
     else if (d.type === 'riffle' && Number.isInteger(d.seat)) { riffle(d.seat); relayRiffle(d.seat, pid); }
+    else if (d.type === 'rx') hostGotRx(pid, d.i);
+    else if (d.type === 'avimg' && okImg(d.img)) { AVIMG[pid] = d.img; relayAvImg(pid, d.img, pid); render(); }
   });
   c.on('close', () => { if (pid && conns.get(pid) === c) { conns.delete(pid); if (S) broadcast(), render(); } });
   c.on('error', () => { });
@@ -4481,6 +4558,8 @@ async function startClient(code) {
       if (d.type === 'state' && d.s) applyState(d.s);
       else if (d.type === 'err') toast(String(d.msg).slice(0, 80));
       else if (d.type === 'riffle' && Number.isInteger(d.seat)) riffle(d.seat);
+      else if (d.type === 'rx' && S) { const p = S.seats[d.seat]; if (p && p.uid !== uid) showReact(d.seat, d.i); }
+      else if (d.type === 'avimg' && typeof d.pid === 'string' && okImg(d.img)) { AVIMG[d.pid] = d.img; render(); }
     });
     c.on('close', () => {
       if (hostConn !== c || gen !== clientGen) return;
@@ -4488,7 +4567,7 @@ async function startClient(code) {
       showLobby('wait', 'Связь с хостом прервалась. Переподключаемся…', true);
       setTimeout(attempt, 1200);
     });
-    c.send({ type: 'hello', pid: uid, name: store.get('name', 'Игрок'), look: myLook() });
+    c.send({ type: 'hello', pid: uid, name: store.get('name', 'Игрок'), look: myLook(), av: myAvVal(), img: myAvImg() || undefined });
     store.set('lastCode', code);
     if (S) { $('#lobby').hidden = true; renderHud(); }
   };
@@ -4580,7 +4659,9 @@ function addBot(s, seat, level) {
   s.names[id] = free.length ? free[Math.floor(Math.random() * free.length)] : 'Бот ' + (Object.keys(s.bots).length + 1);
   s.bots[id] = { level: LEVELS[level] ? level : 'mid' };
   Engine.setLook(s, id, randomLook(gender));
-  return Engine.sit(s, id, seat, Date.now());
+  const err = Engine.sit(s, id, seat, Date.now()); if (err) return err;
+  s.avs = s.avs || {}; s.avs[id] = freeAv(s, id); fixBotAvs(s);
+  return err;
 }
 
 /* ---- bot brain ---- */
@@ -4652,7 +4733,7 @@ function startSolo(cfg, levels, opts = {}) {
   try { if (peer) peer.destroy(); } catch (e) { } peer = null; hostConn = null;
   isHost = true; solo = true; tableCode = '';
   const s = Engine.newTable(uid, cfg, Date.now()); s.created = Date.now(); s.v = 1;
-  s.names = { [uid]: store.get('name', '') || 'Вы' }; Engine.setLook(s, uid, myLook()); s.bots = {};
+  s.names = { [uid]: store.get('name', '') || 'Вы' }; Engine.setLook(s, uid, myLook()); s.bots = {}; s.avs = { [uid]: myAvVal() };
   Engine.sit(s, uid, 0, Date.now());
   const order = [2, 3, 5, 1, 4];
   levels.forEach((lv, k) => addBot(s, order[k], lv));
@@ -5017,7 +5098,7 @@ const LESSON_FLOW = {
 /* ---------------- overlays ---------------- */
 function toast(t) { const el = $('#toast'); el.textContent = t; el.style.opacity = 1; clearTimeout(toast.h); toast.h = setTimeout(() => el.style.opacity = 0, 2400); }
 function closeLobby() { $('#lobby').hidden = true; demo = false; render(); }
-function nameField() { return `<label for="fName">Ваше имя за столом<input id="fName" maxlength="18" autocomplete="nickname" value="${esc(store.get('name', ''))}" placeholder="Например, Боб"></label>`; }
+function nameField() { const v = myAvVal(), url = typeof v === 'number' ? avUrl(v) : myAvImg(); return `<div class="nameRow"><label for="fName">Ваше имя за столом<input id="fName" maxlength="18" autocomplete="nickname" value="${esc(store.get('name', ''))}" placeholder="Например, Боб"></label><button class="myAv" id="bAv" type="button"><span class="c" style="background-image:url(${url})"></span>Сменить</button></div>`; }
 function readName() { const n = ($('#fName').value || '').trim().slice(0, 18); if (!n) { $('#fName').focus(); toast('Введите имя'); return null; } store.set('name', n); return n; }
 function showLobby(kind, msg, keepButtons) {
   const ov = $('#lobby'); ov.hidden = false;
@@ -5057,13 +5138,13 @@ function showLobby(kind, msg, keepButtons) {
     $('#bLook').onclick = e => { e.preventDefault(); const n = ($('#fName').value || '').trim(); if (n) store.set('name', n); ['fSb', 'fBb', 'fBuy'].forEach(k => store.set('cfg_' + k, $('#' + k).value)); openLook(false, () => showLobby('home')); };
     $('#bSolo').onclick = () => { const n = ($('#fName').value || '').trim(); if (n) store.set('name', n); openSoloSetup(); };
     $('#bTut').onclick = () => { const n = ($('#fName').value || '').trim(); if (n) store.set('name', n); openLessons(); };
-    $('#bCreate').onclick = () => { if (!readName()) return; const cfg = readCfg(); const code = newCode(); const s = Engine.newTable(uid, cfg, Date.now()); s.created = Date.now(); s.v = 1; s.names = { [uid]: store.get('name') }; Engine.setLook(s, uid, myLook()); s.code = code; goFull(); startHost(code, s); };
-    if (hc && hs) $('#bResume').onclick = () => { if (!readName()) return; hs.names = hs.names || {}; hs.names[uid] = store.get('name'); Engine.setLook(hs, uid, myLook()); goFull(); startHost(hc, hs); };
+    $('#bCreate').onclick = () => { if (!readName()) return; const cfg = readCfg(); const code = newCode(); const s = Engine.newTable(uid, cfg, Date.now()); s.created = Date.now(); s.v = 1; s.names = { [uid]: store.get('name') }; Engine.setLook(s, uid, myLook()); s.avs = { [uid]: myAvVal() }; s.code = code; goFull(); startHost(code, s); };
+    if (hc && hs) $('#bResume').onclick = () => { if (!readName()) return; hs.names = hs.names || {}; hs.names[uid] = store.get('name'); Engine.setLook(hs, uid, myLook()); hs.avs = hs.avs || {}; hs.avs[uid] = myAvVal(); fixBotAvs(hs); goFull(); startHost(hc, hs); };
     $('#bJoinCode').onclick = () => { const code = ($('#fCode').value || '').trim().toUpperCase(); if (!/^[A-Z0-9]{5}$/.test(code)) { toast('Код — 5 символов'); return; } if (readName()) { goFull(); startClient(code); } };
   }
 }
 const _showLobby = showLobby;
-showLobby = function (...a) { _showLobby(...a); wireInstall($('#lobbyPanel')); };
+showLobby = function (...a) { _showLobby(...a); wireInstall($('#lobbyPanel')); const b = $('#bAv'); if (b) b.onclick = () => { const n = ($('#fName').value || '').trim(); if (n) store.set('name', n); if ($('#fSb')) ['fSb', 'fBb', 'fBuy'].forEach(k => store.set('cfg_' + k, $('#' + k).value)); openAvatars(() => showLobby(...a)); }; try { syncRxBtn(); } catch (e) { } };
 function goHome() { clientGen++; try { if (hostConn) hostConn.close(); } catch (e) { } hostRelays.forEach(c => { try { c.end(true); } catch (e) { } }); hostRelays = []; try { if (peer) peer.destroy(); } catch (e) { } peer = null; hostConn = null; preferRelay = false; linkKind = ''; isHost = false; solo = false; if (tut) endLesson(true); S = null; history.replaceState(null, '', location.pathname); boot(true); }
 function readCfg() {
   const sb = Math.max(1, Math.round(+$('#fSb').value || 250)), bb = Math.max(sb, Math.round(+$('#fBb').value || sb * 2)), buyIn = Math.max(bb * 10, Math.round(+$('#fBuy').value || bb * 100));
@@ -5191,6 +5272,20 @@ function openTreat(id) {
   ov.hidden = false; draw();
 }
 const CHANGELOG = [
+ {
+  "v": "1.0.9",
+  "d": "12 ноября",
+  "items": [
+   "<b>Аватарки</b>: у каждого игрока на плашке — круглый портрет-медальон в латунной оправе, выступающий за край плашки (у боковых мест — меньше и с внешней стороны). На выбор 13 фото; можно поставить своё.",
+   "<b>Выбор аватарки</b>: на экране входа рядом с именем — ваша аватарка и «Сменить». Открывается галерея из 13 фото и «＋ Своё»; выбор запоминается на устройстве. Сменить можно и в меню ☰ — между раздачами.",
+   "<b>Своё фото</b>: после выбора фото с телефона или компьютера открывается окно с кругом — фото двигается пальцем или мышью и приближается ползунком. В игру уходит маленький кружок, остальные игроки получают его один раз при посадке.",
+   "<b>Аватарки ботов</b>: каждый бот при посадке берёт случайное свободное фото — у ботов не бывает одинаковых и чужих. Если вы выбрали фото бота, после раздачи он сам возьмёт другое. Так же и с ботами, которых хост сажает за стол с друзьями.",
+   "<b>Ваша плашка</b> теперь того же размера, что у всех: в первой строке имя и фишки, во второй — комбинация и шанс; кнопка дилера — в нижнем углу.",
+   "<b>Реакции</b>: кнопка 😊 слева от кнопок хода — над FOLD и CALL вылетает ряд из шести эмодзи (😂 👍 😡 😱 👏 😎). Реакция появляется над плашкой в кремовом облачке с хвостиком (у верхних мест — под плашкой), эмодзи двигается по-своему: смех трясётся, палец подпрыгивает, злость дрожит, испуг пульсирует, аплодисменты хлопают, очки покачиваются. Видно всем за столом; между реакциями — пауза 3 секунды.",
+   "<b>Боты реагируют</b> на крупный выигрыш, проигранный олл-ин и сильную комбинацию соседа и иногда отвечают на ваши реакции — с паузами, без спама.",
+   "<b>Вибрация</b> (телефоны Android): когда наступает ваш ход — двойной толчок, через 10 секунд без хода — напоминание. Включается и выключается в меню ☰ («Вибрация»), по умолчанию включена. На iPhone браузеры вибрацию не поддерживают."
+  ]
+ },
  {
   "v": "1.0.8",
   "d": "11 ноября",
@@ -5388,6 +5483,7 @@ function openMenu() {
     ${p ? `<div class="row2" style="margin-top:8px"><button class="btn" id="mRebuy" ${(p.inHand && !p.folded && live) || p.stack > Engine.rebuyMax(S) ? 'disabled' : ''}>${p.stack > Engine.rebuyMax(S) ? 'Докупить можно при ≤ ' + fmt(Engine.rebuyMax(S)) : 'Докупить ' + fmt(S.cfg.buyIn)}</button>
       <button class="btn dark" id="mAway">${p.sitOut ? 'Вернуться' : 'Отойти'}</button>
       <button class="btn red" id="mLeave">Встать</button></div>` : '<p style="margin-top:10px">Вы наблюдаете. Нажмите на свободное место, чтобы сесть.</p>'}
+    <div class="row2" style="margin-top:8px"><button class="btn" id="mAv" ${p && handLive() && p.inHand ? 'disabled' : ''}>${p && handLive() && p.inHand ? 'Аватарка — между раздачами' : 'Аватарка'}</button>${canVib ? `<button class="btn ${vibOn ? 'gold' : 'dark'}" id="mVib">Вибрация: ${vibOn ? 'вкл' : 'выкл'}</button>` : ''}</div>
     <div class="gfxRow"><span class="sl">Графика</span><span class="seg big" id="mGfx">${['auto', 'high', 'eco'].map(m => `<button class="${GFX === m ? 'on' : ''}" data-g="${m}">${GFX_NAMES[m]}</button>`).join('')}</span></div>
     ${GFX === 'auto' && gfxSlow ? '<p class="fine" style="margin:4px 0 0">Сейчас упрощена автоматически: устройство не успевало.</p>' : ''}
     <h3>Учёт фишек</h3>
@@ -5411,6 +5507,8 @@ function openMenu() {
   if ($('#mExitSolo')) $('#mExitSolo').onclick = () => { close(); goHome(); };
   $('#mBar').onclick = openBar;
   $('#mLook').onclick = () => openLook(true);
+  $('#mAv').onclick = () => openAvatars(null);
+  if ($('#mVib')) $('#mVib').onclick = () => { vibOn = !vibOn; store.set('vib', vibOn); close(); toast(vibOn ? 'Вибрация включена' : 'Вибрация выключена'); };
   if (p) {
     $('#mRebuy').onclick = () => { close(); cmd('rebuy'); };
     $('#mAway').onclick = () => { close(); cmd('sitout', { val: !p.sitOut }); };
@@ -5431,10 +5529,241 @@ $('#bFull').onclick = onFullBtn;
 $('#bSound').onclick = () => { soundOn = !soundOn; $('#bSound').textContent = soundOn ? '🔊' : '🔈'; $('#bSound').setAttribute('aria-pressed', String(soundOn)); store.set('sound', soundOn); };
 if (store.get('sound', true) === false) { soundOn = false; $('#bSound').textContent = '🔈'; }
 
+/* ===== 1.0.9: avatars ===== */
+const AV_N = 13, AVIMG = {};
+const avUrl = n => 'av/' + n + '.jpg';
+function strHash(t) { let h = 0; for (let k = 0; k < t.length; k += 7) h = (h * 31 + t.charCodeAt(k)) | 0; return (h >>> 0).toString(36) + t.length.toString(36); }
+function okImg(t) { return typeof t === 'string' && t.length < 30000 && /^data:image\/jpeg;base64,[A-Za-z0-9+/=]+$/.test(t); }
+function myAvVal() {
+  let v = store.get('av', 0);
+  if (v === 'c') { const img = store.get('avImg', ''); if (okImg(img)) return 'c' + strHash(img); v = 0; }
+  if (!(v >= 1 && v <= AV_N)) { v = 1 + Math.floor(Math.random() * AV_N); store.set('av', v); }
+  return v;
+}
+function myAvImg() { const img = store.get('avImg', ''); return store.get('av', 0) === 'c' && okImg(img) ? img : ''; }
+function cleanAv(v) { if (Number.isInteger(v) && v >= 1 && v <= AV_N) return v; if (typeof v === 'string' && /^c[0-9a-z]{1,16}$/.test(v)) return v; return 0; }
+const DEMO_AVS = { d1: 3, d2: 6, d3: 7, d4: 5 };
+function avOf(u, s = S) {
+  const v = s && s.avs ? s.avs[u] : demo ? DEMO_AVS[u] : 0;
+  if (!v) return '';
+  if (typeof v === 'number') return avUrl(v);
+  if (u === uid) return myAvImg() || '';
+  return AVIMG[u] || '';
+}
+function avCss(u) { const url = avOf(u); return url ? `background-image:url(${url})!important` : ''; }
+function avTaken(s, except) { const t = new Set(); Object.entries(s.avs || {}).forEach(([u, v]) => { if (u !== except && typeof v === 'number' && s.seats.some(p => p && p.uid === u)) t.add(v); }); return t; }
+function freeAv(s, except) { const t = avTaken(s, except), free = []; for (let n = 1; n <= AV_N; n++) if (!t.has(n)) free.push(n); return free.length ? free[Math.floor(Math.random() * free.length)] : 1 + Math.floor(Math.random() * AV_N); }
+// bots never share a photo: with each other or with people; a person keeps his choice and the bot moves to a free one
+function fixBotAvs(s) {
+  s.avs = s.avs || {};
+  const used = new Set();
+  s.seats.forEach(p => { if (p && !isBotId(p.uid) && typeof s.avs[p.uid] === 'number') used.add(s.avs[p.uid]); });
+  s.seats.forEach(p => {
+    if (!p || !isBotId(p.uid)) return;
+    let v = s.avs[p.uid];
+    if (!(typeof v === 'number') || used.has(v)) { const free = []; for (let n = 1; n <= AV_N; n++) if (!used.has(n)) free.push(n); v = free.length ? free[Math.floor(Math.random() * free.length)] : 1 + Math.floor(Math.random() * AV_N); s.avs[p.uid] = v; }
+    used.add(v);
+  });
+}
+function isBotId(u) { return typeof u === 'string' && u.startsWith('bot_'); }
+function sendAvImg(img) {
+  if (!img) return;
+  if (isHost) { AVIMG[uid] = img; relayAvImg(uid, img, null); }
+  else if (hostConn && hostConn.open) hostConn.send({ type: 'avimg', img });
+}
+function relayAvImg(pid, img, except) { for (const [p, c] of conns) if (c.open && p !== except) { try { c.send({ type: 'avimg', pid, img }); } catch (e) { } } }
+function setMyAv(v, img) {
+  if (v === 'c') { store.set('avImg', img); store.set('av', 'c'); } else store.set('av', v);
+  if (!S || demo) return;
+  const val = myAvVal(), im = myAvImg();
+  if (im) sendAvImg(im);
+  cmd('av', { av: val });
+}
+function handLive(s = S) { return !!s && ['preflop', 'flop', 'turn', 'river'].includes(s.hand.phase); }
+function openAvatars(back) {
+  const ov = $('#menu'); ov.hidden = false;
+  let sel = store.get('av', 0); if (sel !== 'c' && !(sel >= 1 && sel <= AV_N)) sel = myAvVal();
+  const own = store.get('avImg', '');
+  const draw = () => {
+    $('#menuPanel').innerHTML = `<h2>Аватарка</h2><p>Выберите фото — его увидят все за столом.</p>
+      <div class="gal">${Array.from({ length: AV_N }, (_, k) => `<button class="${sel === k + 1 ? 'on' : ''}" data-a="${k + 1}" style="background-image:url(${avUrl(k + 1)})" aria-label="Фото ${k + 1}"></button>`).join('')}<button class="add${sel === 'c' && okImg(own) ? ' on' : ''}" data-a="c" ${sel === 'c' && okImg(own) ? `style="background-image:url(${own})"` : ''} aria-label="Своё фото">${sel === 'c' && okImg(own) ? '' : '+'}</button></div>
+      <p class="fine" style="text-align:right;margin:0">«+» — своё фото с телефона</p>
+      <div class="row2" style="margin-top:10px"><button class="btn gold" id="avDone">Готово</button></div>
+      <input type="file" id="avFile" accept="image/*" hidden>`;
+    $('#menuPanel').querySelectorAll('[data-a]').forEach(b => b.onclick = () => {
+      if (b.dataset.a === 'c') { $('#avFile').click(); return; }
+      sel = +b.dataset.a; draw();
+    });
+    $('#avFile').onchange = e => { const f = e.target.files && e.target.files[0]; if (f) openCrop(f, img => { setMyAv('c', img); sel = 'c'; openAvatars(back); }, () => openAvatars(back)); };
+    $('#avDone').onclick = () => { if (sel !== 'c') setMyAv(sel); ov.hidden = true; if (back) back(); else render(); };
+  };
+  draw();
+}
+function openCrop(file, done, cancel) {
+  const ov = $('#menu'); ov.hidden = false;
+  const url = URL.createObjectURL(file), im = new Image();
+  im.onerror = () => { URL.revokeObjectURL(url); toast('Не удалось открыть фото'); cancel(); };
+  im.onload = () => {
+    const W = 220, R = 96, base = Math.max(2 * R / im.naturalWidth, 2 * R / im.naturalHeight);
+    let k = 1, x = 0, y = 0;
+    $('#menuPanel').innerHTML = `<h2>Своё фото</h2><p>Двигайте фото пальцем, ползунком — ближе или дальше.</p>
+      <div class="crop"><div class="win" id="crWin"></div><input type="range" id="crZoom" min="100" max="400" value="100" aria-label="Масштаб">
+      <div class="row2" style="width:100%"><button class="btn gold" id="crOk">Готово</button><button class="btn dark" id="crNo">Отмена</button></div></div>`;
+    const win = $('#crWin'); win.appendChild(im);
+    const sc = () => base * k;
+    const clamp = () => { const w = im.naturalWidth * sc(), h = im.naturalHeight * sc(); x = Math.min(W / 2 - R, Math.max(W / 2 + R - w, x)); y = Math.min(W / 2 - R, Math.max(W / 2 + R - h, y)); };
+    const put = () => { clamp(); im.style.transform = `translate(${x}px,${y}px) scale(${sc()})`; };
+    x = W / 2 - im.naturalWidth * sc() / 2; y = W / 2 - im.naturalHeight * sc() / 2; put();
+    $('#crZoom').oninput = e => { const cx = (W / 2 - x) / sc(), cy = (W / 2 - y) / sc(); k = +e.target.value / 100; x = W / 2 - cx * sc(); y = W / 2 - cy * sc(); put(); };
+    let drag = null;
+    win.onpointerdown = e => { drag = [e.clientX - x, e.clientY - y]; win.setPointerCapture(e.pointerId); };
+    win.onpointermove = e => { if (!drag) return; x = e.clientX - drag[0]; y = e.clientY - drag[1]; put(); };
+    win.onpointerup = win.onpointercancel = () => { drag = null; };
+    $('#crNo').onclick = () => { URL.revokeObjectURL(url); cancel(); };
+    $('#crOk').onclick = () => {
+      const N = 160, cv = document.createElement('canvas'); cv.width = cv.height = N;
+      const g = cv.getContext('2d'), f = N / (2 * R);
+      g.fillStyle = '#e9dcc0'; g.fillRect(0, 0, N, N);
+      g.drawImage(im, (x - (W / 2 - R)) * f, (y - (W / 2 - R)) * f, im.naturalWidth * sc() * f, im.naturalHeight * sc() * f);
+      let q = .82, out = cv.toDataURL('image/jpeg', q);
+      while (out.length > 28000 && q > .3) { q -= .12; out = cv.toDataURL('image/jpeg', q); }
+      URL.revokeObjectURL(url);
+      if (!okImg(out)) { toast('Фото не подошло'); cancel(); return; }
+      done(out);
+    };
+  };
+  im.src = url;
+}
+/* ===== 1.0.9: reactions ===== */
+const REACTS = ['😂', '👍', '😡', '😱', '👏', '😎'], RX_CD = 3000, RX_LIFE = 2600;
+let rxLast = 0, rxOpenT = 0, rxPos = null;
+const rxHostLast = {}, botRxLast = {};
+let botRxAll = 0;
+function rxLayer() { let l = $('#rxLayer'); if (!l) { l = document.createElement('div'); l.id = 'rxLayer'; document.body.appendChild(l); } return l; }
+function showReact(seat, i) {
+  if (!Number.isInteger(seat) || !Number.isInteger(i) || i < 0 || i >= REACTS.length) return;
+  const pl = $('#plate' + seat); if (!pl) return;
+  const L = rxLayer(); L.querySelectorAll(`.rx[data-s="${seat}"]`).forEach(x => x.remove());
+  const av = pl.querySelector('.av') || pl, a = av.getBoundingClientRect(), pr = pl.getBoundingClientRect();
+  const el = document.createElement('div'); el.className = 'rx r' + i; el.dataset.s = seat; el.innerHTML = `<span class="e">${REACTS[i]}</span>`;
+  L.appendChild(el);
+  const w = el.offsetWidth, h = el.offsetHeight, cx = a.left + a.width / 2;
+  const dn = pr.top < innerHeight * .3;
+  let left = cx - 25; left = Math.max(4, Math.min(innerWidth - w - 4, left));
+  el.style.setProperty('--tx', Math.max(8, Math.min(w - 22, cx - left - 7)) + 'px');
+  el.style.left = left + 'px';
+  if (dn) { el.classList.add('dn'); el.style.top = (a.bottom + 10) + 'px'; } else el.style.top = (a.top - h - 10) + 'px';
+  setTimeout(() => el.remove(), RX_LIFE + 100);
+  if (isHost && !demo) botAnswer(seat, i);
+}
+function relayRx(seat, i, except) { for (const [p, c] of conns) if (c.open && p !== except) { try { c.send({ type: 'rx', seat, i }); } catch (e) { } } }
+function sendReact(i) {
+  const seat = mySeat(); if (seat < 0 || !S) return;
+  const now = Date.now(); if (now - rxLast < RX_CD) return;
+  rxLast = now; closeRxRow(); syncRxBtn();
+  setTimeout(syncRxBtn, RX_CD + 50);
+  showReact(seat, i);
+  if (isHost) relayRx(seat, i, null); else if (hostConn && hostConn.open) hostConn.send({ type: 'rx', i });
+}
+function hostGotRx(pid, i) {
+  if (!S || !Number.isInteger(i) || i < 0 || i >= REACTS.length) return;
+  const seat = S.seats.findIndex(p => p && p.uid === pid); if (seat < 0) return;
+  const now = Date.now(); if (now - (rxHostLast[pid] || 0) < RX_CD - 400) return; rxHostLast[pid] = now;
+  showReact(seat, i); relayRx(seat, i, pid);
+}
+function botReact(seat, i, delay) {
+  setTimeout(() => {
+    if (!S || !isHost || demo || tut) return;
+    const p = S.seats[seat]; if (!p || !isBotId(p.uid)) return;
+    const now = Date.now(); if (now - (botRxLast[p.uid] || 0) < 8000 || now - botRxAll < 4000) return;
+    botRxLast[p.uid] = now; botRxAll = now;
+    showReact(seat, i); relayRx(seat, i, null);
+  }, delay);
+}
+const BOT_ANSWER = [[0, 5], [1], [0, 5], [5, 3], [5, 1], [5, 2]];
+function botAnswer(seat, i) {
+  if (!S || tut) return;
+  const p = S.seats[seat]; if (!p || isBotId(p.uid)) return;
+  const bots = S.seats.map((q, k) => q && isBotId(q.uid) && k !== seat ? k : -1).filter(k => k >= 0);
+  if (!bots.length || Math.random() > .3) return;
+  const opts = BOT_ANSWER[i]; botReact(bots[Math.floor(Math.random() * bots.length)], opts[Math.floor(Math.random() * opts.length)], 1000 + Math.random() * 1500);
+}
+// host: bots react to what happened in the hand that just ended
+let botRxHand = -1;
+function botHandEnd() {
+  if (!isHost || !S || demo || tut) return;
+  const h = S.hand; if (h.phase !== 'showdown' || !h.result || botRxHand === h.no) return;
+  botRxHand = h.no;
+  const r = h.result, bb = S.cfg.bb, won = {};
+  (r.winners || []).forEach(x => { won[x.seat] = (won[x.seat] || 0) + (x.amt || 0); });
+  const pot = Object.values(won).reduce((a, b) => a + b, 0);
+  const best = Math.max(-1, ...(r.winners || []).map(x => Engine.HAND_NAMES.indexOf(x.hand || '')));
+  S.seats.forEach((p, k) => {
+    if (!p || !isBotId(p.uid)) return;
+    const d = 1800 + Math.random() * 2500;
+    if (won[k] && pot >= 20 * bb && Math.random() < .35) return botReact(k, [5, 4, 0][Math.floor(Math.random() * 3)], d);
+    if (!won[k] && p.allIn && p.stack === 0 && Math.random() < .45) return botReact(k, [2, 3][Math.floor(Math.random() * 2)], d);
+    if (!won[k] && best >= 6 && Math.random() < .2) return botReact(k, [3, 4][Math.floor(Math.random() * 2)], d);
+  });
+}
+function rxBtnEl() {
+  let b = $('#rxBtn');
+  if (!b) {
+    b = document.createElement('button'); b.id = 'rxBtn'; b.textContent = '😊'; b.setAttribute('aria-label', 'Реакция'); b.hidden = true; document.body.appendChild(b);
+    b.onclick = e => { e.stopPropagation(); if ($('#rxRow') && !$('#rxRow').hidden) { closeRxRow(); return; } if (Date.now() - rxLast < RX_CD) return; openRxRow(); };
+    document.addEventListener('pointerdown', e => { const r = $('#rxRow'); if (r && !r.hidden && !r.contains(e.target) && e.target !== b) closeRxRow(); }, true);
+    addEventListener('resize', () => { closeRxRow(); syncRxBtn(); });
+    const mo = new MutationObserver(() => syncRxBtn()); ['#menu', '#lobby'].forEach(q => mo.observe($(q), { attributes: true, attributeFilter: ['hidden'] }));
+  }
+  return b;
+}
+function syncRxBtn() {
+  const b = rxBtnEl();
+  const show = !!S && !demo && !tut && mySeat() >= 0 && $('#lobby').hidden && $('#menu').hidden;
+  b.hidden = !show; if (!show) { closeRxRow(); return; }
+  b.classList.toggle('cd', Date.now() - rxLast < RX_CD);
+  const f = $('#controls').querySelector('button'), sp = $('#sidePanel').getBoundingClientRect();
+  if (f) { const r = f.getBoundingClientRect(); if (r.width) rxPos = { x: r.left - 50, y: r.top + r.height / 2 - 20, right: $('#controls').getBoundingClientRect().right, top: $('#controls').getBoundingClientRect().top }; }
+  const p = rxPos || { x: sp.right - 234 - 50, y: sp.bottom - 96, right: sp.right, top: sp.bottom - 110 };
+  b.style.left = p.x + 'px'; b.style.top = p.y + 'px';
+}
+function openRxRow() {
+  let row = $('#rxRow'); if (!row) { row = document.createElement('div'); row.id = 'rxRow'; document.body.appendChild(row); }
+  syncRxBtn(); const b = $('#rxBtn').getBoundingClientRect(), p = rxPos || { right: b.right + 240, top: b.top };
+  const L = b.left, W = Math.max(150, p.right - L), sz = Math.min(38, Math.floor((W - 30) / 6));
+  row.className = ''; row.hidden = false;
+  row.style.cssText = `left:${L}px;width:${W}px;top:${Math.min(b.top, p.top) - sz - 10}px`;
+  row.innerHTML = REACTS.map((e, k) => `<button data-i="${k}" style="width:${sz}px;height:${sz}px;font-size:${Math.round(sz * .56)}px;animation-delay:${k * 40}ms" aria-label="${e}">${e}</button>`).join('');
+  [...row.children].forEach(x => { const q = x.getBoundingClientRect(); x.style.setProperty('--dx', (b.left + b.width / 2 - q.left - sz / 2) + 'px'); x.style.setProperty('--dy', (b.top + b.height / 2 - q.top - sz / 2) + 'px'); x.onclick = e => { e.stopPropagation(); sendReact(+x.dataset.i); }; });
+  clearTimeout(rxOpenT); rxOpenT = setTimeout(closeRxRow, 4000);
+}
+function closeRxRow() {
+  const row = $('#rxRow'); clearTimeout(rxOpenT); if (!row || row.hidden || row.classList.contains('out')) return;
+  row.classList.add('out'); [...row.children].forEach((x, k, a) => x.style.animationDelay = ((a.length - 1 - k) * 20) + 'ms');
+  setTimeout(() => { row.hidden = true; row.classList.remove('out'); }, 260);
+}
+const _render109 = render, _renderHud109 = renderHud;
+render = function (...a) { const r = _render109.apply(this, a); try { syncRxBtn(); vibWatch(); botHandEnd(); } catch (e) { console.error(e); } return r; };
+renderHud = function (...a) { const r = _renderHud109.apply(this, a); try { syncRxBtn(); } catch (e) { } return r; };
+/* ===== 1.0.9: vibration on your turn ===== */
+let vibOn = store.get('vib', true), vibKey = '', vibT = 0;
+const canVib = typeof navigator !== 'undefined' && typeof navigator.vibrate === 'function' && (navigator.maxTouchPoints > 0 || 'ontouchstart' in window);
+function vibWatch() {
+  if (!S || demo || !canVib) { vibKey = ''; return; }
+  const i = mySeat(), h = S.hand;
+  const mine = i >= 0 && handLive() && h.turn === i && disp && disp.turn === i && !animating;
+  const key = mine ? h.no + ':' + h.phase + ':' + (h.deadline || '') : '';
+  if (key === vibKey) return;
+  vibKey = key; clearTimeout(vibT);
+  if (!key || !vibOn) return;
+  try { navigator.vibrate([60, 80, 60]); } catch (e) { }
+  vibT = setTimeout(() => { if (vibKey === key && vibOn) try { navigator.vibrate([60, 80, 60]); } catch (e) { } }, 10000);
+}
 /* ---------------- demo frame (shown behind the lobby) ---------------- */
 function demoState() {
   const s = Engine.newTable('demo', { sb: 25, bb: 50, buyIn: 5000 }, 0);
   ['d1', 'd2', 'd3', 'd4'].forEach((u, k) => Engine.sit(s, u, [0, 2, 3, 5][k], 0));
+  s.avs = { d1: 3, d2: 6, d3: 7, d4: 5 };
   s.seats[0].stack = 6120; s.seats[2].stack = 3480; s.seats[3].stack = 5750; s.seats[5].stack = 2900;
   let r = 7; const rnd = () => (r = (r * 9301 + 49297) % 233280) / 233280;
   Engine.startHand(s, 0, rnd);
