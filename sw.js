@@ -1,4 +1,4 @@
-const C = 'poker-v1010-1';
+const C = 'poker-v1010-2';
 self.addEventListener('install', e => { self.skipWaiting(); e.waitUntil(caches.open(C).then(c => c.addAll(['./', 'index.html', 'manifest.webmanifest', 'icon-192.png', 'av/1.jpg', 'av/2.jpg', 'av/3.jpg', 'av/4.jpg', 'av/5.jpg', 'av/6.jpg', 'av/7.jpg', 'av/8.jpg', 'av/9.jpg', 'av/10.jpg', 'av/11.jpg', 'av/12.jpg', 'av/13.jpg']).catch(() => {}))); });
 self.addEventListener('activate', e => e.waitUntil(self.clients.claim()));
 self.addEventListener('fetch', e => {

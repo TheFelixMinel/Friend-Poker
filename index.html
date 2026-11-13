@@ -657,14 +657,14 @@ body.lite .card.win .f,body.lite .card.win .f::after{animation:none}
 #tray{background:linear-gradient(var(--trayA),var(--trayB))!important;box-shadow:inset 0 3px 6px #000c,0 0 0 1.5px var(--trim),0 2px 6px #0009!important}
 /* ===== 1.0.8 interface: translucent plates in play; every window a cream page in brown leather, like the club bar ===== */
 /* in play: dark glass plates without an outline, a soft highlight on top */
-.plate,#pot,.betLbl,.potLbl,.pill,.ibtn{background:repeating-linear-gradient(45deg,#ffffff06 0 2px,#0000 2px 4px),#0b0b0cb0!important;border:none!important;
-  box-shadow:inset 0 1px 0 #ffffff1f,inset 0 -1px 0 #0008,0 4px 12px #0007!important;backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px)}
+.plate,#pot,.betLbl,.potLbl,.pill,.ibtn{background:repeating-linear-gradient(45deg,#ffffff06 0 2px,#0000 2px 4px),#0b0b0cc4!important;border:none!important;
+  box-shadow:inset 0 1px 0 #ffffff1f,inset 0 -1px 0 #0008,0 4px 12px #0007!important}
 .plate::before{display:none!important}
 .plate.turn{box-shadow:inset 0 0 0 1.4px #f2d68e,0 0 16px #e6c06e77,0 4px 12px #0007!important}
 .plate .av{background:#00000070!important;box-shadow:inset 0 1px 0 #ffffff22,inset 0 0 0 1px #0009!important;color:#ece6d6!important;font:700 17px var(--hud)!important}
 .pill.barBtn,#title{color:#f2deaa!important}
 .verTag{background:linear-gradient(#f2d68e,#b48a3a)!important;color:#1a1306!important}
-#log{background:#0b0b0ca6!important;color:#e2ddd0!important;border-radius:8px;box-shadow:inset 0 1px 0 #ffffff1c,0 4px 12px #0006!important;backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px)}
+#log{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;background:#0b0b0cbe!important;color:#e2ddd0!important;border-radius:8px;box-shadow:inset 0 1px 0 #ffffff1c,0 4px 12px #0006!important;backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px)}
 #log .hd{background:#00000066!important;color:#f2deaa!important;font-family:var(--display),Georgia,serif!important;font-style:italic;letter-spacing:.08em}
 #log .row b{color:#e9b46a!important}
 
@@ -796,7 +796,7 @@ body.lite #rxRow button{animation:rxFade0 .2s both}body.lite #rxRow.out button{a
 .card.flat{transform-style:flat;transition:none}
 .card.flat .f,.card.flat .b{backface-visibility:visible;-webkit-backface-visibility:visible}
 .card.flat .b{transform:none;display:none}
-.card.flat.down .b{display:block}.card.flat.down .f{display:none}
+.card.flat.down{transform:none}.card.flat.down .b{display:block}.card.flat.down .f{display:none}
 #fpsBox{position:fixed;left:50%;top:6px;transform:translateX(-50%);z-index:99;font:600 10px/1.35 ui-monospace,monospace;color:#e8ffe8;background:#000b;padding:5px 7px;border-radius:6px;pointer-events:none;white-space:pre}
 </style>
 </head>
@@ -1769,7 +1769,7 @@ function cardFaceSvg(c, size) {
 }
 function cardEl(c, size = '', down = false) {
   const el = document.createElement('div');
-  el.className = 'card ' + size + (down ? ' down' : '');
+  el.className = 'card flat ' + size + (down ? ' down' : '');
   if (c != null && c >= 0) {
     const su = Math.floor(c / 13);
     if (su === 1 || su === 2) el.classList.add('red');
@@ -1807,6 +1807,65 @@ function stackEl(amount, maxCols = 3) {
   return el;
 }
 
+/* 1.0.11: chip and card animations run frame by frame in JS instead of the browser's compositor (el.animate):
+   an element under compositor animation becomes its own GPU layer and drags every hand, plate and card drawn above it
+   into new layers; on Android those layers were rasterised late and the table blinked out for a moment */
+// 1.0.11: cards are flat (no 3D layer); a card turns over in 3D only for the half second of the turn and is flat again after
+function flip3d(c, down = false, to = null) {
+  if (!c) return;
+  const base = (to != null ? to : (c.style.transform || '')).replace(/\s*rotateY\([^)]*\)/g, '').trim();
+  const from = (c.style.transform || '').replace(/\s*rotateY\([^)]*\)/g, '').trim();
+  c.classList.remove('flat'); c.style.transition = 'none';
+  c.style.transform = (from + (down ? '' : ' rotateY(180deg)')).trim() || 'none';
+  void c.offsetWidth; c.style.transition = '';
+  c.style.transform = (base + (down ? ' rotateY(180deg)' : '')).trim() || 'none';
+  c.classList.toggle('down', down);
+  clearTimeout(c.__ft); c.__ft = setTimeout(() => { if (c.isConnected) { c.classList.add('flat'); c.style.transform = base; } }, 650);
+}
+const BEZ = {};
+function bezier(x1, y1, x2, y2) {
+  const k = [x1, y1, x2, y2].join(); if (BEZ[k]) return BEZ[k];
+  const cx = 3 * x1, bx = 3 * (x2 - x1) - cx, ax = 1 - cx - bx, cy = 3 * y1, by = 3 * (y2 - y1) - cy, ay = 1 - cy - by;
+  const X = t => ((ax * t + bx) * t + cx) * t, Y = t => ((ay * t + by) * t + cy) * t, dX = t => (3 * ax * t + 2 * bx) * t + cx;
+  return BEZ[k] = x => { let t = x; for (let i = 0; i < 6; i++) { const d = dX(t); if (Math.abs(d) < 1e-6) break; t -= (X(t) - x) / d; } t = Math.min(1, Math.max(0, t)); return Y(t); };
+}
+function easeOf(e) {
+  if (!e || e === 'linear') return t => t;
+  const m = /cubic-bezier\(([^)]+)\)/.exec(e); if (m) { const a = m[1].split(',').map(Number); return bezier(...a); }
+  return { ease: bezier(.25, .1, .25, 1), 'ease-in': bezier(.42, 0, 1, 1), 'ease-out': bezier(0, 0, .58, 1), 'ease-in-out': bezier(.42, 0, .58, 1) }[e] || (t => t);
+}
+const NUM = /-?\d*\.?\d+(?:e-?\d+)?/g;
+function mixStr(a, b, t) {
+  const na = (a.match(NUM) || []).map(Number), nb = (b.match(NUM) || []).map(Number);
+  if (na.length !== nb.length) return t < .5 ? a : b;
+  let k = 0; const tpl = nb.length && /[a-z%]/i.test(b) ? b : a;
+  return tpl.replace(NUM, () => { const v = na[k] + (nb[k] - na[k]) * t; k++; return +v.toFixed(3); });
+}
+function anim2d(el, frames, o = {}) {
+  if (document.hidden) return;
+  const dur = typeof o === 'number' ? o : (o.duration || 300), delay = o.delay || 0, ease = easeOf(o.easing), n = frames.length;
+  const fr = frames.map((f, i) => ({ ...f, offset: f.offset != null ? f.offset : (n === 1 ? 1 : i / (n - 1)) }));
+  const props = [...new Set(fr.flatMap(f => Object.keys(f).filter(k => k !== 'offset' && k !== 'easing')))];
+  if (o.origin) props.push('transformOrigin');
+  const base = {}; props.forEach(p => base[p] = el.style[p]);
+  if (o.origin) el.style.transformOrigin = o.origin;
+  const val = (p, i) => fr[i][p] != null ? String(fr[i][p]) : (p === 'opacity' ? '1' : p === 'scale' ? '1' : p === 'rotate' ? '0deg' : p === 'translate' ? '0 0' : 'none');
+  let t0 = 0, done = false;
+  const step = now => {
+    if (done) return;
+    if (!el.isConnected) { done = true; return; }
+    if (!t0) t0 = now + delay;
+    const raw = Math.max(0, Math.min(1, (now - t0) / dur)), t = ease(raw);
+    if (now >= t0) {
+      let i = 0; while (i < n - 2 && t > fr[i + 1].offset) i++;
+      const a = fr[i], b = fr[Math.min(n - 1, i + 1)], span = (b.offset - a.offset) || 1, u = Math.max(0, Math.min(1, (t - a.offset) / span));
+      for (const p of props) if (p !== 'transformOrigin') el.style[p] = mixStr(val(p, i), val(p, Math.min(n - 1, i + 1)), u);
+    }
+    if (raw >= 1 && now >= t0) { done = true; for (const p of props) el.style[p] = base[p]; return; }
+    requestAnimationFrame(step);
+  };
+  if (document.hidden) return; requestAnimationFrame(step);
+}
 /* ---------------- dealer arms (SVG, redrawn per frame) ---------------- */
 const arms = { L: { x: REST.L[0], y: REST.L[1] }, R: { x: REST.R[0], y: REST.R[1] } };
 const armSvg = $('#arms');
@@ -2403,7 +2462,7 @@ async function peekCards(seat) {
   await movePH(seat, 'A', ...reachFor(seat, 'A', sl.cards, 26), 260);
   const tok = h.tok;
   const cs = cardsAt(seat);
-  cs.forEach((c, k) => { c.animate([{ rotate: '1 -.4 0 0deg' }, { rotate: `1 ${k ? .5 : -.5} 0 46deg`, offset: .3 }, { rotate: `1 ${k ? .5 : -.5} 0 46deg`, offset: .7 }, { rotate: '1 -.4 0 0deg' }], { duration: 1100 * ANIM_K, easing: 'ease-in-out', delay: k * 60 }); });
+  cs.forEach((c, k) => { anim2d(c, [{ scale: '1 1', translate: '0 0' }, { scale: '1 .7', translate: `${k ? 2 : -2}px -3px`, offset: .3 }, { scale: '1 .7', translate: `${k ? 2 : -2}px -3px`, offset: .7 }, { scale: '1 1', translate: '0 0' }], { origin: '50% 100%', duration: 1100 * ANIM_K, easing: 'ease-in-out', delay: k * 60 }); });
   await liftPH(seat, 'A', .6, 260); await sleep(560); await liftPH(seat, 'A', 0, 260);
   if (PH[seat] && PH[seat].A.tok === tok) await restPH(seat, 'A', 280);     // a fold/bet that took the hand over keeps it
 }
@@ -2436,7 +2495,7 @@ async function collectCards() {
   try {
     // 1) both hands reach out, the cards on each half of the table slide together under the glove, faces turn down
     const meetL = [452, 176], meetR = [668, 176];
-    const gather = (arr, m) => Promise.all(arr.map((o, k) => { const f = [o.x, o.y], r0 = o.rot; o.el.classList.add('down'); return tween(380, t => { if (!live()) return false; o.at(f[0] + (m[0] - f[0]) * t, f[1] + (m[1] - f[1]) * t, r0 + ((k % 5) * 3 - 6 - r0) * t, o.sc + (.8 - o.sc) * t); }); }));
+    const gather = (arr, m) => Promise.all(arr.map((o, k) => { const f = [o.x, o.y], r0 = o.rot; flip3d(o.el, true); return tween(380, t => { if (!live()) return false; o.at(f[0] + (m[0] - f[0]) * t, f[1] + (m[1] - f[1]) * t, r0 + ((k % 5) * 3 - 6 - r0) * t, o.sc + (.8 - o.sc) * t); }); }));
     await Promise.all([moveHand('L', ...meetL, 260), moveHand('R', ...meetR, 260)]); if (!live()) return;
     sfx.card();
     await Promise.all([gather(L0, meetL), gather(R0, meetR)]); if (!live()) return;
@@ -3227,8 +3286,8 @@ async function dealerChange(destPoint, bigComp, backToDest, backToOther, otherPo
   await Promise.all(tasks);
   restHands(300);
 }
-function scatterEl(el) { if (!el) return; el.querySelectorAll('.chip').forEach((c, k) => { const a = Math.random() * Math.PI * 2, r = 6 + Math.random() * 14; c.animate([{ translate: '0 0' }, { translate: `${Math.cos(a) * r}px ${Math.sin(a) * r * .5 - 8}px`, offset: .5 }, { translate: '0 0' }], { duration: 380 + k * 8, easing: 'ease-out' }); }); }
-function dropEl(el) { if (!el) return; el.querySelectorAll('.chip').forEach((c, k) => c.animate([{ translate: `0 -16px`, opacity: .4 }, { translate: '0 2px', opacity: 1, offset: .75 }, { translate: '0 0' }], { duration: 240 + (+c.dataset.k || 0) * 28, easing: 'cubic-bezier(.3,1.5,.5,1)' })); }
+function scatterEl(el) { if (!el) return; el.querySelectorAll('.chip').forEach((c, k) => { const a = Math.random() * Math.PI * 2, r = 6 + Math.random() * 14; anim2d(c, [{ translate: '0 0' }, { translate: `${Math.cos(a) * r}px ${Math.sin(a) * r * .5 - 8}px`, offset: .5 }, { translate: '0 0' }], { duration: 380 + k * 8, easing: 'ease-out' }); }); }
+function dropEl(el) { if (!el) return; el.querySelectorAll('.chip').forEach((c, k) => anim2d(c, [{ translate: `0 -16px`, opacity: .4 }, { translate: '0 2px', opacity: 1, offset: .75 }, { translate: '0 0' }], { duration: 240 + (+c.dataset.k || 0) * 28, easing: 'cubic-bezier(.3,1.5,.5,1)' })); }
 
 /* ---------- event handlers (called from animate) ---------- */
 function allinStyle(u) { const l = lookOf(u); if (l.ai === 'neat' || l.ai === 'push') return l.ai; let h = 0; for (const ch of String(u)) h = (h * 31 + ch.charCodeAt(0)) >>> 0; return h % 2 ? 'push' : 'neat'; }
@@ -3566,7 +3625,7 @@ function render() {
         const el = cardEl(faceUp || (isMe && p.peekHide) ? c : -1, size, !faceUp);
         const hp = holePos(i, k, big);
         place(el, hp.cx - cw / 2, hp.cy - ch / 2);
-        const flat = !(isMe && !faceUp);   // 1.0.10: only my face-down cards keep the 3D flip (the peek reveal turns them in place)
+        const flat = true;   // 1.0.11: every card at rest is flat; the 3D flip is switched on only for the moment of turning
         if (flat) el.classList.add('flat');
         el.style.transform = `rotate(${hp.rot}deg)` + (faceUp || flat ? '' : ' rotateY(180deg)');
         if (d.phase === 'showdown' && (p.show || isMe) && d.result) {
@@ -3887,11 +3946,11 @@ async function animate(e) {
         const sl = slot(me);
         if (PH[me]) { setPose(me, 'A', 'cup'); await movePH(me, 'A', ...reachFor(me, 'A', [sl.cards[0], sl.cards[1] + 18], 30), 260); }
         const cs = [...L.felt.querySelectorAll('.card.lg')];
-        cs.forEach((c, k) => { c.style.transformOrigin = '50% 100%'; c.animate([{ rotate: '1 0 0 0deg' }, { rotate: `1 ${k ? .4 : -.4} 0 40deg` }, { rotate: '1 0 0 0deg' }], { duration: 620, easing: 'ease-in-out', delay: k * 80 }); });
+        cs.forEach((c, k) => { anim2d(c, [{ scale: '1 1', translate: '0 0' }, { scale: '1 .74', translate: `${k ? 2 : -2}px -3px` }, { scale: '1 1', translate: '0 0' }], { origin: '50% 100%', duration: 620, easing: 'ease-in-out', delay: k * 80 }); });
         if (PH[me]) liftPH(me, 'A', .7, 240);
         await sleep(560);
         d.seats[me].peekHide = false;
-        cs.forEach((c, k) => setTimeout(() => { c.style.transform = `rotate(${holePos(me, k, true).rot}deg)`; c.classList.remove('down'); }, k * 120));
+        cs.forEach((c, k) => setTimeout(() => { flip3d(c, false, `rotate(${holePos(me, k, true).rot}deg)`); }, k * 120));
         sfx.flip();
         if (PH[me]) { liftPH(me, 'A', 0, 200); restPH(me, 'A', 360); }
         await sleep(420);
@@ -3959,7 +4018,7 @@ async function animate(e) {
         await moveHand('L', BOARD_X(start) - 22, BOARD_Y, 240);
         await Promise.all([moveHand('R', BOARD_X(start + 2) + 26, BOARD_Y - 4, 340, ease.out), ...els.map((o, k) => moveSprite(o.w, [BOARD_X(start) - 28, BOARD_Y - 40], [BOARD_X(start + k) - 28, BOARD_Y - 40], 340, ease.out))]);
         restHands(300);
-        for (const o of els) { o.el.classList.remove('down'); sfx.flip(); await sleep(130); }
+        for (const o of els) { flip3d(o.el); sfx.flip(); await sleep(130); }
         await sleep(380);
       } else {
         const el = cardEl(e.cards[0], '', true); const w = sprite(el, DECK[0] - 28, DECK[1] - 40);
@@ -3967,7 +4026,7 @@ async function animate(e) {
         const k = start;
         await Promise.all([moveHand('R', BOARD_X(k) + 22, BOARD_Y - 4, 360, ease.io), moveSprite(w, [DECK[0] - 28, DECK[1] - 40], [BOARD_X(k) - 28, BOARD_Y - 40], 360, ease.io, [12, 0])]);
         restHands(300);
-        el.classList.remove('down'); sfx.flip(); await sleep(e.runout ? 900 : 480);
+        flip3d(el); sfx.flip(); await sleep(e.runout ? 900 : 480);
       }
       d.board.push(...e.cards);
       d.seats.forEach(p => { if (p && p.inHand && !p.folded && !p.allIn) p.last = ''; });
@@ -3984,7 +4043,7 @@ async function animate(e) {
       cardsAt(e.seat).forEach(c => c.remove());
       const flips = (p.cards || []).map((c, k) => { const hp = holePos(e.seat, k, false); const el = cardEl(c, 'sm', true); spriteC(el, hp.cx, hp.cy, cw, ch, hp.rot); return el; });
       if (PH[e.seat]) { setPose(e.seat, 'A', 'pinch'); await movePH(e.seat, 'A', ...reachFor(e.seat, 'A', sl.cards, 22), 240); liftPH(e.seat, 'A', 1, 200); rotPH(e.seat, 'A', -16, 260); }
-      await sleep(60); flips.forEach((el, k) => setTimeout(() => { el.style.transformOrigin = '50% 100%'; el.animate([{ translate: '0 0' }, { translate: '0 -8px' }, { translate: '0 0' }], { duration: 450 }); el.classList.remove('down'); sfx.flip(); }, k * 150));
+      await sleep(60); flips.forEach((el, k) => setTimeout(() => { el.style.transformOrigin = '50% 100%'; anim2d(el, [{ translate: '0 0' }, { translate: '0 -8px' }, { translate: '0 0' }], { duration: 450 }); flip3d(el); sfx.flip(); }, k * 150));
       await sleep(620);
       if (PH[e.seat]) { liftPH(e.seat, 'A', 0, 200); rotPH(e.seat, 'A', 0, 200); restPH(e.seat, 'A', 320); }
       p.show = true; L.fx.innerHTML = ''; render();
@@ -4089,20 +4148,20 @@ function pileEl(amount, seed) {
   });
   return el;
 }
-function settleChips(st) { st.querySelectorAll('.chip').forEach((c, k) => { const j = (Math.random() - .5) * 4; c.animate([{ transform: `translate(${j}px,-6px)` }, { transform: 'translate(0,0)' }], { duration: 160 + k * 25, easing: 'cubic-bezier(.3,1.6,.5,1)' }); }); }
-function scatterChips(st) { st.querySelectorAll('.chip').forEach((c, k) => { const a = Math.random() * Math.PI * 2, r = 4 + Math.random() * 10; c.animate([{ transform: 'translate(0,-10px)' }, { transform: `translate(${Math.cos(a) * r}px,${Math.sin(a) * r * .6}px)` }, { transform: 'translate(0,0)' }], { duration: 420 + k * 20, easing: 'ease-out' }); }); }
+function settleChips(st) { st.querySelectorAll('.chip').forEach((c, k) => { const j = (Math.random() - .5) * 4; anim2d(c, [{ transform: `translate(${j}px,-6px)` }, { transform: 'translate(0,0)' }], { duration: 160 + k * 25, easing: 'cubic-bezier(.3,1.6,.5,1)' }); }); }
+function scatterChips(st) { st.querySelectorAll('.chip').forEach((c, k) => { const a = Math.random() * Math.PI * 2, r = 4 + Math.random() * 10; anim2d(c, [{ transform: 'translate(0,-10px)' }, { transform: `translate(${Math.cos(a) * r}px,${Math.sin(a) * r * .6}px)` }, { transform: 'translate(0,0)' }], { duration: 420 + k * 20, easing: 'ease-out' }); }); }
 
 /* chip riffle (теребение) */
 function riffle(seat) {
   const st = chipsEl('stack', seat); if (!st) return;
   const chips = [...st.querySelectorAll('.chip')].filter(c => c.dataset.col === '0');
-  if (chips.length < 2) { chips.forEach(c => c.animate([{ rotate: '0deg' }, { rotate: '8deg' }, { rotate: '-6deg' }, { rotate: '0deg' }], { duration: 360 })); return; }
+  if (chips.length < 2) { chips.forEach(c => anim2d(c, [{ rotate: '0deg' }, { rotate: '8deg' }, { rotate: '-6deg' }, { rotate: '0deg' }], { duration: 360 })); return; }
   const half = Math.ceil(chips.length / 2);
   chips.forEach((c, k) => {
     const left = k < half; const dx = left ? -12 : 12;
     const lift = left ? -(k * 3.2) : -((k - half) * 3.2);
     const fin = -(k * 3.2);
-    c.animate([
+    anim2d(c, [
       { transform: 'translate(0,0)' },
       { transform: `translate(${dx}px,${lift + k * CHIP_DY + 2}px) rotate(${left ? -10 : 10}deg)`, offset: .35 },
       { transform: `translate(${dx * .4}px,${(k % 2 ? 1 : -1) * 1.6}px)`, offset: .7 },
@@ -5327,7 +5386,10 @@ const CHANGELOG = [
    "<b>Руки, карты и плашки больше не пропадают на мгновение</b>: стол больше не пересобирается целиком при каждом обновлении — карты, плашки, бокалы и фишки создаются один раз и меняются только когда действительно что-то изменилось. На Android из-за постоянной пересборки видеокарта иногда на миг теряла целые слои картинки.",
    "<b>Руки игроков не мигают при смене жеста</b>: каждый жест (лежит, берёт карты, держит бокал, стучит) заранее рисуется в готовую картинку, а новый жест заменяет старый только когда уже готов.",
    "<b>Легче для телефона</b>: карты на столе больше не держат объёмный 3D-слой — объём остаётся только у ваших закрытых карт, которые переворачиваются на месте; за раздачу браузер создаёт в десятки раз меньше элементов.",
-   "<b>Счётчик производительности</b>: если открыть игру по ссылке с <i>?fps=1</i>, в углу появится табличка — кадры в секунду, обновления стола, долгие кадры за 30 секунд и самый долгий кадр. Обычные игроки её не видят."
+   "<b>Счётчик производительности</b>: если открыть игру по ссылке с <i>?fps=1</i>, в углу появится табличка — кадры в секунду, обновления стола, долгие кадры за 30 секунд и самый долгий кадр. Обычные игроки её не видят.",
+   "<b>Исправление 1.0.10</b>: карты на столе теперь плоские и становятся объёмными только на полсекунды переворота; мелкие анимации фишек и карт (теребение, разлёт, падение, подглядывание) двигает сама игра, а не видеокарта — телефону больше не приходится то и дело заново собирать большие слои с руками и плашками, из-за которых они на миг пропадали.",
+   "<b>Подглядывание в карты</b> стало плоским: край карты приподнимается и сжимается к игроку, без наклона в глубину.",
+   "<b>Плашки, банк, кнопки и «Ход игры»</b> без размытия под ними: фон чуть плотнее, вид почти прежний, а телефону легче."
   ]
  },
  {
