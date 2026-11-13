@@ -791,6 +791,13 @@ body.lite #rxRow button{animation:rxFade0 .2s both}body.lite #rxRow.out button{a
 .crop .win img{position:absolute;left:0;top:0;transform-origin:0 0;user-select:none;-webkit-user-drag:none;pointer-events:none;max-width:none}
 .crop .win::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at 50% 50%,#0000 0 96px,#b8913f 97px 99px,#000a 100px)}
 .crop input[type=range]{width:220px;accent-color:#8a6a3a}
+
+/* ===== 1.0.10: flat cards on the felt, performance counter ===== */
+.card.flat{transform-style:flat;transition:none}
+.card.flat .f,.card.flat .b{backface-visibility:visible;-webkit-backface-visibility:visible}
+.card.flat .b{transform:none;display:none}
+.card.flat.down .b{display:block}.card.flat.down .f{display:none}
+#fpsBox{position:fixed;left:50%;top:6px;transform:translateX(-50%);z-index:99;font:600 10px/1.35 ui-monospace,monospace;color:#e8ffe8;background:#000b;padding:5px 7px;border-radius:6px;pointer-events:none;white-space:pre}
 </style>
 </head>
 <body>
@@ -934,7 +941,7 @@ body.lite #rxRow button{animation:rxFade0 .2s both}body.lite #rxRow.out button{a
   <div class="layer" id="seatLayer"></div>
 
   <div class="layer" id="hud">
-    <div class="hudTop" style="left:10px"><span id="title">Royal Flush</span><span class="verTag">1.0.9</span><span class="pill" id="tableInfo">Холдем</span></div>
+    <div class="hudTop" style="left:10px"><span id="title">Royal Flush</span><span class="verTag">1.0.10</span><span class="pill" id="tableInfo">Холдем</span></div>
     <div class="hudTop" style="right:10px"><span class="pill" id="onlineInfo" hidden></span>
       <button class="pill barBtn" id="bBar">Бар</button>
       <button class="pill invite" id="bInvite">+ Пригласить</button>
@@ -1651,13 +1658,31 @@ let logOpen = true;
 
 const stage = $('#stage');
 const L = { felt: $('#feltItems'), fx: $('#fxLayer'), seats: $('#seatLayer'), hud: $('#hud'), txt: $('#txtLayer'), cups: $('#cupLayer') };
+/* 1.0.10: render builds the felt, the seats and the drinks aside and then keeps every element whose markup did not change:
+   no more tearing down and re-creating the whole table several times a second (Android dropped whole layers for a moment) */
+const LAYER0 = { felt: L.felt, seats: L.seats, cups: L.cups };
+function layersReal() { L.felt = LAYER0.felt; L.seats = LAYER0.seats; L.cups = LAYER0.cups; }
+let RC_KEPT = 0, RC_NEW = 0;
+function reconcile(real, tmp, only) {
+  const olds = only ? [...real.children].filter(only) : [...real.children], pool = new Map();
+  for (const o of olds) { const k = o.__k || o.outerHTML; if (!pool.has(k)) pool.set(k, []); pool.get(k).push(o); }
+  const keep = new Set(), out = [];
+  for (const n of [...tmp.children]) {
+    const k = n.outerHTML, arr = pool.get(k);
+    if (arr && arr.length) { const o = arr.shift(); o.onclick = n.onclick; o.onkeydown = n.onkeydown; keep.add(o); out.push(o); RC_KEPT++; }
+    else { n.__k = k; out.push(n); RC_NEW++; }
+  }
+  for (const o of olds) if (!keep.has(o)) o.remove();
+  if (!only) { let cur = real.firstElementChild; for (const n of out) { if (n === cur) { cur = cur.nextElementSibling; continue; } real.insertBefore(n, cur); } }
+  else { const now = [...real.children].filter(only); if (now.length !== out.length || out.some((n, k) => n !== now[k])) out.forEach(n => real.appendChild(n)); }
+}
 const TK = 1, TOX = 0, TOY = 0;          // table area is scaled into the left part of the stage
 const TSX = 1.04, TSY = 1.07, TOC = [560, 253];   // must match the #tableWrap transform
 const toStage = (x, y) => [TOX + (TOC[0] + (x - TOC[0]) * TSX) * TK, TOY + (TOC[1] + (y - TOC[1]) * TSY) * TK];
 
 /* ---------------- scaling ---------------- */
 let force = false;
-const VERSION = '1.0.9', CODENAME = 'Royal Flush';
+const VERSION = '1.0.10', CODENAME = 'Royal Flush';
 /* 1.0.6: the whole table (wooden rail included) is fitted into the screen and centred, with the same small gap above and
    below on every screen; the HUD and the side plates keep to the screen edges. Plain transform, no CSS zoom (zoom flickered on some Android phones) */
 const RAIL_Y0 = TOC[1] + (18 - TOC[1]) * TSY, RAIL_Y1 = TOC[1] + (488 - TOC[1]) * TSY;   // the rail's top and bottom in stage units
@@ -2131,9 +2156,9 @@ function handImage(look, mirror, pose = 'relax', glove = false) {
     const body = handMarkup(look, mirror, pose, glove), defs = $('#handDefs').innerHTML;
     const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="-24 -30 100 64" width="200" height="128">${defs}<defs><filter id="hs" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="1.4"/></filter></defs><g transform="translate(0,3)" filter="url(#hs)" opacity=".42" style="fill:#000">${body.replace(/fill="[^"]*"/g, 'fill="#000"').replace(/stroke="[^"]*"/g, 'stroke="none"')}</g>${body}</svg>`;
     url = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
-    HAND_IMG.set(key, url);
+    HAND_IMG.set(key, url); handBitmap(key, url);
   }
-  return `<image href="${url}" x="-24" y="-30" width="100" height="64"/>`;
+  return `<image href="${HAND_BMP.get(key) || url}" x="-24" y="-30" width="100" height="64"/>`;
 }
 /* accessories by slot; wristL = left hand (mirrored), wristR = right hand */
 function accMarkup(L0, g, mirror) {
@@ -2170,8 +2195,25 @@ function setPose(seat, side, pose) {
   const st = PH[seat]; if (!st) return;
   const h = st[side]; if (h.pose === pose) return;
   h.pose = pose;
-  h.hnd.innerHTML = `<g transform="scale(${st.geo.scale})">${handImage(st.look, isLeftHand(st.geo, side), pose)}</g>`;
+  // 1.0.10: the new pose is decoded first and only then replaces the old one, so the hand never blinks out
+  const html = `<g transform="scale(${st.geo.scale})">${handImage(st.look, isLeftHand(st.geo, side), pose)}</g>`, href = html.match(/href="([^"]+)"/)[1];
+  const tok = h.poseTok = (h.poseTok || 0) + 1, swap = () => { if (h.poseTok === tok && PH[seat] === st) h.hnd.innerHTML = html; };
+  if (HAND_READY.has(href)) { swap(); return; }
+  const im = new Image(); im.src = href;
+  im.decode().then(() => { HAND_READY.add(href); swap(); }, swap);
 }
+const HAND_BMP = new Map(), HAND_READY = new Set(), HAND_POSES = ['relax', 'pinch', 'cup', 'grip', 'flat', 'knock'];
+// the hand is an SVG with a blurred shadow: drawing that is slow on phones, so each pose is rasterised once into a bitmap
+function handBitmap(key, url) {
+  const im = new Image(); im.src = url;
+  im.decode().then(() => {
+    const cv = document.createElement('canvas'); cv.width = 400; cv.height = 256;
+    cv.getContext('2d').drawImage(im, 0, 0, 400, 256);
+    cv.toBlob(b => { if (!b) return; const u = URL.createObjectURL(b); const ok = new Image(); ok.src = u; ok.decode().then(() => { HAND_BMP.set(key, u); HAND_READY.add(u); }, () => { }); }, 'image/png');
+  }, () => { });
+}
+// all poses of the hands at the table are prepared in the background, so the first grab of a card is already smooth
+function warmHands(look, mirror) { const idle = window.requestIdleCallback || (f => setTimeout(f, 30)); HAND_POSES.forEach((ps, k) => idle(() => handImage(look, mirror, ps))); }
 
 /* per-seat hand geometry in stage coordinates */
 function handGeo(seat) {
@@ -2226,6 +2268,7 @@ function buildHands() {
     }
     PH[i] = st;
     drawPH(i, 'A'); drawPH(i, 'B');
+    warmHands(look, isLeftHand(geo, 'A')); warmHands(look, isLeftHand(geo, 'B'));
   }
   for (const k of Object.keys(PH)) if (!want.has(+k)) { PH[k].g.remove(); delete PH[k]; }
 }
@@ -3479,17 +3522,18 @@ async function colourUp(d) {
 }
 
 function render() {
+  layersReal();
   if (!disp) return;
   const d = disp, me = mySeat();
   const W8 = winnersSet(d);
-  L.felt.innerHTML = ''; L.seats.innerHTML = '';
+  const cupsReal = LAYER0.cups; L.felt = document.createElement('div'); L.seats = document.createElement('div'); L.cups = document.createElement('div');   // 1.0.10: built aside, then merged
   // board
   const WC = winCards(d);
   if (WC && !winAt) winAt = Date.now(); if (!WC) winAt = 0;
   const liftWin = (el, dir) => { const t = Date.now() - winAt; if (dir) { el.style.setProperty('--lx', (dir[0] * 12).toFixed(1) + 'px'); el.style.setProperty('--ly', (dir[1] * 12).toFixed(1) + 'px'); } el.style.animation = `winLift .45s ease-out ${-Math.min(t, 450)}ms both`; };
   const gone = collectedNo === d.no;
-  (gone ? [] : d.board).forEach((c, k) => { const el = cardEl(c); place(el, BOARD_X(k) - 28, BOARD_Y - 40); if (WC) { const kk = WC.kick.has(c); el.classList.add(...(WC.set.has(c) ? (kk ? ['win', 'kick'] : ['win']) : ['dim'])); if (WC.set.has(c) && !kk) liftWin(el); } L.felt.appendChild(el); });
-  if (!gone) for (let k = 0; k < (d.muck || 0); k++) { const [mx, my, mr] = muckPos(k); const el = cardEl(-1, 'sm', true); place(el, mx - 25, my - 36); el.style.transform = `rotate(${mr}deg) rotateY(180deg) scale(.8)`; L.felt.appendChild(el); }
+  (gone ? [] : d.board).forEach((c, k) => { const el = cardEl(c); el.classList.add('flat'); place(el, BOARD_X(k) - 28, BOARD_Y - 40); if (WC) { const kk = WC.kick.has(c); el.classList.add(...(WC.set.has(c) ? (kk ? ['win', 'kick'] : ['win']) : ['dim'])); if (WC.set.has(c) && !kk) liftWin(el); } L.felt.appendChild(el); });
+  if (!gone) for (let k = 0; k < (d.muck || 0); k++) { const [mx, my, mr] = muckPos(k); const el = cardEl(-1, 'sm', true); el.classList.add('flat'); place(el, mx - 25, my - 36); el.style.transform = `rotate(${mr}deg) scale(.8)`; L.felt.appendChild(el); }
   // 1.0.6: no combination label in the centre: every shown hand gets its own label on its cards (below)
   // pot
   const potAmt = d.pot || 0;
@@ -3522,7 +3566,9 @@ function render() {
         const el = cardEl(faceUp || (isMe && p.peekHide) ? c : -1, size, !faceUp);
         const hp = holePos(i, k, big);
         place(el, hp.cx - cw / 2, hp.cy - ch / 2);
-        el.style.transform = `rotate(${hp.rot}deg)` + (faceUp ? '' : ' rotateY(180deg)');
+        const flat = !(isMe && !faceUp);   // 1.0.10: only my face-down cards keep the 3D flip (the peek reveal turns them in place)
+        if (flat) el.classList.add('flat');
+        el.style.transform = `rotate(${hp.rot}deg)` + (faceUp || flat ? '' : ' rotateY(180deg)');
         if (d.phase === 'showdown' && (p.show || isMe) && d.result) {
           if (WC) { const w = W8.has(i) && WC.set.has(c); el.classList.add(...(w ? (WC.kick.has(c) ? ['win', 'kick'] : ['win']) : ['dim'])); }   // players' cards stay inside their outline: glow only
           else if (p.show) el.classList.add(W8.has(i) ? 'win' : 'dim');
@@ -3568,6 +3614,8 @@ function render() {
     const lip = document.createElement('div'); lip.className = 'cupLip'; lip.dataset.seat = i; lip.innerHTML = CUP_LIP; place(lip, slot(i).drink[0] - CUP_R, slot(i).drink[1] - CUP_R); L.cups.appendChild(lip);
   }
   BAR.buckets.forEach(bk => { const b = document.createElement('div'); b.className = 'bucket'; b.dataset.tg = bk.tg; b.innerHTML = bucketSvg(bk.id, !!bk.out); place(b, ...bucketAt(bk)); L.felt.appendChild(b); });
+  const tf = L.felt, ts = L.seats, tc = L.cups; layersReal();
+  reconcile(L.felt, tf); reconcile(L.seats, ts); reconcile(cupsReal, tc, x => x.matches('.cup,.glass,.cupLip'));
   drawMarks();
   buildHands();
   renderEquity();
@@ -5273,6 +5321,16 @@ function openTreat(id) {
 }
 const CHANGELOG = [
  {
+  "v": "1.0.10",
+  "d": "13 ноября",
+  "items": [
+   "<b>Руки, карты и плашки больше не пропадают на мгновение</b>: стол больше не пересобирается целиком при каждом обновлении — карты, плашки, бокалы и фишки создаются один раз и меняются только когда действительно что-то изменилось. На Android из-за постоянной пересборки видеокарта иногда на миг теряла целые слои картинки.",
+   "<b>Руки игроков не мигают при смене жеста</b>: каждый жест (лежит, берёт карты, держит бокал, стучит) заранее рисуется в готовую картинку, а новый жест заменяет старый только когда уже готов.",
+   "<b>Легче для телефона</b>: карты на столе больше не держат объёмный 3D-слой — объём остаётся только у ваших закрытых карт, которые переворачиваются на месте; за раздачу браузер создаёт в десятки раз меньше элементов.",
+   "<b>Счётчик производительности</b>: если открыть игру по ссылке с <i>?fps=1</i>, в углу появится табличка — кадры в секунду, обновления стола, долгие кадры за 30 секунд и самый долгий кадр. Обычные игроки её не видят."
+  ]
+ },
+ {
   "v": "1.0.9",
   "d": "12 ноября",
   "items": [
@@ -5743,8 +5801,27 @@ function closeRxRow() {
   setTimeout(() => { row.hidden = true; row.classList.remove('out'); }, 260);
 }
 const _render109 = render, _renderHud109 = renderHud;
-render = function (...a) { const r = _render109.apply(this, a); try { syncRxBtn(); vibWatch(); botHandEnd(); } catch (e) { console.error(e); } return r; };
+let RENDER_N = 0;
+render = function (...a) { RENDER_N++; const r = _render109.apply(this, a); try { syncRxBtn(); vibWatch(); botHandEnd(); } catch (e) { console.error(e); } return r; };
 renderHud = function (...a) { const r = _renderHud109.apply(this, a); try { syncRxBtn(); } catch (e) { } return r; };
+
+/* ===== 1.0.10: hidden performance counter (?fps=1) ===== */
+if (/[?&]fps=1/.test(location.search)) {
+  const box = document.createElement('div'); box.id = 'fpsBox'; document.body.appendChild(box);
+  let fr = 0, last = performance.now(), sec = last, rn = RENDER_N, longs = [], worst = 0;
+  const loop = t => {
+    const dt = t - last; last = t; fr++;
+    if (dt > 50 && !document.hidden) { longs.push(t); worst = Math.max(worst, dt); }
+    if (t - sec >= 1000) {
+      longs = longs.filter(x => t - x < 30000);
+      const fps = Math.round(fr * 1000 / (t - sec)), rps = ((RENDER_N - rn) * 1000 / (t - sec)).toFixed(1), kept = RC_KEPT + RC_NEW ? Math.round(RC_KEPT * 100 / (RC_KEPT + RC_NEW)) : 0;
+      box.textContent = `FPS ${fps}\nобновл./с ${rps}\nдолгих 30с ${longs.length}\nхудший ${Math.round(worst)} мс\nсохранено ${kept}%\n${VERSION} · ${LITE ? 'эконом' : 'полная'}`;
+      fr = 0; sec = t; rn = RENDER_N; RC_KEPT = RC_NEW = 0;
+    }
+    requestAnimationFrame(loop);
+  };
+  requestAnimationFrame(loop);
+}
 /* ===== 1.0.9: vibration on your turn ===== */
 let vibOn = store.get('vib', true), vibKey = '', vibT = 0;
 const canVib = typeof navigator !== 'undefined' && typeof navigator.vibrate === 'function' && (navigator.maxTouchPoints > 0 || 'ontouchstart' in window);
